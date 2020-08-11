@@ -42,5 +42,11 @@ val core = project
 
 val root = project
   .in(file("."))
+  .settings(
+    addCommandAlias(
+      "codegen",
+      "calibanGenClient https://gitlab.com/api/graphql core/src/main/scala/io/pg/gitlab/graphql.scala --packageName io.pg.gitlab"
+    )
+  )
   .aggregate(core)
   .enablePlugins(CodegenPlugin)
