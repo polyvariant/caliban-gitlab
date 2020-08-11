@@ -14,6 +14,7 @@ inThisBuild(
   )
 )
 
+val Scala212 = "2.12.12"
 val Scala213 = "2.13.3"
 
 def crossPlugin(x: sbt.librarymanagement.ModuleID) = compilerPlugin(x.cross(CrossVersion.full))
@@ -28,7 +29,7 @@ val compilerPlugins = List(
 val GraalVM11 = "graalvm11@20.1.0"
 
 ThisBuild / scalaVersion := Scala213
-ThisBuild / crossScalaVersions := Seq(Scala213)
+ThisBuild / crossScalaVersions := Seq(Scala212, Scala213)
 ThisBuild / githubWorkflowJavaVersions := Seq(GraalVM11)
 //sbt-ci-release settings
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
