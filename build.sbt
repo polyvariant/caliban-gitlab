@@ -27,8 +27,10 @@ val compilerPlugins = List(
 
 val GraalVM11 = "graalvm11@20.1.0"
 
+ThisBuild / scalaVersion := Scala213
 ThisBuild / crossScalaVersions := Seq(Scala213)
 ThisBuild / githubWorkflowJavaVersions := Seq(GraalVM11)
+//sbt-ci-release settings
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release")))
@@ -36,7 +38,6 @@ ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release")))
 val core = project
   .settings(
     name := "caliban-gitlab",
-    scalaVersion := Scala213,
     libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.9.0")
   )
 
