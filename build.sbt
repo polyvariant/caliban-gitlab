@@ -1,6 +1,6 @@
 inThisBuild(
   List(
-    organization := "io.pg",
+    organization := "com.kubukoz",
     homepage := Some(url("https://github.com/pitgull/caliban-gitlab")),
     licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
     developers := List(
