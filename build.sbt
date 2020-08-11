@@ -11,7 +11,7 @@ inThisBuild(
         url("https://blog.kubukoz.com")
       )
     ),
-    publishArtifact in (Compile, packageDoc) := false
+    sources in (Compile, doc) := Seq()
   )
 )
 
