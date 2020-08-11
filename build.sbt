@@ -10,7 +10,8 @@ inThisBuild(
         "kubukoz@gmail.com",
         url("https://blog.kubukoz.com")
       )
-    )
+    ),
+    publishArtifact in (Compile, packageDoc) := false
   )
 )
 
