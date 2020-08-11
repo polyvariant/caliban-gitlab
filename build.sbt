@@ -33,11 +33,14 @@ ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release")))
 
-val root = project
-  .in(file("core"))
+val core = project
   .settings(
     name := "caliban-gitlab",
     scalaVersion := Scala213,
     libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.9.0")
   )
+
+val root = project
+  .in(file("."))
+  .aggregate(core)
   .enablePlugins(CodegenPlugin)
