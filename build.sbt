@@ -30,8 +30,7 @@ val compilerPlugins = List(
 val GraalVM11 = "graalvm11@20.1.0"
 
 ThisBuild / scalaVersion := Scala213
-// ThisBuild / crossScalaVersions := Seq(Scala212, Scala213)
-ThisBuild / crossScalaVersions := Seq(Scala213)
+ThisBuild / crossScalaVersions := Seq(Scala212, Scala213)
 ThisBuild / githubWorkflowJavaVersions := Seq(GraalVM11)
 //sbt-ci-release settings
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
