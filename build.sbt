@@ -54,6 +54,10 @@ val root = project
       "codegen",
       "calibanGenClient https://gitlab.com/api/graphql core/src/main/scala/io/pg/gitlab/graphql.scala --packageName io.pg.gitlab"
     ),
+    addCommandAlias(
+      "release",
+      "+publishSigned sonatypeBundleRelease"
+    ),
     skip in publish := true
   )
   .aggregate(core)
