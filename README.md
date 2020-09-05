@@ -17,3 +17,10 @@ For calling queries/mutations, consult [Caliban's documentation](https://ghostdo
 `sbt codegen` - generates sources
 
 `sbt githubWorkflowGenerate` - generates the gitlab actions
+
+## Publishing
+
+Until publishing from CI works:
+
+- `+publishSigned`
+- `sonatypeBundleRelease`
