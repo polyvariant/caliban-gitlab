@@ -56,7 +56,7 @@ val root = project
     ),
     addCommandAlias(
       "release",
-      "+publishSigned sonatypeBundleRelease"
+      "+publishSigned;sonatypeBundleRelease"
     ),
     skip in publish := true
   )

@@ -9,6 +9,10 @@ import caliban.client.Value._
 
 object graphql {
 
+  type AlertManagementHttpIntegrationID = String
+
+  type AwardableID = String
+
   type BoardID = String
 
   type CiPipelineID = String
@@ -17,11 +21,39 @@ object graphql {
 
   type ClustersAgentTokenID = String
 
+  type ClustersClusterID = String
+
+  type ContainerRepositoryID = String
+
   type DastScannerProfileID = String
 
   type DastSiteProfileID = String
 
+  type DastSiteTokenID = String
+
+  type DastSiteValidationID = String
+
+  type Date = String
+
+  type DesignManagementDesignAtVersionID = String
+
   type DesignManagementDesignID = String
+
+  type DesignManagementVersionID = String
+
+  type DiffNoteID = String
+
+  type DiscussionID = String
+
+  type EnvironmentID = String
+
+  type EpicID = String
+
+  type EpicTreeSortingID = String
+
+  type GitlabErrorTrackingDetailedErrorID = String
+
+  type GroupID = String
 
   type ID = String
 
@@ -35,15 +67,39 @@ object graphql {
 
   type LabelID = String
 
+  type ListID = String
+
+  type MergeRequestID = String
+
   type MilestoneID = String
 
+  type NamespaceID = String
+
+  type NoteID = String
+
+  type NoteableID = String
+
+  type ProjectID = String
+
+  type PrometheusServiceID = String
+
+  type SnippetID = String
+
+  type TerraformStateID = String
+
   type Time = String
+
+  type TodoID = String
+
+  type TodoableID = String
 
   type UntrustedRegexp = String
 
   type Upload = String
 
   type UserID = String
+
+  type VulnerabilityID = String
 
   sealed trait AccessLevelEnum extends scala.Product with scala.Serializable
 
@@ -89,6 +145,10 @@ object graphql {
     case object updated_asc extends AlertManagementAlertSort
     case object created_desc extends AlertManagementAlertSort
     case object created_asc extends AlertManagementAlertSort
+    case object UPDATED_DESC extends AlertManagementAlertSort
+    case object UPDATED_ASC extends AlertManagementAlertSort
+    case object CREATED_DESC extends AlertManagementAlertSort
+    case object CREATED_ASC extends AlertManagementAlertSort
     case object STARTED_AT_ASC extends AlertManagementAlertSort
     case object STARTED_AT_DESC extends AlertManagementAlertSort
     case object ENDED_AT_ASC extends AlertManagementAlertSort
@@ -109,6 +169,10 @@ object graphql {
       case StringValue("updated_asc")       => Right(AlertManagementAlertSort.updated_asc)
       case StringValue("created_desc")      => Right(AlertManagementAlertSort.created_desc)
       case StringValue("created_asc")       => Right(AlertManagementAlertSort.created_asc)
+      case StringValue("UPDATED_DESC")      => Right(AlertManagementAlertSort.UPDATED_DESC)
+      case StringValue("UPDATED_ASC")       => Right(AlertManagementAlertSort.UPDATED_ASC)
+      case StringValue("CREATED_DESC")      => Right(AlertManagementAlertSort.CREATED_DESC)
+      case StringValue("CREATED_ASC")       => Right(AlertManagementAlertSort.CREATED_ASC)
       case StringValue("STARTED_AT_ASC")    => Right(AlertManagementAlertSort.STARTED_AT_ASC)
       case StringValue("STARTED_AT_DESC")   => Right(AlertManagementAlertSort.STARTED_AT_DESC)
       case StringValue("ENDED_AT_ASC")      => Right(AlertManagementAlertSort.ENDED_AT_ASC)
@@ -134,6 +198,10 @@ object graphql {
           case AlertManagementAlertSort.updated_asc       => EnumValue("updated_asc")
           case AlertManagementAlertSort.created_desc      => EnumValue("created_desc")
           case AlertManagementAlertSort.created_asc       => EnumValue("created_asc")
+          case AlertManagementAlertSort.UPDATED_DESC      => EnumValue("UPDATED_DESC")
+          case AlertManagementAlertSort.UPDATED_ASC       => EnumValue("UPDATED_ASC")
+          case AlertManagementAlertSort.CREATED_DESC      => EnumValue("CREATED_DESC")
+          case AlertManagementAlertSort.CREATED_ASC       => EnumValue("CREATED_ASC")
           case AlertManagementAlertSort.STARTED_AT_ASC    => EnumValue("STARTED_AT_ASC")
           case AlertManagementAlertSort.STARTED_AT_DESC   => EnumValue("STARTED_AT_DESC")
           case AlertManagementAlertSort.ENDED_AT_ASC      => EnumValue("ENDED_AT_ASC")
@@ -151,6 +219,31 @@ object graphql {
         }
 
       override def typeName: String = "AlertManagementAlertSort"
+    }
+
+  }
+
+  sealed trait AlertManagementIntegrationType extends scala.Product with scala.Serializable
+
+  object AlertManagementIntegrationType {
+    case object PROMETHEUS extends AlertManagementIntegrationType
+    case object HTTP extends AlertManagementIntegrationType
+
+    implicit val decoder: ScalarDecoder[AlertManagementIntegrationType] = {
+      case StringValue("PROMETHEUS") => Right(AlertManagementIntegrationType.PROMETHEUS)
+      case StringValue("HTTP")       => Right(AlertManagementIntegrationType.HTTP)
+      case other                     => Left(DecodingError(s"Can't build AlertManagementIntegrationType from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[AlertManagementIntegrationType] = new ArgEncoder[AlertManagementIntegrationType] {
+
+      override def encode(value: AlertManagementIntegrationType): Value =
+        value match {
+          case AlertManagementIntegrationType.PROMETHEUS => EnumValue("PROMETHEUS")
+          case AlertManagementIntegrationType.HTTP       => EnumValue("HTTP")
+        }
+
+      override def typeName: String = "AlertManagementIntegrationType"
     }
 
   }
@@ -219,6 +312,31 @@ object graphql {
         }
 
       override def typeName: String = "AlertManagementStatus"
+    }
+
+  }
+
+  sealed trait AvailabilityEnum extends scala.Product with scala.Serializable
+
+  object AvailabilityEnum {
+    case object NOT_SET extends AvailabilityEnum
+    case object BUSY extends AvailabilityEnum
+
+    implicit val decoder: ScalarDecoder[AvailabilityEnum] = {
+      case StringValue("NOT_SET") => Right(AvailabilityEnum.NOT_SET)
+      case StringValue("BUSY")    => Right(AvailabilityEnum.BUSY)
+      case other                  => Left(DecodingError(s"Can't build AvailabilityEnum from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[AvailabilityEnum] = new ArgEncoder[AvailabilityEnum] {
+
+      override def encode(value: AvailabilityEnum): Value =
+        value match {
+          case AvailabilityEnum.NOT_SET => EnumValue("NOT_SET")
+          case AvailabilityEnum.BUSY    => EnumValue("BUSY")
+        }
+
+      override def typeName: String = "AvailabilityEnum"
     }
 
   }
@@ -412,13 +530,40 @@ object graphql {
 
   }
 
+  sealed trait ContainerRepositoryStatus extends scala.Product with scala.Serializable
+
+  object ContainerRepositoryStatus {
+    case object DELETE_SCHEDULED extends ContainerRepositoryStatus
+    case object DELETE_FAILED extends ContainerRepositoryStatus
+
+    implicit val decoder: ScalarDecoder[ContainerRepositoryStatus] = {
+      case StringValue("DELETE_SCHEDULED") => Right(ContainerRepositoryStatus.DELETE_SCHEDULED)
+      case StringValue("DELETE_FAILED")    => Right(ContainerRepositoryStatus.DELETE_FAILED)
+      case other                           => Left(DecodingError(s"Can't build ContainerRepositoryStatus from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[ContainerRepositoryStatus] = new ArgEncoder[ContainerRepositoryStatus] {
+
+      override def encode(value: ContainerRepositoryStatus): Value =
+        value match {
+          case ContainerRepositoryStatus.DELETE_SCHEDULED => EnumValue("DELETE_SCHEDULED")
+          case ContainerRepositoryStatus.DELETE_FAILED    => EnumValue("DELETE_FAILED")
+        }
+
+      override def typeName: String = "ContainerRepositoryStatus"
+    }
+
+  }
+
   sealed trait DastScanTypeEnum extends scala.Product with scala.Serializable
 
   object DastScanTypeEnum {
     case object PASSIVE extends DastScanTypeEnum
+    case object ACTIVE extends DastScanTypeEnum
 
     implicit val decoder: ScalarDecoder[DastScanTypeEnum] = {
       case StringValue("PASSIVE") => Right(DastScanTypeEnum.PASSIVE)
+      case StringValue("ACTIVE")  => Right(DastScanTypeEnum.ACTIVE)
       case other                  => Left(DecodingError(s"Can't build DastScanTypeEnum from input $other"))
     }
 
@@ -427,6 +572,7 @@ object graphql {
       override def encode(value: DastScanTypeEnum): Value =
         value match {
           case DastScanTypeEnum.PASSIVE => EnumValue("PASSIVE")
+          case DastScanTypeEnum.ACTIVE  => EnumValue("ACTIVE")
         }
 
       override def typeName: String = "DastScanTypeEnum"
@@ -461,6 +607,59 @@ object graphql {
         }
 
       override def typeName: String = "DastSiteProfileValidationStatusEnum"
+    }
+
+  }
+
+  sealed trait DastSiteValidationStrategyEnum extends scala.Product with scala.Serializable
+
+  object DastSiteValidationStrategyEnum {
+    case object TEXT_FILE extends DastSiteValidationStrategyEnum
+    case object HEADER extends DastSiteValidationStrategyEnum
+
+    implicit val decoder: ScalarDecoder[DastSiteValidationStrategyEnum] = {
+      case StringValue("TEXT_FILE") => Right(DastSiteValidationStrategyEnum.TEXT_FILE)
+      case StringValue("HEADER")    => Right(DastSiteValidationStrategyEnum.HEADER)
+      case other                    => Left(DecodingError(s"Can't build DastSiteValidationStrategyEnum from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[DastSiteValidationStrategyEnum] = new ArgEncoder[DastSiteValidationStrategyEnum] {
+
+      override def encode(value: DastSiteValidationStrategyEnum): Value =
+        value match {
+          case DastSiteValidationStrategyEnum.TEXT_FILE => EnumValue("TEXT_FILE")
+          case DastSiteValidationStrategyEnum.HEADER    => EnumValue("HEADER")
+        }
+
+      override def typeName: String = "DastSiteValidationStrategyEnum"
+    }
+
+  }
+
+  sealed trait DesignCollectionCopyState extends scala.Product with scala.Serializable
+
+  object DesignCollectionCopyState {
+    case object READY extends DesignCollectionCopyState
+    case object IN_PROGRESS extends DesignCollectionCopyState
+    case object ERROR extends DesignCollectionCopyState
+
+    implicit val decoder: ScalarDecoder[DesignCollectionCopyState] = {
+      case StringValue("READY")       => Right(DesignCollectionCopyState.READY)
+      case StringValue("IN_PROGRESS") => Right(DesignCollectionCopyState.IN_PROGRESS)
+      case StringValue("ERROR")       => Right(DesignCollectionCopyState.ERROR)
+      case other                      => Left(DecodingError(s"Can't build DesignCollectionCopyState from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[DesignCollectionCopyState] = new ArgEncoder[DesignCollectionCopyState] {
+
+      override def encode(value: DesignCollectionCopyState): Value =
+        value match {
+          case DesignCollectionCopyState.READY       => EnumValue("READY")
+          case DesignCollectionCopyState.IN_PROGRESS => EnumValue("IN_PROGRESS")
+          case DesignCollectionCopyState.ERROR       => EnumValue("ERROR")
+        }
+
+      override def typeName: String = "DesignCollectionCopyState"
     }
 
   }
@@ -686,6 +885,40 @@ object graphql {
 
   }
 
+  sealed trait IssuableSeverity extends scala.Product with scala.Serializable
+
+  object IssuableSeverity {
+    case object UNKNOWN extends IssuableSeverity
+    case object LOW extends IssuableSeverity
+    case object MEDIUM extends IssuableSeverity
+    case object HIGH extends IssuableSeverity
+    case object CRITICAL extends IssuableSeverity
+
+    implicit val decoder: ScalarDecoder[IssuableSeverity] = {
+      case StringValue("UNKNOWN")  => Right(IssuableSeverity.UNKNOWN)
+      case StringValue("LOW")      => Right(IssuableSeverity.LOW)
+      case StringValue("MEDIUM")   => Right(IssuableSeverity.MEDIUM)
+      case StringValue("HIGH")     => Right(IssuableSeverity.HIGH)
+      case StringValue("CRITICAL") => Right(IssuableSeverity.CRITICAL)
+      case other                   => Left(DecodingError(s"Can't build IssuableSeverity from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[IssuableSeverity] = new ArgEncoder[IssuableSeverity] {
+
+      override def encode(value: IssuableSeverity): Value =
+        value match {
+          case IssuableSeverity.UNKNOWN  => EnumValue("UNKNOWN")
+          case IssuableSeverity.LOW      => EnumValue("LOW")
+          case IssuableSeverity.MEDIUM   => EnumValue("MEDIUM")
+          case IssuableSeverity.HIGH     => EnumValue("HIGH")
+          case IssuableSeverity.CRITICAL => EnumValue("CRITICAL")
+        }
+
+      override def typeName: String = "IssuableSeverity"
+    }
+
+  }
+
   sealed trait IssuableState extends scala.Product with scala.Serializable
 
   object IssuableState {
@@ -724,6 +957,10 @@ object graphql {
     case object updated_asc extends IssueSort
     case object created_desc extends IssueSort
     case object created_asc extends IssueSort
+    case object UPDATED_DESC extends IssueSort
+    case object UPDATED_ASC extends IssueSort
+    case object CREATED_DESC extends IssueSort
+    case object CREATED_ASC extends IssueSort
     case object PRIORITY_ASC extends IssueSort
     case object PRIORITY_DESC extends IssueSort
     case object LABEL_PRIORITY_ASC extends IssueSort
@@ -733,14 +970,24 @@ object graphql {
     case object DUE_DATE_ASC extends IssueSort
     case object DUE_DATE_DESC extends IssueSort
     case object RELATIVE_POSITION_ASC extends IssueSort
+    case object SEVERITY_ASC extends IssueSort
+    case object SEVERITY_DESC extends IssueSort
     case object WEIGHT_ASC extends IssueSort
     case object WEIGHT_DESC extends IssueSort
+    case object PUBLISHED_ASC extends IssueSort
+    case object PUBLISHED_DESC extends IssueSort
+    case object SLA_DUE_AT_ASC extends IssueSort
+    case object SLA_DUE_AT_DESC extends IssueSort
 
     implicit val decoder: ScalarDecoder[IssueSort] = {
       case StringValue("updated_desc")          => Right(IssueSort.updated_desc)
       case StringValue("updated_asc")           => Right(IssueSort.updated_asc)
       case StringValue("created_desc")          => Right(IssueSort.created_desc)
       case StringValue("created_asc")           => Right(IssueSort.created_asc)
+      case StringValue("UPDATED_DESC")          => Right(IssueSort.UPDATED_DESC)
+      case StringValue("UPDATED_ASC")           => Right(IssueSort.UPDATED_ASC)
+      case StringValue("CREATED_DESC")          => Right(IssueSort.CREATED_DESC)
+      case StringValue("CREATED_ASC")           => Right(IssueSort.CREATED_ASC)
       case StringValue("PRIORITY_ASC")          => Right(IssueSort.PRIORITY_ASC)
       case StringValue("PRIORITY_DESC")         => Right(IssueSort.PRIORITY_DESC)
       case StringValue("LABEL_PRIORITY_ASC")    => Right(IssueSort.LABEL_PRIORITY_ASC)
@@ -750,8 +997,14 @@ object graphql {
       case StringValue("DUE_DATE_ASC")          => Right(IssueSort.DUE_DATE_ASC)
       case StringValue("DUE_DATE_DESC")         => Right(IssueSort.DUE_DATE_DESC)
       case StringValue("RELATIVE_POSITION_ASC") => Right(IssueSort.RELATIVE_POSITION_ASC)
+      case StringValue("SEVERITY_ASC")          => Right(IssueSort.SEVERITY_ASC)
+      case StringValue("SEVERITY_DESC")         => Right(IssueSort.SEVERITY_DESC)
       case StringValue("WEIGHT_ASC")            => Right(IssueSort.WEIGHT_ASC)
       case StringValue("WEIGHT_DESC")           => Right(IssueSort.WEIGHT_DESC)
+      case StringValue("PUBLISHED_ASC")         => Right(IssueSort.PUBLISHED_ASC)
+      case StringValue("PUBLISHED_DESC")        => Right(IssueSort.PUBLISHED_DESC)
+      case StringValue("SLA_DUE_AT_ASC")        => Right(IssueSort.SLA_DUE_AT_ASC)
+      case StringValue("SLA_DUE_AT_DESC")       => Right(IssueSort.SLA_DUE_AT_DESC)
       case other                                => Left(DecodingError(s"Can't build IssueSort from input $other"))
     }
 
@@ -763,6 +1016,10 @@ object graphql {
           case IssueSort.updated_asc           => EnumValue("updated_asc")
           case IssueSort.created_desc          => EnumValue("created_desc")
           case IssueSort.created_asc           => EnumValue("created_asc")
+          case IssueSort.UPDATED_DESC          => EnumValue("UPDATED_DESC")
+          case IssueSort.UPDATED_ASC           => EnumValue("UPDATED_ASC")
+          case IssueSort.CREATED_DESC          => EnumValue("CREATED_DESC")
+          case IssueSort.CREATED_ASC           => EnumValue("CREATED_ASC")
           case IssueSort.PRIORITY_ASC          => EnumValue("PRIORITY_ASC")
           case IssueSort.PRIORITY_DESC         => EnumValue("PRIORITY_DESC")
           case IssueSort.LABEL_PRIORITY_ASC    => EnumValue("LABEL_PRIORITY_ASC")
@@ -772,8 +1029,14 @@ object graphql {
           case IssueSort.DUE_DATE_ASC          => EnumValue("DUE_DATE_ASC")
           case IssueSort.DUE_DATE_DESC         => EnumValue("DUE_DATE_DESC")
           case IssueSort.RELATIVE_POSITION_ASC => EnumValue("RELATIVE_POSITION_ASC")
+          case IssueSort.SEVERITY_ASC          => EnumValue("SEVERITY_ASC")
+          case IssueSort.SEVERITY_DESC         => EnumValue("SEVERITY_DESC")
           case IssueSort.WEIGHT_ASC            => EnumValue("WEIGHT_ASC")
           case IssueSort.WEIGHT_DESC           => EnumValue("WEIGHT_DESC")
+          case IssueSort.PUBLISHED_ASC         => EnumValue("PUBLISHED_ASC")
+          case IssueSort.PUBLISHED_DESC        => EnumValue("PUBLISHED_DESC")
+          case IssueSort.SLA_DUE_AT_ASC        => EnumValue("SLA_DUE_AT_ASC")
+          case IssueSort.SLA_DUE_AT_DESC       => EnumValue("SLA_DUE_AT_DESC")
         }
 
       override def typeName: String = "IssueSort"
@@ -808,6 +1071,31 @@ object graphql {
         }
 
       override def typeName: String = "IssueState"
+    }
+
+  }
+
+  sealed trait IssueStateEvent extends scala.Product with scala.Serializable
+
+  object IssueStateEvent {
+    case object REOPEN extends IssueStateEvent
+    case object CLOSE extends IssueStateEvent
+
+    implicit val decoder: ScalarDecoder[IssueStateEvent] = {
+      case StringValue("REOPEN") => Right(IssueStateEvent.REOPEN)
+      case StringValue("CLOSE")  => Right(IssueStateEvent.CLOSE)
+      case other                 => Left(DecodingError(s"Can't build IssueStateEvent from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[IssueStateEvent] = new ArgEncoder[IssueStateEvent] {
+
+      override def encode(value: IssueStateEvent): Value =
+        value match {
+          case IssueStateEvent.REOPEN => EnumValue("REOPEN")
+          case IssueStateEvent.CLOSE  => EnumValue("CLOSE")
+        }
+
+      override def typeName: String = "IssueStateEvent"
     }
 
   }
@@ -902,6 +1190,55 @@ object graphql {
 
   }
 
+  sealed trait MeasurementIdentifier extends scala.Product with scala.Serializable
+
+  object MeasurementIdentifier {
+    case object PROJECTS extends MeasurementIdentifier
+    case object USERS extends MeasurementIdentifier
+    case object ISSUES extends MeasurementIdentifier
+    case object MERGE_REQUESTS extends MeasurementIdentifier
+    case object GROUPS extends MeasurementIdentifier
+    case object PIPELINES extends MeasurementIdentifier
+    case object PIPELINES_SUCCEEDED extends MeasurementIdentifier
+    case object PIPELINES_FAILED extends MeasurementIdentifier
+    case object PIPELINES_CANCELED extends MeasurementIdentifier
+    case object PIPELINES_SKIPPED extends MeasurementIdentifier
+
+    implicit val decoder: ScalarDecoder[MeasurementIdentifier] = {
+      case StringValue("PROJECTS")            => Right(MeasurementIdentifier.PROJECTS)
+      case StringValue("USERS")               => Right(MeasurementIdentifier.USERS)
+      case StringValue("ISSUES")              => Right(MeasurementIdentifier.ISSUES)
+      case StringValue("MERGE_REQUESTS")      => Right(MeasurementIdentifier.MERGE_REQUESTS)
+      case StringValue("GROUPS")              => Right(MeasurementIdentifier.GROUPS)
+      case StringValue("PIPELINES")           => Right(MeasurementIdentifier.PIPELINES)
+      case StringValue("PIPELINES_SUCCEEDED") => Right(MeasurementIdentifier.PIPELINES_SUCCEEDED)
+      case StringValue("PIPELINES_FAILED")    => Right(MeasurementIdentifier.PIPELINES_FAILED)
+      case StringValue("PIPELINES_CANCELED")  => Right(MeasurementIdentifier.PIPELINES_CANCELED)
+      case StringValue("PIPELINES_SKIPPED")   => Right(MeasurementIdentifier.PIPELINES_SKIPPED)
+      case other                              => Left(DecodingError(s"Can't build MeasurementIdentifier from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[MeasurementIdentifier] = new ArgEncoder[MeasurementIdentifier] {
+
+      override def encode(value: MeasurementIdentifier): Value =
+        value match {
+          case MeasurementIdentifier.PROJECTS            => EnumValue("PROJECTS")
+          case MeasurementIdentifier.USERS               => EnumValue("USERS")
+          case MeasurementIdentifier.ISSUES              => EnumValue("ISSUES")
+          case MeasurementIdentifier.MERGE_REQUESTS      => EnumValue("MERGE_REQUESTS")
+          case MeasurementIdentifier.GROUPS              => EnumValue("GROUPS")
+          case MeasurementIdentifier.PIPELINES           => EnumValue("PIPELINES")
+          case MeasurementIdentifier.PIPELINES_SUCCEEDED => EnumValue("PIPELINES_SUCCEEDED")
+          case MeasurementIdentifier.PIPELINES_FAILED    => EnumValue("PIPELINES_FAILED")
+          case MeasurementIdentifier.PIPELINES_CANCELED  => EnumValue("PIPELINES_CANCELED")
+          case MeasurementIdentifier.PIPELINES_SKIPPED   => EnumValue("PIPELINES_SKIPPED")
+        }
+
+      override def typeName: String = "MeasurementIdentifier"
+    }
+
+  }
+
   sealed trait MergeRequestSort extends scala.Product with scala.Serializable
 
   object MergeRequestSort {
@@ -909,6 +1246,10 @@ object graphql {
     case object updated_asc extends MergeRequestSort
     case object created_desc extends MergeRequestSort
     case object created_asc extends MergeRequestSort
+    case object UPDATED_DESC extends MergeRequestSort
+    case object UPDATED_ASC extends MergeRequestSort
+    case object CREATED_DESC extends MergeRequestSort
+    case object CREATED_ASC extends MergeRequestSort
     case object PRIORITY_ASC extends MergeRequestSort
     case object PRIORITY_DESC extends MergeRequestSort
     case object LABEL_PRIORITY_ASC extends MergeRequestSort
@@ -923,6 +1264,10 @@ object graphql {
       case StringValue("updated_asc")         => Right(MergeRequestSort.updated_asc)
       case StringValue("created_desc")        => Right(MergeRequestSort.created_desc)
       case StringValue("created_asc")         => Right(MergeRequestSort.created_asc)
+      case StringValue("UPDATED_DESC")        => Right(MergeRequestSort.UPDATED_DESC)
+      case StringValue("UPDATED_ASC")         => Right(MergeRequestSort.UPDATED_ASC)
+      case StringValue("CREATED_DESC")        => Right(MergeRequestSort.CREATED_DESC)
+      case StringValue("CREATED_ASC")         => Right(MergeRequestSort.CREATED_ASC)
       case StringValue("PRIORITY_ASC")        => Right(MergeRequestSort.PRIORITY_ASC)
       case StringValue("PRIORITY_DESC")       => Right(MergeRequestSort.PRIORITY_DESC)
       case StringValue("LABEL_PRIORITY_ASC")  => Right(MergeRequestSort.LABEL_PRIORITY_ASC)
@@ -942,6 +1287,10 @@ object graphql {
           case MergeRequestSort.updated_asc         => EnumValue("updated_asc")
           case MergeRequestSort.created_desc        => EnumValue("created_desc")
           case MergeRequestSort.created_asc         => EnumValue("created_asc")
+          case MergeRequestSort.UPDATED_DESC        => EnumValue("UPDATED_DESC")
+          case MergeRequestSort.UPDATED_ASC         => EnumValue("UPDATED_ASC")
+          case MergeRequestSort.CREATED_DESC        => EnumValue("CREATED_DESC")
+          case MergeRequestSort.CREATED_ASC         => EnumValue("CREATED_ASC")
           case MergeRequestSort.PRIORITY_ASC        => EnumValue("PRIORITY_ASC")
           case MergeRequestSort.PRIORITY_DESC       => EnumValue("PRIORITY_DESC")
           case MergeRequestSort.LABEL_PRIORITY_ASC  => EnumValue("LABEL_PRIORITY_ASC")
@@ -1069,6 +1418,31 @@ object graphql {
 
   }
 
+  sealed trait NamespaceProjectSort extends scala.Product with scala.Serializable
+
+  object NamespaceProjectSort {
+    case object SIMILARITY extends NamespaceProjectSort
+    case object STORAGE extends NamespaceProjectSort
+
+    implicit val decoder: ScalarDecoder[NamespaceProjectSort] = {
+      case StringValue("SIMILARITY") => Right(NamespaceProjectSort.SIMILARITY)
+      case StringValue("STORAGE")    => Right(NamespaceProjectSort.STORAGE)
+      case other                     => Left(DecodingError(s"Can't build NamespaceProjectSort from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[NamespaceProjectSort] = new ArgEncoder[NamespaceProjectSort] {
+
+      override def encode(value: NamespaceProjectSort): Value =
+        value match {
+          case NamespaceProjectSort.SIMILARITY => EnumValue("SIMILARITY")
+          case NamespaceProjectSort.STORAGE    => EnumValue("STORAGE")
+        }
+
+      override def typeName: String = "NamespaceProjectSort"
+    }
+
+  }
+
   sealed trait PackageTypeEnum extends scala.Product with scala.Serializable
 
   object PackageTypeEnum {
@@ -1079,6 +1453,8 @@ object graphql {
     case object PYPI extends PackageTypeEnum
     case object COMPOSER extends PackageTypeEnum
     case object GENERIC extends PackageTypeEnum
+    case object GOLANG extends PackageTypeEnum
+    case object DEBIAN extends PackageTypeEnum
 
     implicit val decoder: ScalarDecoder[PackageTypeEnum] = {
       case StringValue("MAVEN")    => Right(PackageTypeEnum.MAVEN)
@@ -1088,6 +1464,8 @@ object graphql {
       case StringValue("PYPI")     => Right(PackageTypeEnum.PYPI)
       case StringValue("COMPOSER") => Right(PackageTypeEnum.COMPOSER)
       case StringValue("GENERIC")  => Right(PackageTypeEnum.GENERIC)
+      case StringValue("GOLANG")   => Right(PackageTypeEnum.GOLANG)
+      case StringValue("DEBIAN")   => Right(PackageTypeEnum.DEBIAN)
       case other                   => Left(DecodingError(s"Can't build PackageTypeEnum from input $other"))
     }
 
@@ -1102,6 +1480,8 @@ object graphql {
           case PackageTypeEnum.PYPI     => EnumValue("PYPI")
           case PackageTypeEnum.COMPOSER => EnumValue("COMPOSER")
           case PackageTypeEnum.GENERIC  => EnumValue("GENERIC")
+          case PackageTypeEnum.GOLANG   => EnumValue("GOLANG")
+          case PackageTypeEnum.DEBIAN   => EnumValue("DEBIAN")
         }
 
       override def typeName: String = "PackageTypeEnum"
@@ -1204,36 +1584,33 @@ object graphql {
 
   }
 
-  sealed trait ProjectSettingEnum extends scala.Product with scala.Serializable
+  sealed trait RegistryState extends scala.Product with scala.Serializable
 
-  object ProjectSettingEnum {
-    case object gdpr extends ProjectSettingEnum
-    case object hipaa extends ProjectSettingEnum
-    case object pci_dss extends ProjectSettingEnum
-    case object soc_2 extends ProjectSettingEnum
-    case object sox extends ProjectSettingEnum
+  object RegistryState {
+    case object PENDING extends RegistryState
+    case object STARTED extends RegistryState
+    case object SYNCED extends RegistryState
+    case object FAILED extends RegistryState
 
-    implicit val decoder: ScalarDecoder[ProjectSettingEnum] = {
-      case StringValue("gdpr")    => Right(ProjectSettingEnum.gdpr)
-      case StringValue("hipaa")   => Right(ProjectSettingEnum.hipaa)
-      case StringValue("pci_dss") => Right(ProjectSettingEnum.pci_dss)
-      case StringValue("soc_2")   => Right(ProjectSettingEnum.soc_2)
-      case StringValue("sox")     => Right(ProjectSettingEnum.sox)
-      case other                  => Left(DecodingError(s"Can't build ProjectSettingEnum from input $other"))
+    implicit val decoder: ScalarDecoder[RegistryState] = {
+      case StringValue("PENDING") => Right(RegistryState.PENDING)
+      case StringValue("STARTED") => Right(RegistryState.STARTED)
+      case StringValue("SYNCED")  => Right(RegistryState.SYNCED)
+      case StringValue("FAILED")  => Right(RegistryState.FAILED)
+      case other                  => Left(DecodingError(s"Can't build RegistryState from input $other"))
     }
 
-    implicit val encoder: ArgEncoder[ProjectSettingEnum] = new ArgEncoder[ProjectSettingEnum] {
+    implicit val encoder: ArgEncoder[RegistryState] = new ArgEncoder[RegistryState] {
 
-      override def encode(value: ProjectSettingEnum): Value =
+      override def encode(value: RegistryState): Value =
         value match {
-          case ProjectSettingEnum.gdpr    => EnumValue("gdpr")
-          case ProjectSettingEnum.hipaa   => EnumValue("hipaa")
-          case ProjectSettingEnum.pci_dss => EnumValue("pci_dss")
-          case ProjectSettingEnum.soc_2   => EnumValue("soc_2")
-          case ProjectSettingEnum.sox     => EnumValue("sox")
+          case RegistryState.PENDING => EnumValue("PENDING")
+          case RegistryState.STARTED => EnumValue("STARTED")
+          case RegistryState.SYNCED  => EnumValue("SYNCED")
+          case RegistryState.FAILED  => EnumValue("FAILED")
         }
 
-      override def typeName: String = "ProjectSettingEnum"
+      override def typeName: String = "RegistryState"
     }
 
   }
@@ -1265,6 +1642,37 @@ object graphql {
         }
 
       override def typeName: String = "ReleaseAssetLinkType"
+    }
+
+  }
+
+  sealed trait ReleaseSort extends scala.Product with scala.Serializable
+
+  object ReleaseSort {
+    case object CREATED_DESC extends ReleaseSort
+    case object CREATED_ASC extends ReleaseSort
+    case object RELEASED_AT_DESC extends ReleaseSort
+    case object RELEASED_AT_ASC extends ReleaseSort
+
+    implicit val decoder: ScalarDecoder[ReleaseSort] = {
+      case StringValue("CREATED_DESC")     => Right(ReleaseSort.CREATED_DESC)
+      case StringValue("CREATED_ASC")      => Right(ReleaseSort.CREATED_ASC)
+      case StringValue("RELEASED_AT_DESC") => Right(ReleaseSort.RELEASED_AT_DESC)
+      case StringValue("RELEASED_AT_ASC")  => Right(ReleaseSort.RELEASED_AT_ASC)
+      case other                           => Left(DecodingError(s"Can't build ReleaseSort from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[ReleaseSort] = new ArgEncoder[ReleaseSort] {
+
+      override def encode(value: ReleaseSort): Value =
+        value match {
+          case ReleaseSort.CREATED_DESC     => EnumValue("CREATED_DESC")
+          case ReleaseSort.CREATED_ASC      => EnumValue("CREATED_ASC")
+          case ReleaseSort.RELEASED_AT_DESC => EnumValue("RELEASED_AT_DESC")
+          case ReleaseSort.RELEASED_AT_ASC  => EnumValue("RELEASED_AT_ASC")
+        }
+
+      override def typeName: String = "ReleaseSort"
     }
 
   }
@@ -1322,6 +1730,46 @@ object graphql {
 
   }
 
+  sealed trait SecurityReportTypeEnum extends scala.Product with scala.Serializable
+
+  object SecurityReportTypeEnum {
+    case object SAST extends SecurityReportTypeEnum
+    case object DAST extends SecurityReportTypeEnum
+    case object DEPENDENCY_SCANNING extends SecurityReportTypeEnum
+    case object CONTAINER_SCANNING extends SecurityReportTypeEnum
+    case object SECRET_DETECTION extends SecurityReportTypeEnum
+    case object COVERAGE_FUZZING extends SecurityReportTypeEnum
+    case object API_FUZZING extends SecurityReportTypeEnum
+
+    implicit val decoder: ScalarDecoder[SecurityReportTypeEnum] = {
+      case StringValue("SAST")                => Right(SecurityReportTypeEnum.SAST)
+      case StringValue("DAST")                => Right(SecurityReportTypeEnum.DAST)
+      case StringValue("DEPENDENCY_SCANNING") => Right(SecurityReportTypeEnum.DEPENDENCY_SCANNING)
+      case StringValue("CONTAINER_SCANNING")  => Right(SecurityReportTypeEnum.CONTAINER_SCANNING)
+      case StringValue("SECRET_DETECTION")    => Right(SecurityReportTypeEnum.SECRET_DETECTION)
+      case StringValue("COVERAGE_FUZZING")    => Right(SecurityReportTypeEnum.COVERAGE_FUZZING)
+      case StringValue("API_FUZZING")         => Right(SecurityReportTypeEnum.API_FUZZING)
+      case other                              => Left(DecodingError(s"Can't build SecurityReportTypeEnum from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[SecurityReportTypeEnum] = new ArgEncoder[SecurityReportTypeEnum] {
+
+      override def encode(value: SecurityReportTypeEnum): Value =
+        value match {
+          case SecurityReportTypeEnum.SAST                => EnumValue("SAST")
+          case SecurityReportTypeEnum.DAST                => EnumValue("DAST")
+          case SecurityReportTypeEnum.DEPENDENCY_SCANNING => EnumValue("DEPENDENCY_SCANNING")
+          case SecurityReportTypeEnum.CONTAINER_SCANNING  => EnumValue("CONTAINER_SCANNING")
+          case SecurityReportTypeEnum.SECRET_DETECTION    => EnumValue("SECRET_DETECTION")
+          case SecurityReportTypeEnum.COVERAGE_FUZZING    => EnumValue("COVERAGE_FUZZING")
+          case SecurityReportTypeEnum.API_FUZZING         => EnumValue("API_FUZZING")
+        }
+
+      override def typeName: String = "SecurityReportTypeEnum"
+    }
+
+  }
+
   sealed trait SecurityScannerType extends scala.Product with scala.Serializable
 
   object SecurityScannerType {
@@ -1331,6 +1779,7 @@ object graphql {
     case object CONTAINER_SCANNING extends SecurityScannerType
     case object SECRET_DETECTION extends SecurityScannerType
     case object COVERAGE_FUZZING extends SecurityScannerType
+    case object API_FUZZING extends SecurityScannerType
 
     implicit val decoder: ScalarDecoder[SecurityScannerType] = {
       case StringValue("SAST")                => Right(SecurityScannerType.SAST)
@@ -1339,6 +1788,7 @@ object graphql {
       case StringValue("CONTAINER_SCANNING")  => Right(SecurityScannerType.CONTAINER_SCANNING)
       case StringValue("SECRET_DETECTION")    => Right(SecurityScannerType.SECRET_DETECTION)
       case StringValue("COVERAGE_FUZZING")    => Right(SecurityScannerType.COVERAGE_FUZZING)
+      case StringValue("API_FUZZING")         => Right(SecurityScannerType.API_FUZZING)
       case other                              => Left(DecodingError(s"Can't build SecurityScannerType from input $other"))
     }
 
@@ -1352,6 +1802,7 @@ object graphql {
           case SecurityScannerType.CONTAINER_SCANNING  => EnumValue("CONTAINER_SCANNING")
           case SecurityScannerType.SECRET_DETECTION    => EnumValue("SECRET_DETECTION")
           case SecurityScannerType.COVERAGE_FUZZING    => EnumValue("COVERAGE_FUZZING")
+          case SecurityScannerType.API_FUZZING         => EnumValue("API_FUZZING")
         }
 
       override def typeName: String = "SecurityScannerType"
@@ -1405,6 +1856,7 @@ object graphql {
     case object DISCORD_SERVICE extends ServiceType
     case object DRONE_CI_SERVICE extends ServiceType
     case object EMAILS_ON_PUSH_SERVICE extends ServiceType
+    case object EWM_SERVICE extends ServiceType
     case object EXTERNAL_WIKI_SERVICE extends ServiceType
     case object FLOWDOCK_SERVICE extends ServiceType
     case object HANGOUTS_CHAT_SERVICE extends ServiceType
@@ -1442,6 +1894,7 @@ object graphql {
       case StringValue("DISCORD_SERVICE")                   => Right(ServiceType.DISCORD_SERVICE)
       case StringValue("DRONE_CI_SERVICE")                  => Right(ServiceType.DRONE_CI_SERVICE)
       case StringValue("EMAILS_ON_PUSH_SERVICE")            => Right(ServiceType.EMAILS_ON_PUSH_SERVICE)
+      case StringValue("EWM_SERVICE")                       => Right(ServiceType.EWM_SERVICE)
       case StringValue("EXTERNAL_WIKI_SERVICE")             => Right(ServiceType.EXTERNAL_WIKI_SERVICE)
       case StringValue("FLOWDOCK_SERVICE")                  => Right(ServiceType.FLOWDOCK_SERVICE)
       case StringValue("HANGOUTS_CHAT_SERVICE")             => Right(ServiceType.HANGOUTS_CHAT_SERVICE)
@@ -1484,6 +1937,7 @@ object graphql {
           case ServiceType.DISCORD_SERVICE                   => EnumValue("DISCORD_SERVICE")
           case ServiceType.DRONE_CI_SERVICE                  => EnumValue("DRONE_CI_SERVICE")
           case ServiceType.EMAILS_ON_PUSH_SERVICE            => EnumValue("EMAILS_ON_PUSH_SERVICE")
+          case ServiceType.EWM_SERVICE                       => EnumValue("EWM_SERVICE")
           case ServiceType.EXTERNAL_WIKI_SERVICE             => EnumValue("EXTERNAL_WIKI_SERVICE")
           case ServiceType.FLOWDOCK_SERVICE                  => EnumValue("FLOWDOCK_SERVICE")
           case ServiceType.HANGOUTS_CHAT_SERVICE             => EnumValue("HANGOUTS_CHAT_SERVICE")
@@ -1552,12 +2006,20 @@ object graphql {
     case object updated_asc extends Sort
     case object created_desc extends Sort
     case object created_asc extends Sort
+    case object UPDATED_DESC extends Sort
+    case object UPDATED_ASC extends Sort
+    case object CREATED_DESC extends Sort
+    case object CREATED_ASC extends Sort
 
     implicit val decoder: ScalarDecoder[Sort] = {
       case StringValue("updated_desc") => Right(Sort.updated_desc)
       case StringValue("updated_asc")  => Right(Sort.updated_asc)
       case StringValue("created_desc") => Right(Sort.created_desc)
       case StringValue("created_asc")  => Right(Sort.created_asc)
+      case StringValue("UPDATED_DESC") => Right(Sort.UPDATED_DESC)
+      case StringValue("UPDATED_ASC")  => Right(Sort.UPDATED_ASC)
+      case StringValue("CREATED_DESC") => Right(Sort.CREATED_DESC)
+      case StringValue("CREATED_ASC")  => Right(Sort.CREATED_ASC)
       case other                       => Left(DecodingError(s"Can't build Sort from input $other"))
     }
 
@@ -1569,6 +2031,10 @@ object graphql {
           case Sort.updated_asc  => EnumValue("updated_asc")
           case Sort.created_desc => EnumValue("created_desc")
           case Sort.created_asc  => EnumValue("created_asc")
+          case Sort.UPDATED_DESC => EnumValue("UPDATED_DESC")
+          case Sort.UPDATED_ASC  => EnumValue("UPDATED_ASC")
+          case Sort.CREATED_DESC => EnumValue("CREATED_DESC")
+          case Sort.CREATED_ASC  => EnumValue("CREATED_ASC")
         }
 
       override def typeName: String = "Sort"
@@ -1880,6 +2346,7 @@ object graphql {
     case object DAST extends VulnerabilityReportType
     case object SECRET_DETECTION extends VulnerabilityReportType
     case object COVERAGE_FUZZING extends VulnerabilityReportType
+    case object API_FUZZING extends VulnerabilityReportType
 
     implicit val decoder: ScalarDecoder[VulnerabilityReportType] = {
       case StringValue("SAST")                => Right(VulnerabilityReportType.SAST)
@@ -1888,6 +2355,7 @@ object graphql {
       case StringValue("DAST")                => Right(VulnerabilityReportType.DAST)
       case StringValue("SECRET_DETECTION")    => Right(VulnerabilityReportType.SECRET_DETECTION)
       case StringValue("COVERAGE_FUZZING")    => Right(VulnerabilityReportType.COVERAGE_FUZZING)
+      case StringValue("API_FUZZING")         => Right(VulnerabilityReportType.API_FUZZING)
       case other                              => Left(DecodingError(s"Can't build VulnerabilityReportType from input $other"))
     }
 
@@ -1901,6 +2369,7 @@ object graphql {
           case VulnerabilityReportType.DAST                => EnumValue("DAST")
           case VulnerabilityReportType.SECRET_DETECTION    => EnumValue("SECRET_DETECTION")
           case VulnerabilityReportType.COVERAGE_FUZZING    => EnumValue("COVERAGE_FUZZING")
+          case VulnerabilityReportType.API_FUZZING         => EnumValue("API_FUZZING")
         }
 
       override def typeName: String = "VulnerabilityReportType"
@@ -1945,19 +2414,68 @@ object graphql {
 
   }
 
+  sealed trait VulnerabilitySort extends scala.Product with scala.Serializable
+
+  object VulnerabilitySort {
+    case object severity_desc extends VulnerabilitySort
+    case object severity_asc extends VulnerabilitySort
+    case object title_desc extends VulnerabilitySort
+    case object title_asc extends VulnerabilitySort
+    case object detected_desc extends VulnerabilitySort
+    case object detected_asc extends VulnerabilitySort
+    case object report_type_desc extends VulnerabilitySort
+    case object report_type_asc extends VulnerabilitySort
+    case object state_desc extends VulnerabilitySort
+    case object state_asc extends VulnerabilitySort
+
+    implicit val decoder: ScalarDecoder[VulnerabilitySort] = {
+      case StringValue("severity_desc")    => Right(VulnerabilitySort.severity_desc)
+      case StringValue("severity_asc")     => Right(VulnerabilitySort.severity_asc)
+      case StringValue("title_desc")       => Right(VulnerabilitySort.title_desc)
+      case StringValue("title_asc")        => Right(VulnerabilitySort.title_asc)
+      case StringValue("detected_desc")    => Right(VulnerabilitySort.detected_desc)
+      case StringValue("detected_asc")     => Right(VulnerabilitySort.detected_asc)
+      case StringValue("report_type_desc") => Right(VulnerabilitySort.report_type_desc)
+      case StringValue("report_type_asc")  => Right(VulnerabilitySort.report_type_asc)
+      case StringValue("state_desc")       => Right(VulnerabilitySort.state_desc)
+      case StringValue("state_asc")        => Right(VulnerabilitySort.state_asc)
+      case other                           => Left(DecodingError(s"Can't build VulnerabilitySort from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[VulnerabilitySort] = new ArgEncoder[VulnerabilitySort] {
+
+      override def encode(value: VulnerabilitySort): Value =
+        value match {
+          case VulnerabilitySort.severity_desc    => EnumValue("severity_desc")
+          case VulnerabilitySort.severity_asc     => EnumValue("severity_asc")
+          case VulnerabilitySort.title_desc       => EnumValue("title_desc")
+          case VulnerabilitySort.title_asc        => EnumValue("title_asc")
+          case VulnerabilitySort.detected_desc    => EnumValue("detected_desc")
+          case VulnerabilitySort.detected_asc     => EnumValue("detected_asc")
+          case VulnerabilitySort.report_type_desc => EnumValue("report_type_desc")
+          case VulnerabilitySort.report_type_asc  => EnumValue("report_type_asc")
+          case VulnerabilitySort.state_desc       => EnumValue("state_desc")
+          case VulnerabilitySort.state_asc        => EnumValue("state_asc")
+        }
+
+      override def typeName: String = "VulnerabilitySort"
+    }
+
+  }
+
   sealed trait VulnerabilityState extends scala.Product with scala.Serializable
 
   object VulnerabilityState {
     case object DETECTED extends VulnerabilityState
-    case object DISMISSED extends VulnerabilityState
-    case object RESOLVED extends VulnerabilityState
     case object CONFIRMED extends VulnerabilityState
+    case object RESOLVED extends VulnerabilityState
+    case object DISMISSED extends VulnerabilityState
 
     implicit val decoder: ScalarDecoder[VulnerabilityState] = {
       case StringValue("DETECTED")  => Right(VulnerabilityState.DETECTED)
-      case StringValue("DISMISSED") => Right(VulnerabilityState.DISMISSED)
-      case StringValue("RESOLVED")  => Right(VulnerabilityState.RESOLVED)
       case StringValue("CONFIRMED") => Right(VulnerabilityState.CONFIRMED)
+      case StringValue("RESOLVED")  => Right(VulnerabilityState.RESOLVED)
+      case StringValue("DISMISSED") => Right(VulnerabilityState.DISMISSED)
       case other                    => Left(DecodingError(s"Can't build VulnerabilityState from input $other"))
     }
 
@@ -1966,9 +2484,9 @@ object graphql {
       override def encode(value: VulnerabilityState): Value =
         value match {
           case VulnerabilityState.DETECTED  => EnumValue("DETECTED")
-          case VulnerabilityState.DISMISSED => EnumValue("DISMISSED")
-          case VulnerabilityState.RESOLVED  => EnumValue("RESOLVED")
           case VulnerabilityState.CONFIRMED => EnumValue("CONFIRMED")
+          case VulnerabilityState.RESOLVED  => EnumValue("RESOLVED")
+          case VulnerabilityState.DISMISSED => EnumValue("DISMISSED")
         }
 
       override def typeName: String = "VulnerabilityState"
@@ -2120,6 +2638,12 @@ object graphql {
       * Timestamp the alert ended
       */
     def endedAt: SelectionBuilder[AlertManagementAlert, Option[Time]] = Field("endedAt", OptionOf(Scalar()))
+
+    /**
+      * Environment for the alert
+      */
+    def environment[A](innerSelection: SelectionBuilder[Environment, A]): SelectionBuilder[AlertManagementAlert, Option[A]] =
+      Field("environment", OptionOf(Obj(innerSelection)))
 
     /**
       * Number of events of this alert
@@ -2320,6 +2844,158 @@ object graphql {
       * Number of alerts with status TRIGGERED for the project
       */
     def triggered: SelectionBuilder[AlertManagementAlertStatusCountsType, Option[Int]] = Field("triggered", OptionOf(Scalar()))
+  }
+
+  type AlertManagementHttpIntegration
+
+  object AlertManagementHttpIntegration {
+
+    /**
+      * Whether the endpoint is currently accepting alerts
+      */
+    def active: SelectionBuilder[AlertManagementHttpIntegration, Option[Boolean]] = Field("active", OptionOf(Scalar()))
+
+    /**
+      * URL at which Prometheus metrics can be queried to populate the metrics dashboard
+      */
+    def apiUrl: SelectionBuilder[AlertManagementHttpIntegration, Option[String]] = Field("apiUrl", OptionOf(Scalar()))
+
+    /**
+      * ID of the integration
+      */
+    def id: SelectionBuilder[AlertManagementHttpIntegration, String] = Field("id", Scalar())
+
+    /**
+      * Name of the integration
+      */
+    def name: SelectionBuilder[AlertManagementHttpIntegration, Option[String]] = Field("name", OptionOf(Scalar()))
+
+    /**
+      * Token used to authenticate alert notification requests
+      */
+    def token: SelectionBuilder[AlertManagementHttpIntegration, Option[String]] = Field("token", OptionOf(Scalar()))
+
+    /**
+      * Type of integration
+      */
+    def `type`: SelectionBuilder[AlertManagementHttpIntegration, AlertManagementIntegrationType] = Field("type", Scalar())
+
+    /**
+      * Endpoint which accepts alert notifications
+      */
+    def url: SelectionBuilder[AlertManagementHttpIntegration, Option[String]] = Field("url", OptionOf(Scalar()))
+  }
+
+  type AlertManagementIntegrationConnection
+
+  object AlertManagementIntegrationConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[AlertManagementIntegrationEdge, A]
+    ): SelectionBuilder[AlertManagementIntegrationConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      onAlertManagementHttpIntegration: Option[SelectionBuilder[AlertManagementHttpIntegration, A]] = None,
+      onAlertManagementPrometheusIntegration: Option[SelectionBuilder[AlertManagementPrometheusIntegration, A]] = None
+    ): SelectionBuilder[AlertManagementIntegrationConnection, Option[List[Option[A]]]] =
+      Field(
+        "nodes",
+        OptionOf(
+          ListOf(
+            OptionOf(
+              ChoiceOf(
+                Map(
+                  "AlertManagementHttpIntegration" -> onAlertManagementHttpIntegration,
+                  "AlertManagementPrometheusIntegration" -> onAlertManagementPrometheusIntegration
+                ).collect { case (k, Some(v)) => k -> Obj(v) }
+              )
+            )
+          )
+        )
+      )
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[AlertManagementIntegrationConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type AlertManagementIntegrationEdge
+
+  object AlertManagementIntegrationEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[AlertManagementIntegrationEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](
+      onAlertManagementHttpIntegration: Option[SelectionBuilder[AlertManagementHttpIntegration, A]] = None,
+      onAlertManagementPrometheusIntegration: Option[SelectionBuilder[AlertManagementPrometheusIntegration, A]] = None
+    ): SelectionBuilder[AlertManagementIntegrationEdge, Option[A]] =
+      Field(
+        "node",
+        OptionOf(
+          ChoiceOf(
+            Map(
+              "AlertManagementHttpIntegration" -> onAlertManagementHttpIntegration,
+              "AlertManagementPrometheusIntegration" -> onAlertManagementPrometheusIntegration
+            ).collect { case (k, Some(v)) => k -> Obj(v) }
+          )
+        )
+      )
+
+  }
+
+  type AlertManagementPrometheusIntegration
+
+  object AlertManagementPrometheusIntegration {
+
+    /**
+      * Whether the endpoint is currently accepting alerts
+      */
+    def active: SelectionBuilder[AlertManagementPrometheusIntegration, Option[Boolean]] = Field("active", OptionOf(Scalar()))
+
+    /**
+      * URL at which Prometheus metrics can be queried to populate the metrics dashboard
+      */
+    def apiUrl: SelectionBuilder[AlertManagementPrometheusIntegration, Option[String]] = Field("apiUrl", OptionOf(Scalar()))
+
+    /**
+      * ID of the integration
+      */
+    def id: SelectionBuilder[AlertManagementPrometheusIntegration, String] = Field("id", Scalar())
+
+    /**
+      * Name of the integration
+      */
+    def name: SelectionBuilder[AlertManagementPrometheusIntegration, Option[String]] = Field("name", OptionOf(Scalar()))
+
+    /**
+      * Token used to authenticate alert notification requests
+      */
+    def token: SelectionBuilder[AlertManagementPrometheusIntegration, Option[String]] = Field("token", OptionOf(Scalar()))
+
+    /**
+      * Type of integration
+      */
+    def `type`: SelectionBuilder[AlertManagementPrometheusIntegration, AlertManagementIntegrationType] = Field("type", Scalar())
+
+    /**
+      * Endpoint which accepts alert notifications
+      */
+    def url: SelectionBuilder[AlertManagementPrometheusIntegration, Option[String]] = Field("url", OptionOf(Scalar()))
   }
 
   type AlertSetAssigneesPayload
@@ -2620,7 +3296,7 @@ object graphql {
       first: Option[Int] = None,
       last: Option[Int] = None
     )(
-      innerSelection: SelectionBuilder[EpicConnection, A]
+      innerSelection: SelectionBuilder[BoardEpicConnection, A]
     ): SelectionBuilder[Board, Option[A]] =
       Field(
         "epics",
@@ -2650,10 +3326,28 @@ object graphql {
     def id: SelectionBuilder[Board, String] = Field("id", Scalar())
 
     /**
+      * Labels of the board
+      */
+    def labels[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[LabelConnection, A]
+    ): SelectionBuilder[Board, Option[A]] =
+      Field(
+        "labels",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * Lists of the board
       */
     def lists[A](
-      id: Option[String] = None,
+      id: Option[ListID] = None,
+      issueFilters: Option[BoardIssueInput] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -2664,8 +3358,14 @@ object graphql {
       Field(
         "lists",
         OptionOf(Obj(innerSelection)),
-        arguments =
-          List(Argument("id", id), Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+        arguments = List(
+          Argument("id", id),
+          Argument("issueFilters", issueFilters),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
       )
 
     /**
@@ -2722,6 +3422,414 @@ object graphql {
       */
     def node[A](innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[BoardEdge, Option[A]] =
       Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type BoardEpic
+
+  object BoardEpic {
+
+    /**
+      * Author of the epic
+      */
+    def author[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[BoardEpic, A] = Field("author", Obj(innerSelection))
+
+    /**
+      * Children (sub-epics) of the epic
+      */
+    def children[A](
+      startDate: Option[Time] = None,
+      endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
+      iid: Option[String] = None,
+      iids: Option[List[String]] = None,
+      state: Option[EpicState] = None,
+      search: Option[String] = None,
+      sort: Option[EpicSort] = None,
+      authorUsername: Option[String] = None,
+      labelName: Option[List[String]] = None,
+      milestoneTitle: Option[String] = None,
+      iidStartsWith: Option[String] = None,
+      includeDescendantGroups: Option[Boolean] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[EpicConnection, A]
+    ): SelectionBuilder[BoardEpic, Option[A]] =
+      Field(
+        "children",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("startDate", startDate),
+          Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
+          Argument("iid", iid),
+          Argument("iids", iids),
+          Argument("state", state),
+          Argument("search", search),
+          Argument("sort", sort),
+          Argument("authorUsername", authorUsername),
+          Argument("labelName", labelName),
+          Argument("milestoneTitle", milestoneTitle),
+          Argument("iidStartsWith", iidStartsWith),
+          Argument("includeDescendantGroups", includeDescendantGroups),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
+      * Timestamp of when the epic was closed
+      */
+    def closedAt: SelectionBuilder[BoardEpic, Option[Time]] = Field("closedAt", OptionOf(Scalar()))
+
+    /**
+      * Indicates if the epic is confidential
+      */
+    def confidential: SelectionBuilder[BoardEpic, Option[Boolean]] = Field("confidential", OptionOf(Scalar()))
+
+    /**
+      * Timestamp of when the epic was created
+      */
+    def createdAt: SelectionBuilder[BoardEpic, Option[Time]] = Field("createdAt", OptionOf(Scalar()))
+
+    /**
+      * Todos for the current user
+      */
+    def currentUserTodos[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None,
+      state: Option[TodoStateEnum] = None
+    )(
+      innerSelection: SelectionBuilder[TodoConnection, A]
+    ): SelectionBuilder[BoardEpic, A] =
+      Field(
+        "currentUserTodos",
+        Obj(innerSelection),
+        arguments = List(
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last),
+          Argument("state", state)
+        )
+      )
+
+    /**
+      * Number of open and closed descendant epics and issues
+      */
+    def descendantCounts[A](innerSelection: SelectionBuilder[EpicDescendantCount, A]): SelectionBuilder[BoardEpic, Option[A]] =
+      Field("descendantCounts", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Total weight of open and closed issues in the epic and its descendants
+      */
+    def descendantWeightSum[A](innerSelection: SelectionBuilder[EpicDescendantWeights, A]): SelectionBuilder[BoardEpic, Option[A]] =
+      Field("descendantWeightSum", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Description of the epic
+      */
+    def description: SelectionBuilder[BoardEpic, Option[String]] = Field("description", OptionOf(Scalar()))
+
+    /**
+      * All discussions on this noteable
+      */
+    def discussions[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[DiscussionConnection, A]
+    ): SelectionBuilder[BoardEpic, A] =
+      Field(
+        "discussions",
+        Obj(innerSelection),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Number of downvotes the epic has received
+      */
+    def downvotes: SelectionBuilder[BoardEpic, Int] = Field("downvotes", Scalar())
+
+    /**
+      * Due date of the epic
+      */
+    def dueDate: SelectionBuilder[BoardEpic, Option[Time]] = Field("dueDate", OptionOf(Scalar()))
+
+    /**
+      * Fixed due date of the epic
+      */
+    def dueDateFixed: SelectionBuilder[BoardEpic, Option[Time]] = Field("dueDateFixed", OptionOf(Scalar()))
+
+    /**
+      * Inherited due date of the epic from milestones
+      */
+    def dueDateFromMilestones: SelectionBuilder[BoardEpic, Option[Time]] = Field("dueDateFromMilestones", OptionOf(Scalar()))
+
+    /**
+      * Indicates if the due date has been manually set
+      */
+    def dueDateIsFixed: SelectionBuilder[BoardEpic, Option[Boolean]] = Field("dueDateIsFixed", OptionOf(Scalar()))
+
+    /**
+      * Group to which the epic belongs
+      */
+    def group[A](innerSelection: SelectionBuilder[Group, A]): SelectionBuilder[BoardEpic, A] = Field("group", Obj(innerSelection))
+
+    /**
+      * Indicates if the epic has children
+      */
+    def hasChildren: SelectionBuilder[BoardEpic, Boolean] = Field("hasChildren", Scalar())
+
+    /**
+      * Indicates if the epic has direct issues
+      */
+    def hasIssues: SelectionBuilder[BoardEpic, Boolean] = Field("hasIssues", Scalar())
+
+    /**
+      * Indicates if the epic has a parent epic
+      */
+    def hasParent: SelectionBuilder[BoardEpic, Boolean] = Field("hasParent", Scalar())
+
+    /**
+      * Current health status of the epic
+      */
+    def healthStatus[A](innerSelection: SelectionBuilder[EpicHealthStatus, A]): SelectionBuilder[BoardEpic, Option[A]] =
+      Field("healthStatus", OptionOf(Obj(innerSelection)))
+
+    /**
+      * ID of the epic
+      */
+    def id: SelectionBuilder[BoardEpic, String] = Field("id", Scalar())
+
+    /**
+      * Internal ID of the epic
+      */
+    def iid: SelectionBuilder[BoardEpic, String] = Field("iid", Scalar())
+
+    /**
+      * A list of issues associated with the epic
+      */
+    def issues[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[EpicIssueConnection, A]
+    ): SelectionBuilder[BoardEpic, Option[A]] =
+      Field(
+        "issues",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Labels assigned to the epic
+      */
+    def labels[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[LabelConnection, A]
+    ): SelectionBuilder[BoardEpic, Option[A]] =
+      Field(
+        "labels",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * All notes on this noteable
+      */
+    def notes[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[NoteConnection, A]
+    ): SelectionBuilder[BoardEpic, A] =
+      Field(
+        "notes",
+        Obj(innerSelection),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Parent epic of the epic
+      */
+    def parent[A](innerSelection: SelectionBuilder[Epic, A]): SelectionBuilder[BoardEpic, Option[A]] =
+      Field("parent", OptionOf(Obj(innerSelection)))
+
+    /**
+      * List of participants for the epic
+      */
+    def participants[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[UserConnection, A]
+    ): SelectionBuilder[BoardEpic, Option[A]] =
+      Field(
+        "participants",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Internal reference of the epic. Returned in shortened format by default
+      */
+    def reference(full: Option[Boolean] = None): SelectionBuilder[BoardEpic, String] =
+      Field("reference", Scalar(), arguments = List(Argument("full", full)))
+
+    /**
+      * URI path of the epic-issue relationship
+      */
+    def relationPath: SelectionBuilder[BoardEpic, Option[String]] = Field("relationPath", OptionOf(Scalar()))
+
+    /**
+      * The relative position of the epic in the epic tree
+      */
+    def relativePosition: SelectionBuilder[BoardEpic, Option[Int]] = Field("relativePosition", OptionOf(Scalar()))
+
+    /**
+      * Start date of the epic
+      */
+    def startDate: SelectionBuilder[BoardEpic, Option[Time]] = Field("startDate", OptionOf(Scalar()))
+
+    /**
+      * Fixed start date of the epic
+      */
+    def startDateFixed: SelectionBuilder[BoardEpic, Option[Time]] = Field("startDateFixed", OptionOf(Scalar()))
+
+    /**
+      * Inherited start date of the epic from milestones
+      */
+    def startDateFromMilestones: SelectionBuilder[BoardEpic, Option[Time]] = Field("startDateFromMilestones", OptionOf(Scalar()))
+
+    /**
+      * Indicates if the start date has been manually set
+      */
+    def startDateIsFixed: SelectionBuilder[BoardEpic, Option[Boolean]] = Field("startDateIsFixed", OptionOf(Scalar()))
+
+    /**
+      * State of the epic
+      */
+    def state: SelectionBuilder[BoardEpic, EpicState] = Field("state", Scalar())
+
+    /**
+      * Indicates the currently logged in user is subscribed to the epic
+      */
+    def subscribed: SelectionBuilder[BoardEpic, Boolean] = Field("subscribed", Scalar())
+
+    /**
+      * Title of the epic
+      */
+    def title: SelectionBuilder[BoardEpic, Option[String]] = Field("title", OptionOf(Scalar()))
+
+    /**
+      * Timestamp of when the epic was updated
+      */
+    def updatedAt: SelectionBuilder[BoardEpic, Option[Time]] = Field("updatedAt", OptionOf(Scalar()))
+
+    /**
+      * Number of upvotes the epic has received
+      */
+    def upvotes: SelectionBuilder[BoardEpic, Int] = Field("upvotes", Scalar())
+
+    /**
+      * Number of user discussions in the epic
+      */
+    def userDiscussionsCount: SelectionBuilder[BoardEpic, Int] = Field("userDiscussionsCount", Scalar())
+
+    /**
+      * Number of user notes of the epic
+      */
+    def userNotesCount: SelectionBuilder[BoardEpic, Int] = Field("userNotesCount", Scalar())
+
+    /**
+      * Permissions for the current user on the resource
+      */
+    def userPermissions[A](innerSelection: SelectionBuilder[EpicPermissions, A]): SelectionBuilder[BoardEpic, A] =
+      Field("userPermissions", Obj(innerSelection))
+
+    /**
+      * User preferences for the epic on the issue board
+      */
+    def userPreferences[A](innerSelection: SelectionBuilder[BoardEpicUserPreferences, A]): SelectionBuilder[BoardEpic, Option[A]] =
+      Field("userPreferences", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Web path of the epic
+      */
+    def webPath: SelectionBuilder[BoardEpic, String] = Field("webPath", Scalar())
+
+    /**
+      * Web URL of the epic
+      */
+    def webUrl: SelectionBuilder[BoardEpic, String] = Field("webUrl", Scalar())
+  }
+
+  type BoardEpicConnection
+
+  object BoardEpicConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](innerSelection: SelectionBuilder[BoardEpicEdge, A]): SelectionBuilder[BoardEpicConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[BoardEpic, A]): SelectionBuilder[BoardEpicConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[BoardEpicConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type BoardEpicEdge
+
+  object BoardEpicEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[BoardEpicEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[BoardEpic, A]): SelectionBuilder[BoardEpicEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type BoardEpicUserPreferences
+
+  object BoardEpicUserPreferences {
+
+    /**
+      * Indicates epic should be displayed as collapsed
+      */
+    def collapsed: SelectionBuilder[BoardEpicUserPreferences, Boolean] = Field("collapsed", Scalar())
   }
 
   type BoardList
@@ -2954,6 +4062,12 @@ object graphql {
   object CiGroup {
 
     /**
+      * Detailed status of the group
+      */
+    def detailedStatus[A](innerSelection: SelectionBuilder[DetailedStatus, A]): SelectionBuilder[CiGroup, Option[A]] =
+      Field("detailedStatus", OptionOf(Obj(innerSelection)))
+
+    /**
       * Jobs in group
       */
     def jobs[A](
@@ -3025,6 +4139,12 @@ object graphql {
   object CiJob {
 
     /**
+      * Detailed status of the job
+      */
+    def detailedStatus[A](innerSelection: SelectionBuilder[DetailedStatus, A]): SelectionBuilder[CiJob, Option[A]] =
+      Field("detailedStatus", OptionOf(Obj(innerSelection)))
+
+    /**
       * Name of the job
       */
     def name: SelectionBuilder[CiJob, Option[String]] = Field("name", OptionOf(Scalar()))
@@ -3046,6 +4166,10 @@ object graphql {
         arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
 
+    /**
+      * Schedule for the build
+      */
+    def scheduledAt: SelectionBuilder[CiJob, Option[Time]] = Field("scheduledAt", OptionOf(Scalar()))
   }
 
   type CiJobConnection
@@ -3090,6 +4214,12 @@ object graphql {
   type CiStage
 
   object CiStage {
+
+    /**
+      * Detailed status of the stage
+      */
+    def detailedStatus[A](innerSelection: SelectionBuilder[DetailedStatus, A]): SelectionBuilder[CiStage, Option[A]] =
+      Field("detailedStatus", OptionOf(Obj(innerSelection)))
 
     /**
       * Group of jobs for the stage
@@ -3179,9 +4309,54 @@ object graphql {
       Field("project", OptionOf(Obj(innerSelection)))
 
     /**
+      * Tokens associated with the cluster agent
+      */
+    def tokens[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[ClusterAgentTokenConnection, A]
+    ): SelectionBuilder[ClusterAgent, Option[A]] =
+      Field(
+        "tokens",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * Timestamp the cluster agent was updated
       */
     def updatedAt: SelectionBuilder[ClusterAgent, Option[Time]] = Field("updatedAt", OptionOf(Scalar()))
+  }
+
+  type ClusterAgentConnection
+
+  object ClusterAgentConnection {
+
+    /**
+      * Total count of collection
+      */
+    def count: SelectionBuilder[ClusterAgentConnection, Int] = Field("count", Scalar())
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](innerSelection: SelectionBuilder[ClusterAgentEdge, A]): SelectionBuilder[ClusterAgentConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[ClusterAgent, A]): SelectionBuilder[ClusterAgentConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[ClusterAgentConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
   }
 
   type ClusterAgentDeletePayload
@@ -3197,6 +4372,22 @@ object graphql {
       * Errors encountered during execution of the mutation.
       */
     def errors: SelectionBuilder[ClusterAgentDeletePayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type ClusterAgentEdge
+
+  object ClusterAgentEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[ClusterAgentEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[ClusterAgent, A]): SelectionBuilder[ClusterAgentEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
   }
 
   type ClusterAgentToken
@@ -3218,6 +4409,38 @@ object graphql {
       * Global ID of the token
       */
     def id: SelectionBuilder[ClusterAgentToken, ClustersAgentTokenID] = Field("id", Scalar())
+  }
+
+  type ClusterAgentTokenConnection
+
+  object ClusterAgentTokenConnection {
+
+    /**
+      * Total count of collection
+      */
+    def count: SelectionBuilder[ClusterAgentTokenConnection, Int] = Field("count", Scalar())
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[ClusterAgentTokenEdge, A]
+    ): SelectionBuilder[ClusterAgentTokenConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[ClusterAgentToken, A]
+    ): SelectionBuilder[ClusterAgentTokenConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[ClusterAgentTokenConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
   }
 
   type ClusterAgentTokenCreatePayload
@@ -3259,6 +4482,110 @@ object graphql {
       * Errors encountered during execution of the mutation.
       */
     def errors: SelectionBuilder[ClusterAgentTokenDeletePayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type ClusterAgentTokenEdge
+
+  object ClusterAgentTokenEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[ClusterAgentTokenEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[ClusterAgentToken, A]): SelectionBuilder[ClusterAgentTokenEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type CodeCoverageActivity
+
+  object CodeCoverageActivity {
+
+    /**
+      * Average percentage of the different code coverage results available for the group.
+      */
+    def averageCoverage: SelectionBuilder[CodeCoverageActivity, Option[Double]] = Field("averageCoverage", OptionOf(Scalar()))
+
+    /**
+      * Number of different code coverage results available for the group.
+      */
+    def coverageCount: SelectionBuilder[CodeCoverageActivity, Option[Int]] = Field("coverageCount", OptionOf(Scalar()))
+
+    /**
+      * Date when the code coverage was created.
+      */
+    def date: SelectionBuilder[CodeCoverageActivity, Date] = Field("date", Scalar())
+
+    /**
+      * Number of projects with code coverage results for the group.
+      */
+    def projectCount: SelectionBuilder[CodeCoverageActivity, Option[Int]] = Field("projectCount", OptionOf(Scalar()))
+  }
+
+  type CodeCoverageActivityConnection
+
+  object CodeCoverageActivityConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[CodeCoverageActivityEdge, A]
+    ): SelectionBuilder[CodeCoverageActivityConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[CodeCoverageActivity, A]
+    ): SelectionBuilder[CodeCoverageActivityConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[CodeCoverageActivityConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type CodeCoverageActivityEdge
+
+  object CodeCoverageActivityEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[CodeCoverageActivityEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[CodeCoverageActivity, A]): SelectionBuilder[CodeCoverageActivityEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type CodeCoverageSummary
+
+  object CodeCoverageSummary {
+
+    /**
+      * Average percentage of the different code coverage results available for the project.
+      */
+    def averageCoverage: SelectionBuilder[CodeCoverageSummary, Option[Double]] = Field("averageCoverage", OptionOf(Scalar()))
+
+    /**
+      * Number of different code coverage results available.
+      */
+    def coverageCount: SelectionBuilder[CodeCoverageSummary, Option[Int]] = Field("coverageCount", OptionOf(Scalar()))
+
+    /**
+      * Latest date when the code coverage was created for the project.
+      */
+    def lastUpdatedOn: SelectionBuilder[CodeCoverageSummary, Option[Date]] = Field("lastUpdatedOn", OptionOf(Scalar()))
   }
 
   type Commit
@@ -3410,7 +4737,7 @@ object graphql {
     /**
       * Name of the compliance framework
       */
-    def name: SelectionBuilder[ComplianceFramework, ProjectSettingEnum] = Field("name", Scalar())
+    def name: SelectionBuilder[ComplianceFramework, String] = Field("name", Scalar())
   }
 
   type ComplianceFrameworkConnection
@@ -3471,9 +4798,14 @@ object graphql {
     def errors: SelectionBuilder[ConfigureSastPayload, List[String]] = Field("errors", ListOf(Scalar()))
 
     /**
-      * JSON containing the status of MR creation.
+      * Status of creating the commit for the supplied SAST CI configuration
       */
-    def result: SelectionBuilder[ConfigureSastPayload, Option[JSON]] = Field("result", OptionOf(Scalar()))
+    def status: SelectionBuilder[ConfigureSastPayload, String] = Field("status", Scalar())
+
+    /**
+      * Redirect path to use when the response is successful
+      */
+    def successPath: SelectionBuilder[ConfigureSastPayload, Option[String]] = Field("successPath", OptionOf(Scalar()))
   }
 
   type ContainerExpirationPolicy
@@ -3525,6 +4857,271 @@ object graphql {
       * Timestamp of when the container expiration policy was updated
       */
     def updatedAt: SelectionBuilder[ContainerExpirationPolicy, Time] = Field("updatedAt", Scalar())
+  }
+
+  type ContainerRepository
+
+  object ContainerRepository {
+
+    /**
+      * Can the current user delete the container repository.
+      */
+    def canDelete: SelectionBuilder[ContainerRepository, Boolean] = Field("canDelete", Scalar())
+
+    /**
+      * Timestamp when the container repository was created.
+      */
+    def createdAt: SelectionBuilder[ContainerRepository, Time] = Field("createdAt", Scalar())
+
+    /**
+      * Timestamp when the cleanup done by the expiration policy was started on the container repository.
+      */
+    def expirationPolicyStartedAt: SelectionBuilder[ContainerRepository, Option[Time]] =
+      Field("expirationPolicyStartedAt", OptionOf(Scalar()))
+
+    /**
+      * ID of the container repository.
+      */
+    def id: SelectionBuilder[ContainerRepository, String] = Field("id", Scalar())
+
+    /**
+      * URL of the container repository.
+      */
+    def location: SelectionBuilder[ContainerRepository, String] = Field("location", Scalar())
+
+    /**
+      * Name of the container repository.
+      */
+    def name: SelectionBuilder[ContainerRepository, String] = Field("name", Scalar())
+
+    /**
+      * Path of the container repository.
+      */
+    def path: SelectionBuilder[ContainerRepository, String] = Field("path", Scalar())
+
+    /**
+      * Status of the container repository.
+      */
+    def status: SelectionBuilder[ContainerRepository, Option[ContainerRepositoryStatus]] = Field("status", OptionOf(Scalar()))
+
+    /**
+      * Number of tags associated with this image.
+      */
+    def tagsCount: SelectionBuilder[ContainerRepository, Int] = Field("tagsCount", Scalar())
+
+    /**
+      * Timestamp when the container repository was updated.
+      */
+    def updatedAt: SelectionBuilder[ContainerRepository, Time] = Field("updatedAt", Scalar())
+  }
+
+  type ContainerRepositoryConnection
+
+  object ContainerRepositoryConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[ContainerRepositoryEdge, A]
+    ): SelectionBuilder[ContainerRepositoryConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[ContainerRepository, A]
+    ): SelectionBuilder[ContainerRepositoryConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[ContainerRepositoryConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type ContainerRepositoryDetails
+
+  object ContainerRepositoryDetails {
+
+    /**
+      * Can the current user delete the container repository.
+      */
+    def canDelete: SelectionBuilder[ContainerRepositoryDetails, Boolean] = Field("canDelete", Scalar())
+
+    /**
+      * Timestamp when the container repository was created.
+      */
+    def createdAt: SelectionBuilder[ContainerRepositoryDetails, Time] = Field("createdAt", Scalar())
+
+    /**
+      * Timestamp when the cleanup done by the expiration policy was started on the container repository.
+      */
+    def expirationPolicyStartedAt: SelectionBuilder[ContainerRepositoryDetails, Option[Time]] =
+      Field("expirationPolicyStartedAt", OptionOf(Scalar()))
+
+    /**
+      * ID of the container repository.
+      */
+    def id: SelectionBuilder[ContainerRepositoryDetails, String] = Field("id", Scalar())
+
+    /**
+      * URL of the container repository.
+      */
+    def location: SelectionBuilder[ContainerRepositoryDetails, String] = Field("location", Scalar())
+
+    /**
+      * Name of the container repository.
+      */
+    def name: SelectionBuilder[ContainerRepositoryDetails, String] = Field("name", Scalar())
+
+    /**
+      * Path of the container repository.
+      */
+    def path: SelectionBuilder[ContainerRepositoryDetails, String] = Field("path", Scalar())
+
+    /**
+      * Status of the container repository.
+      */
+    def status: SelectionBuilder[ContainerRepositoryDetails, Option[ContainerRepositoryStatus]] = Field("status", OptionOf(Scalar()))
+
+    /**
+      * Tags of the container repository
+      */
+    def tags[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[ContainerRepositoryTagConnection, A]
+    ): SelectionBuilder[ContainerRepositoryDetails, Option[A]] =
+      Field(
+        "tags",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Number of tags associated with this image.
+      */
+    def tagsCount: SelectionBuilder[ContainerRepositoryDetails, Int] = Field("tagsCount", Scalar())
+
+    /**
+      * Timestamp when the container repository was updated.
+      */
+    def updatedAt: SelectionBuilder[ContainerRepositoryDetails, Time] = Field("updatedAt", Scalar())
+  }
+
+  type ContainerRepositoryEdge
+
+  object ContainerRepositoryEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[ContainerRepositoryEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[ContainerRepository, A]): SelectionBuilder[ContainerRepositoryEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type ContainerRepositoryTag
+
+  object ContainerRepositoryTag {
+
+    /**
+      * Can the current user delete this tag.
+      */
+    def canDelete: SelectionBuilder[ContainerRepositoryTag, Boolean] = Field("canDelete", Scalar())
+
+    /**
+      * Timestamp when the tag was created.
+      */
+    def createdAt: SelectionBuilder[ContainerRepositoryTag, Time] = Field("createdAt", Scalar())
+
+    /**
+      * Digest of the tag.
+      */
+    def digest: SelectionBuilder[ContainerRepositoryTag, String] = Field("digest", Scalar())
+
+    /**
+      * URL of the tag.
+      */
+    def location: SelectionBuilder[ContainerRepositoryTag, String] = Field("location", Scalar())
+
+    /**
+      * Name of the tag.
+      */
+    def name: SelectionBuilder[ContainerRepositoryTag, String] = Field("name", Scalar())
+
+    /**
+      * Path of the tag.
+      */
+    def path: SelectionBuilder[ContainerRepositoryTag, String] = Field("path", Scalar())
+
+    /**
+      * Revision of the tag.
+      */
+    def revision: SelectionBuilder[ContainerRepositoryTag, String] = Field("revision", Scalar())
+
+    /**
+      * Short revision of the tag.
+      */
+    def shortRevision: SelectionBuilder[ContainerRepositoryTag, String] = Field("shortRevision", Scalar())
+
+    /**
+      * The size of the tag.
+      */
+    def totalSize: SelectionBuilder[ContainerRepositoryTag, Int] = Field("totalSize", Scalar())
+  }
+
+  type ContainerRepositoryTagConnection
+
+  object ContainerRepositoryTagConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[ContainerRepositoryTagEdge, A]
+    ): SelectionBuilder[ContainerRepositoryTagConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[ContainerRepositoryTag, A]
+    ): SelectionBuilder[ContainerRepositoryTagConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[ContainerRepositoryTagConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type ContainerRepositoryTagEdge
+
+  object ContainerRepositoryTagEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[ContainerRepositoryTagEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[ContainerRepositoryTag, A]): SelectionBuilder[ContainerRepositoryTagEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
   }
 
   type CreateAlertIssuePayload
@@ -3580,6 +5177,27 @@ object graphql {
       * Errors encountered during execution of the mutation.
       */
     def errors: SelectionBuilder[CreateAnnotationPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type CreateBoardPayload
+
+  object CreateBoardPayload {
+
+    /**
+      * The board after mutation.
+      */
+    def board[A](innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[CreateBoardPayload, Option[A]] =
+      Field("board", OptionOf(Obj(innerSelection)))
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[CreateBoardPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[CreateBoardPayload, List[String]] = Field("errors", ListOf(Scalar()))
   }
 
   type CreateBranchPayload
@@ -3687,6 +5305,27 @@ object graphql {
       Field("note", OptionOf(Obj(innerSelection)))
   }
 
+  type CreateIssuePayload
+
+  object CreateIssuePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[CreateIssuePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[CreateIssuePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The issue after mutation
+      */
+    def issue[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[CreateIssuePayload, Option[A]] =
+      Field("issue", OptionOf(Obj(innerSelection)))
+  }
+
   type CreateIterationPayload
 
   object CreateIterationPayload {
@@ -3744,7 +5383,7 @@ object graphql {
     def errors: SelectionBuilder[CreateRequirementPayload, List[String]] = Field("errors", ListOf(Scalar()))
 
     /**
-      * The requirement after mutation
+      * Requirement after mutation
       */
     def requirement[A](innerSelection: SelectionBuilder[Requirement, A]): SelectionBuilder[CreateRequirementPayload, Option[A]] =
       Field("requirement", OptionOf(Obj(innerSelection)))
@@ -3769,6 +5408,32 @@ object graphql {
       */
     def snippet[A](innerSelection: SelectionBuilder[Snippet, A]): SelectionBuilder[CreateSnippetPayload, Option[A]] =
       Field("snippet", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Indicates whether the operation returns a record detected as spam
+      */
+    def spam: SelectionBuilder[CreateSnippetPayload, Option[Boolean]] = Field("spam", OptionOf(Scalar()))
+  }
+
+  type CreateTestCasePayload
+
+  object CreateTestCasePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[CreateTestCasePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[CreateTestCasePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The test case created
+      */
+    def testCase[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[CreateTestCasePayload, Option[A]] =
+      Field("testCase", OptionOf(Obj(innerSelection)))
   }
 
   type DastOnDemandScanCreatePayload
@@ -3796,6 +5461,11 @@ object graphql {
   object DastScannerProfile {
 
     /**
+      * Relative web path to the edit page of a scanner profile
+      */
+    def editPath: SelectionBuilder[DastScannerProfile, Option[String]] = Field("editPath", OptionOf(Scalar()))
+
+    /**
       * ID of the DAST scanner profile
       */
     def globalId: SelectionBuilder[DastScannerProfile, DastScannerProfileID] = Field("globalId", Scalar())
@@ -3812,7 +5482,17 @@ object graphql {
     def profileName: SelectionBuilder[DastScannerProfile, Option[String]] = Field("profileName", OptionOf(Scalar()))
 
     /**
-      * The maximum number of seconds allowed for the spider to traverse the site
+      * Indicates the type of DAST scan that will run. Either a Passive Scan or an Active Scan.
+      */
+    def scanType: SelectionBuilder[DastScannerProfile, Option[DastScanTypeEnum]] = Field("scanType", OptionOf(Scalar()))
+
+    /**
+      * Indicates if debug messages should be included in DAST console output. True to include the debug messages.
+      */
+    def showDebugMessages: SelectionBuilder[DastScannerProfile, Boolean] = Field("showDebugMessages", Scalar())
+
+    /**
+      * The maximum number of minutes allowed for the spider to traverse the site
       */
     def spiderTimeout: SelectionBuilder[DastScannerProfile, Option[Int]] = Field("spiderTimeout", OptionOf(Scalar()))
 
@@ -3820,6 +5500,11 @@ object graphql {
       * The maximum number of seconds allowed for the site under test to respond to a request
       */
     def targetTimeout: SelectionBuilder[DastScannerProfile, Option[Int]] = Field("targetTimeout", OptionOf(Scalar()))
+
+    /**
+      * Indicates if the AJAX spider should be used to crawl the target site. True to run the AJAX spider in addition to the traditional spider, and false to run only the traditional spider.
+      */
+    def useAjaxSpider: SelectionBuilder[DastScannerProfile, Boolean] = Field("useAjaxSpider", Scalar())
   }
 
   type DastScannerProfileConnection
@@ -4071,6 +5756,78 @@ object graphql {
     def id: SelectionBuilder[DastSiteProfileUpdatePayload, Option[DastSiteProfileID]] = Field("id", OptionOf(Scalar()))
   }
 
+  type DastSiteTokenCreatePayload
+
+  object DastSiteTokenCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[DastSiteTokenCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[DastSiteTokenCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * ID of the site token.
+      */
+    def id: SelectionBuilder[DastSiteTokenCreatePayload, Option[DastSiteTokenID]] = Field("id", OptionOf(Scalar()))
+
+    /**
+      * The current validation status of the target.
+      */
+    def status: SelectionBuilder[DastSiteTokenCreatePayload, Option[DastSiteProfileValidationStatusEnum]] =
+      Field("status", OptionOf(Scalar()))
+
+    /**
+      * Token string.
+      */
+    def token: SelectionBuilder[DastSiteTokenCreatePayload, Option[String]] = Field("token", OptionOf(Scalar()))
+  }
+
+  type DastSiteValidation
+
+  object DastSiteValidation {
+
+    /**
+      * ID of the site validation
+      */
+    def id: SelectionBuilder[DastSiteValidation, DastSiteValidationID] = Field("id", Scalar())
+
+    /**
+      * The status of the validation
+      */
+    def status: SelectionBuilder[DastSiteValidation, DastSiteProfileValidationStatusEnum] = Field("status", Scalar())
+  }
+
+  type DastSiteValidationCreatePayload
+
+  object DastSiteValidationCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[DastSiteValidationCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[DastSiteValidationCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * ID of the site validation.
+      */
+    def id: SelectionBuilder[DastSiteValidationCreatePayload, Option[DastSiteValidationID]] = Field("id", OptionOf(Scalar()))
+
+    /**
+      * The current validation status.
+      */
+    def status: SelectionBuilder[DastSiteValidationCreatePayload, Option[DastSiteProfileValidationStatusEnum]] =
+      Field("status", OptionOf(Scalar()))
+  }
+
   type DeleteAnnotationPayload
 
   object DeleteAnnotationPayload {
@@ -4109,6 +5866,30 @@ object graphql {
   type Design
 
   object Design {
+
+    /**
+      * Todos for the current user
+      */
+    def currentUserTodos[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None,
+      state: Option[TodoStateEnum] = None
+    )(
+      innerSelection: SelectionBuilder[TodoConnection, A]
+    ): SelectionBuilder[Design, A] =
+      Field(
+        "currentUserTodos",
+        Obj(innerSelection),
+        arguments = List(
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last),
+          Argument("state", state)
+        )
+      )
 
     /**
       * The diff refs for this design
@@ -4199,7 +5980,7 @@ object graphql {
       */
     def versions[A](
       earlierOrEqualToSha: Option[String] = None,
-      earlierOrEqualToId: Option[String] = None,
+      earlierOrEqualToId: Option[DesignManagementVersionID] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -4227,7 +6008,7 @@ object graphql {
   object DesignAtVersion {
 
     /**
-      * The underlying design.
+      * The underlying design
       */
     def design[A](innerSelection: SelectionBuilder[Design, A]): SelectionBuilder[DesignAtVersion, A] = Field("design", Obj(innerSelection))
 
@@ -4338,10 +6119,15 @@ object graphql {
   object DesignCollection {
 
     /**
+      * Copy state of the design collection
+      */
+    def copyState: SelectionBuilder[DesignCollection, Option[DesignCollectionCopyState]] = Field("copyState", OptionOf(Scalar()))
+
+    /**
       * Find a specific design
       */
     def design[A](
-      id: Option[String] = None,
+      id: Option[DesignManagementDesignID] = None,
       filename: Option[String] = None
     )(
       innerSelection: SelectionBuilder[Design, A]
@@ -4352,7 +6138,7 @@ object graphql {
       * Find a design as of a version
       */
     def designAtVersion[A](
-      id: String
+      id: DesignManagementDesignAtVersionID
     )(
       innerSelection: SelectionBuilder[DesignAtVersion, A]
     ): SelectionBuilder[DesignCollection, Option[A]] =
@@ -4362,9 +6148,9 @@ object graphql {
       * All designs for the design collection
       */
     def designs[A](
-      ids: Option[List[String]] = None,
+      ids: Option[List[DesignManagementDesignID]] = None,
       filenames: Option[List[String]] = None,
-      atVersion: Option[String] = None,
+      atVersion: Option[DesignManagementVersionID] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -4402,7 +6188,7 @@ object graphql {
       */
     def version[A](
       sha: Option[String] = None,
-      id: Option[String] = None
+      id: Option[DesignManagementVersionID] = None
     )(
       innerSelection: SelectionBuilder[DesignVersion, A]
     ): SelectionBuilder[DesignCollection, Option[A]] =
@@ -4413,7 +6199,7 @@ object graphql {
       */
     def versions[A](
       earlierOrEqualToSha: Option[String] = None,
-      earlierOrEqualToId: Option[String] = None,
+      earlierOrEqualToId: Option[DesignManagementVersionID] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -4483,7 +6269,7 @@ object graphql {
       * Find a design as of a version
       */
     def designAtVersion[A](
-      id: String
+      id: DesignManagementDesignAtVersionID
     )(
       innerSelection: SelectionBuilder[DesignAtVersion, A]
     ): SelectionBuilder[DesignManagement, Option[A]] =
@@ -4492,8 +6278,12 @@ object graphql {
     /**
       * Find a version
       */
-    def version[A](id: String)(innerSelection: SelectionBuilder[DesignVersion, A]): SelectionBuilder[DesignManagement, Option[A]] =
-      Field("version", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id)))
+    def version[A](
+      id: DesignManagementVersionID
+    )(
+      innerSelection: SelectionBuilder[DesignVersion, A]
+    ): SelectionBuilder[DesignManagement, Option[A]] = Field("version", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id)))
+
   }
 
   type DesignManagementDeletePayload
@@ -4574,8 +6364,8 @@ object graphql {
       * A particular design as of this version, provided it is visible at this version
       */
     def designAtVersion[A](
-      id: Option[String] = None,
-      designId: Option[String] = None,
+      id: Option[DesignManagementDesignAtVersionID] = None,
+      designId: Option[DesignManagementDesignID] = None,
       filename: Option[String] = None
     )(
       innerSelection: SelectionBuilder[DesignAtVersion, A]
@@ -4607,7 +6397,7 @@ object graphql {
       * All designs that are visible at this version, as of this version
       */
     def designsAtVersion[A](
-      ids: Option[List[String]] = None,
+      ids: Option[List[DesignManagementDesignID]] = None,
       filenames: Option[List[String]] = None,
       after: Option[String] = None,
       before: Option[String] = None,
@@ -4680,6 +6470,71 @@ object graphql {
       Field("node", OptionOf(Obj(innerSelection)))
   }
 
+  type DestroyBoardListPayload
+
+  object DestroyBoardListPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[DestroyBoardListPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[DestroyBoardListPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The list after mutation.
+      */
+    def list[A](innerSelection: SelectionBuilder[BoardList, A]): SelectionBuilder[DestroyBoardListPayload, Option[A]] =
+      Field("list", OptionOf(Obj(innerSelection)))
+  }
+
+  type DestroyBoardPayload
+
+  object DestroyBoardPayload {
+
+    /**
+      * The board after mutation
+      */
+    def board[A](innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[DestroyBoardPayload, Option[A]] =
+      Field("board", OptionOf(Obj(innerSelection)))
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[DestroyBoardPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[DestroyBoardPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type DestroyContainerRepositoryPayload
+
+  object DestroyContainerRepositoryPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[DestroyContainerRepositoryPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * The container repository policy after scheduling the deletion.
+      */
+    def containerRepository[A](
+      innerSelection: SelectionBuilder[ContainerRepository, A]
+    ): SelectionBuilder[DestroyContainerRepositoryPayload, A] = Field("containerRepository", Obj(innerSelection))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[DestroyContainerRepositoryPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
   type DestroyNotePayload
 
   object DestroyNotePayload {
@@ -4727,44 +6582,125 @@ object graphql {
   object DetailedStatus {
 
     /**
-      * Path of the details for the pipeline status
+      * Action information for the status. This includes method, button title, icon, path, and title
       */
-    def detailsPath: SelectionBuilder[DetailedStatus, String] = Field("detailsPath", Scalar())
+    def action[A](innerSelection: SelectionBuilder[StatusAction, A]): SelectionBuilder[DetailedStatus, Option[A]] =
+      Field("action", OptionOf(Obj(innerSelection)))
 
     /**
-      * Favicon of the pipeline status
+      * Path of the details for the status
       */
-    def favicon: SelectionBuilder[DetailedStatus, String] = Field("favicon", Scalar())
+    def detailsPath: SelectionBuilder[DetailedStatus, Option[String]] = Field("detailsPath", OptionOf(Scalar()))
 
     /**
-      * Group of the pipeline status
+      * Favicon of the status
       */
-    def group: SelectionBuilder[DetailedStatus, String] = Field("group", Scalar())
+    def favicon: SelectionBuilder[DetailedStatus, Option[String]] = Field("favicon", OptionOf(Scalar()))
 
     /**
-      * Indicates if the pipeline status has further details
+      * Group of the status
       */
-    def hasDetails: SelectionBuilder[DetailedStatus, Boolean] = Field("hasDetails", Scalar())
+    def group: SelectionBuilder[DetailedStatus, Option[String]] = Field("group", OptionOf(Scalar()))
 
     /**
-      * Icon of the pipeline status
+      * Indicates if the status has further details
       */
-    def icon: SelectionBuilder[DetailedStatus, String] = Field("icon", Scalar())
+    def hasDetails: SelectionBuilder[DetailedStatus, Option[Boolean]] = Field("hasDetails", OptionOf(Scalar()))
 
     /**
-      * Label of the pipeline status
+      * Icon of the status
       */
-    def label: SelectionBuilder[DetailedStatus, String] = Field("label", Scalar())
+    def icon: SelectionBuilder[DetailedStatus, Option[String]] = Field("icon", OptionOf(Scalar()))
 
     /**
-      * Text of the pipeline status
+      * Label of the status
       */
-    def text: SelectionBuilder[DetailedStatus, String] = Field("text", Scalar())
+    def label: SelectionBuilder[DetailedStatus, Option[String]] = Field("label", OptionOf(Scalar()))
 
     /**
-      * Tooltip associated with the pipeline status
+      * Text of the status
       */
-    def tooltip: SelectionBuilder[DetailedStatus, String] = Field("tooltip", Scalar())
+    def text: SelectionBuilder[DetailedStatus, Option[String]] = Field("text", OptionOf(Scalar()))
+
+    /**
+      * Tooltip associated with the status
+      */
+    def tooltip: SelectionBuilder[DetailedStatus, Option[String]] = Field("tooltip", OptionOf(Scalar()))
+  }
+
+  type DevopsAdoptionSegment
+
+  object DevopsAdoptionSegment {
+
+    /**
+      * Assigned groups
+      */
+    def groups[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[GroupConnection, A]
+    ): SelectionBuilder[DevopsAdoptionSegment, Option[A]] =
+      Field(
+        "groups",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * ID of the segment
+      */
+    def id: SelectionBuilder[DevopsAdoptionSegment, String] = Field("id", Scalar())
+
+    /**
+      * Name of the segment
+      */
+    def name: SelectionBuilder[DevopsAdoptionSegment, String] = Field("name", Scalar())
+  }
+
+  type DevopsAdoptionSegmentConnection
+
+  object DevopsAdoptionSegmentConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[DevopsAdoptionSegmentEdge, A]
+    ): SelectionBuilder[DevopsAdoptionSegmentConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[DevopsAdoptionSegment, A]
+    ): SelectionBuilder[DevopsAdoptionSegmentConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[DevopsAdoptionSegmentConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type DevopsAdoptionSegmentEdge
+
+  object DevopsAdoptionSegmentEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[DevopsAdoptionSegmentEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[DevopsAdoptionSegment, A]): SelectionBuilder[DevopsAdoptionSegmentEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
   }
 
   type DiffPosition
@@ -5042,7 +6978,7 @@ object graphql {
     def id: SelectionBuilder[Environment, String] = Field("id", Scalar())
 
     /**
-      * The most severe open alert for the environment. If multiple alerts have equal severity, the most recent is returned.
+      * The most severe open alert for the environment. If multiple alerts have equal severity, the most recent is returned
       */
     def latestOpenedMostSevereAlert[A](
       innerSelection: SelectionBuilder[AlertManagementAlert, A]
@@ -5058,6 +6994,11 @@ object graphql {
       * Human-readable name of the environment
       */
     def name: SelectionBuilder[Environment, String] = Field("name", Scalar())
+
+    /**
+      * The path to the environment.
+      */
+    def path: SelectionBuilder[Environment, String] = Field("path", Scalar())
 
     /**
       * State of the environment, for example: available/stopped
@@ -5104,6 +7045,22 @@ object graphql {
       Field("node", OptionOf(Obj(innerSelection)))
   }
 
+  type EnvironmentsCanaryIngressUpdatePayload
+
+  object EnvironmentsCanaryIngressUpdatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[EnvironmentsCanaryIngressUpdatePayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[EnvironmentsCanaryIngressUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
   type Epic
 
   object Epic {
@@ -5119,6 +7076,7 @@ object graphql {
     def children[A](
       startDate: Option[Time] = None,
       endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
       iid: Option[String] = None,
       iids: Option[List[String]] = None,
       state: Option[EpicState] = None,
@@ -5128,6 +7086,7 @@ object graphql {
       labelName: Option[List[String]] = None,
       milestoneTitle: Option[String] = None,
       iidStartsWith: Option[String] = None,
+      includeDescendantGroups: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -5141,6 +7100,7 @@ object graphql {
         arguments = List(
           Argument("startDate", startDate),
           Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
           Argument("iid", iid),
           Argument("iids", iids),
           Argument("state", state),
@@ -5150,6 +7110,7 @@ object graphql {
           Argument("labelName", labelName),
           Argument("milestoneTitle", milestoneTitle),
           Argument("iidStartsWith", iidStartsWith),
+          Argument("includeDescendantGroups", includeDescendantGroups),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -5158,7 +7119,7 @@ object graphql {
       )
 
     /**
-      * Timestamp of the epic's closure
+      * Timestamp of when the epic was closed
       */
     def closedAt: SelectionBuilder[Epic, Option[Time]] = Field("closedAt", OptionOf(Scalar()))
 
@@ -5168,9 +7129,33 @@ object graphql {
     def confidential: SelectionBuilder[Epic, Option[Boolean]] = Field("confidential", OptionOf(Scalar()))
 
     /**
-      * Timestamp of the epic's creation
+      * Timestamp of when the epic was created
       */
     def createdAt: SelectionBuilder[Epic, Option[Time]] = Field("createdAt", OptionOf(Scalar()))
+
+    /**
+      * Todos for the current user
+      */
+    def currentUserTodos[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None,
+      state: Option[TodoStateEnum] = None
+    )(
+      innerSelection: SelectionBuilder[TodoConnection, A]
+    ): SelectionBuilder[Epic, A] =
+      Field(
+        "currentUserTodos",
+        Obj(innerSelection),
+        arguments = List(
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last),
+          Argument("state", state)
+        )
+      )
 
     /**
       * Number of open and closed descendant epics and issues
@@ -5393,7 +7378,7 @@ object graphql {
     def title: SelectionBuilder[Epic, Option[String]] = Field("title", OptionOf(Scalar()))
 
     /**
-      * Timestamp of the epic's last activity
+      * Timestamp of when the epic was updated
       */
     def updatedAt: SelectionBuilder[Epic, Option[Time]] = Field("updatedAt", OptionOf(Scalar()))
 
@@ -5401,6 +7386,16 @@ object graphql {
       * Number of upvotes the epic has received
       */
     def upvotes: SelectionBuilder[Epic, Int] = Field("upvotes", Scalar())
+
+    /**
+      * Number of user discussions in the epic
+      */
+    def userDiscussionsCount: SelectionBuilder[Epic, Int] = Field("userDiscussionsCount", Scalar())
+
+    /**
+      * Number of user notes of the epic
+      */
+    def userNotesCount: SelectionBuilder[Epic, Int] = Field("userNotesCount", Scalar())
 
     /**
       * Permissions for the current user on the resource
@@ -5583,6 +7578,11 @@ object graphql {
     def blocked: SelectionBuilder[EpicIssue, Boolean] = Field("blocked", Scalar())
 
     /**
+      * Count of issues blocking this issue
+      */
+    def blockedByCount: SelectionBuilder[EpicIssue, Option[Int]] = Field("blockedByCount", OptionOf(Scalar()))
+
+    /**
       * Timestamp of when the issue was closed
       */
     def closedAt: SelectionBuilder[EpicIssue, Option[Time]] = Field("closedAt", OptionOf(Scalar()))
@@ -5596,6 +7596,30 @@ object graphql {
       * Timestamp of when the issue was created
       */
     def createdAt: SelectionBuilder[EpicIssue, Time] = Field("createdAt", Scalar())
+
+    /**
+      * Todos for the current user
+      */
+    def currentUserTodos[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None,
+      state: Option[TodoStateEnum] = None
+    )(
+      innerSelection: SelectionBuilder[TodoConnection, A]
+    ): SelectionBuilder[EpicIssue, A] =
+      Field(
+        "currentUserTodos",
+        Obj(innerSelection),
+        arguments = List(
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last),
+          Argument("state", state)
+        )
+      )
 
     /**
       * Description of the issue
@@ -5653,6 +7677,11 @@ object graphql {
     def dueDate: SelectionBuilder[EpicIssue, Option[Time]] = Field("dueDate", OptionOf(Scalar()))
 
     /**
+      * Indicates if a project has email notifications disabled
+      */
+    def emailsDisabled: SelectionBuilder[EpicIssue, Boolean] = Field("emailsDisabled", Scalar())
+
+    /**
       * Epic to which this issue belongs
       */
     def epic[A](innerSelection: SelectionBuilder[Epic, A]): SelectionBuilder[EpicIssue, Option[A]] =
@@ -5667,6 +7696,16 @@ object graphql {
       * Current health status. Returns null if `save_issuable_health_status` feature flag is disabled.
       */
     def healthStatus: SelectionBuilder[EpicIssue, Option[HealthStatus]] = Field("healthStatus", OptionOf(Scalar()))
+
+    /**
+      * Human-readable time estimate of the issue
+      */
+    def humanTimeEstimate: SelectionBuilder[EpicIssue, Option[String]] = Field("humanTimeEstimate", OptionOf(Scalar()))
+
+    /**
+      * Human-readable total time reported as spent on the issue
+      */
+    def humanTotalTimeSpent: SelectionBuilder[EpicIssue, Option[String]] = Field("humanTotalTimeSpent", OptionOf(Scalar()))
 
     /**
       * Global ID of the epic-issue relation
@@ -5706,6 +7745,17 @@ object graphql {
       */
     def milestone[A](innerSelection: SelectionBuilder[Milestone, A]): SelectionBuilder[EpicIssue, Option[A]] =
       Field("milestone", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Indicates if issue got moved from other project
+      */
+    def moved: SelectionBuilder[EpicIssue, Option[Boolean]] = Field("moved", OptionOf(Scalar()))
+
+    /**
+      * Updated Issue after it got moved to another project
+      */
+    def movedTo[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[EpicIssue, Option[A]] =
+      Field("movedTo", OptionOf(Obj(innerSelection)))
 
     /**
       * All notes on this noteable
@@ -5756,6 +7806,16 @@ object graphql {
       * Relative position of the issue (used for positioning in epic tree and issue boards)
       */
     def relativePosition: SelectionBuilder[EpicIssue, Option[Int]] = Field("relativePosition", OptionOf(Scalar()))
+
+    /**
+      * Severity level of the incident
+      */
+    def severity: SelectionBuilder[EpicIssue, Option[IssuableSeverity]] = Field("severity", OptionOf(Scalar()))
+
+    /**
+      * Timestamp of when the issue SLA expires.
+      */
+    def slaDueAt: SelectionBuilder[EpicIssue, Option[Time]] = Field("slaDueAt", OptionOf(Scalar()))
 
     /**
       * State of the issue
@@ -5809,9 +7869,20 @@ object graphql {
     def updatedAt: SelectionBuilder[EpicIssue, Time] = Field("updatedAt", Scalar())
 
     /**
+      * User that last updated the issue
+      */
+    def updatedBy[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[EpicIssue, Option[A]] =
+      Field("updatedBy", OptionOf(Obj(innerSelection)))
+
+    /**
       * Number of upvotes the issue has received
       */
     def upvotes: SelectionBuilder[EpicIssue, Int] = Field("upvotes", Scalar())
+
+    /**
+      * Number of user discussions in the issue
+      */
+    def userDiscussionsCount: SelectionBuilder[EpicIssue, Int] = Field("userDiscussionsCount", Scalar())
 
     /**
       * Number of user notes of the issue
@@ -5866,6 +7937,11 @@ object graphql {
       */
     def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[EpicIssueConnection, A] =
       Field("pageInfo", Obj(innerSelection))
+
+    /**
+      * Total weight of issues collection
+      */
+    def weight: SelectionBuilder[EpicIssueConnection, Int] = Field("weight", Scalar())
   }
 
   type EpicIssueEdge
@@ -5996,6 +8072,25 @@ object graphql {
     def internalUrl: SelectionBuilder[GeoNode, Option[String]] = Field("internalUrl", OptionOf(Scalar()))
 
     /**
+      * Find merge request diff registries on this Geo node
+      */
+    def mergeRequestDiffRegistries[A](
+      ids: Option[List[String]] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[MergeRequestDiffRegistryConnection, A]
+    ): SelectionBuilder[GeoNode, Option[A]] =
+      Field(
+        "mergeRequestDiffRegistries",
+        OptionOf(Obj(innerSelection)),
+        arguments =
+          List(Argument("ids", ids), Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * The interval (in days) in which the repository verification is valid. Once expired, it will be reverified
       */
     def minimumReverificationInterval: SelectionBuilder[GeoNode, Option[Int]] = Field("minimumReverificationInterval", OptionOf(Scalar()))
@@ -6004,6 +8099,25 @@ object graphql {
       * The unique identifier for this Geo node
       */
     def name: SelectionBuilder[GeoNode, Option[String]] = Field("name", OptionOf(Scalar()))
+
+    /**
+      * Package file registries of the GeoNode
+      */
+    def packageFileRegistries[A](
+      ids: Option[List[String]] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[PackageFileRegistryConnection, A]
+    ): SelectionBuilder[GeoNode, Option[A]] =
+      Field(
+        "packageFileRegistries",
+        OptionOf(Obj(innerSelection)),
+        arguments =
+          List(Argument("ids", ids), Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
 
     /**
       * Indicates whether this Geo node is the primary
@@ -6046,6 +8160,25 @@ object graphql {
       * Indicates if this secondary node will replicate blobs in Object Storage
       */
     def syncObjectStorage: SelectionBuilder[GeoNode, Option[Boolean]] = Field("syncObjectStorage", OptionOf(Scalar()))
+
+    /**
+      * Find terraform state version registries on this Geo node
+      */
+    def terraformStateVersionRegistries[A](
+      ids: Option[List[String]] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[TerraformStateVersionRegistryConnection, A]
+    ): SelectionBuilder[GeoNode, Option[A]] =
+      Field(
+        "terraformStateVersionRegistries",
+        OptionOf(Obj(innerSelection)),
+        arguments =
+          List(Argument("ids", ids), Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
 
     /**
       * The user-facing URL for this Geo node
@@ -6099,6 +8232,17 @@ object graphql {
   object Group {
 
     /**
+      * Size limit for repositories in the namespace in bytes
+      */
+    def actualRepositorySizeLimit: SelectionBuilder[Group, Option[Double]] = Field("actualRepositorySizeLimit", OptionOf(Scalar()))
+
+    /**
+      * Additional storage purchased for the root namespace in bytes
+      */
+    def additionalPurchasedStorageSize: SelectionBuilder[Group, Option[Double]] =
+      Field("additionalPurchasedStorageSize", OptionOf(Scalar()))
+
+    /**
       * Indicates whether Auto DevOps is enabled for all projects within this group
       */
     def autoDevopsEnabled: SelectionBuilder[Group, Option[Boolean]] = Field("autoDevopsEnabled", OptionOf(Scalar()))
@@ -6111,14 +8255,14 @@ object graphql {
     /**
       * A single board of the group
       */
-    def board[A](id: Option[String] = None)(innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[Group, Option[A]] =
+    def board[A](id: BoardID)(innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[Group, Option[A]] =
       Field("board", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id)))
 
     /**
       * Boards of the group
       */
     def boards[A](
-      id: Option[String] = None,
+      id: Option[BoardID] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -6132,6 +8276,59 @@ object graphql {
         arguments =
           List(Argument("id", id), Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
+
+    /**
+      * Represents the code coverage activity for this group. Available only when feature flag `group_coverage_data_report_graph` is enabled
+      */
+    def codeCoverageActivities[A](
+      startDate: Date,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[CodeCoverageActivityConnection, A]
+    ): SelectionBuilder[Group, Option[A]] =
+      Field(
+        "codeCoverageActivities",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("startDate", startDate),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
+      * Container repositories of the project
+      */
+    def containerRepositories[A](
+      name: Option[String] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[ContainerRepositoryConnection, A]
+    ): SelectionBuilder[Group, Option[A]] =
+      Field(
+        "containerRepositories",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("name", name),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
+      * Includes at least one project where the repository size exceeds the limit
+      */
+    def containsLockedProjects: SelectionBuilder[Group, Boolean] = Field("containsLockedProjects", Scalar())
 
     /**
       * Description of the namespace
@@ -6154,42 +8351,7 @@ object graphql {
     def epic[A](
       startDate: Option[Time] = None,
       endDate: Option[Time] = None,
-      iid: Option[String] = None,
-      iids: Option[List[String]] = None,
-      state: Option[EpicState] = None,
-      search: Option[String] = None,
-      sort: Option[EpicSort] = None,
-      authorUsername: Option[String] = None,
-      labelName: Option[List[String]] = None,
-      milestoneTitle: Option[String] = None,
-      iidStartsWith: Option[String] = None
-    )(
-      innerSelection: SelectionBuilder[Epic, A]
-    ): SelectionBuilder[Group, Option[A]] =
-      Field(
-        "epic",
-        OptionOf(Obj(innerSelection)),
-        arguments = List(
-          Argument("startDate", startDate),
-          Argument("endDate", endDate),
-          Argument("iid", iid),
-          Argument("iids", iids),
-          Argument("state", state),
-          Argument("search", search),
-          Argument("sort", sort),
-          Argument("authorUsername", authorUsername),
-          Argument("labelName", labelName),
-          Argument("milestoneTitle", milestoneTitle),
-          Argument("iidStartsWith", iidStartsWith)
-        )
-      )
-
-    /**
-      * Find epics
-      */
-    def epics[A](
-      startDate: Option[Time] = None,
-      endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
       iid: Option[String] = None,
       iids: Option[List[String]] = None,
       state: Option[EpicState] = None,
@@ -6199,6 +8361,47 @@ object graphql {
       labelName: Option[List[String]] = None,
       milestoneTitle: Option[String] = None,
       iidStartsWith: Option[String] = None,
+      includeDescendantGroups: Option[Boolean] = None
+    )(
+      innerSelection: SelectionBuilder[Epic, A]
+    ): SelectionBuilder[Group, Option[A]] =
+      Field(
+        "epic",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("startDate", startDate),
+          Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
+          Argument("iid", iid),
+          Argument("iids", iids),
+          Argument("state", state),
+          Argument("search", search),
+          Argument("sort", sort),
+          Argument("authorUsername", authorUsername),
+          Argument("labelName", labelName),
+          Argument("milestoneTitle", milestoneTitle),
+          Argument("iidStartsWith", iidStartsWith),
+          Argument("includeDescendantGroups", includeDescendantGroups)
+        )
+      )
+
+    /**
+      * Find epics
+      */
+    def epics[A](
+      startDate: Option[Time] = None,
+      endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
+      iid: Option[String] = None,
+      iids: Option[List[String]] = None,
+      state: Option[EpicState] = None,
+      search: Option[String] = None,
+      sort: Option[EpicSort] = None,
+      authorUsername: Option[String] = None,
+      labelName: Option[List[String]] = None,
+      milestoneTitle: Option[String] = None,
+      iidStartsWith: Option[String] = None,
+      includeDescendantGroups: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -6212,6 +8415,7 @@ object graphql {
         arguments = List(
           Argument("startDate", startDate),
           Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
           Argument("iid", iid),
           Argument("iids", iids),
           Argument("state", state),
@@ -6221,6 +8425,7 @@ object graphql {
           Argument("labelName", labelName),
           Argument("milestoneTitle", milestoneTitle),
           Argument("iidStartsWith", iidStartsWith),
+          Argument("includeDescendantGroups", includeDescendantGroups),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -6244,6 +8449,30 @@ object graphql {
     def fullPath: SelectionBuilder[Group, String] = Field("fullPath", Scalar())
 
     /**
+      * A membership of a user within this group
+      */
+    def groupMembers[A](
+      search: Option[String] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[GroupMemberConnection, A]
+    ): SelectionBuilder[Group, Option[A]] =
+      Field(
+        "groupMembers",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("search", search),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
       * Indicates if Group timelogs are enabled for namespace
       */
     def groupTimelogsEnabled: SelectionBuilder[Group, Option[Boolean]] = Field("groupTimelogsEnabled", OptionOf(Scalar()))
@@ -6259,14 +8488,16 @@ object graphql {
     def isTemporaryStorageIncreaseEnabled: SelectionBuilder[Group, Boolean] = Field("isTemporaryStorageIncreaseEnabled", Scalar())
 
     /**
-      * Issues of the group
+      * Issues for projects in this group
       */
     def issues[A](
       iid: Option[String] = None,
       iids: Option[List[String]] = None,
       labelName: Option[List[Option[String]]] = None,
       milestoneTitle: Option[List[Option[String]]] = None,
+      authorUsername: Option[String] = None,
       assigneeUsername: Option[String] = None,
+      assigneeUsernames: Option[List[String]] = None,
       assigneeId: Option[String] = None,
       createdBefore: Option[Time] = None,
       createdAfter: Option[Time] = None,
@@ -6279,6 +8510,7 @@ object graphql {
       state: Option[IssuableState] = None,
       sort: Option[IssueSort] = None,
       iterationId: Option[List[Option[String]]] = None,
+      epicId: Option[String] = None,
       includeSubgroups: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
@@ -6295,7 +8527,9 @@ object graphql {
           Argument("iids", iids),
           Argument("labelName", labelName),
           Argument("milestoneTitle", milestoneTitle),
+          Argument("authorUsername", authorUsername),
           Argument("assigneeUsername", assigneeUsername),
+          Argument("assigneeUsernames", assigneeUsernames),
           Argument("assigneeId", assigneeId),
           Argument("createdBefore", createdBefore),
           Argument("createdAfter", createdAfter),
@@ -6308,6 +8542,7 @@ object graphql {
           Argument("state", state),
           Argument("sort", sort),
           Argument("iterationId", iterationId),
+          Argument("epicId", epicId),
           Argument("includeSubgroups", includeSubgroups),
           Argument("after", after),
           Argument("before", before),
@@ -6322,6 +8557,7 @@ object graphql {
     def iterations[A](
       startDate: Option[Time] = None,
       endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
       state: Option[IterationState] = None,
       title: Option[String] = None,
       id: Option[String] = None,
@@ -6340,6 +8576,7 @@ object graphql {
         arguments = List(
           Argument("startDate", startDate),
           Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
           Argument("state", state),
           Argument("title", title),
           Argument("id", id),
@@ -6393,13 +8630,63 @@ object graphql {
     def mentionsDisabled: SelectionBuilder[Group, Option[Boolean]] = Field("mentionsDisabled", OptionOf(Scalar()))
 
     /**
+      * Merge requests for projects in this group
+      */
+    def mergeRequests[A](
+      iids: Option[List[String]] = None,
+      sourceBranches: Option[List[String]] = None,
+      targetBranches: Option[List[String]] = None,
+      state: Option[MergeRequestState] = None,
+      labels: Option[List[String]] = None,
+      mergedAfter: Option[Time] = None,
+      mergedBefore: Option[Time] = None,
+      milestoneTitle: Option[String] = None,
+      sort: Option[MergeRequestSort] = None,
+      includeSubgroups: Option[Boolean] = None,
+      assigneeUsername: Option[String] = None,
+      authorUsername: Option[String] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[MergeRequestConnection, A]
+    ): SelectionBuilder[Group, Option[A]] =
+      Field(
+        "mergeRequests",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("iids", iids),
+          Argument("sourceBranches", sourceBranches),
+          Argument("targetBranches", targetBranches),
+          Argument("state", state),
+          Argument("labels", labels),
+          Argument("mergedAfter", mergedAfter),
+          Argument("mergedBefore", mergedBefore),
+          Argument("milestoneTitle", milestoneTitle),
+          Argument("sort", sort),
+          Argument("includeSubgroups", includeSubgroups),
+          Argument("assigneeUsername", assigneeUsername),
+          Argument("authorUsername", authorUsername),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
       * Milestones of the group
       */
     def milestones[A](
       startDate: Option[Time] = None,
       endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
       ids: Option[List[String]] = None,
       state: Option[MilestoneStateEnum] = None,
+      title: Option[String] = None,
+      searchTitle: Option[String] = None,
+      containingDate: Option[Time] = None,
       includeDescendants: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
@@ -6414,8 +8701,12 @@ object graphql {
         arguments = List(
           Argument("startDate", startDate),
           Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
           Argument("ids", ids),
           Argument("state", state),
+          Argument("title", title),
+          Argument("searchTitle", searchTitle),
+          Argument("containingDate", containingDate),
           Argument("includeDescendants", includeDescendants),
           Argument("after", after),
           Argument("before", before),
@@ -6450,6 +8741,8 @@ object graphql {
       */
     def projects[A](
       includeSubgroups: Option[Boolean] = None,
+      search: Option[String] = None,
+      sort: Option[NamespaceProjectSort] = None,
       hasVulnerabilities: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
@@ -6463,6 +8756,8 @@ object graphql {
         Obj(innerSelection),
         arguments = List(
           Argument("includeSubgroups", includeSubgroups),
+          Argument("search", search),
+          Argument("sort", sort),
           Argument("hasVulnerabilities", hasVulnerabilities),
           Argument("after", after),
           Argument("before", before),
@@ -6470,6 +8765,11 @@ object graphql {
           Argument("last", last)
         )
       )
+
+    /**
+      * Number of projects in the root namespace where the repository size exceeds the limit
+      */
+    def repositorySizeExcessProjectCount: SelectionBuilder[Group, Int] = Field("repositorySizeExcessProjectCount", Scalar())
 
     /**
       * Indicates if users can request access to namespace
@@ -6539,6 +8839,16 @@ object graphql {
       )
 
     /**
+      * Total repository size of all projects in the root namespace in bytes
+      */
+    def totalRepositorySize: SelectionBuilder[Group, Option[Double]] = Field("totalRepositorySize", OptionOf(Scalar()))
+
+    /**
+      * Total excess repository size of all projects in the root namespace in bytes
+      */
+    def totalRepositorySizeExcess: SelectionBuilder[Group, Option[Double]] = Field("totalRepositorySizeExcess", OptionOf(Scalar()))
+
+    /**
       * Time before two-factor authentication is enforced
       */
     def twoFactorGracePeriod: SelectionBuilder[Group, Option[Int]] = Field("twoFactorGracePeriod", OptionOf(Scalar()))
@@ -6563,6 +8873,9 @@ object graphql {
       severity: Option[List[VulnerabilitySeverity]] = None,
       state: Option[List[VulnerabilityState]] = None,
       scanner: Option[List[String]] = None,
+      sort: Option[VulnerabilitySort] = None,
+      hasResolution: Option[Boolean] = None,
+      hasIssues: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -6579,6 +8892,9 @@ object graphql {
           Argument("severity", severity),
           Argument("state", state),
           Argument("scanner", scanner),
+          Argument("sort", sort),
+          Argument("hasResolution", hasResolution),
+          Argument("hasIssues", hasIssues),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -6642,8 +8958,12 @@ object graphql {
     /**
       * Represents vulnerable project counts for each grade
       */
-    def vulnerabilityGrades[A](innerSelection: SelectionBuilder[VulnerableProjectsByGrade, A]): SelectionBuilder[Group, List[A]] =
-      Field("vulnerabilityGrades", ListOf(Obj(innerSelection)))
+    def vulnerabilityGrades[A](
+      includeSubgroups: Option[Boolean] = None
+    )(
+      innerSelection: SelectionBuilder[VulnerableProjectsByGrade, A]
+    ): SelectionBuilder[Group, List[A]] =
+      Field("vulnerabilityGrades", ListOf(Obj(innerSelection)), arguments = List(Argument("includeSubgroups", includeSubgroups)))
 
     /**
       * Vulnerability scanners reported on the project vulnerabilties of the group and its subgroups
@@ -6690,6 +9010,45 @@ object graphql {
       * Web URL of the group
       */
     def webUrl: SelectionBuilder[Group, String] = Field("webUrl", Scalar())
+  }
+
+  type GroupConnection
+
+  object GroupConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](innerSelection: SelectionBuilder[GroupEdge, A]): SelectionBuilder[GroupConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[Group, A]): SelectionBuilder[GroupConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[GroupConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type GroupEdge
+
+  object GroupEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[GroupEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[Group, A]): SelectionBuilder[GroupEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
   }
 
   type GroupMember
@@ -6795,6 +9154,98 @@ object graphql {
     def readGroup: SelectionBuilder[GroupPermissions, Boolean] = Field("readGroup", Scalar())
   }
 
+  type HttpIntegrationCreatePayload
+
+  object HttpIntegrationCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[HttpIntegrationCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[HttpIntegrationCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The HTTP integration
+      */
+    def integration[A](
+      innerSelection: SelectionBuilder[AlertManagementHttpIntegration, A]
+    ): SelectionBuilder[HttpIntegrationCreatePayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type HttpIntegrationDestroyPayload
+
+  object HttpIntegrationDestroyPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[HttpIntegrationDestroyPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[HttpIntegrationDestroyPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The HTTP integration
+      */
+    def integration[A](
+      innerSelection: SelectionBuilder[AlertManagementHttpIntegration, A]
+    ): SelectionBuilder[HttpIntegrationDestroyPayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type HttpIntegrationResetTokenPayload
+
+  object HttpIntegrationResetTokenPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[HttpIntegrationResetTokenPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[HttpIntegrationResetTokenPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The HTTP integration
+      */
+    def integration[A](
+      innerSelection: SelectionBuilder[AlertManagementHttpIntegration, A]
+    ): SelectionBuilder[HttpIntegrationResetTokenPayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type HttpIntegrationUpdatePayload
+
+  object HttpIntegrationUpdatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[HttpIntegrationUpdatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[HttpIntegrationUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The HTTP integration
+      */
+    def integration[A](
+      innerSelection: SelectionBuilder[AlertManagementHttpIntegration, A]
+    ): SelectionBuilder[HttpIntegrationUpdatePayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
   type InstanceSecurityDashboard
 
   object InstanceSecurityDashboard {
@@ -6866,6 +9317,71 @@ object graphql {
 
   }
 
+  type InstanceStatisticsMeasurement
+
+  object InstanceStatisticsMeasurement {
+
+    /**
+      * Object count
+      */
+    def count: SelectionBuilder[InstanceStatisticsMeasurement, Int] = Field("count", Scalar())
+
+    /**
+      * The type of objects being measured
+      */
+    def identifier: SelectionBuilder[InstanceStatisticsMeasurement, MeasurementIdentifier] = Field("identifier", Scalar())
+
+    /**
+      * The time the measurement was recorded
+      */
+    def recordedAt: SelectionBuilder[InstanceStatisticsMeasurement, Option[Time]] = Field("recordedAt", OptionOf(Scalar()))
+  }
+
+  type InstanceStatisticsMeasurementConnection
+
+  object InstanceStatisticsMeasurementConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[InstanceStatisticsMeasurementEdge, A]
+    ): SelectionBuilder[InstanceStatisticsMeasurementConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[InstanceStatisticsMeasurement, A]
+    ): SelectionBuilder[InstanceStatisticsMeasurementConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[InstanceStatisticsMeasurementConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type InstanceStatisticsMeasurementEdge
+
+  object InstanceStatisticsMeasurementEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[InstanceStatisticsMeasurementEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](
+      innerSelection: SelectionBuilder[InstanceStatisticsMeasurement, A]
+    ): SelectionBuilder[InstanceStatisticsMeasurementEdge, Option[A]] = Field("node", OptionOf(Obj(innerSelection)))
+
+  }
+
   type Issue
 
   object Issue {
@@ -6904,6 +9420,11 @@ object graphql {
     def blocked: SelectionBuilder[Issue, Boolean] = Field("blocked", Scalar())
 
     /**
+      * Count of issues blocking this issue
+      */
+    def blockedByCount: SelectionBuilder[Issue, Option[Int]] = Field("blockedByCount", OptionOf(Scalar()))
+
+    /**
       * Timestamp of when the issue was closed
       */
     def closedAt: SelectionBuilder[Issue, Option[Time]] = Field("closedAt", OptionOf(Scalar()))
@@ -6917,6 +9438,30 @@ object graphql {
       * Timestamp of when the issue was created
       */
     def createdAt: SelectionBuilder[Issue, Time] = Field("createdAt", Scalar())
+
+    /**
+      * Todos for the current user
+      */
+    def currentUserTodos[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None,
+      state: Option[TodoStateEnum] = None
+    )(
+      innerSelection: SelectionBuilder[TodoConnection, A]
+    ): SelectionBuilder[Issue, A] =
+      Field(
+        "currentUserTodos",
+        Obj(innerSelection),
+        arguments = List(
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last),
+          Argument("state", state)
+        )
+      )
 
     /**
       * Description of the issue
@@ -6974,6 +9519,11 @@ object graphql {
     def dueDate: SelectionBuilder[Issue, Option[Time]] = Field("dueDate", OptionOf(Scalar()))
 
     /**
+      * Indicates if a project has email notifications disabled
+      */
+    def emailsDisabled: SelectionBuilder[Issue, Boolean] = Field("emailsDisabled", Scalar())
+
+    /**
       * Epic to which this issue belongs
       */
     def epic[A](innerSelection: SelectionBuilder[Epic, A]): SelectionBuilder[Issue, Option[A]] =
@@ -6983,6 +9533,16 @@ object graphql {
       * Current health status. Returns null if `save_issuable_health_status` feature flag is disabled.
       */
     def healthStatus: SelectionBuilder[Issue, Option[HealthStatus]] = Field("healthStatus", OptionOf(Scalar()))
+
+    /**
+      * Human-readable time estimate of the issue
+      */
+    def humanTimeEstimate: SelectionBuilder[Issue, Option[String]] = Field("humanTimeEstimate", OptionOf(Scalar()))
+
+    /**
+      * Human-readable total time reported as spent on the issue
+      */
+    def humanTotalTimeSpent: SelectionBuilder[Issue, Option[String]] = Field("humanTotalTimeSpent", OptionOf(Scalar()))
 
     /**
       * ID of the issue
@@ -7022,6 +9582,17 @@ object graphql {
       */
     def milestone[A](innerSelection: SelectionBuilder[Milestone, A]): SelectionBuilder[Issue, Option[A]] =
       Field("milestone", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Indicates if issue got moved from other project
+      */
+    def moved: SelectionBuilder[Issue, Option[Boolean]] = Field("moved", OptionOf(Scalar()))
+
+    /**
+      * Updated Issue after it got moved to another project
+      */
+    def movedTo[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[Issue, Option[A]] =
+      Field("movedTo", OptionOf(Obj(innerSelection)))
 
     /**
       * All notes on this noteable
@@ -7067,6 +9638,16 @@ object graphql {
       * Relative position of the issue (used for positioning in epic tree and issue boards)
       */
     def relativePosition: SelectionBuilder[Issue, Option[Int]] = Field("relativePosition", OptionOf(Scalar()))
+
+    /**
+      * Severity level of the incident
+      */
+    def severity: SelectionBuilder[Issue, Option[IssuableSeverity]] = Field("severity", OptionOf(Scalar()))
+
+    /**
+      * Timestamp of when the issue SLA expires.
+      */
+    def slaDueAt: SelectionBuilder[Issue, Option[Time]] = Field("slaDueAt", OptionOf(Scalar()))
 
     /**
       * State of the issue
@@ -7120,9 +9701,20 @@ object graphql {
     def updatedAt: SelectionBuilder[Issue, Time] = Field("updatedAt", Scalar())
 
     /**
+      * User that last updated the issue
+      */
+    def updatedBy[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[Issue, Option[A]] =
+      Field("updatedBy", OptionOf(Obj(innerSelection)))
+
+    /**
       * Number of upvotes the issue has received
       */
     def upvotes: SelectionBuilder[Issue, Int] = Field("upvotes", Scalar())
+
+    /**
+      * Number of user discussions in the issue
+      */
+    def userDiscussionsCount: SelectionBuilder[Issue, Int] = Field("userDiscussionsCount", Scalar())
 
     /**
       * Number of user notes of the issue
@@ -7177,6 +9769,11 @@ object graphql {
       */
     def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[IssueConnection, A] =
       Field("pageInfo", Obj(innerSelection))
+
+    /**
+      * Total weight of issues collection
+      */
+    def weight: SelectionBuilder[IssueConnection, Int] = Field("weight", Scalar())
   }
 
   type IssueEdge
@@ -7213,6 +9810,27 @@ object graphql {
       * The issue after mutation
       */
     def issue[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[IssueMoveListPayload, Option[A]] =
+      Field("issue", OptionOf(Obj(innerSelection)))
+  }
+
+  type IssueMovePayload
+
+  object IssueMovePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[IssueMovePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[IssueMovePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The issue after mutation
+      */
+    def issue[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[IssueMovePayload, Option[A]] =
       Field("issue", OptionOf(Obj(innerSelection)))
   }
 
@@ -7387,6 +10005,27 @@ object graphql {
       Field("issue", OptionOf(Obj(innerSelection)))
   }
 
+  type IssueSetSeverityPayload
+
+  object IssueSetSeverityPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[IssueSetSeverityPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[IssueSetSeverityPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The issue after mutation
+      */
+    def issue[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[IssueSetSeverityPayload, Option[A]] =
+      Field("issue", OptionOf(Obj(innerSelection)))
+  }
+
   type IssueSetSubscriptionPayload
 
   object IssueSetSubscriptionPayload {
@@ -7454,6 +10093,12 @@ object graphql {
   object Iteration {
 
     /**
+      * Daily scope and completed totals for burnup charts
+      */
+    def burnupTimeSeries[A](innerSelection: SelectionBuilder[BurnupChartDailyTotals, A]): SelectionBuilder[Iteration, Option[List[A]]] =
+      Field("burnupTimeSeries", OptionOf(ListOf(Obj(innerSelection))))
+
+    /**
       * Timestamp of iteration creation
       */
     def createdAt: SelectionBuilder[Iteration, Time] = Field("createdAt", Scalar())
@@ -7482,6 +10127,12 @@ object graphql {
       * Internal ID of the iteration
       */
     def iid: SelectionBuilder[Iteration, String] = Field("iid", Scalar())
+
+    /**
+      * Historically accurate report about the timebox
+      */
+    def report[A](innerSelection: SelectionBuilder[TimeboxReport, A]): SelectionBuilder[Iteration, Option[A]] =
+      Field("report", OptionOf(Obj(innerSelection)))
 
     /**
       * Web path of the iteration, scoped to the query parent. Only valid for Project parents. Returns null in other contexts
@@ -7858,6 +10509,11 @@ object graphql {
   object LabelConnection {
 
     /**
+      * Total count of collection
+      */
+    def count: SelectionBuilder[LabelConnection, Int] = Field("count", Scalar())
+
+    /**
       * A list of edges.
       */
     def edges[A](innerSelection: SelectionBuilder[LabelEdge, A]): SelectionBuilder[LabelConnection, Option[List[Option[A]]]] =
@@ -7874,6 +10530,27 @@ object graphql {
       */
     def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[LabelConnection, A] =
       Field("pageInfo", Obj(innerSelection))
+  }
+
+  type LabelCreatePayload
+
+  object LabelCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[LabelCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[LabelCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The label after mutation
+      */
+    def label[A](innerSelection: SelectionBuilder[Label, A]): SelectionBuilder[LabelCreatePayload, Option[A]] =
+      Field("label", OptionOf(Obj(innerSelection)))
   }
 
   type LabelEdge
@@ -7981,6 +10658,16 @@ object graphql {
     def allowCollaboration: SelectionBuilder[MergeRequest, Option[Boolean]] = Field("allowCollaboration", OptionOf(Scalar()))
 
     /**
+      * Number of approvals left
+      */
+    def approvalsLeft: SelectionBuilder[MergeRequest, Option[Int]] = Field("approvalsLeft", OptionOf(Scalar()))
+
+    /**
+      * Number of approvals required
+      */
+    def approvalsRequired: SelectionBuilder[MergeRequest, Option[Int]] = Field("approvalsRequired", OptionOf(Scalar()))
+
+    /**
       * Indicates if the merge request has all the required approvals. Returns true if no required approvals are configured.
       */
     def approved: SelectionBuilder[MergeRequest, Boolean] = Field("approved", Scalar())
@@ -8026,14 +10713,48 @@ object graphql {
       Field("author", OptionOf(Obj(innerSelection)))
 
     /**
+      * Indicates if auto merge is enabled for the merge request
+      */
+    def autoMergeEnabled: SelectionBuilder[MergeRequest, Boolean] = Field("autoMergeEnabled", Scalar())
+
+    /**
       * Number of commits in the merge request
       */
     def commitCount: SelectionBuilder[MergeRequest, Option[Int]] = Field("commitCount", OptionOf(Scalar()))
 
     /**
+      * Indicates if the merge request has conflicts
+      */
+    def conflicts: SelectionBuilder[MergeRequest, Boolean] = Field("conflicts", Scalar())
+
+    /**
       * Timestamp of when the merge request was created
       */
     def createdAt: SelectionBuilder[MergeRequest, Time] = Field("createdAt", Scalar())
+
+    /**
+      * Todos for the current user
+      */
+    def currentUserTodos[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None,
+      state: Option[TodoStateEnum] = None
+    )(
+      innerSelection: SelectionBuilder[TodoConnection, A]
+    ): SelectionBuilder[MergeRequest, A] =
+      Field(
+        "currentUserTodos",
+        Obj(innerSelection),
+        arguments = List(
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last),
+          Argument("state", state)
+        )
+      )
 
     /**
       * Default merge commit message of the merge request
@@ -8241,10 +10962,10 @@ object graphql {
       last: Option[Int] = None
     )(
       innerSelection: SelectionBuilder[PipelineConnection, A]
-    ): SelectionBuilder[MergeRequest, A] =
+    ): SelectionBuilder[MergeRequest, Option[A]] =
       Field(
         "pipelines",
-        Obj(innerSelection),
+        OptionOf(Obj(innerSelection)),
         arguments = List(
           Argument("status", status),
           Argument("ref", ref),
@@ -8381,6 +11102,11 @@ object graphql {
     def upvotes: SelectionBuilder[MergeRequest, Int] = Field("upvotes", Scalar())
 
     /**
+      * Number of user discussions in the merge request
+      */
+    def userDiscussionsCount: SelectionBuilder[MergeRequest, Option[Int]] = Field("userDiscussionsCount", OptionOf(Scalar()))
+
+    /**
       * User notes count of the merge request
       */
     def userNotesCount: SelectionBuilder[MergeRequest, Option[Int]] = Field("userNotesCount", OptionOf(Scalar()))
@@ -8451,6 +11177,94 @@ object graphql {
       Field("mergeRequest", OptionOf(Obj(innerSelection)))
   }
 
+  type MergeRequestDiffRegistry
+
+  object MergeRequestDiffRegistry {
+
+    /**
+      * Timestamp when the MergeRequestDiffRegistry was created
+      */
+    def createdAt: SelectionBuilder[MergeRequestDiffRegistry, Option[Time]] = Field("createdAt", OptionOf(Scalar()))
+
+    /**
+      * ID of the MergeRequestDiffRegistry
+      */
+    def id: SelectionBuilder[MergeRequestDiffRegistry, String] = Field("id", Scalar())
+
+    /**
+      * Error message during sync of the MergeRequestDiffRegistry
+      */
+    def lastSyncFailure: SelectionBuilder[MergeRequestDiffRegistry, Option[String]] = Field("lastSyncFailure", OptionOf(Scalar()))
+
+    /**
+      * Timestamp of the most recent successful sync of the MergeRequestDiffRegistry
+      */
+    def lastSyncedAt: SelectionBuilder[MergeRequestDiffRegistry, Option[Time]] = Field("lastSyncedAt", OptionOf(Scalar()))
+
+    /**
+      * ID of the Merge Request diff
+      */
+    def mergeRequestDiffId: SelectionBuilder[MergeRequestDiffRegistry, String] = Field("mergeRequestDiffId", Scalar())
+
+    /**
+      * Timestamp after which the MergeRequestDiffRegistry should be resynced
+      */
+    def retryAt: SelectionBuilder[MergeRequestDiffRegistry, Option[Time]] = Field("retryAt", OptionOf(Scalar()))
+
+    /**
+      * Number of consecutive failed sync attempts of the MergeRequestDiffRegistry
+      */
+    def retryCount: SelectionBuilder[MergeRequestDiffRegistry, Option[Int]] = Field("retryCount", OptionOf(Scalar()))
+
+    /**
+      * Sync state of the MergeRequestDiffRegistry
+      */
+    def state: SelectionBuilder[MergeRequestDiffRegistry, Option[RegistryState]] = Field("state", OptionOf(Scalar()))
+  }
+
+  type MergeRequestDiffRegistryConnection
+
+  object MergeRequestDiffRegistryConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[MergeRequestDiffRegistryEdge, A]
+    ): SelectionBuilder[MergeRequestDiffRegistryConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[MergeRequestDiffRegistry, A]
+    ): SelectionBuilder[MergeRequestDiffRegistryConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[MergeRequestDiffRegistryConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type MergeRequestDiffRegistryEdge
+
+  object MergeRequestDiffRegistryEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[MergeRequestDiffRegistryEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[MergeRequestDiffRegistry, A]): SelectionBuilder[MergeRequestDiffRegistryEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
   type MergeRequestEdge
 
   object MergeRequestEdge {
@@ -8475,6 +11289,11 @@ object graphql {
       * Indicates the user can perform `admin_merge_request` on this resource
       */
     def adminMergeRequest: SelectionBuilder[MergeRequestPermissions, Boolean] = Field("adminMergeRequest", Scalar())
+
+    /**
+      * Indicates the user can perform `can_merge` on this resource
+      */
+    def canMerge: SelectionBuilder[MergeRequestPermissions, Boolean] = Field("canMerge", Scalar())
 
     /**
       * Indicates the user can perform `cherry_pick_on_current_merge_request` on this resource
@@ -8836,6 +11655,12 @@ object graphql {
     def projectMilestone: SelectionBuilder[Milestone, Boolean] = Field("projectMilestone", Scalar())
 
     /**
+      * Historically accurate report about the timebox
+      */
+    def report[A](innerSelection: SelectionBuilder[TimeboxReport, A]): SelectionBuilder[Milestone, Option[A]] =
+      Field("report", OptionOf(Obj(innerSelection)))
+
+    /**
       * Timestamp of the milestone start date
       */
     def startDate: SelectionBuilder[Milestone, Option[Time]] = Field("startDate", OptionOf(Scalar()))
@@ -8931,6 +11756,22 @@ object graphql {
   object Namespace {
 
     /**
+      * Size limit for repositories in the namespace in bytes
+      */
+    def actualRepositorySizeLimit: SelectionBuilder[Namespace, Option[Double]] = Field("actualRepositorySizeLimit", OptionOf(Scalar()))
+
+    /**
+      * Additional storage purchased for the root namespace in bytes
+      */
+    def additionalPurchasedStorageSize: SelectionBuilder[Namespace, Option[Double]] =
+      Field("additionalPurchasedStorageSize", OptionOf(Scalar()))
+
+    /**
+      * Includes at least one project where the repository size exceeds the limit
+      */
+    def containsLockedProjects: SelectionBuilder[Namespace, Boolean] = Field("containsLockedProjects", Scalar())
+
+    /**
       * Description of the namespace
       */
     def description: SelectionBuilder[Namespace, Option[String]] = Field("description", OptionOf(Scalar()))
@@ -8980,6 +11821,8 @@ object graphql {
       */
     def projects[A](
       includeSubgroups: Option[Boolean] = None,
+      search: Option[String] = None,
+      sort: Option[NamespaceProjectSort] = None,
       hasVulnerabilities: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
@@ -8993,6 +11836,8 @@ object graphql {
         Obj(innerSelection),
         arguments = List(
           Argument("includeSubgroups", includeSubgroups),
+          Argument("search", search),
+          Argument("sort", sort),
           Argument("hasVulnerabilities", hasVulnerabilities),
           Argument("after", after),
           Argument("before", before),
@@ -9000,6 +11845,11 @@ object graphql {
           Argument("last", last)
         )
       )
+
+    /**
+      * Number of projects in the root namespace where the repository size exceeds the limit
+      */
+    def repositorySizeExcessProjectCount: SelectionBuilder[Namespace, Int] = Field("repositorySizeExcessProjectCount", Scalar())
 
     /**
       * Indicates if users can request access to namespace
@@ -9022,6 +11872,16 @@ object graphql {
       */
     def temporaryStorageIncreaseEndsOn: SelectionBuilder[Namespace, Option[Time]] =
       Field("temporaryStorageIncreaseEndsOn", OptionOf(Scalar()))
+
+    /**
+      * Total repository size of all projects in the root namespace in bytes
+      */
+    def totalRepositorySize: SelectionBuilder[Namespace, Option[Double]] = Field("totalRepositorySize", OptionOf(Scalar()))
+
+    /**
+      * Total excess repository size of all projects in the root namespace in bytes
+      */
+    def totalRepositorySizeExcess: SelectionBuilder[Namespace, Option[Double]] = Field("totalRepositorySizeExcess", OptionOf(Scalar()))
 
     /**
       * Visibility of the namespace
@@ -9251,6 +12111,11 @@ object graphql {
     def readNote: SelectionBuilder[NotePermissions, Boolean] = Field("readNote", Scalar())
 
     /**
+      * Indicates the user can perform `reposition_note` on this resource
+      */
+    def repositionNote: SelectionBuilder[NotePermissions, Boolean] = Field("repositionNote", Scalar())
+
+    /**
       * Indicates the user can perform `resolve_note` on this resource
       */
     def resolveNote: SelectionBuilder[NotePermissions, Boolean] = Field("resolveNote", Scalar())
@@ -9330,6 +12195,94 @@ object graphql {
       Field("node", OptionOf(Obj(innerSelection)))
   }
 
+  type PackageFileRegistry
+
+  object PackageFileRegistry {
+
+    /**
+      * Timestamp when the PackageFileRegistry was created
+      */
+    def createdAt: SelectionBuilder[PackageFileRegistry, Option[Time]] = Field("createdAt", OptionOf(Scalar()))
+
+    /**
+      * ID of the PackageFileRegistry
+      */
+    def id: SelectionBuilder[PackageFileRegistry, String] = Field("id", Scalar())
+
+    /**
+      * Error message during sync of the PackageFileRegistry
+      */
+    def lastSyncFailure: SelectionBuilder[PackageFileRegistry, Option[String]] = Field("lastSyncFailure", OptionOf(Scalar()))
+
+    /**
+      * Timestamp of the most recent successful sync of the PackageFileRegistry
+      */
+    def lastSyncedAt: SelectionBuilder[PackageFileRegistry, Option[Time]] = Field("lastSyncedAt", OptionOf(Scalar()))
+
+    /**
+      * ID of the PackageFile
+      */
+    def packageFileId: SelectionBuilder[PackageFileRegistry, String] = Field("packageFileId", Scalar())
+
+    /**
+      * Timestamp after which the PackageFileRegistry should be resynced
+      */
+    def retryAt: SelectionBuilder[PackageFileRegistry, Option[Time]] = Field("retryAt", OptionOf(Scalar()))
+
+    /**
+      * Number of consecutive failed sync attempts of the PackageFileRegistry
+      */
+    def retryCount: SelectionBuilder[PackageFileRegistry, Option[Int]] = Field("retryCount", OptionOf(Scalar()))
+
+    /**
+      * Sync state of the PackageFileRegistry
+      */
+    def state: SelectionBuilder[PackageFileRegistry, Option[RegistryState]] = Field("state", OptionOf(Scalar()))
+  }
+
+  type PackageFileRegistryConnection
+
+  object PackageFileRegistryConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[PackageFileRegistryEdge, A]
+    ): SelectionBuilder[PackageFileRegistryConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[PackageFileRegistry, A]
+    ): SelectionBuilder[PackageFileRegistryConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[PackageFileRegistryConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type PackageFileRegistryEdge
+
+  object PackageFileRegistryEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[PackageFileRegistryEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[PackageFileRegistry, A]): SelectionBuilder[PackageFileRegistryEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
   type PageInfo
 
   object PageInfo {
@@ -9365,6 +12318,11 @@ object graphql {
     def beforeSha: SelectionBuilder[Pipeline, Option[String]] = Field("beforeSha", OptionOf(Scalar()))
 
     /**
+      * Specifies if a pipeline can be canceled
+      */
+    def cancelable: SelectionBuilder[Pipeline, Boolean] = Field("cancelable", Scalar())
+
+    /**
       * Timestamp of the pipeline's commit
       */
     def committedAt: SelectionBuilder[Pipeline, Option[Time]] = Field("committedAt", OptionOf(Scalar()))
@@ -9391,6 +12349,23 @@ object graphql {
       Field("detailedStatus", Obj(innerSelection))
 
     /**
+      * Pipelines this pipeline will trigger
+      */
+    def downstream[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[PipelineConnection, A]
+    ): SelectionBuilder[Pipeline, Option[A]] =
+      Field(
+        "downstream",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * Duration of the pipeline in seconds
       */
     def duration: SelectionBuilder[Pipeline, Option[Int]] = Field("duration", OptionOf(Scalar()))
@@ -9411,6 +12386,46 @@ object graphql {
     def iid: SelectionBuilder[Pipeline, String] = Field("iid", Scalar())
 
     /**
+      * Jobs belonging to the pipeline
+      */
+    def jobs[A](
+      securityReportTypes: Option[List[SecurityReportTypeEnum]] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[CiJobConnection, A]
+    ): SelectionBuilder[Pipeline, Option[A]] =
+      Field(
+        "jobs",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("securityReportTypes", securityReportTypes),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
+      * Relative path to the pipeline's page
+      */
+    def path: SelectionBuilder[Pipeline, Option[String]] = Field("path", OptionOf(Scalar()))
+
+    /**
+      * Project the pipeline belongs to
+      */
+    def project[A](innerSelection: SelectionBuilder[Project, A]): SelectionBuilder[Pipeline, Option[A]] =
+      Field("project", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Specifies if a pipeline can be retried
+      */
+    def retryable: SelectionBuilder[Pipeline, Boolean] = Field("retryable", Scalar())
+
+    /**
       * Vulnerability and scanned resource counts for each security scanner of the pipeline
       */
     def securityReportSummary[A](innerSelection: SelectionBuilder[SecurityReportSummary, A]): SelectionBuilder[Pipeline, Option[A]] =
@@ -9420,6 +12435,12 @@ object graphql {
       * SHA of the pipeline's commit
       */
     def sha: SelectionBuilder[Pipeline, String] = Field("sha", Scalar())
+
+    /**
+      * Job where pipeline was triggered from
+      */
+    def sourceJob[A](innerSelection: SelectionBuilder[CiJob, A]): SelectionBuilder[Pipeline, Option[A]] =
+      Field("sourceJob", OptionOf(Obj(innerSelection)))
 
     /**
       * Stages of the pipeline
@@ -9452,6 +12473,12 @@ object graphql {
       * Timestamp of the pipeline's last activity
       */
     def updatedAt: SelectionBuilder[Pipeline, Time] = Field("updatedAt", Scalar())
+
+    /**
+      * Pipeline that triggered the pipeline
+      */
+    def upstream[A](innerSelection: SelectionBuilder[Pipeline, A]): SelectionBuilder[Pipeline, Option[A]] =
+      Field("upstream", OptionOf(Obj(innerSelection)))
 
     /**
       * Pipeline user
@@ -9586,31 +12613,48 @@ object graphql {
   object Project {
 
     /**
+      * Size limit for the repository in bytes
+      */
+    def actualRepositorySizeLimit: SelectionBuilder[Project, Option[Double]] = Field("actualRepositorySizeLimit", OptionOf(Scalar()))
+
+    /**
       * A single Alert Management alert of the project
       */
     def alertManagementAlert[A](
       iid: Option[String] = None,
       statuses: Option[List[AlertManagementStatus]] = None,
       sort: Option[AlertManagementAlertSort] = None,
-      search: Option[String] = None
+      search: Option[String] = None,
+      assigneeUsername: Option[String] = None
     )(
       innerSelection: SelectionBuilder[AlertManagementAlert, A]
     ): SelectionBuilder[Project, Option[A]] =
       Field(
         "alertManagementAlert",
         OptionOf(Obj(innerSelection)),
-        arguments = List(Argument("iid", iid), Argument("statuses", statuses), Argument("sort", sort), Argument("search", search))
+        arguments = List(
+          Argument("iid", iid),
+          Argument("statuses", statuses),
+          Argument("sort", sort),
+          Argument("search", search),
+          Argument("assigneeUsername", assigneeUsername)
+        )
       )
 
     /**
       * Counts of alerts by status for the project
       */
     def alertManagementAlertStatusCounts[A](
-      search: Option[String] = None
+      search: Option[String] = None,
+      assigneeUsername: Option[String] = None
     )(
       innerSelection: SelectionBuilder[AlertManagementAlertStatusCountsType, A]
     ): SelectionBuilder[Project, Option[A]] =
-      Field("alertManagementAlertStatusCounts", OptionOf(Obj(innerSelection)), arguments = List(Argument("search", search)))
+      Field(
+        "alertManagementAlertStatusCounts",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("search", search), Argument("assigneeUsername", assigneeUsername))
+      )
 
     /**
       * Alert Management alerts of the project
@@ -9620,6 +12664,7 @@ object graphql {
       statuses: Option[List[AlertManagementStatus]] = None,
       sort: Option[AlertManagementAlertSort] = None,
       search: Option[String] = None,
+      assigneeUsername: Option[String] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -9635,11 +12680,29 @@ object graphql {
           Argument("statuses", statuses),
           Argument("sort", sort),
           Argument("search", search),
+          Argument("assigneeUsername", assigneeUsername),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
           Argument("last", last)
         )
+      )
+
+    /**
+      * Integrations which can receive alerts for the project
+      */
+    def alertManagementIntegrations[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[AlertManagementIntegrationConnection, A]
+    ): SelectionBuilder[Project, Option[A]] =
+      Field(
+        "alertManagementIntegrations",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
 
     /**
@@ -9665,14 +12728,14 @@ object graphql {
     /**
       * A single board of the project
       */
-    def board[A](id: Option[String] = None)(innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[Project, Option[A]] =
+    def board[A](id: BoardID)(innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[Project, Option[A]] =
       Field("board", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id)))
 
     /**
       * Boards of the project
       */
     def boards[A](
-      id: Option[String] = None,
+      id: Option[BoardID] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -9686,6 +12749,35 @@ object graphql {
         arguments =
           List(Argument("id", id), Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
+
+    /**
+      * Find a single cluster agent by name
+      */
+    def clusterAgent[A](name: String)(innerSelection: SelectionBuilder[ClusterAgent, A]): SelectionBuilder[Project, Option[A]] =
+      Field("clusterAgent", OptionOf(Obj(innerSelection)), arguments = List(Argument("name", name)))
+
+    /**
+      * Cluster agents associated with the project
+      */
+    def clusterAgents[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[ClusterAgentConnection, A]
+    ): SelectionBuilder[Project, Option[A]] =
+      Field(
+        "clusterAgents",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Code coverages summary associated with the project. Available only when feature flag `group_coverage_data_report` is enabled
+      */
+    def codeCoverageSummary[A](innerSelection: SelectionBuilder[CodeCoverageSummary, A]): SelectionBuilder[Project, Option[A]] =
+      Field("codeCoverageSummary", OptionOf(Obj(innerSelection)))
 
     /**
       * Compliance frameworks associated with the project
@@ -9714,6 +12806,30 @@ object graphql {
       * Indicates if the project stores Docker container images in a container registry
       */
     def containerRegistryEnabled: SelectionBuilder[Project, Option[Boolean]] = Field("containerRegistryEnabled", OptionOf(Scalar()))
+
+    /**
+      * Container repositories of the project
+      */
+    def containerRepositories[A](
+      name: Option[String] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[ContainerRepositoryConnection, A]
+    ): SelectionBuilder[Project, Option[A]] =
+      Field(
+        "containerRepositories",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("name", name),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
 
     /**
       * Timestamp of the project creation
@@ -9762,6 +12878,16 @@ object graphql {
         OptionOf(Obj(innerSelection)),
         arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
+
+    /**
+      * DAST Site Validation associated with the project
+      */
+    def dastSiteValidation[A](
+      targetUrl: String
+    )(
+      innerSelection: SelectionBuilder[DastSiteValidation, A]
+    ): SelectionBuilder[Project, Option[A]] =
+      Field("dastSiteValidation", OptionOf(Obj(innerSelection)), arguments = List(Argument("targetUrl", targetUrl)))
 
     /**
       * Short description of the project
@@ -9862,7 +12988,9 @@ object graphql {
       iids: Option[List[String]] = None,
       labelName: Option[List[Option[String]]] = None,
       milestoneTitle: Option[List[Option[String]]] = None,
+      authorUsername: Option[String] = None,
       assigneeUsername: Option[String] = None,
+      assigneeUsernames: Option[List[String]] = None,
       assigneeId: Option[String] = None,
       createdBefore: Option[Time] = None,
       createdAfter: Option[Time] = None,
@@ -9874,7 +13002,8 @@ object graphql {
       types: Option[List[IssueType]] = None,
       state: Option[IssuableState] = None,
       sort: Option[IssueSort] = None,
-      iterationId: Option[List[Option[String]]] = None
+      iterationId: Option[List[Option[String]]] = None,
+      epicId: Option[String] = None
     )(
       innerSelection: SelectionBuilder[Issue, A]
     ): SelectionBuilder[Project, Option[A]] =
@@ -9886,7 +13015,9 @@ object graphql {
           Argument("iids", iids),
           Argument("labelName", labelName),
           Argument("milestoneTitle", milestoneTitle),
+          Argument("authorUsername", authorUsername),
           Argument("assigneeUsername", assigneeUsername),
+          Argument("assigneeUsernames", assigneeUsernames),
           Argument("assigneeId", assigneeId),
           Argument("createdBefore", createdBefore),
           Argument("createdAfter", createdAfter),
@@ -9898,7 +13029,8 @@ object graphql {
           Argument("types", types),
           Argument("state", state),
           Argument("sort", sort),
-          Argument("iterationId", iterationId)
+          Argument("iterationId", iterationId),
+          Argument("epicId", epicId)
         )
       )
 
@@ -9910,7 +13042,9 @@ object graphql {
       iids: Option[List[String]] = None,
       labelName: Option[List[Option[String]]] = None,
       milestoneTitle: Option[List[Option[String]]] = None,
+      authorUsername: Option[String] = None,
       assigneeUsername: Option[String] = None,
+      assigneeUsernames: Option[List[String]] = None,
       assigneeId: Option[String] = None,
       createdBefore: Option[Time] = None,
       createdAfter: Option[Time] = None,
@@ -9931,7 +13065,9 @@ object graphql {
           Argument("iids", iids),
           Argument("labelName", labelName),
           Argument("milestoneTitle", milestoneTitle),
+          Argument("authorUsername", authorUsername),
           Argument("assigneeUsername", assigneeUsername),
+          Argument("assigneeUsernames", assigneeUsernames),
           Argument("assigneeId", assigneeId),
           Argument("createdBefore", createdBefore),
           Argument("createdAfter", createdAfter),
@@ -9952,7 +13088,9 @@ object graphql {
       iids: Option[List[String]] = None,
       labelName: Option[List[Option[String]]] = None,
       milestoneTitle: Option[List[Option[String]]] = None,
+      authorUsername: Option[String] = None,
       assigneeUsername: Option[String] = None,
+      assigneeUsernames: Option[List[String]] = None,
       assigneeId: Option[String] = None,
       createdBefore: Option[Time] = None,
       createdAfter: Option[Time] = None,
@@ -9965,6 +13103,7 @@ object graphql {
       state: Option[IssuableState] = None,
       sort: Option[IssueSort] = None,
       iterationId: Option[List[Option[String]]] = None,
+      epicId: Option[String] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -9980,7 +13119,9 @@ object graphql {
           Argument("iids", iids),
           Argument("labelName", labelName),
           Argument("milestoneTitle", milestoneTitle),
+          Argument("authorUsername", authorUsername),
           Argument("assigneeUsername", assigneeUsername),
+          Argument("assigneeUsernames", assigneeUsernames),
           Argument("assigneeId", assigneeId),
           Argument("createdBefore", createdBefore),
           Argument("createdAfter", createdAfter),
@@ -9993,6 +13134,7 @@ object graphql {
           Argument("state", state),
           Argument("sort", sort),
           Argument("iterationId", iterationId),
+          Argument("epicId", epicId),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -10011,6 +13153,7 @@ object graphql {
     def iterations[A](
       startDate: Option[Time] = None,
       endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
       state: Option[IterationState] = None,
       title: Option[String] = None,
       id: Option[String] = None,
@@ -10029,6 +13172,7 @@ object graphql {
         arguments = List(
           Argument("startDate", startDate),
           Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
           Argument("state", state),
           Argument("title", title),
           Argument("id", id),
@@ -10174,8 +13318,12 @@ object graphql {
     def milestones[A](
       startDate: Option[Time] = None,
       endDate: Option[Time] = None,
+      timeframe: Option[Timeframe] = None,
       ids: Option[List[String]] = None,
       state: Option[MilestoneStateEnum] = None,
+      title: Option[String] = None,
+      searchTitle: Option[String] = None,
+      containingDate: Option[Time] = None,
       includeAncestors: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
@@ -10190,8 +13338,12 @@ object graphql {
         arguments = List(
           Argument("startDate", startDate),
           Argument("endDate", endDate),
+          Argument("timeframe", timeframe),
           Argument("ids", ids),
           Argument("state", state),
+          Argument("title", title),
+          Argument("searchTitle", searchTitle),
+          Argument("containingDate", containingDate),
           Argument("includeAncestors", includeAncestors),
           Argument("after", after),
           Argument("before", before),
@@ -10334,6 +13486,7 @@ object graphql {
       * Releases of the project
       */
     def releases[A](
+      sort: Option[ReleaseSort] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -10344,7 +13497,13 @@ object graphql {
       Field(
         "releases",
         OptionOf(Obj(innerSelection)),
-        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+        arguments = List(
+          Argument("sort", sort),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
       )
 
     /**
@@ -10359,12 +13518,17 @@ object graphql {
       Field("repository", OptionOf(Obj(innerSelection)))
 
     /**
+      * Size of repository that exceeds the limit in bytes
+      */
+    def repositorySizeExcess: SelectionBuilder[Project, Option[Double]] = Field("repositorySizeExcess", OptionOf(Scalar()))
+
+    /**
       * Indicates if users can request member access to the project
       */
     def requestAccessEnabled: SelectionBuilder[Project, Option[Boolean]] = Field("requestAccessEnabled", OptionOf(Scalar()))
 
     /**
-      * Find a single requirement. Available only when feature flag `requirements_management` is enabled.
+      * Find a single requirement
       */
     def requirement[A](
       iid: Option[String] = None,
@@ -10396,7 +13560,7 @@ object graphql {
       Field("requirementStatesCount", OptionOf(Obj(innerSelection)))
 
     /**
-      * Find requirements. Available only when feature flag `requirements_management` is enabled.
+      * Find requirements
       */
     def requirements[A](
       iid: Option[String] = None,
@@ -10449,7 +13613,11 @@ object graphql {
     /**
       * Detailed version of a Sentry error on the project
       */
-    def sentryDetailedError[A](id: String)(innerSelection: SelectionBuilder[SentryDetailedError, A]): SelectionBuilder[Project, Option[A]] =
+    def sentryDetailedError[A](
+      id: GitlabErrorTrackingDetailedErrorID
+    )(
+      innerSelection: SelectionBuilder[SentryDetailedError, A]
+    ): SelectionBuilder[Project, Option[A]] =
       Field("sentryDetailedError", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id)))
 
     /**
@@ -10503,7 +13671,7 @@ object graphql {
       * Snippets of the project
       */
     def snippets[A](
-      ids: Option[List[String]] = None,
+      ids: Option[List[SnippetID]] = None,
       visibility: Option[VisibilityScopesEnum] = None,
       after: Option[String] = None,
       before: Option[String] = None,
@@ -10557,6 +13725,23 @@ object graphql {
     def tagList: SelectionBuilder[Project, Option[String]] = Field("tagList", OptionOf(Scalar()))
 
     /**
+      * Terraform states associated with the project
+      */
+    def terraformStates[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[TerraformStateConnection, A]
+    ): SelectionBuilder[Project, Option[A]] =
+      Field(
+        "terraformStates",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * Permissions for the current user on the resource
       */
     def userPermissions[A](innerSelection: SelectionBuilder[ProjectPermissions, A]): SelectionBuilder[Project, A] =
@@ -10576,6 +13761,9 @@ object graphql {
       severity: Option[List[VulnerabilitySeverity]] = None,
       state: Option[List[VulnerabilityState]] = None,
       scanner: Option[List[String]] = None,
+      sort: Option[VulnerabilitySort] = None,
+      hasResolution: Option[Boolean] = None,
+      hasIssues: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -10592,6 +13780,35 @@ object graphql {
           Argument("severity", severity),
           Argument("state", state),
           Argument("scanner", scanner),
+          Argument("sort", sort),
+          Argument("hasResolution", hasResolution),
+          Argument("hasIssues", hasIssues),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
+      * Number of vulnerabilities per day for the project
+      */
+    def vulnerabilitiesCountByDay[A](
+      startDate: ISO8601Date,
+      endDate: ISO8601Date,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[VulnerabilitiesCountByDayConnection, A]
+    ): SelectionBuilder[Project, Option[A]] =
+      Field(
+        "vulnerabilitiesCountByDay",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("startDate", startDate),
+          Argument("endDate", endDate),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -11059,6 +14276,105 @@ object graphql {
     def id: SelectionBuilder[PrometheusAlert, String] = Field("id", Scalar())
   }
 
+  type PrometheusIntegrationCreatePayload
+
+  object PrometheusIntegrationCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[PrometheusIntegrationCreatePayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[PrometheusIntegrationCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The newly created integration
+      */
+    def integration[A](
+      innerSelection: SelectionBuilder[AlertManagementPrometheusIntegration, A]
+    ): SelectionBuilder[PrometheusIntegrationCreatePayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type PrometheusIntegrationResetTokenPayload
+
+  object PrometheusIntegrationResetTokenPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[PrometheusIntegrationResetTokenPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[PrometheusIntegrationResetTokenPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The newly created integration
+      */
+    def integration[A](
+      innerSelection: SelectionBuilder[AlertManagementPrometheusIntegration, A]
+    ): SelectionBuilder[PrometheusIntegrationResetTokenPayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type PrometheusIntegrationUpdatePayload
+
+  object PrometheusIntegrationUpdatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[PrometheusIntegrationUpdatePayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[PrometheusIntegrationUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The newly created integration
+      */
+    def integration[A](
+      innerSelection: SelectionBuilder[AlertManagementPrometheusIntegration, A]
+    ): SelectionBuilder[PrometheusIntegrationUpdatePayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type PromoteToEpicPayload
+
+  object PromoteToEpicPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[PromoteToEpicPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * The epic after issue promotion
+      */
+    def epic[A](innerSelection: SelectionBuilder[Epic, A]): SelectionBuilder[PromoteToEpicPayload, Option[A]] =
+      Field("epic", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[PromoteToEpicPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The issue after mutation
+      */
+    def issue[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[PromoteToEpicPayload, Option[A]] =
+      Field("issue", OptionOf(Obj(innerSelection)))
+  }
+
   type Release
 
   object Release {
@@ -11155,11 +14471,21 @@ object graphql {
       * Relative web path to the tag associated with the release
       */
     def tagPath: SelectionBuilder[Release, Option[String]] = Field("tagPath", OptionOf(Scalar()))
+
+    /**
+      * Indicates the release is an upcoming release
+      */
+    def upcomingRelease: SelectionBuilder[Release, Option[Boolean]] = Field("upcomingRelease", OptionOf(Scalar()))
   }
 
   type ReleaseAssetLink
 
   object ReleaseAssetLink {
+
+    /**
+      * Direct asset URL of the link
+      */
+    def directAssetUrl: SelectionBuilder[ReleaseAssetLink, Option[String]] = Field("directAssetUrl", OptionOf(Scalar()))
 
     /**
       * Indicates the link points to an external resource
@@ -11303,6 +14629,27 @@ object graphql {
       Field("pageInfo", Obj(innerSelection))
   }
 
+  type ReleaseCreatePayload
+
+  object ReleaseCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[ReleaseCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[ReleaseCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The release after mutation
+      */
+    def release[A](innerSelection: SelectionBuilder[Release, A]): SelectionBuilder[ReleaseCreatePayload, Option[A]] =
+      Field("release", OptionOf(Obj(innerSelection)))
+  }
+
   type ReleaseEdge
 
   object ReleaseEdge {
@@ -11392,19 +14739,34 @@ object graphql {
   object ReleaseLinks {
 
     /**
+      * HTTP URL of the issues page, filtered by this release and `state=closed`
+      */
+    def closedIssuesUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("closedIssuesUrl", OptionOf(Scalar()))
+
+    /**
+      * HTTP URL of the merge request page , filtered by this release and `state=closed`
+      */
+    def closedMergeRequestsUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("closedMergeRequestsUrl", OptionOf(Scalar()))
+
+    /**
       * HTTP URL of the release's edit page
       */
     def editUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("editUrl", OptionOf(Scalar()))
 
     /**
-      * HTTP URL of the issues page filtered by this release
+      * HTTP URL of the merge request page , filtered by this release and `state=merged`
       */
-    def issuesUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("issuesUrl", OptionOf(Scalar()))
+    def mergedMergeRequestsUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("mergedMergeRequestsUrl", OptionOf(Scalar()))
 
     /**
-      * HTTP URL of the merge request page filtered by this release
+      * HTTP URL of the issues page, filtered by this release and `state=open`
       */
-    def mergeRequestsUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("mergeRequestsUrl", OptionOf(Scalar()))
+    def openedIssuesUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("openedIssuesUrl", OptionOf(Scalar()))
+
+    /**
+      * HTTP URL of the merge request page, filtered by this release and `state=open`
+      */
+    def openedMergeRequestsUrl: SelectionBuilder[ReleaseLinks, Option[String]] = Field("openedMergeRequestsUrl", OptionOf(Scalar()))
 
     /**
       * HTTP URL of the release
@@ -11504,6 +14866,27 @@ object graphql {
     def errors: SelectionBuilder[RemoveProjectFromSecurityDashboardPayload, List[String]] = Field("errors", ListOf(Scalar()))
   }
 
+  type RepositionImageDiffNotePayload
+
+  object RepositionImageDiffNotePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[RepositionImageDiffNotePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[RepositionImageDiffNotePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The note after mutation
+      */
+    def note[A](innerSelection: SelectionBuilder[Note, A]): SelectionBuilder[RepositionImageDiffNotePayload, Option[A]] =
+      Field("note", OptionOf(Obj(innerSelection)))
+  }
+
   type Repository
 
   object Repository {
@@ -11556,6 +14939,16 @@ object graphql {
     def createdAt: SelectionBuilder[Requirement, Time] = Field("createdAt", Scalar())
 
     /**
+      * Description of the requirement
+      */
+    def description: SelectionBuilder[Requirement, Option[String]] = Field("description", OptionOf(Scalar()))
+
+    /**
+      * The GitLab Flavored Markdown rendering of `description`
+      */
+    def descriptionHtml: SelectionBuilder[Requirement, Option[String]] = Field("descriptionHtml", OptionOf(Scalar()))
+
+    /**
       * ID of the requirement
       */
     def id: SelectionBuilder[Requirement, String] = Field("id", Scalar())
@@ -11564,6 +14957,17 @@ object graphql {
       * Internal ID of the requirement
       */
     def iid: SelectionBuilder[Requirement, String] = Field("iid", Scalar())
+
+    /**
+      * Indicates if latest test report was created by user
+      */
+    def lastTestReportManuallyCreated: SelectionBuilder[Requirement, Option[Boolean]] =
+      Field("lastTestReportManuallyCreated", OptionOf(Scalar()))
+
+    /**
+      * Latest requirement test report state
+      */
+    def lastTestReportState: SelectionBuilder[Requirement, Option[TestReportState]] = Field("lastTestReportState", OptionOf(Scalar()))
 
     /**
       * Project to which the requirement belongs
@@ -11603,6 +15007,11 @@ object graphql {
       * Title of the requirement
       */
     def title: SelectionBuilder[Requirement, Option[String]] = Field("title", OptionOf(Scalar()))
+
+    /**
+      * The GitLab Flavored Markdown rendering of `title`
+      */
+    def titleHtml: SelectionBuilder[Requirement, Option[String]] = Field("titleHtml", OptionOf(Scalar()))
 
     /**
       * Timestamp of when the requirement was last updated
@@ -11700,6 +15109,30 @@ object graphql {
     def opened: SelectionBuilder[RequirementStatesCount, Option[Int]] = Field("opened", OptionOf(Scalar()))
   }
 
+  type RevertVulnerabilityToDetectedPayload
+
+  object RevertVulnerabilityToDetectedPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[RevertVulnerabilityToDetectedPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[RevertVulnerabilityToDetectedPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The vulnerability after revert
+      */
+    def vulnerability[A](
+      innerSelection: SelectionBuilder[Vulnerability, A]
+    ): SelectionBuilder[RevertVulnerabilityToDetectedPayload, Option[A]] = Field("vulnerability", OptionOf(Obj(innerSelection)))
+
+  }
+
   type RootStorageStatistics
 
   object RootStorageStatistics {
@@ -11718,6 +15151,11 @@ object graphql {
       * The packages size in bytes
       */
     def packagesSize: SelectionBuilder[RootStorageStatistics, Double] = Field("packagesSize", Scalar())
+
+    /**
+      * The CI pipeline artifacts size in bytes
+      */
+    def pipelineArtifactsSize: SelectionBuilder[RootStorageStatistics, Double] = Field("pipelineArtifactsSize", Scalar())
 
     /**
       * The Git repository size in bytes
@@ -11758,6 +15196,151 @@ object graphql {
       * URL of the pipeline that was created.
       */
     def pipelineUrl: SelectionBuilder[RunDASTScanPayload, Option[String]] = Field("pipelineUrl", OptionOf(Scalar()))
+  }
+
+  type RunnerArchitecture
+
+  object RunnerArchitecture {
+
+    /**
+      * Download location for the runner for the platform architecture
+      */
+    def downloadLocation: SelectionBuilder[RunnerArchitecture, String] = Field("downloadLocation", Scalar())
+
+    /**
+      * Name of the runner platform architecture
+      */
+    def name: SelectionBuilder[RunnerArchitecture, String] = Field("name", Scalar())
+  }
+
+  type RunnerArchitectureConnection
+
+  object RunnerArchitectureConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[RunnerArchitectureEdge, A]
+    ): SelectionBuilder[RunnerArchitectureConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[RunnerArchitecture, A]
+    ): SelectionBuilder[RunnerArchitectureConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[RunnerArchitectureConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type RunnerArchitectureEdge
+
+  object RunnerArchitectureEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[RunnerArchitectureEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[RunnerArchitecture, A]): SelectionBuilder[RunnerArchitectureEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type RunnerPlatform
+
+  object RunnerPlatform {
+
+    /**
+      * Runner architectures supported for the platform
+      */
+    def architectures[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[RunnerArchitectureConnection, A]
+    ): SelectionBuilder[RunnerPlatform, Option[A]] =
+      Field(
+        "architectures",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Human readable name of the runner platform
+      */
+    def humanReadableName: SelectionBuilder[RunnerPlatform, String] = Field("humanReadableName", Scalar())
+
+    /**
+      * Name slug of the runner platform
+      */
+    def name: SelectionBuilder[RunnerPlatform, String] = Field("name", Scalar())
+  }
+
+  type RunnerPlatformConnection
+
+  object RunnerPlatformConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[RunnerPlatformEdge, A]
+    ): SelectionBuilder[RunnerPlatformConnection, Option[List[Option[A]]]] = Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[RunnerPlatform, A]): SelectionBuilder[RunnerPlatformConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[RunnerPlatformConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type RunnerPlatformEdge
+
+  object RunnerPlatformEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[RunnerPlatformEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[RunnerPlatform, A]): SelectionBuilder[RunnerPlatformEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type RunnerSetup
+
+  object RunnerSetup {
+
+    /**
+      * Instructions for installing the runner on the specified architecture
+      */
+    def installInstructions: SelectionBuilder[RunnerSetup, String] = Field("installInstructions", Scalar())
+
+    /**
+      * Instructions for registering the runner
+      */
+    def registerInstructions: SelectionBuilder[RunnerSetup, Option[String]] = Field("registerInstructions", OptionOf(Scalar()))
   }
 
   type SastCiConfiguration
@@ -11822,24 +15405,42 @@ object graphql {
   object SastCiConfigurationAnalyzersEntity {
 
     /**
-      * Analyzer description that is displayed on the form.
+      * Analyzer description that is displayed on the form
       */
     def description: SelectionBuilder[SastCiConfigurationAnalyzersEntity, Option[String]] = Field("description", OptionOf(Scalar()))
 
     /**
-      * Indicates whether an analyzer is enabled.
+      * Indicates whether an analyzer is enabled
       */
     def enabled: SelectionBuilder[SastCiConfigurationAnalyzersEntity, Option[Boolean]] = Field("enabled", OptionOf(Scalar()))
 
     /**
-      * Analyzer label used in the config UI.
+      * Analyzer label used in the config UI
       */
     def label: SelectionBuilder[SastCiConfigurationAnalyzersEntity, Option[String]] = Field("label", OptionOf(Scalar()))
 
     /**
-      * Name of the analyzer.
+      * Name of the analyzer
       */
     def name: SelectionBuilder[SastCiConfigurationAnalyzersEntity, Option[String]] = Field("name", OptionOf(Scalar()))
+
+    /**
+      * List of supported variables
+      */
+    def variables[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[SastCiConfigurationEntityConnection, A]
+    ): SelectionBuilder[SastCiConfigurationAnalyzersEntity, Option[A]] =
+      Field(
+        "variables",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
   }
 
   type SastCiConfigurationAnalyzersEntityConnection
@@ -12110,6 +15711,13 @@ object graphql {
   type SecurityReportSummary
 
   object SecurityReportSummary {
+
+    /**
+      * Aggregated counts for the api_fuzzing scan
+      */
+    def apiFuzzing[A](
+      innerSelection: SelectionBuilder[SecurityReportSummarySection, A]
+    ): SelectionBuilder[SecurityReportSummary, Option[A]] = Field("apiFuzzing", OptionOf(Obj(innerSelection)))
 
     /**
       * Aggregated counts for the container_scanning scan
@@ -12462,7 +16070,7 @@ object graphql {
       * Detailed version of a Sentry error on the project
       */
     def detailedError[A](
-      id: String
+      id: GitlabErrorTrackingDetailedErrorID
     )(
       innerSelection: SelectionBuilder[SentryDetailedError, A]
     ): SelectionBuilder[SentryErrorCollection, Option[A]] =
@@ -12472,7 +16080,7 @@ object graphql {
       * Stack Trace of Sentry Error
       */
     def errorStackTrace[A](
-      id: String
+      id: GitlabErrorTrackingDetailedErrorID
     )(
       innerSelection: SelectionBuilder[SentryErrorStackTrace, A]
     ): SelectionBuilder[SentryErrorCollection, Option[A]] =
@@ -12723,8 +16331,26 @@ object graphql {
     /**
       * Snippet blobs
       */
-    def blobs[A](innerSelection: SelectionBuilder[SnippetBlob, A]): SelectionBuilder[Snippet, List[A]] =
-      Field("blobs", ListOf(Obj(innerSelection)))
+    def blobs[A](
+      paths: Option[List[String]] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[SnippetBlobConnection, A]
+    ): SelectionBuilder[Snippet, Option[A]] =
+      Field(
+        "blobs",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("paths", paths),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
 
     /**
       * Timestamp this snippet was created
@@ -12771,7 +16397,7 @@ object graphql {
     /**
       * ID of the snippet
       */
-    def id: SelectionBuilder[Snippet, String] = Field("id", Scalar())
+    def id: SelectionBuilder[Snippet, SnippetID] = Field("id", Scalar())
 
     /**
       * All notes on this noteable
@@ -12900,6 +16526,45 @@ object graphql {
     def size: SelectionBuilder[SnippetBlob, Int] = Field("size", Scalar())
   }
 
+  type SnippetBlobConnection
+
+  object SnippetBlobConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](innerSelection: SelectionBuilder[SnippetBlobEdge, A]): SelectionBuilder[SnippetBlobConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[SnippetBlob, A]): SelectionBuilder[SnippetBlobConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[SnippetBlobConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type SnippetBlobEdge
+
+  object SnippetBlobEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[SnippetBlobEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[SnippetBlob, A]): SelectionBuilder[SnippetBlobEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
   type SnippetBlobViewer
 
   object SnippetBlobViewer {
@@ -13014,6 +16679,36 @@ object graphql {
     def updateSnippet: SelectionBuilder[SnippetPermissions, Boolean] = Field("updateSnippet", Scalar())
   }
 
+  type StatusAction
+
+  object StatusAction {
+
+    /**
+      * Title for the button, for example: Retry this job
+      */
+    def buttonTitle: SelectionBuilder[StatusAction, Option[String]] = Field("buttonTitle", OptionOf(Scalar()))
+
+    /**
+      * Icon used in the action button
+      */
+    def icon: SelectionBuilder[StatusAction, Option[String]] = Field("icon", OptionOf(Scalar()))
+
+    /**
+      * Method for the action, for example: :post
+      */
+    def method: SelectionBuilder[StatusAction, Option[String]] = Field("method", OptionOf(Scalar()))
+
+    /**
+      * Path for the action
+      */
+    def path: SelectionBuilder[StatusAction, Option[String]] = Field("path", OptionOf(Scalar()))
+
+    /**
+      * Title for the action, for example: Retry
+      */
+    def title: SelectionBuilder[StatusAction, Option[String]] = Field("title", OptionOf(Scalar()))
+  }
+
   type Submodule
 
   object Submodule {
@@ -13113,6 +16808,260 @@ object graphql {
     def count: SelectionBuilder[TaskCompletionStatus, Int] = Field("count", Scalar())
   }
 
+  type TerraformState
+
+  object TerraformState {
+
+    /**
+      * Timestamp the Terraform state was created
+      */
+    def createdAt: SelectionBuilder[TerraformState, Time] = Field("createdAt", Scalar())
+
+    /**
+      * ID of the Terraform state
+      */
+    def id: SelectionBuilder[TerraformState, String] = Field("id", Scalar())
+
+    /**
+      * The latest version of the Terraform state
+      */
+    def latestVersion[A](innerSelection: SelectionBuilder[TerraformStateVersion, A]): SelectionBuilder[TerraformState, Option[A]] =
+      Field("latestVersion", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Timestamp the Terraform state was locked
+      */
+    def lockedAt: SelectionBuilder[TerraformState, Option[Time]] = Field("lockedAt", OptionOf(Scalar()))
+
+    /**
+      * The user currently holding a lock on the Terraform state
+      */
+    def lockedByUser[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[TerraformState, Option[A]] =
+      Field("lockedByUser", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Name of the Terraform state
+      */
+    def name: SelectionBuilder[TerraformState, String] = Field("name", Scalar())
+
+    /**
+      * Timestamp the Terraform state was updated
+      */
+    def updatedAt: SelectionBuilder[TerraformState, Time] = Field("updatedAt", Scalar())
+  }
+
+  type TerraformStateConnection
+
+  object TerraformStateConnection {
+
+    /**
+      * Total count of collection
+      */
+    def count: SelectionBuilder[TerraformStateConnection, Int] = Field("count", Scalar())
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[TerraformStateEdge, A]
+    ): SelectionBuilder[TerraformStateConnection, Option[List[Option[A]]]] = Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[TerraformState, A]): SelectionBuilder[TerraformStateConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[TerraformStateConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type TerraformStateDeletePayload
+
+  object TerraformStateDeletePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[TerraformStateDeletePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[TerraformStateDeletePayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type TerraformStateEdge
+
+  object TerraformStateEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[TerraformStateEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[TerraformState, A]): SelectionBuilder[TerraformStateEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type TerraformStateLockPayload
+
+  object TerraformStateLockPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[TerraformStateLockPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[TerraformStateLockPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type TerraformStateUnlockPayload
+
+  object TerraformStateUnlockPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[TerraformStateUnlockPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[TerraformStateUnlockPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type TerraformStateVersion
+
+  object TerraformStateVersion {
+
+    /**
+      * Timestamp the version was created
+      */
+    def createdAt: SelectionBuilder[TerraformStateVersion, Time] = Field("createdAt", Scalar())
+
+    /**
+      * The user that created this version
+      */
+    def createdByUser[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[TerraformStateVersion, Option[A]] =
+      Field("createdByUser", OptionOf(Obj(innerSelection)))
+
+    /**
+      * ID of the Terraform state version
+      */
+    def id: SelectionBuilder[TerraformStateVersion, String] = Field("id", Scalar())
+
+    /**
+      * The job that created this version
+      */
+    def job[A](innerSelection: SelectionBuilder[CiJob, A]): SelectionBuilder[TerraformStateVersion, Option[A]] =
+      Field("job", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Timestamp the version was updated
+      */
+    def updatedAt: SelectionBuilder[TerraformStateVersion, Time] = Field("updatedAt", Scalar())
+  }
+
+  type TerraformStateVersionRegistry
+
+  object TerraformStateVersionRegistry {
+
+    /**
+      * Timestamp when the TerraformStateVersionRegistry was created
+      */
+    def createdAt: SelectionBuilder[TerraformStateVersionRegistry, Option[Time]] = Field("createdAt", OptionOf(Scalar()))
+
+    /**
+      * ID of the TerraformStateVersionRegistry
+      */
+    def id: SelectionBuilder[TerraformStateVersionRegistry, String] = Field("id", Scalar())
+
+    /**
+      * Error message during sync of the TerraformStateVersionRegistry
+      */
+    def lastSyncFailure: SelectionBuilder[TerraformStateVersionRegistry, Option[String]] = Field("lastSyncFailure", OptionOf(Scalar()))
+
+    /**
+      * Timestamp of the most recent successful sync of the TerraformStateVersionRegistry
+      */
+    def lastSyncedAt: SelectionBuilder[TerraformStateVersionRegistry, Option[Time]] = Field("lastSyncedAt", OptionOf(Scalar()))
+
+    /**
+      * Timestamp after which the TerraformStateVersionRegistry should be resynced
+      */
+    def retryAt: SelectionBuilder[TerraformStateVersionRegistry, Option[Time]] = Field("retryAt", OptionOf(Scalar()))
+
+    /**
+      * Number of consecutive failed sync attempts of the TerraformStateVersionRegistry
+      */
+    def retryCount: SelectionBuilder[TerraformStateVersionRegistry, Option[Int]] = Field("retryCount", OptionOf(Scalar()))
+
+    /**
+      * Sync state of the TerraformStateVersionRegistry
+      */
+    def state: SelectionBuilder[TerraformStateVersionRegistry, Option[RegistryState]] = Field("state", OptionOf(Scalar()))
+
+    /**
+      * ID of the terraform state version
+      */
+    def terraformStateVersionId: SelectionBuilder[TerraformStateVersionRegistry, String] = Field("terraformStateVersionId", Scalar())
+  }
+
+  type TerraformStateVersionRegistryConnection
+
+  object TerraformStateVersionRegistryConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[TerraformStateVersionRegistryEdge, A]
+    ): SelectionBuilder[TerraformStateVersionRegistryConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[TerraformStateVersionRegistry, A]
+    ): SelectionBuilder[TerraformStateVersionRegistryConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[TerraformStateVersionRegistryConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type TerraformStateVersionRegistryEdge
+
+  object TerraformStateVersionRegistryEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[TerraformStateVersionRegistryEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](
+      innerSelection: SelectionBuilder[TerraformStateVersionRegistry, A]
+    ): SelectionBuilder[TerraformStateVersionRegistryEdge, Option[A]] = Field("node", OptionOf(Obj(innerSelection)))
+
+  }
+
   type TestReport
 
   object TestReport {
@@ -13178,6 +17127,61 @@ object graphql {
       Field("node", OptionOf(Obj(innerSelection)))
   }
 
+  type TimeReportStats
+
+  object TimeReportStats {
+
+    /**
+      * Completed issues metrics
+      */
+    def complete[A](innerSelection: SelectionBuilder[TimeboxMetrics, A]): SelectionBuilder[TimeReportStats, Option[A]] =
+      Field("complete", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Incomplete issues metrics
+      */
+    def incomplete[A](innerSelection: SelectionBuilder[TimeboxMetrics, A]): SelectionBuilder[TimeReportStats, Option[A]] =
+      Field("incomplete", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Total issues metrics
+      */
+    def total[A](innerSelection: SelectionBuilder[TimeboxMetrics, A]): SelectionBuilder[TimeReportStats, Option[A]] =
+      Field("total", OptionOf(Obj(innerSelection)))
+  }
+
+  type TimeboxMetrics
+
+  object TimeboxMetrics {
+
+    /**
+      * The count metric
+      */
+    def count: SelectionBuilder[TimeboxMetrics, Int] = Field("count", Scalar())
+
+    /**
+      * The weight metric
+      */
+    def weight: SelectionBuilder[TimeboxMetrics, Int] = Field("weight", Scalar())
+  }
+
+  type TimeboxReport
+
+  object TimeboxReport {
+
+    /**
+      * Daily scope and completed totals for burnup charts
+      */
+    def burnupTimeSeries[A](innerSelection: SelectionBuilder[BurnupChartDailyTotals, A]): SelectionBuilder[TimeboxReport, Option[List[A]]] =
+      Field("burnupTimeSeries", OptionOf(ListOf(Obj(innerSelection))))
+
+    /**
+      * Represents the time report stats for the timebox
+      */
+    def stats[A](innerSelection: SelectionBuilder[TimeReportStats, A]): SelectionBuilder[TimeboxReport, Option[A]] =
+      Field("stats", OptionOf(Obj(innerSelection)))
+  }
+
   type Timelog
 
   object Timelog {
@@ -13193,6 +17197,12 @@ object graphql {
       */
     def issue[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[Timelog, Option[A]] =
       Field("issue", OptionOf(Obj(innerSelection)))
+
+    /**
+      * The note where the quick action to add the logged time was executed
+      */
+    def note[A](innerSelection: SelectionBuilder[Note, A]): SelectionBuilder[Timelog, Option[A]] =
+      Field("note", OptionOf(Obj(innerSelection)))
 
     /**
       * Timestamp of when the time tracked was spent at
@@ -13259,7 +17269,7 @@ object graphql {
     def action: SelectionBuilder[Todo, TodoActionEnum] = Field("action", Scalar())
 
     /**
-      * The owner of this todo
+      * The author of this todo
       */
     def author[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[Todo, A] = Field("author", Obj(innerSelection))
 
@@ -13324,6 +17334,27 @@ object graphql {
       Field("pageInfo", Obj(innerSelection))
   }
 
+  type TodoCreatePayload
+
+  object TodoCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[TodoCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[TodoCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The to-do created
+      */
+    def todo[A](innerSelection: SelectionBuilder[Todo, A]): SelectionBuilder[TodoCreatePayload, Option[A]] =
+      Field("todo", OptionOf(Obj(innerSelection)))
+  }
+
   type TodoEdge
 
   object TodoEdge {
@@ -13384,7 +17415,7 @@ object graphql {
       * The ids of the updated todo items. Deprecated in 13.2: Use todos
       */
     @deprecated("Use todos. Deprecated in 13.2", "")
-    def updatedIds: SelectionBuilder[TodoRestoreManyPayload, List[String]] = Field("updatedIds", ListOf(Scalar()))
+    def updatedIds: SelectionBuilder[TodoRestoreManyPayload, List[TodoID]] = Field("updatedIds", ListOf(Scalar()))
   }
 
   type TodoRestorePayload
@@ -13431,7 +17462,7 @@ object graphql {
       * Ids of the updated todos. Deprecated in 13.2: Use todos
       */
     @deprecated("Use todos. Deprecated in 13.2", "")
-    def updatedIds: SelectionBuilder[TodosMarkAllDonePayload, List[String]] = Field("updatedIds", ListOf(Scalar()))
+    def updatedIds: SelectionBuilder[TodosMarkAllDonePayload, List[TodoID]] = Field("updatedIds", ListOf(Scalar()))
   }
 
   type ToggleAwardEmojiPayload
@@ -13640,6 +17671,29 @@ object graphql {
       Field("todo", OptionOf(Obj(innerSelection)))
   }
 
+  type UpdateBoardEpicUserPreferencesPayload
+
+  object UpdateBoardEpicUserPreferencesPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[UpdateBoardEpicUserPreferencesPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * User preferences for the epic in the board after mutation
+      */
+    def epicUserPreferences[A](
+      innerSelection: SelectionBuilder[BoardEpicUserPreferences, A]
+    ): SelectionBuilder[UpdateBoardEpicUserPreferencesPayload, Option[A]] = Field("epicUserPreferences", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[UpdateBoardEpicUserPreferencesPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
   type UpdateBoardListPayload
 
   object UpdateBoardListPayload {
@@ -13826,7 +17880,7 @@ object graphql {
     def errors: SelectionBuilder[UpdateRequirementPayload, List[String]] = Field("errors", ListOf(Scalar()))
 
     /**
-      * The requirement after mutation
+      * Requirement after mutation
       */
     def requirement[A](innerSelection: SelectionBuilder[Requirement, A]): SelectionBuilder[UpdateRequirementPayload, Option[A]] =
       Field("requirement", OptionOf(Obj(innerSelection)))
@@ -13851,6 +17905,11 @@ object graphql {
       */
     def snippet[A](innerSelection: SelectionBuilder[Snippet, A]): SelectionBuilder[UpdateSnippetPayload, Option[A]] =
       Field("snippet", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Indicates whether the operation returns a record detected as spam
+      */
+    def spam: SelectionBuilder[UpdateSnippetPayload, Option[Boolean]] = Field("spam", OptionOf(Scalar()))
   }
 
   type User
@@ -13871,7 +17930,8 @@ object graphql {
       milestoneTitle: Option[String] = None,
       sort: Option[MergeRequestSort] = None,
       projectPath: Option[String] = None,
-      projectId: Option[String] = None,
+      projectId: Option[ProjectID] = None,
+      authorUsername: Option[String] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -13894,6 +17954,7 @@ object graphql {
           Argument("sort", sort),
           Argument("projectPath", projectPath),
           Argument("projectId", projectId),
+          Argument("authorUsername", authorUsername),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -13915,7 +17976,8 @@ object graphql {
       milestoneTitle: Option[String] = None,
       sort: Option[MergeRequestSort] = None,
       projectPath: Option[String] = None,
-      projectId: Option[String] = None,
+      projectId: Option[ProjectID] = None,
+      assigneeUsername: Option[String] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -13938,6 +18000,7 @@ object graphql {
           Argument("sort", sort),
           Argument("projectPath", projectPath),
           Argument("projectId", projectId),
+          Argument("assigneeUsername", assigneeUsername),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -14003,7 +18066,7 @@ object graphql {
       * Snippets authored by the user
       */
     def snippets[A](
-      ids: Option[List[String]] = None,
+      ids: Option[List[SnippetID]] = None,
       visibility: Option[VisibilityScopesEnum] = None,
       `type`: Option[TypeEnum] = None,
       after: Option[String] = None,
@@ -14020,6 +18083,30 @@ object graphql {
           Argument("ids", ids),
           Argument("visibility", visibility),
           Argument("type", `type`),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
+
+    /**
+      * Projects starred by the user
+      */
+    def starredProjects[A](
+      search: Option[String] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[ProjectConnection, A]
+    ): SelectionBuilder[User, Option[A]] =
+      Field(
+        "starredProjects",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("search", search),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -14146,6 +18233,11 @@ object graphql {
   type UserStatus
 
   object UserStatus {
+
+    /**
+      * User availability status
+      */
+    def availability: SelectionBuilder[UserStatus, AvailabilityEnum] = Field("availability", Scalar())
 
     /**
       * String representation of emoji
@@ -14334,6 +18426,23 @@ object graphql {
     def detectedAt: SelectionBuilder[Vulnerability, Time] = Field("detectedAt", Scalar())
 
     /**
+      * All discussions on this noteable
+      */
+    def discussions[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[DiscussionConnection, A]
+    ): SelectionBuilder[Vulnerability, A] =
+      Field(
+        "discussions",
+        Obj(innerSelection),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * GraphQL ID of the vulnerability
       */
     def id: SelectionBuilder[Vulnerability, String] = Field("id", Scalar())
@@ -14396,6 +18505,23 @@ object graphql {
       )
 
     /**
+      * All notes on this noteable
+      */
+    def notes[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[NoteConnection, A]
+    ): SelectionBuilder[Vulnerability, A] =
+      Field(
+        "notes",
+        Obj(innerSelection),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * Primary identifier of the vulnerability.
       */
     def primaryIdentifier[A](innerSelection: SelectionBuilder[VulnerabilityIdentifier, A]): SelectionBuilder[Vulnerability, Option[A]] =
@@ -14408,7 +18534,7 @@ object graphql {
       Field("project", OptionOf(Obj(innerSelection)))
 
     /**
-      * Type of the security report that found the vulnerability (SAST, DEPENDENCY_SCANNING, CONTAINER_SCANNING, DAST, SECRET_DETECTION, COVERAGE_FUZZING)
+      * Type of the security report that found the vulnerability (SAST, DEPENDENCY_SCANNING, CONTAINER_SCANNING, DAST, SECRET_DETECTION, COVERAGE_FUZZING, API_FUZZING)
       */
     def reportType: SelectionBuilder[Vulnerability, Option[VulnerabilityReportType]] = Field("reportType", OptionOf(Scalar()))
 
@@ -14429,7 +18555,7 @@ object graphql {
     def severity: SelectionBuilder[Vulnerability, Option[VulnerabilitySeverity]] = Field("severity", OptionOf(Scalar()))
 
     /**
-      * State of the vulnerability (DETECTED, DISMISSED, RESOLVED, CONFIRMED)
+      * State of the vulnerability (DETECTED, CONFIRMED, RESOLVED, DISMISSED)
       */
     def state: SelectionBuilder[Vulnerability, Option[VulnerabilityState]] = Field("state", OptionOf(Scalar()))
 
@@ -14455,6 +18581,27 @@ object graphql {
     def vulnerabilityPath: SelectionBuilder[Vulnerability, Option[String]] = Field("vulnerabilityPath", OptionOf(Scalar()))
   }
 
+  type VulnerabilityConfirmPayload
+
+  object VulnerabilityConfirmPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[VulnerabilityConfirmPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[VulnerabilityConfirmPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The vulnerability after state change
+      */
+    def vulnerability[A](innerSelection: SelectionBuilder[Vulnerability, A]): SelectionBuilder[VulnerabilityConfirmPayload, Option[A]] =
+      Field("vulnerability", OptionOf(Obj(innerSelection)))
+  }
+
   type VulnerabilityConnection
 
   object VulnerabilityConnection {
@@ -14477,6 +18624,27 @@ object graphql {
       */
     def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[VulnerabilityConnection, A] =
       Field("pageInfo", Obj(innerSelection))
+  }
+
+  type VulnerabilityDismissPayload
+
+  object VulnerabilityDismissPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[VulnerabilityDismissPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[VulnerabilityDismissPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The vulnerability after dismissal
+      */
+    def vulnerability[A](innerSelection: SelectionBuilder[Vulnerability, A]): SelectionBuilder[VulnerabilityDismissPayload, Option[A]] =
+      Field("vulnerability", OptionOf(Obj(innerSelection)))
   }
 
   type VulnerabilityEdge
@@ -14788,6 +18956,51 @@ object graphql {
     def updateVulnerabilityFeedback: SelectionBuilder[VulnerabilityPermissions, Boolean] = Field("updateVulnerabilityFeedback", Scalar())
   }
 
+  type VulnerabilityResolvePayload
+
+  object VulnerabilityResolvePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[VulnerabilityResolvePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[VulnerabilityResolvePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The vulnerability after state change
+      */
+    def vulnerability[A](innerSelection: SelectionBuilder[Vulnerability, A]): SelectionBuilder[VulnerabilityResolvePayload, Option[A]] =
+      Field("vulnerability", OptionOf(Obj(innerSelection)))
+  }
+
+  type VulnerabilityRevertToDetectedPayload
+
+  object VulnerabilityRevertToDetectedPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[VulnerabilityRevertToDetectedPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[VulnerabilityRevertToDetectedPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The vulnerability after revert
+      */
+    def vulnerability[A](
+      innerSelection: SelectionBuilder[Vulnerability, A]
+    ): SelectionBuilder[VulnerabilityRevertToDetectedPayload, Option[A]] = Field("vulnerability", OptionOf(Obj(innerSelection)))
+
+  }
+
   type VulnerabilityScanner
 
   object VulnerabilityScanner {
@@ -14950,7 +19163,7 @@ object graphql {
 
   }
 
-  case class AddAwardEmojiInput(awardableId: String, name: String, clientMutationId: Option[String] = None)
+  case class AddAwardEmojiInput(awardableId: AwardableID, name: String, clientMutationId: Option[String] = None)
 
   object AddAwardEmojiInput {
 
@@ -14959,7 +19172,7 @@ object graphql {
       override def encode(value: AddAwardEmojiInput): Value =
         ObjectValue(
           List(
-            "awardableId" -> implicitly[ArgEncoder[String]].encode(value.awardableId),
+            "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -14970,7 +19183,7 @@ object graphql {
 
   }
 
-  case class AddProjectToSecurityDashboardInput(id: String, clientMutationId: Option[String] = None)
+  case class AddProjectToSecurityDashboardInput(id: ProjectID, clientMutationId: Option[String] = None)
 
   object AddProjectToSecurityDashboardInput {
 
@@ -14979,7 +19192,7 @@ object graphql {
       override def encode(value: AddProjectToSecurityDashboardInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[ProjectID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -14996,6 +19209,7 @@ object graphql {
     subscriptionPlan: Option[String] = None,
     callerId: Option[String] = None,
     relatedClass: Option[String] = None,
+    featureCategory: Option[String] = None,
     queueName: String,
     clientMutationId: Option[String] = None
   )
@@ -15013,6 +19227,7 @@ object graphql {
             "subscriptionPlan" -> value.subscriptionPlan.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "callerId" -> value.callerId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "relatedClass" -> value.relatedClass.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "featureCategory" -> value.featureCategory.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "queueName" -> implicitly[ArgEncoder[String]].encode(value.queueName),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -15073,7 +19288,7 @@ object graphql {
 
   }
 
-  case class AwardEmojiAddInput(awardableId: String, name: String, clientMutationId: Option[String] = None)
+  case class AwardEmojiAddInput(awardableId: AwardableID, name: String, clientMutationId: Option[String] = None)
 
   object AwardEmojiAddInput {
 
@@ -15082,7 +19297,7 @@ object graphql {
       override def encode(value: AwardEmojiAddInput): Value =
         ObjectValue(
           List(
-            "awardableId" -> implicitly[ArgEncoder[String]].encode(value.awardableId),
+            "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -15093,7 +19308,7 @@ object graphql {
 
   }
 
-  case class AwardEmojiRemoveInput(awardableId: String, name: String, clientMutationId: Option[String] = None)
+  case class AwardEmojiRemoveInput(awardableId: AwardableID, name: String, clientMutationId: Option[String] = None)
 
   object AwardEmojiRemoveInput {
 
@@ -15102,7 +19317,7 @@ object graphql {
       override def encode(value: AwardEmojiRemoveInput): Value =
         ObjectValue(
           List(
-            "awardableId" -> implicitly[ArgEncoder[String]].encode(value.awardableId),
+            "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -15113,7 +19328,7 @@ object graphql {
 
   }
 
-  case class AwardEmojiToggleInput(awardableId: String, name: String, clientMutationId: Option[String] = None)
+  case class AwardEmojiToggleInput(awardableId: AwardableID, name: String, clientMutationId: Option[String] = None)
 
   object AwardEmojiToggleInput {
 
@@ -15122,7 +19337,7 @@ object graphql {
       override def encode(value: AwardEmojiToggleInput): Value =
         ObjectValue(
           List(
-            "awardableId" -> implicitly[ArgEncoder[String]].encode(value.awardableId),
+            "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -15140,7 +19355,7 @@ object graphql {
     authorUsername: Option[String] = None,
     releaseTag: Option[String] = None,
     myReactionEmoji: Option[String] = None,
-    epicId: Option[String] = None,
+    epicId: Option[EpicID] = None,
     weight: Option[String] = None,
     not: Option[NegatedBoardIssueInput] = None,
     search: Option[String] = None,
@@ -15168,7 +19383,7 @@ object graphql {
             "authorUsername" -> value.authorUsername.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "releaseTag" -> value.releaseTag.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "myReactionEmoji" -> value.myReactionEmoji.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
             "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "not" -> value.not.fold(NullValue: Value)(value => implicitly[ArgEncoder[NegatedBoardIssueInput]].encode(value)),
             "search" -> value.search.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
@@ -15212,7 +19427,7 @@ object graphql {
   }
 
   case class BoardListUpdateLimitMetricsInput(
-    listId: String,
+    listId: ListID,
     limitMetric: Option[ListLimitMetric] = None,
     maxIssueCount: Option[Int] = None,
     maxIssueWeight: Option[Int] = None,
@@ -15226,7 +19441,7 @@ object graphql {
       override def encode(value: BoardListUpdateLimitMetricsInput): Value =
         ObjectValue(
           List(
-            "listId" -> implicitly[ArgEncoder[String]].encode(value.listId),
+            "listId" -> implicitly[ArgEncoder[ListID]].encode(value.listId),
             "limitMetric" -> value.limitMetric.fold(NullValue: Value)(value => implicitly[ArgEncoder[ListLimitMetric]].encode(value)),
             "maxIssueCount" -> value.maxIssueCount.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
             "maxIssueWeight" -> value.maxIssueWeight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
@@ -15331,6 +19546,7 @@ object graphql {
   case class CommitCreateInput(
     projectPath: String,
     branch: String,
+    startBranch: Option[String] = None,
     message: String,
     actions: List[CommitAction] = Nil,
     clientMutationId: Option[String] = None
@@ -15345,6 +19561,7 @@ object graphql {
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "branch" -> implicitly[ArgEncoder[String]].encode(value.branch),
+            "startBranch" -> value.startBranch.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "message" -> implicitly[ArgEncoder[String]].encode(value.message),
             "actions" -> ListValue(value.actions.map(value => implicitly[ArgEncoder[CommitAction]].encode(value))),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
@@ -15356,7 +19573,7 @@ object graphql {
 
   }
 
-  case class ConfigureSastInput(projectPath: String, configuration: JSON, clientMutationId: Option[String] = None)
+  case class ConfigureSastInput(projectPath: String, configuration: SastCiConfigurationInput, clientMutationId: Option[String] = None)
 
   object ConfigureSastInput {
 
@@ -15366,7 +19583,7 @@ object graphql {
         ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "configuration" -> implicitly[ArgEncoder[JSON]].encode(value.configuration),
+            "configuration" -> implicitly[ArgEncoder[SastCiConfigurationInput]].encode(value.configuration),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -15397,8 +19614,8 @@ object graphql {
   }
 
   case class CreateAnnotationInput(
-    environmentId: Option[String] = None,
-    clusterId: Option[String] = None,
+    environmentId: Option[EnvironmentID] = None,
+    clusterId: Option[ClustersClusterID] = None,
     startingAt: Time,
     endingAt: Option[Time] = None,
     dashboardPath: String,
@@ -15413,8 +19630,8 @@ object graphql {
       override def encode(value: CreateAnnotationInput): Value =
         ObjectValue(
           List(
-            "environmentId" -> value.environmentId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clusterId" -> value.clusterId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "environmentId" -> value.environmentId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EnvironmentID]].encode(value)),
+            "clusterId" -> value.clusterId.fold(NullValue: Value)(value => implicitly[ArgEncoder[ClustersClusterID]].encode(value)),
             "startingAt" -> implicitly[ArgEncoder[Time]].encode(value.startingAt),
             "endingAt" -> value.endingAt.fold(NullValue: Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
             "dashboardPath" -> implicitly[ArgEncoder[String]].encode(value.dashboardPath),
@@ -15424,6 +19641,42 @@ object graphql {
         )
 
       override def typeName: String = "CreateAnnotationInput"
+    }
+
+  }
+
+  case class CreateBoardInput(
+    projectPath: Option[String] = None,
+    groupPath: Option[String] = None,
+    name: Option[String] = None,
+    assigneeId: Option[String] = None,
+    milestoneId: Option[MilestoneID] = None,
+    weight: Option[Boolean] = None,
+    labelIds: Option[List[LabelID]] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object CreateBoardInput {
+
+    implicit val encoder: ArgEncoder[CreateBoardInput] = new ArgEncoder[CreateBoardInput] {
+
+      override def encode(value: CreateBoardInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> value.projectPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "groupPath" -> value.groupPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "assigneeId" -> value.assigneeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
+            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "labelIds" -> value
+              .labelIds
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "CreateBoardInput"
     }
 
   }
@@ -15470,7 +19723,7 @@ object graphql {
   }
 
   case class CreateDiffNoteInput(
-    noteableId: String,
+    noteableId: NoteableID,
     body: String,
     confidential: Option[Boolean] = None,
     position: DiffPositionInput,
@@ -15484,7 +19737,7 @@ object graphql {
       override def encode(value: CreateDiffNoteInput): Value =
         ObjectValue(
           List(
-            "noteableId" -> implicitly[ArgEncoder[String]].encode(value.noteableId),
+            "noteableId" -> implicitly[ArgEncoder[NoteableID]].encode(value.noteableId),
             "body" -> implicitly[ArgEncoder[String]].encode(value.body),
             "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "position" -> implicitly[ArgEncoder[DiffPositionInput]].encode(value.position),
@@ -15542,7 +19795,7 @@ object graphql {
   }
 
   case class CreateImageDiffNoteInput(
-    noteableId: String,
+    noteableId: NoteableID,
     body: String,
     confidential: Option[Boolean] = None,
     position: DiffImagePositionInput,
@@ -15556,7 +19809,7 @@ object graphql {
       override def encode(value: CreateImageDiffNoteInput): Value =
         ObjectValue(
           List(
-            "noteableId" -> implicitly[ArgEncoder[String]].encode(value.noteableId),
+            "noteableId" -> implicitly[ArgEncoder[NoteableID]].encode(value.noteableId),
             "body" -> implicitly[ArgEncoder[String]].encode(value.body),
             "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "position" -> implicitly[ArgEncoder[DiffImagePositionInput]].encode(value.position),
@@ -15565,6 +19818,70 @@ object graphql {
         )
 
       override def typeName: String = "CreateImageDiffNoteInput"
+    }
+
+  }
+
+  case class CreateIssueInput(
+    description: Option[String] = None,
+    dueDate: Option[ISO8601Date] = None,
+    confidential: Option[Boolean] = None,
+    locked: Option[Boolean] = None,
+    projectPath: String,
+    iid: Option[Int] = None,
+    title: String,
+    milestoneId: Option[MilestoneID] = None,
+    labels: Option[List[String]] = None,
+    labelIds: Option[List[LabelID]] = None,
+    createdAt: Option[Time] = None,
+    mergeRequestToResolveDiscussionsOf: Option[MergeRequestID] = None,
+    discussionToResolve: Option[String] = None,
+    assigneeIds: Option[List[UserID]] = None,
+    healthStatus: Option[HealthStatus] = None,
+    weight: Option[Int] = None,
+    epicId: Option[EpicID] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object CreateIssueInput {
+
+    implicit val encoder: ArgEncoder[CreateIssueInput] = new ArgEncoder[CreateIssueInput] {
+
+      override def encode(value: CreateIssueInput): Value =
+        ObjectValue(
+          List(
+            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "dueDate" -> value.dueDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[ISO8601Date]].encode(value)),
+            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "locked" -> value.locked.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "iid" -> value.iid.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "title" -> implicitly[ArgEncoder[String]].encode(value.title),
+            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
+            "labels" -> value
+              .labels
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "labelIds" -> value
+              .labelIds
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
+            "createdAt" -> value.createdAt.fold(NullValue: Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "mergeRequestToResolveDiscussionsOf" -> value
+              .mergeRequestToResolveDiscussionsOf
+              .fold(NullValue: Value)(value => implicitly[ArgEncoder[MergeRequestID]].encode(value)),
+            "discussionToResolve" -> value
+              .discussionToResolve
+              .fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "assigneeIds" -> value
+              .assigneeIds
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[UserID]].encode(value)))),
+            "healthStatus" -> value.healthStatus.fold(NullValue: Value)(value => implicitly[ArgEncoder[HealthStatus]].encode(value)),
+            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "CreateIssueInput"
     }
 
   }
@@ -15602,10 +19919,10 @@ object graphql {
   }
 
   case class CreateNoteInput(
-    noteableId: String,
+    noteableId: NoteableID,
     body: String,
     confidential: Option[Boolean] = None,
-    discussionId: Option[String] = None,
+    discussionId: Option[DiscussionID] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -15616,10 +19933,10 @@ object graphql {
       override def encode(value: CreateNoteInput): Value =
         ObjectValue(
           List(
-            "noteableId" -> implicitly[ArgEncoder[String]].encode(value.noteableId),
+            "noteableId" -> implicitly[ArgEncoder[NoteableID]].encode(value.noteableId),
             "body" -> implicitly[ArgEncoder[String]].encode(value.body),
             "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "discussionId" -> value.discussionId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "discussionId" -> value.discussionId.fold(NullValue: Value)(value => implicitly[ArgEncoder[DiscussionID]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -15629,7 +19946,12 @@ object graphql {
 
   }
 
-  case class CreateRequirementInput(title: String, projectPath: String, clientMutationId: Option[String] = None)
+  case class CreateRequirementInput(
+    title: Option[String] = None,
+    description: Option[String] = None,
+    projectPath: String,
+    clientMutationId: Option[String] = None
+  )
 
   object CreateRequirementInput {
 
@@ -15638,7 +19960,8 @@ object graphql {
       override def encode(value: CreateRequirementInput): Value =
         ObjectValue(
           List(
-            "title" -> implicitly[ArgEncoder[String]].encode(value.title),
+            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -15687,6 +20010,36 @@ object graphql {
 
   }
 
+  case class CreateTestCaseInput(
+    title: String,
+    description: Option[String] = None,
+    labelIds: Option[List[String]] = None,
+    projectPath: String,
+    clientMutationId: Option[String] = None
+  )
+
+  object CreateTestCaseInput {
+
+    implicit val encoder: ArgEncoder[CreateTestCaseInput] = new ArgEncoder[CreateTestCaseInput] {
+
+      override def encode(value: CreateTestCaseInput): Value =
+        ObjectValue(
+          List(
+            "title" -> implicitly[ArgEncoder[String]].encode(value.title),
+            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "labelIds" -> value
+              .labelIds
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "CreateTestCaseInput"
+    }
+
+  }
+
   case class DastOnDemandScanCreateInput(
     fullPath: String,
     dastSiteProfileId: DastSiteProfileID,
@@ -15720,6 +20073,9 @@ object graphql {
     profileName: String,
     spiderTimeout: Option[Int] = None,
     targetTimeout: Option[Int] = None,
+    scanType: Option[DastScanTypeEnum] = None,
+    useAjaxSpider: Option[Boolean] = None,
+    showDebugMessages: Option[Boolean] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -15734,6 +20090,9 @@ object graphql {
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
             "spiderTimeout" -> value.spiderTimeout.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
             "targetTimeout" -> value.targetTimeout.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "scanType" -> value.scanType.fold(NullValue: Value)(value => implicitly[ArgEncoder[DastScanTypeEnum]].encode(value)),
+            "useAjaxSpider" -> value.useAjaxSpider.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "showDebugMessages" -> value.showDebugMessages.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -15769,6 +20128,9 @@ object graphql {
     profileName: String,
     spiderTimeout: Int,
     targetTimeout: Int,
+    scanType: Option[DastScanTypeEnum] = None,
+    useAjaxSpider: Option[Boolean] = None,
+    showDebugMessages: Option[Boolean] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -15784,6 +20146,9 @@ object graphql {
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
             "spiderTimeout" -> implicitly[ArgEncoder[Int]].encode(value.spiderTimeout),
             "targetTimeout" -> implicitly[ArgEncoder[Int]].encode(value.targetTimeout),
+            "scanType" -> value.scanType.fold(NullValue: Value)(value => implicitly[ArgEncoder[DastScanTypeEnum]].encode(value)),
+            "useAjaxSpider" -> value.useAjaxSpider.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "showDebugMessages" -> value.showDebugMessages.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -15863,6 +20228,56 @@ object graphql {
         )
 
       override def typeName: String = "DastSiteProfileUpdateInput"
+    }
+
+  }
+
+  case class DastSiteTokenCreateInput(fullPath: String, targetUrl: Option[String] = None, clientMutationId: Option[String] = None)
+
+  object DastSiteTokenCreateInput {
+
+    implicit val encoder: ArgEncoder[DastSiteTokenCreateInput] = new ArgEncoder[DastSiteTokenCreateInput] {
+
+      override def encode(value: DastSiteTokenCreateInput): Value =
+        ObjectValue(
+          List(
+            "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
+            "targetUrl" -> value.targetUrl.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DastSiteTokenCreateInput"
+    }
+
+  }
+
+  case class DastSiteValidationCreateInput(
+    fullPath: String,
+    dastSiteTokenId: DastSiteTokenID,
+    validationPath: String,
+    strategy: Option[DastSiteValidationStrategyEnum] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object DastSiteValidationCreateInput {
+
+    implicit val encoder: ArgEncoder[DastSiteValidationCreateInput] = new ArgEncoder[DastSiteValidationCreateInput] {
+
+      override def encode(value: DastSiteValidationCreateInput): Value =
+        ObjectValue(
+          List(
+            "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
+            "dastSiteTokenId" -> implicitly[ArgEncoder[DastSiteTokenID]].encode(value.dastSiteTokenId),
+            "validationPath" -> implicitly[ArgEncoder[String]].encode(value.validationPath),
+            "strategy" -> value
+              .strategy
+              .fold(NullValue: Value)(value => implicitly[ArgEncoder[DastSiteValidationStrategyEnum]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DastSiteValidationCreateInput"
     }
 
   }
@@ -15964,7 +20379,64 @@ object graphql {
 
   }
 
-  case class DestroyNoteInput(id: String, clientMutationId: Option[String] = None)
+  case class DestroyBoardInput(id: BoardID, clientMutationId: Option[String] = None)
+
+  object DestroyBoardInput {
+
+    implicit val encoder: ArgEncoder[DestroyBoardInput] = new ArgEncoder[DestroyBoardInput] {
+
+      override def encode(value: DestroyBoardInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[BoardID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DestroyBoardInput"
+    }
+
+  }
+
+  case class DestroyBoardListInput(listId: ListID, clientMutationId: Option[String] = None)
+
+  object DestroyBoardListInput {
+
+    implicit val encoder: ArgEncoder[DestroyBoardListInput] = new ArgEncoder[DestroyBoardListInput] {
+
+      override def encode(value: DestroyBoardListInput): Value =
+        ObjectValue(
+          List(
+            "listId" -> implicitly[ArgEncoder[ListID]].encode(value.listId),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DestroyBoardListInput"
+    }
+
+  }
+
+  case class DestroyContainerRepositoryInput(id: ContainerRepositoryID, clientMutationId: Option[String] = None)
+
+  object DestroyContainerRepositoryInput {
+
+    implicit val encoder: ArgEncoder[DestroyContainerRepositoryInput] = new ArgEncoder[DestroyContainerRepositoryInput] {
+
+      override def encode(value: DestroyContainerRepositoryInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[ContainerRepositoryID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DestroyContainerRepositoryInput"
+    }
+
+  }
+
+  case class DestroyNoteInput(id: NoteID, clientMutationId: Option[String] = None)
 
   object DestroyNoteInput {
 
@@ -15973,7 +20445,7 @@ object graphql {
       override def encode(value: DestroyNoteInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[NoteID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -15983,7 +20455,7 @@ object graphql {
 
   }
 
-  case class DestroySnippetInput(id: String, clientMutationId: Option[String] = None)
+  case class DestroySnippetInput(id: SnippetID, clientMutationId: Option[String] = None)
 
   object DestroySnippetInput {
 
@@ -15992,7 +20464,7 @@ object graphql {
       override def encode(value: DestroySnippetInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[SnippetID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16085,7 +20557,7 @@ object graphql {
 
   }
 
-  case class DiscussionToggleResolveInput(id: String, resolve: Boolean, clientMutationId: Option[String] = None)
+  case class DiscussionToggleResolveInput(id: DiscussionID, resolve: Boolean, clientMutationId: Option[String] = None)
 
   object DiscussionToggleResolveInput {
 
@@ -16094,7 +20566,7 @@ object graphql {
       override def encode(value: DiscussionToggleResolveInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[DiscussionID]].encode(value.id),
             "resolve" -> implicitly[ArgEncoder[Boolean]].encode(value.resolve),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -16105,7 +20577,7 @@ object graphql {
 
   }
 
-  case class DismissVulnerabilityInput(id: String, comment: Option[String] = None, clientMutationId: Option[String] = None)
+  case class DismissVulnerabilityInput(id: VulnerabilityID, comment: Option[String] = None, clientMutationId: Option[String] = None)
 
   object DismissVulnerabilityInput {
 
@@ -16114,13 +20586,33 @@ object graphql {
       override def encode(value: DismissVulnerabilityInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
             "comment" -> value.comment.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "DismissVulnerabilityInput"
+    }
+
+  }
+
+  case class EnvironmentsCanaryIngressUpdateInput(id: EnvironmentID, weight: Int, clientMutationId: Option[String] = None)
+
+  object EnvironmentsCanaryIngressUpdateInput {
+
+    implicit val encoder: ArgEncoder[EnvironmentsCanaryIngressUpdateInput] = new ArgEncoder[EnvironmentsCanaryIngressUpdateInput] {
+
+      override def encode(value: EnvironmentsCanaryIngressUpdateInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[EnvironmentID]].encode(value.id),
+            "weight" -> implicitly[ArgEncoder[Int]].encode(value.weight),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "EnvironmentsCanaryIngressUpdateInput"
     }
 
   }
@@ -16175,10 +20667,10 @@ object graphql {
   }
 
   case class EpicTreeNodeFieldsInputType(
-    id: String,
-    adjacentReferenceId: Option[String] = None,
+    id: EpicTreeSortingID,
+    adjacentReferenceId: Option[EpicTreeSortingID] = None,
     relativePosition: Option[MoveType] = None,
-    newParentId: Option[String] = None
+    newParentId: Option[EpicID] = None
   )
 
   object EpicTreeNodeFieldsInputType {
@@ -16188,12 +20680,12 @@ object graphql {
       override def encode(value: EpicTreeNodeFieldsInputType): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[EpicTreeSortingID]].encode(value.id),
             "adjacentReferenceId" -> value
               .adjacentReferenceId
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+              .fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicTreeSortingID]].encode(value)),
             "relativePosition" -> value.relativePosition.fold(NullValue: Value)(value => implicitly[ArgEncoder[MoveType]].encode(value)),
-            "newParentId" -> value.newParentId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "newParentId" -> value.newParentId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value))
           )
         )
 
@@ -16202,7 +20694,7 @@ object graphql {
 
   }
 
-  case class EpicTreeReorderInput(baseEpicId: String, moved: EpicTreeNodeFieldsInputType, clientMutationId: Option[String] = None)
+  case class EpicTreeReorderInput(baseEpicId: EpicID, moved: EpicTreeNodeFieldsInputType, clientMutationId: Option[String] = None)
 
   object EpicTreeReorderInput {
 
@@ -16211,13 +20703,119 @@ object graphql {
       override def encode(value: EpicTreeReorderInput): Value =
         ObjectValue(
           List(
-            "baseEpicId" -> implicitly[ArgEncoder[String]].encode(value.baseEpicId),
+            "baseEpicId" -> implicitly[ArgEncoder[EpicID]].encode(value.baseEpicId),
             "moved" -> implicitly[ArgEncoder[EpicTreeNodeFieldsInputType]].encode(value.moved),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "EpicTreeReorderInput"
+    }
+
+  }
+
+  case class HttpIntegrationCreateInput(projectPath: String, name: String, active: Boolean, clientMutationId: Option[String] = None)
+
+  object HttpIntegrationCreateInput {
+
+    implicit val encoder: ArgEncoder[HttpIntegrationCreateInput] = new ArgEncoder[HttpIntegrationCreateInput] {
+
+      override def encode(value: HttpIntegrationCreateInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "name" -> implicitly[ArgEncoder[String]].encode(value.name),
+            "active" -> implicitly[ArgEncoder[Boolean]].encode(value.active),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "HttpIntegrationCreateInput"
+    }
+
+  }
+
+  case class HttpIntegrationDestroyInput(id: AlertManagementHttpIntegrationID, clientMutationId: Option[String] = None)
+
+  object HttpIntegrationDestroyInput {
+
+    implicit val encoder: ArgEncoder[HttpIntegrationDestroyInput] = new ArgEncoder[HttpIntegrationDestroyInput] {
+
+      override def encode(value: HttpIntegrationDestroyInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[AlertManagementHttpIntegrationID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "HttpIntegrationDestroyInput"
+    }
+
+  }
+
+  case class HttpIntegrationResetTokenInput(id: AlertManagementHttpIntegrationID, clientMutationId: Option[String] = None)
+
+  object HttpIntegrationResetTokenInput {
+
+    implicit val encoder: ArgEncoder[HttpIntegrationResetTokenInput] = new ArgEncoder[HttpIntegrationResetTokenInput] {
+
+      override def encode(value: HttpIntegrationResetTokenInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[AlertManagementHttpIntegrationID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "HttpIntegrationResetTokenInput"
+    }
+
+  }
+
+  case class HttpIntegrationUpdateInput(
+    id: AlertManagementHttpIntegrationID,
+    name: Option[String] = None,
+    active: Option[Boolean] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object HttpIntegrationUpdateInput {
+
+    implicit val encoder: ArgEncoder[HttpIntegrationUpdateInput] = new ArgEncoder[HttpIntegrationUpdateInput] {
+
+      override def encode(value: HttpIntegrationUpdateInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[AlertManagementHttpIntegrationID]].encode(value.id),
+            "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "active" -> value.active.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "HttpIntegrationUpdateInput"
+    }
+
+  }
+
+  case class IssueMoveInput(projectPath: String, iid: String, targetProjectPath: String, clientMutationId: Option[String] = None)
+
+  object IssueMoveInput {
+
+    implicit val encoder: ArgEncoder[IssueMoveInput] = new ArgEncoder[IssueMoveInput] {
+
+      override def encode(value: IssueMoveInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
+            "targetProjectPath" -> implicitly[ArgEncoder[String]].encode(value.targetProjectPath),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "IssueMoveInput"
     }
 
   }
@@ -16230,6 +20828,7 @@ object graphql {
     toListId: Option[String] = None,
     moveBeforeId: Option[String] = None,
     moveAfterId: Option[String] = None,
+    epicId: Option[EpicID] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -16247,6 +20846,7 @@ object graphql {
             "toListId" -> value.toListId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "moveBeforeId" -> value.moveBeforeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "moveAfterId" -> value.moveAfterId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16328,7 +20928,7 @@ object graphql {
 
   }
 
-  case class IssueSetEpicInput(projectPath: String, iid: String, epicId: Option[String] = None, clientMutationId: Option[String] = None)
+  case class IssueSetEpicInput(projectPath: String, iid: String, epicId: Option[EpicID] = None, clientMutationId: Option[String] = None)
 
   object IssueSetEpicInput {
 
@@ -16339,7 +20939,7 @@ object graphql {
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16352,7 +20952,7 @@ object graphql {
   case class IssueSetIterationInput(
     projectPath: String,
     iid: String,
-    iterationId: Option[String] = None,
+    iterationId: Option[IterationID] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -16365,7 +20965,7 @@ object graphql {
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "iterationId" -> value.iterationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "iterationId" -> value.iterationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[IterationID]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16392,6 +20992,27 @@ object graphql {
         )
 
       override def typeName: String = "IssueSetLockedInput"
+    }
+
+  }
+
+  case class IssueSetSeverityInput(projectPath: String, iid: String, severity: IssuableSeverity, clientMutationId: Option[String] = None)
+
+  object IssueSetSeverityInput {
+
+    implicit val encoder: ArgEncoder[IssueSetSeverityInput] = new ArgEncoder[IssueSetSeverityInput] {
+
+      override def encode(value: IssueSetSeverityInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
+            "severity" -> implicitly[ArgEncoder[IssuableSeverity]].encode(value.severity),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "IssueSetSeverityInput"
     }
 
   }
@@ -16509,7 +21130,37 @@ object graphql {
 
   }
 
-  case class MarkAsSpamSnippetInput(id: String, clientMutationId: Option[String] = None)
+  case class LabelCreateInput(
+    projectPath: Option[String] = None,
+    groupPath: Option[String] = None,
+    title: String,
+    description: Option[String] = None,
+    color: Option[String] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object LabelCreateInput {
+
+    implicit val encoder: ArgEncoder[LabelCreateInput] = new ArgEncoder[LabelCreateInput] {
+
+      override def encode(value: LabelCreateInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> value.projectPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "groupPath" -> value.groupPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "title" -> implicitly[ArgEncoder[String]].encode(value.title),
+            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "color" -> value.color.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "LabelCreateInput"
+    }
+
+  }
+
+  case class MarkAsSpamSnippetInput(id: SnippetID, clientMutationId: Option[String] = None)
 
   object MarkAsSpamSnippetInput {
 
@@ -16518,7 +21169,7 @@ object graphql {
       override def encode(value: MarkAsSpamSnippetInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[SnippetID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16595,7 +21246,7 @@ object graphql {
   case class MergeRequestSetLabelsInput(
     projectPath: String,
     iid: String,
-    labelIds: List[String] = Nil,
+    labelIds: List[LabelID] = Nil,
     operationMode: Option[MutationOperationMode] = None,
     clientMutationId: Option[String] = None
   )
@@ -16609,7 +21260,7 @@ object graphql {
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "labelIds" -> ListValue(value.labelIds.map(value => implicitly[ArgEncoder[String]].encode(value))),
+            "labelIds" -> ListValue(value.labelIds.map(value => implicitly[ArgEncoder[LabelID]].encode(value))),
             "operationMode" -> value
               .operationMode
               .fold(NullValue: Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
@@ -16646,7 +21297,7 @@ object graphql {
   case class MergeRequestSetMilestoneInput(
     projectPath: String,
     iid: String,
-    milestoneId: Option[String] = None,
+    milestoneId: Option[MilestoneID] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -16659,7 +21310,7 @@ object graphql {
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16746,7 +21397,7 @@ object graphql {
 
   }
 
-  case class NamespaceIncreaseStorageTemporarilyInput(id: String, clientMutationId: Option[String] = None)
+  case class NamespaceIncreaseStorageTemporarilyInput(id: NamespaceID, clientMutationId: Option[String] = None)
 
   object NamespaceIncreaseStorageTemporarilyInput {
 
@@ -16755,7 +21406,7 @@ object graphql {
       override def encode(value: NamespaceIncreaseStorageTemporarilyInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[NamespaceID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16772,7 +21423,7 @@ object graphql {
     authorUsername: Option[String] = None,
     releaseTag: Option[String] = None,
     myReactionEmoji: Option[String] = None,
-    epicId: Option[String] = None,
+    epicId: Option[EpicID] = None,
     weight: Option[String] = None
   )
 
@@ -16797,7 +21448,7 @@ object graphql {
             "authorUsername" -> value.authorUsername.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "releaseTag" -> value.releaseTag.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "myReactionEmoji" -> value.myReactionEmoji.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
             "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16864,7 +21515,178 @@ object graphql {
 
   }
 
-  case class RemoveAwardEmojiInput(awardableId: String, name: String, clientMutationId: Option[String] = None)
+  case class PrometheusIntegrationCreateInput(projectPath: String, active: Boolean, apiUrl: String, clientMutationId: Option[String] = None)
+
+  object PrometheusIntegrationCreateInput {
+
+    implicit val encoder: ArgEncoder[PrometheusIntegrationCreateInput] = new ArgEncoder[PrometheusIntegrationCreateInput] {
+
+      override def encode(value: PrometheusIntegrationCreateInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "active" -> implicitly[ArgEncoder[Boolean]].encode(value.active),
+            "apiUrl" -> implicitly[ArgEncoder[String]].encode(value.apiUrl),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "PrometheusIntegrationCreateInput"
+    }
+
+  }
+
+  case class PrometheusIntegrationResetTokenInput(id: PrometheusServiceID, clientMutationId: Option[String] = None)
+
+  object PrometheusIntegrationResetTokenInput {
+
+    implicit val encoder: ArgEncoder[PrometheusIntegrationResetTokenInput] = new ArgEncoder[PrometheusIntegrationResetTokenInput] {
+
+      override def encode(value: PrometheusIntegrationResetTokenInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[PrometheusServiceID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "PrometheusIntegrationResetTokenInput"
+    }
+
+  }
+
+  case class PrometheusIntegrationUpdateInput(
+    id: PrometheusServiceID,
+    active: Option[Boolean] = None,
+    apiUrl: Option[String] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object PrometheusIntegrationUpdateInput {
+
+    implicit val encoder: ArgEncoder[PrometheusIntegrationUpdateInput] = new ArgEncoder[PrometheusIntegrationUpdateInput] {
+
+      override def encode(value: PrometheusIntegrationUpdateInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[PrometheusServiceID]].encode(value.id),
+            "active" -> value.active.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "apiUrl" -> value.apiUrl.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "PrometheusIntegrationUpdateInput"
+    }
+
+  }
+
+  case class PromoteToEpicInput(projectPath: String, iid: String, groupPath: Option[String] = None, clientMutationId: Option[String] = None)
+
+  object PromoteToEpicInput {
+
+    implicit val encoder: ArgEncoder[PromoteToEpicInput] = new ArgEncoder[PromoteToEpicInput] {
+
+      override def encode(value: PromoteToEpicInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
+            "groupPath" -> value.groupPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "PromoteToEpicInput"
+    }
+
+  }
+
+  case class ReleaseAssetLinkInput(
+    name: String,
+    url: String,
+    directAssetPath: Option[String] = None,
+    linkType: Option[ReleaseAssetLinkType] = None
+  )
+
+  object ReleaseAssetLinkInput {
+
+    implicit val encoder: ArgEncoder[ReleaseAssetLinkInput] = new ArgEncoder[ReleaseAssetLinkInput] {
+
+      override def encode(value: ReleaseAssetLinkInput): Value =
+        ObjectValue(
+          List(
+            "name" -> implicitly[ArgEncoder[String]].encode(value.name),
+            "url" -> implicitly[ArgEncoder[String]].encode(value.url),
+            "directAssetPath" -> value.directAssetPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "linkType" -> value.linkType.fold(NullValue: Value)(value => implicitly[ArgEncoder[ReleaseAssetLinkType]].encode(value))
+          )
+        )
+
+      override def typeName: String = "ReleaseAssetLinkInput"
+    }
+
+  }
+
+  case class ReleaseAssetsInput(links: Option[List[ReleaseAssetLinkInput]] = None)
+
+  object ReleaseAssetsInput {
+
+    implicit val encoder: ArgEncoder[ReleaseAssetsInput] = new ArgEncoder[ReleaseAssetsInput] {
+
+      override def encode(value: ReleaseAssetsInput): Value =
+        ObjectValue(
+          List(
+            "links" -> value
+              .links
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[ReleaseAssetLinkInput]].encode(value))))
+          )
+        )
+
+      override def typeName: String = "ReleaseAssetsInput"
+    }
+
+  }
+
+  case class ReleaseCreateInput(
+    projectPath: String,
+    tagName: String,
+    ref: Option[String] = None,
+    name: Option[String] = None,
+    description: Option[String] = None,
+    releasedAt: Option[Time] = None,
+    milestones: Option[List[String]] = None,
+    assets: Option[ReleaseAssetsInput] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object ReleaseCreateInput {
+
+    implicit val encoder: ArgEncoder[ReleaseCreateInput] = new ArgEncoder[ReleaseCreateInput] {
+
+      override def encode(value: ReleaseCreateInput): Value =
+        ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "tagName" -> implicitly[ArgEncoder[String]].encode(value.tagName),
+            "ref" -> value.ref.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "releasedAt" -> value.releasedAt.fold(NullValue: Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "milestones" -> value
+              .milestones
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "assets" -> value.assets.fold(NullValue: Value)(value => implicitly[ArgEncoder[ReleaseAssetsInput]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "ReleaseCreateInput"
+    }
+
+  }
+
+  case class RemoveAwardEmojiInput(awardableId: AwardableID, name: String, clientMutationId: Option[String] = None)
 
   object RemoveAwardEmojiInput {
 
@@ -16873,7 +21695,7 @@ object graphql {
       override def encode(value: RemoveAwardEmojiInput): Value =
         ObjectValue(
           List(
-            "awardableId" -> implicitly[ArgEncoder[String]].encode(value.awardableId),
+            "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -16884,7 +21706,7 @@ object graphql {
 
   }
 
-  case class RemoveProjectFromSecurityDashboardInput(id: String, clientMutationId: Option[String] = None)
+  case class RemoveProjectFromSecurityDashboardInput(id: ProjectID, clientMutationId: Option[String] = None)
 
   object RemoveProjectFromSecurityDashboardInput {
 
@@ -16893,12 +21715,51 @@ object graphql {
       override def encode(value: RemoveProjectFromSecurityDashboardInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[ProjectID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "RemoveProjectFromSecurityDashboardInput"
+    }
+
+  }
+
+  case class RepositionImageDiffNoteInput(id: DiffNoteID, position: UpdateDiffImagePositionInput, clientMutationId: Option[String] = None)
+
+  object RepositionImageDiffNoteInput {
+
+    implicit val encoder: ArgEncoder[RepositionImageDiffNoteInput] = new ArgEncoder[RepositionImageDiffNoteInput] {
+
+      override def encode(value: RepositionImageDiffNoteInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[DiffNoteID]].encode(value.id),
+            "position" -> implicitly[ArgEncoder[UpdateDiffImagePositionInput]].encode(value.position),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "RepositionImageDiffNoteInput"
+    }
+
+  }
+
+  case class RevertVulnerabilityToDetectedInput(id: VulnerabilityID, clientMutationId: Option[String] = None)
+
+  object RevertVulnerabilityToDetectedInput {
+
+    implicit val encoder: ArgEncoder[RevertVulnerabilityToDetectedInput] = new ArgEncoder[RevertVulnerabilityToDetectedInput] {
+
+      override def encode(value: RevertVulnerabilityToDetectedInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "RevertVulnerabilityToDetectedInput"
     }
 
   }
@@ -16931,6 +21792,90 @@ object graphql {
 
   }
 
+  case class SastCiConfigurationAnalyzersEntityInput(
+    name: String,
+    enabled: Boolean,
+    variables: Option[List[SastCiConfigurationEntityInput]] = None
+  )
+
+  object SastCiConfigurationAnalyzersEntityInput {
+
+    implicit val encoder: ArgEncoder[SastCiConfigurationAnalyzersEntityInput] = new ArgEncoder[SastCiConfigurationAnalyzersEntityInput] {
+
+      override def encode(value: SastCiConfigurationAnalyzersEntityInput): Value =
+        ObjectValue(
+          List(
+            "name" -> implicitly[ArgEncoder[String]].encode(value.name),
+            "enabled" -> implicitly[ArgEncoder[Boolean]].encode(value.enabled),
+            "variables" -> value
+              .variables
+              .fold(NullValue: Value)(value =>
+                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
+              )
+          )
+        )
+
+      override def typeName: String = "SastCiConfigurationAnalyzersEntityInput"
+    }
+
+  }
+
+  case class SastCiConfigurationEntityInput(field: String, defaultValue: String, value: String)
+
+  object SastCiConfigurationEntityInput {
+
+    implicit val encoder: ArgEncoder[SastCiConfigurationEntityInput] = new ArgEncoder[SastCiConfigurationEntityInput] {
+
+      override def encode(value: SastCiConfigurationEntityInput): Value =
+        ObjectValue(
+          List(
+            "field" -> implicitly[ArgEncoder[String]].encode(value.field),
+            "defaultValue" -> implicitly[ArgEncoder[String]].encode(value.defaultValue),
+            "value" -> implicitly[ArgEncoder[String]].encode(value.value)
+          )
+        )
+
+      override def typeName: String = "SastCiConfigurationEntityInput"
+    }
+
+  }
+
+  case class SastCiConfigurationInput(
+    global: Option[List[SastCiConfigurationEntityInput]] = None,
+    pipeline: Option[List[SastCiConfigurationEntityInput]] = None,
+    analyzers: Option[List[SastCiConfigurationAnalyzersEntityInput]] = None
+  )
+
+  object SastCiConfigurationInput {
+
+    implicit val encoder: ArgEncoder[SastCiConfigurationInput] = new ArgEncoder[SastCiConfigurationInput] {
+
+      override def encode(value: SastCiConfigurationInput): Value =
+        ObjectValue(
+          List(
+            "global" -> value
+              .global
+              .fold(NullValue: Value)(value =>
+                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
+              ),
+            "pipeline" -> value
+              .pipeline
+              .fold(NullValue: Value)(value =>
+                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
+              ),
+            "analyzers" -> value
+              .analyzers
+              .fold(NullValue: Value)(value =>
+                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationAnalyzersEntityInput]].encode(value)))
+              )
+          )
+        )
+
+      override def typeName: String = "SastCiConfigurationInput"
+    }
+
+  }
+
   case class SnippetBlobActionInputType(
     action: SnippetBlobActionEnum,
     previousPath: Option[String] = None,
@@ -16957,7 +21902,99 @@ object graphql {
 
   }
 
-  case class TodoMarkDoneInput(id: String, clientMutationId: Option[String] = None)
+  case class TerraformStateDeleteInput(id: TerraformStateID, clientMutationId: Option[String] = None)
+
+  object TerraformStateDeleteInput {
+
+    implicit val encoder: ArgEncoder[TerraformStateDeleteInput] = new ArgEncoder[TerraformStateDeleteInput] {
+
+      override def encode(value: TerraformStateDeleteInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[TerraformStateID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "TerraformStateDeleteInput"
+    }
+
+  }
+
+  case class TerraformStateLockInput(id: TerraformStateID, clientMutationId: Option[String] = None)
+
+  object TerraformStateLockInput {
+
+    implicit val encoder: ArgEncoder[TerraformStateLockInput] = new ArgEncoder[TerraformStateLockInput] {
+
+      override def encode(value: TerraformStateLockInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[TerraformStateID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "TerraformStateLockInput"
+    }
+
+  }
+
+  case class TerraformStateUnlockInput(id: TerraformStateID, clientMutationId: Option[String] = None)
+
+  object TerraformStateUnlockInput {
+
+    implicit val encoder: ArgEncoder[TerraformStateUnlockInput] = new ArgEncoder[TerraformStateUnlockInput] {
+
+      override def encode(value: TerraformStateUnlockInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[TerraformStateID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "TerraformStateUnlockInput"
+    }
+
+  }
+
+  case class Timeframe(start: Date, end: Date)
+
+  object Timeframe {
+
+    implicit val encoder: ArgEncoder[Timeframe] = new ArgEncoder[Timeframe] {
+
+      override def encode(value: Timeframe): Value =
+        ObjectValue(
+          List("start" -> implicitly[ArgEncoder[Date]].encode(value.start), "end" -> implicitly[ArgEncoder[Date]].encode(value.end))
+        )
+
+      override def typeName: String = "Timeframe"
+    }
+
+  }
+
+  case class TodoCreateInput(targetId: TodoableID, clientMutationId: Option[String] = None)
+
+  object TodoCreateInput {
+
+    implicit val encoder: ArgEncoder[TodoCreateInput] = new ArgEncoder[TodoCreateInput] {
+
+      override def encode(value: TodoCreateInput): Value =
+        ObjectValue(
+          List(
+            "targetId" -> implicitly[ArgEncoder[TodoableID]].encode(value.targetId),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "TodoCreateInput"
+    }
+
+  }
+
+  case class TodoMarkDoneInput(id: TodoID, clientMutationId: Option[String] = None)
 
   object TodoMarkDoneInput {
 
@@ -16966,7 +22003,7 @@ object graphql {
       override def encode(value: TodoMarkDoneInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[TodoID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16976,7 +22013,7 @@ object graphql {
 
   }
 
-  case class TodoRestoreInput(id: String, clientMutationId: Option[String] = None)
+  case class TodoRestoreInput(id: TodoID, clientMutationId: Option[String] = None)
 
   object TodoRestoreInput {
 
@@ -16985,7 +22022,7 @@ object graphql {
       override def encode(value: TodoRestoreInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[TodoID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -16995,7 +22032,7 @@ object graphql {
 
   }
 
-  case class TodoRestoreManyInput(ids: List[String] = Nil, clientMutationId: Option[String] = None)
+  case class TodoRestoreManyInput(ids: List[TodoID] = Nil, clientMutationId: Option[String] = None)
 
   object TodoRestoreManyInput {
 
@@ -17004,7 +22041,7 @@ object graphql {
       override def encode(value: TodoRestoreManyInput): Value =
         ObjectValue(
           List(
-            "ids" -> ListValue(value.ids.map(value => implicitly[ArgEncoder[String]].encode(value))),
+            "ids" -> ListValue(value.ids.map(value => implicitly[ArgEncoder[TodoID]].encode(value))),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -17030,7 +22067,7 @@ object graphql {
 
   }
 
-  case class ToggleAwardEmojiInput(awardableId: String, name: String, clientMutationId: Option[String] = None)
+  case class ToggleAwardEmojiInput(awardableId: AwardableID, name: String, clientMutationId: Option[String] = None)
 
   object ToggleAwardEmojiInput {
 
@@ -17039,7 +22076,7 @@ object graphql {
       override def encode(value: ToggleAwardEmojiInput): Value =
         ObjectValue(
           List(
-            "awardableId" -> implicitly[ArgEncoder[String]].encode(value.awardableId),
+            "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -17076,14 +22113,42 @@ object graphql {
 
   }
 
+  case class UpdateBoardEpicUserPreferencesInput(
+    boardId: BoardID,
+    epicId: EpicID,
+    collapsed: Boolean,
+    clientMutationId: Option[String] = None
+  )
+
+  object UpdateBoardEpicUserPreferencesInput {
+
+    implicit val encoder: ArgEncoder[UpdateBoardEpicUserPreferencesInput] = new ArgEncoder[UpdateBoardEpicUserPreferencesInput] {
+
+      override def encode(value: UpdateBoardEpicUserPreferencesInput): Value =
+        ObjectValue(
+          List(
+            "boardId" -> implicitly[ArgEncoder[BoardID]].encode(value.boardId),
+            "epicId" -> implicitly[ArgEncoder[EpicID]].encode(value.epicId),
+            "collapsed" -> implicitly[ArgEncoder[Boolean]].encode(value.collapsed),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "UpdateBoardEpicUserPreferencesInput"
+    }
+
+  }
+
   case class UpdateBoardInput(
-    id: String,
+    id: BoardID,
     name: Option[String] = None,
     hideBacklogList: Option[Boolean] = None,
     hideClosedList: Option[Boolean] = None,
-    assigneeId: Option[String] = None,
-    milestoneId: Option[String] = None,
+    assigneeId: Option[UserID] = None,
+    milestoneId: Option[MilestoneID] = None,
     weight: Option[Int] = None,
+    labels: Option[List[String]] = None,
+    labelIds: Option[List[LabelID]] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -17094,13 +22159,19 @@ object graphql {
       override def encode(value: UpdateBoardInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[BoardID]].encode(value.id),
             "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "hideBacklogList" -> value.hideBacklogList.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "hideClosedList" -> value.hideClosedList.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "assigneeId" -> value.assigneeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "assigneeId" -> value.assigneeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[UserID]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
             "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "labels" -> value
+              .labels
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "labelIds" -> value
+              .labelIds
+              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -17111,7 +22182,7 @@ object graphql {
   }
 
   case class UpdateBoardListInput(
-    listId: String,
+    listId: ListID,
     position: Option[Int] = None,
     collapsed: Option[Boolean] = None,
     clientMutationId: Option[String] = None
@@ -17124,7 +22195,7 @@ object graphql {
       override def encode(value: UpdateBoardListInput): Value =
         ObjectValue(
           List(
-            "listId" -> implicitly[ArgEncoder[String]].encode(value.listId),
+            "listId" -> implicitly[ArgEncoder[ListID]].encode(value.listId),
             "position" -> value.position.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
             "collapsed" -> value.collapsed.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
@@ -17249,7 +22320,7 @@ object graphql {
   }
 
   case class UpdateImageDiffNoteInput(
-    id: String,
+    id: NoteID,
     body: Option[String] = None,
     position: Option[UpdateDiffImagePositionInput] = None,
     clientMutationId: Option[String] = None
@@ -17262,7 +22333,7 @@ object graphql {
       override def encode(value: UpdateImageDiffNoteInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[NoteID]].encode(value.id),
             "body" -> value.body.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "position" -> value
               .position
@@ -17279,16 +22350,18 @@ object graphql {
   case class UpdateIssueInput(
     projectPath: String,
     iid: String,
-    title: Option[String] = None,
     description: Option[String] = None,
-    dueDate: Option[Time] = None,
+    dueDate: Option[ISO8601Date] = None,
     confidential: Option[Boolean] = None,
     locked: Option[Boolean] = None,
+    title: Option[String] = None,
+    milestoneId: Option[String] = None,
     addLabelIds: Option[List[String]] = None,
     removeLabelIds: Option[List[String]] = None,
-    milestoneId: Option[String] = None,
+    stateEvent: Option[IssueStateEvent] = None,
     healthStatus: Option[HealthStatus] = None,
-    epicId: Option[String] = None,
+    weight: Option[Int] = None,
+    epicId: Option[EpicID] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -17301,20 +22374,22 @@ object graphql {
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "dueDate" -> value.dueDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "dueDate" -> value.dueDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[ISO8601Date]].encode(value)),
             "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "locked" -> value.locked.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "addLabelIds" -> value
               .addLabelIds
               .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "removeLabelIds" -> value
               .removeLabelIds
               .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "stateEvent" -> value.stateEvent.fold(NullValue: Value)(value => implicitly[ArgEncoder[IssueStateEvent]].encode(value)),
             "healthStatus" -> value.healthStatus.fold(NullValue: Value)(value => implicitly[ArgEncoder[HealthStatus]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -17357,7 +22432,7 @@ object graphql {
   }
 
   case class UpdateNoteInput(
-    id: String,
+    id: NoteID,
     body: Option[String] = None,
     confidential: Option[Boolean] = None,
     clientMutationId: Option[String] = None
@@ -17370,7 +22445,7 @@ object graphql {
       override def encode(value: UpdateNoteInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[NoteID]].encode(value.id),
             "body" -> value.body.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
@@ -17384,9 +22459,11 @@ object graphql {
 
   case class UpdateRequirementInput(
     title: Option[String] = None,
+    description: Option[String] = None,
+    projectPath: String,
     state: Option[RequirementState] = None,
     iid: String,
-    projectPath: String,
+    lastTestReportState: Option[TestReportState] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -17398,9 +22475,13 @@ object graphql {
         ObjectValue(
           List(
             "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "state" -> value.state.fold(NullValue: Value)(value => implicitly[ArgEncoder[RequirementState]].encode(value)),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "lastTestReportState" -> value
+              .lastTestReportState
+              .fold(NullValue: Value)(value => implicitly[ArgEncoder[TestReportState]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -17411,7 +22492,7 @@ object graphql {
   }
 
   case class UpdateSnippetInput(
-    id: String,
+    id: SnippetID,
     title: Option[String] = None,
     description: Option[String] = None,
     visibilityLevel: Option[VisibilityLevelsEnum] = None,
@@ -17426,7 +22507,7 @@ object graphql {
       override def encode(value: UpdateSnippetInput): Value =
         ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
+            "id" -> implicitly[ArgEncoder[SnippetID]].encode(value.id),
             "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "visibilityLevel" -> value
@@ -17446,9 +22527,96 @@ object graphql {
 
   }
 
+  case class VulnerabilityConfirmInput(id: VulnerabilityID, clientMutationId: Option[String] = None)
+
+  object VulnerabilityConfirmInput {
+
+    implicit val encoder: ArgEncoder[VulnerabilityConfirmInput] = new ArgEncoder[VulnerabilityConfirmInput] {
+
+      override def encode(value: VulnerabilityConfirmInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "VulnerabilityConfirmInput"
+    }
+
+  }
+
+  case class VulnerabilityDismissInput(id: VulnerabilityID, comment: Option[String] = None, clientMutationId: Option[String] = None)
+
+  object VulnerabilityDismissInput {
+
+    implicit val encoder: ArgEncoder[VulnerabilityDismissInput] = new ArgEncoder[VulnerabilityDismissInput] {
+
+      override def encode(value: VulnerabilityDismissInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
+            "comment" -> value.comment.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "VulnerabilityDismissInput"
+    }
+
+  }
+
+  case class VulnerabilityResolveInput(id: VulnerabilityID, clientMutationId: Option[String] = None)
+
+  object VulnerabilityResolveInput {
+
+    implicit val encoder: ArgEncoder[VulnerabilityResolveInput] = new ArgEncoder[VulnerabilityResolveInput] {
+
+      override def encode(value: VulnerabilityResolveInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "VulnerabilityResolveInput"
+    }
+
+  }
+
+  case class VulnerabilityRevertToDetectedInput(id: VulnerabilityID, clientMutationId: Option[String] = None)
+
+  object VulnerabilityRevertToDetectedInput {
+
+    implicit val encoder: ArgEncoder[VulnerabilityRevertToDetectedInput] = new ArgEncoder[VulnerabilityRevertToDetectedInput] {
+
+      override def encode(value: VulnerabilityRevertToDetectedInput): Value =
+        ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "VulnerabilityRevertToDetectedInput"
+    }
+
+  }
+
   type Query = RootQuery
 
   object Query {
+
+    /**
+      * Find a container repository
+      */
+    def containerRepository[A](
+      id: ContainerRepositoryID
+    )(
+      innerSelection: SelectionBuilder[ContainerRepositoryDetails, A]
+    ): SelectionBuilder[RootQuery, Option[A]] =
+      Field("containerRepository", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id)))
 
     /**
       * Get information about current user
@@ -17461,6 +22629,23 @@ object graphql {
       */
     def designManagement[A](innerSelection: SelectionBuilder[DesignManagement, A]): SelectionBuilder[RootQuery, A] =
       Field("designManagement", Obj(innerSelection))
+
+    /**
+      * Get configured DevOps adoption segments on the instance
+      */
+    def devopsAdoptionSegments[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[DevopsAdoptionSegmentConnection, A]
+    ): SelectionBuilder[RootQuery, Option[A]] =
+      Field(
+        "devopsAdoptionSegments",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
 
     /**
       * Text to echo back
@@ -17485,6 +22670,34 @@ object graphql {
     def instanceSecurityDashboard[A](
       innerSelection: SelectionBuilder[InstanceSecurityDashboard, A]
     ): SelectionBuilder[RootQuery, Option[A]] = Field("instanceSecurityDashboard", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Get statistics on the instance
+      */
+    def instanceStatisticsMeasurements[A](
+      identifier: MeasurementIdentifier,
+      recordedAfter: Option[Time] = None,
+      recordedBefore: Option[Time] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[InstanceStatisticsMeasurementConnection, A]
+    ): SelectionBuilder[RootQuery, Option[A]] =
+      Field(
+        "instanceStatisticsMeasurements",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("identifier", identifier),
+          Argument("recordedAfter", recordedAfter),
+          Argument("recordedBefore", recordedBefore),
+          Argument("after", after),
+          Argument("before", before),
+          Argument("first", first),
+          Argument("last", last)
+        )
+      )
 
     /**
       * Find an issue
@@ -17528,6 +22741,9 @@ object graphql {
     def projects[A](
       membership: Option[Boolean] = None,
       search: Option[String] = None,
+      ids: Option[List[String]] = None,
+      searchNamespaces: Option[Boolean] = None,
+      sort: Option[String] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -17541,6 +22757,9 @@ object graphql {
         arguments = List(
           Argument("membership", membership),
           Argument("search", search),
+          Argument("ids", ids),
+          Argument("searchNamespaces", searchNamespaces),
+          Argument("sort", sort),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -17549,13 +22768,52 @@ object graphql {
       )
 
     /**
+      * Supported runner platforms
+      */
+    def runnerPlatforms[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[RunnerPlatformConnection, A]
+    ): SelectionBuilder[RootQuery, Option[A]] =
+      Field(
+        "runnerPlatforms",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
+      * Get runner setup instructions
+      */
+    def runnerSetup[A](
+      platform: String,
+      architecture: String,
+      projectId: Option[ProjectID] = None,
+      groupId: Option[GroupID] = None
+    )(
+      innerSelection: SelectionBuilder[RunnerSetup, A]
+    ): SelectionBuilder[RootQuery, Option[A]] =
+      Field(
+        "runnerSetup",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(
+          Argument("platform", platform),
+          Argument("architecture", architecture),
+          Argument("projectId", projectId),
+          Argument("groupId", groupId)
+        )
+      )
+
+    /**
       * Find Snippets visible to the current user
       */
     def snippets[A](
-      ids: Option[List[String]] = None,
+      ids: Option[List[SnippetID]] = None,
       visibility: Option[VisibilityScopesEnum] = None,
-      authorId: Option[String] = None,
-      projectId: Option[String] = None,
+      authorId: Option[UserID] = None,
+      projectId: Option[ProjectID] = None,
       `type`: Option[TypeEnum] = None,
       explore: Option[Boolean] = None,
       after: Option[String] = None,
@@ -17586,7 +22844,7 @@ object graphql {
       * Find a user
       */
     def user[A](
-      id: Option[String] = None,
+      id: Option[UserID] = None,
       username: Option[String] = None
     )(
       innerSelection: SelectionBuilder[User, A]
@@ -17600,6 +22858,7 @@ object graphql {
       ids: Option[List[String]] = None,
       usernames: Option[List[String]] = None,
       sort: Option[Sort] = None,
+      search: Option[String] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -17614,6 +22873,7 @@ object graphql {
           Argument("ids", ids),
           Argument("usernames", usernames),
           Argument("sort", sort),
+          Argument("search", search),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -17630,6 +22890,9 @@ object graphql {
       severity: Option[List[VulnerabilitySeverity]] = None,
       state: Option[List[VulnerabilityState]] = None,
       scanner: Option[List[String]] = None,
+      sort: Option[VulnerabilitySort] = None,
+      hasResolution: Option[Boolean] = None,
+      hasIssues: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -17646,6 +22909,9 @@ object graphql {
           Argument("severity", severity),
           Argument("state", state),
           Argument("scanner", scanner),
+          Argument("sort", sort),
+          Argument("hasResolution", hasResolution),
+          Argument("hasIssues", hasIssues),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -17706,6 +22972,11 @@ object graphql {
         )
       )
 
+    /**
+      * Find a vulnerability
+      */
+    def vulnerability[A](id: VulnerabilityID)(innerSelection: SelectionBuilder[Vulnerability, A]): SelectionBuilder[RootQuery, Option[A]] =
+      Field("vulnerability", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id)))
   }
 
   type Mutation = RootMutation
@@ -17832,6 +23103,13 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("createAnnotation", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def createBoard[A](
+      input: CreateBoardInput
+    )(
+      innerSelection: SelectionBuilder[CreateBoardPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("createBoard", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def createBranch[A](
       input: CreateBranchInput
     )(
@@ -17867,6 +23145,13 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("createImageDiffNote", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def createIssue[A](
+      input: CreateIssueInput
+    )(
+      innerSelection: SelectionBuilder[CreateIssuePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("createIssue", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def createIteration[A](
       input: CreateIterationInput
     )(
@@ -17894,6 +23179,13 @@ object graphql {
       innerSelection: SelectionBuilder[CreateSnippetPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("createSnippet", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def createTestCase[A](
+      input: CreateTestCaseInput
+    )(
+      innerSelection: SelectionBuilder[CreateTestCasePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("createTestCase", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def dastOnDemandScanCreate[A](
       input: DastOnDemandScanCreateInput
@@ -17944,6 +23236,20 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("dastSiteProfileUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def dastSiteTokenCreate[A](
+      input: DastSiteTokenCreateInput
+    )(
+      innerSelection: SelectionBuilder[DastSiteTokenCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("dastSiteTokenCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def dastSiteValidationCreate[A](
+      input: DastSiteValidationCreateInput
+    )(
+      innerSelection: SelectionBuilder[DastSiteValidationCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("dastSiteValidationCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def deleteAnnotation[A](
       input: DeleteAnnotationInput
     )(
@@ -17972,6 +23278,27 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("designManagementUpload", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def destroyBoard[A](
+      input: DestroyBoardInput
+    )(
+      innerSelection: SelectionBuilder[DestroyBoardPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("destroyBoard", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def destroyBoardList[A](
+      input: DestroyBoardListInput
+    )(
+      innerSelection: SelectionBuilder[DestroyBoardListPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("destroyBoardList", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def destroyContainerRepository[A](
+      input: DestroyContainerRepositoryInput
+    )(
+      innerSelection: SelectionBuilder[DestroyContainerRepositoryPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("destroyContainerRepository", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def destroyNote[A](
       input: DestroyNoteInput
     )(
@@ -17996,12 +23323,20 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("discussionToggleResolve", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    @deprecated("Use vulnerabilityDismiss. Deprecated in 13.5", "")
     def dismissVulnerability[A](
       input: DismissVulnerabilityInput
     )(
       innerSelection: SelectionBuilder[DismissVulnerabilityPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("dismissVulnerability", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def environmentsCanaryIngressUpdate[A](
+      input: EnvironmentsCanaryIngressUpdateInput
+    )(
+      innerSelection: SelectionBuilder[EnvironmentsCanaryIngressUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("environmentsCanaryIngressUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def epicAddIssue[A](
       input: EpicAddIssueInput
@@ -18023,6 +23358,41 @@ object graphql {
       innerSelection: SelectionBuilder[EpicTreeReorderPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("epicTreeReorder", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def httpIntegrationCreate[A](
+      input: HttpIntegrationCreateInput
+    )(
+      innerSelection: SelectionBuilder[HttpIntegrationCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("httpIntegrationCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def httpIntegrationDestroy[A](
+      input: HttpIntegrationDestroyInput
+    )(
+      innerSelection: SelectionBuilder[HttpIntegrationDestroyPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("httpIntegrationDestroy", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def httpIntegrationResetToken[A](
+      input: HttpIntegrationResetTokenInput
+    )(
+      innerSelection: SelectionBuilder[HttpIntegrationResetTokenPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("httpIntegrationResetToken", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def httpIntegrationUpdate[A](
+      input: HttpIntegrationUpdateInput
+    )(
+      innerSelection: SelectionBuilder[HttpIntegrationUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("httpIntegrationUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def issueMove[A](
+      input: IssueMoveInput
+    )(
+      innerSelection: SelectionBuilder[IssueMovePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("issueMove", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def issueMoveList[A](
       input: IssueMoveListInput
@@ -18073,6 +23443,13 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("issueSetLocked", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def issueSetSeverity[A](
+      input: IssueSetSeverityInput
+    )(
+      innerSelection: SelectionBuilder[IssueSetSeverityPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("issueSetSeverity", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def issueSetSubscription[A](
       input: IssueSetSubscriptionInput
     )(
@@ -18100,6 +23477,13 @@ object graphql {
       innerSelection: SelectionBuilder[JiraImportUsersPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("jiraImportUsers", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def labelCreate[A](
+      input: LabelCreateInput
+    )(
+      innerSelection: SelectionBuilder[LabelCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("labelCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def markAsSpamSnippet[A](
       input: MarkAsSpamSnippetInput
@@ -18195,6 +23579,41 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("pipelineRetry", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def prometheusIntegrationCreate[A](
+      input: PrometheusIntegrationCreateInput
+    )(
+      innerSelection: SelectionBuilder[PrometheusIntegrationCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("prometheusIntegrationCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def prometheusIntegrationResetToken[A](
+      input: PrometheusIntegrationResetTokenInput
+    )(
+      innerSelection: SelectionBuilder[PrometheusIntegrationResetTokenPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("prometheusIntegrationResetToken", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def prometheusIntegrationUpdate[A](
+      input: PrometheusIntegrationUpdateInput
+    )(
+      innerSelection: SelectionBuilder[PrometheusIntegrationUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("prometheusIntegrationUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def promoteToEpic[A](
+      input: PromoteToEpicInput
+    )(
+      innerSelection: SelectionBuilder[PromoteToEpicPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("promoteToEpic", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def releaseCreate[A](
+      input: ReleaseCreateInput
+    )(
+      innerSelection: SelectionBuilder[ReleaseCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("releaseCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     @deprecated("Use awardEmojiRemove. Deprecated in 13.2", "")
     def removeAwardEmoji[A](
       input: RemoveAwardEmojiInput
@@ -18210,12 +23629,59 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("removeProjectFromSecurityDashboard", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    /**
+      * Repositions a DiffNote on an image (a `Note` where the `position.positionType` is `"image"`)
+      */
+    def repositionImageDiffNote[A](
+      input: RepositionImageDiffNoteInput
+    )(
+      innerSelection: SelectionBuilder[RepositionImageDiffNotePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("repositionImageDiffNote", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    @deprecated("Use vulnerabilityRevertToDetected. Deprecated in 13.5", "")
+    def revertVulnerabilityToDetected[A](
+      input: RevertVulnerabilityToDetectedInput
+    )(
+      innerSelection: SelectionBuilder[RevertVulnerabilityToDetectedPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("revertVulnerabilityToDetected", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    @deprecated("Use DastOnDemandScanCreate. Deprecated in 13.4", "")
     def runDastScan[A](
       input: RunDASTScanInput
     )(
       innerSelection: SelectionBuilder[RunDASTScanPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("runDastScan", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def terraformStateDelete[A](
+      input: TerraformStateDeleteInput
+    )(
+      innerSelection: SelectionBuilder[TerraformStateDeletePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("terraformStateDelete", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def terraformStateLock[A](
+      input: TerraformStateLockInput
+    )(
+      innerSelection: SelectionBuilder[TerraformStateLockPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("terraformStateLock", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def terraformStateUnlock[A](
+      input: TerraformStateUnlockInput
+    )(
+      innerSelection: SelectionBuilder[TerraformStateUnlockPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("terraformStateUnlock", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def todoCreate[A](
+      input: TodoCreateInput
+    )(
+      innerSelection: SelectionBuilder[TodoCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("todoCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def todoMarkDone[A](
       input: TodoMarkDoneInput
@@ -18266,6 +23732,13 @@ object graphql {
       innerSelection: SelectionBuilder[UpdateBoardPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("updateBoard", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def updateBoardEpicUserPreferences[A](
+      input: UpdateBoardEpicUserPreferencesInput
+    )(
+      innerSelection: SelectionBuilder[UpdateBoardEpicUserPreferencesPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("updateBoardEpicUserPreferences", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def updateBoardList[A](
       input: UpdateBoardListInput
@@ -18335,6 +23808,34 @@ object graphql {
       innerSelection: SelectionBuilder[UpdateSnippetPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("updateSnippet", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def vulnerabilityConfirm[A](
+      input: VulnerabilityConfirmInput
+    )(
+      innerSelection: SelectionBuilder[VulnerabilityConfirmPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("vulnerabilityConfirm", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def vulnerabilityDismiss[A](
+      input: VulnerabilityDismissInput
+    )(
+      innerSelection: SelectionBuilder[VulnerabilityDismissPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("vulnerabilityDismiss", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def vulnerabilityResolve[A](
+      input: VulnerabilityResolveInput
+    )(
+      innerSelection: SelectionBuilder[VulnerabilityResolvePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("vulnerabilityResolve", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def vulnerabilityRevertToDetected[A](
+      input: VulnerabilityRevertToDetectedInput
+    )(
+      innerSelection: SelectionBuilder[VulnerabilityRevertToDetectedPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("vulnerabilityRevertToDetected", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
   }
 
