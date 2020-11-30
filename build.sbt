@@ -44,7 +44,7 @@ ThisBuild / githubWorkflowEnv ++= List("PGP_PASSPHRASE", "PGP_SECRET", "SONATYPE
 val core = project
   .settings(
     name := "caliban-gitlab",
-    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.9.1")
+    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.9.3")
   )
 
 val root = project
@@ -56,7 +56,7 @@ val root = project
     ),
     addCommandAlias(
       "release",
-      "+publishSigned sonatypeBundleRelease"
+      "+publishSigned;sonatypeBundleRelease"
     ),
     skip in publish := true
   )
