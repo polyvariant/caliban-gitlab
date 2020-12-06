@@ -190,6 +190,6 @@ jobs:
           name: target-${{ matrix.os }}-${{ matrix.java }}-project_target
           path: project/target
 
-      - uses: olafurpg/setup-gpg@v2
+      - uses: olafurpg/setup-gpg@v3
 
       - run: sbt ++${{ matrix.scala }} ci-release
