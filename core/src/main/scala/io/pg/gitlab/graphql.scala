@@ -5,11 +5,13 @@ import caliban.client.FieldBuilder._
 import caliban.client.SelectionBuilder._
 import caliban.client._
 import caliban.client.Operations._
-import caliban.client.Value._
+import caliban.client.__Value._
 
 object graphql {
 
   type AlertManagementHttpIntegrationID = String
+
+  type AnalyticsDevopsAdoptionSegmentID = String
 
   type AwardableID = String
 
@@ -71,6 +73,8 @@ object graphql {
 
   type MergeRequestID = String
 
+  type MetricsDashboardAnnotationID = String
+
   type MilestoneID = String
 
   type NamespaceID = String
@@ -112,25 +116,25 @@ object graphql {
     case object OWNER extends AccessLevelEnum
 
     implicit val decoder: ScalarDecoder[AccessLevelEnum] = {
-      case StringValue("NO_ACCESS")  => Right(AccessLevelEnum.NO_ACCESS)
-      case StringValue("GUEST")      => Right(AccessLevelEnum.GUEST)
-      case StringValue("REPORTER")   => Right(AccessLevelEnum.REPORTER)
-      case StringValue("DEVELOPER")  => Right(AccessLevelEnum.DEVELOPER)
-      case StringValue("MAINTAINER") => Right(AccessLevelEnum.MAINTAINER)
-      case StringValue("OWNER")      => Right(AccessLevelEnum.OWNER)
-      case other                     => Left(DecodingError(s"Can't build AccessLevelEnum from input $other"))
+      case __StringValue("NO_ACCESS")  => Right(AccessLevelEnum.NO_ACCESS)
+      case __StringValue("GUEST")      => Right(AccessLevelEnum.GUEST)
+      case __StringValue("REPORTER")   => Right(AccessLevelEnum.REPORTER)
+      case __StringValue("DEVELOPER")  => Right(AccessLevelEnum.DEVELOPER)
+      case __StringValue("MAINTAINER") => Right(AccessLevelEnum.MAINTAINER)
+      case __StringValue("OWNER")      => Right(AccessLevelEnum.OWNER)
+      case other                       => Left(DecodingError(s"Can't build AccessLevelEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[AccessLevelEnum] = new ArgEncoder[AccessLevelEnum] {
 
-      override def encode(value: AccessLevelEnum): Value =
+      override def encode(value: AccessLevelEnum): __Value =
         value match {
-          case AccessLevelEnum.NO_ACCESS  => EnumValue("NO_ACCESS")
-          case AccessLevelEnum.GUEST      => EnumValue("GUEST")
-          case AccessLevelEnum.REPORTER   => EnumValue("REPORTER")
-          case AccessLevelEnum.DEVELOPER  => EnumValue("DEVELOPER")
-          case AccessLevelEnum.MAINTAINER => EnumValue("MAINTAINER")
-          case AccessLevelEnum.OWNER      => EnumValue("OWNER")
+          case AccessLevelEnum.NO_ACCESS  => __EnumValue("NO_ACCESS")
+          case AccessLevelEnum.GUEST      => __EnumValue("GUEST")
+          case AccessLevelEnum.REPORTER   => __EnumValue("REPORTER")
+          case AccessLevelEnum.DEVELOPER  => __EnumValue("DEVELOPER")
+          case AccessLevelEnum.MAINTAINER => __EnumValue("MAINTAINER")
+          case AccessLevelEnum.OWNER      => __EnumValue("OWNER")
         }
 
       override def typeName: String = "AccessLevelEnum"
@@ -145,10 +149,10 @@ object graphql {
     case object updated_asc extends AlertManagementAlertSort
     case object created_desc extends AlertManagementAlertSort
     case object created_asc extends AlertManagementAlertSort
-    case object UPDATED_DESC extends AlertManagementAlertSort
-    case object UPDATED_ASC extends AlertManagementAlertSort
-    case object CREATED_DESC extends AlertManagementAlertSort
-    case object CREATED_ASC extends AlertManagementAlertSort
+    case object UPDATED_DESC_ extends AlertManagementAlertSort
+    case object UPDATED_ASC_ extends AlertManagementAlertSort
+    case object CREATED_DESC_ extends AlertManagementAlertSort
+    case object CREATED_ASC_ extends AlertManagementAlertSort
     case object STARTED_AT_ASC extends AlertManagementAlertSort
     case object STARTED_AT_DESC extends AlertManagementAlertSort
     case object ENDED_AT_ASC extends AlertManagementAlertSort
@@ -165,57 +169,57 @@ object graphql {
     case object STATUS_DESC extends AlertManagementAlertSort
 
     implicit val decoder: ScalarDecoder[AlertManagementAlertSort] = {
-      case StringValue("updated_desc")      => Right(AlertManagementAlertSort.updated_desc)
-      case StringValue("updated_asc")       => Right(AlertManagementAlertSort.updated_asc)
-      case StringValue("created_desc")      => Right(AlertManagementAlertSort.created_desc)
-      case StringValue("created_asc")       => Right(AlertManagementAlertSort.created_asc)
-      case StringValue("UPDATED_DESC")      => Right(AlertManagementAlertSort.UPDATED_DESC)
-      case StringValue("UPDATED_ASC")       => Right(AlertManagementAlertSort.UPDATED_ASC)
-      case StringValue("CREATED_DESC")      => Right(AlertManagementAlertSort.CREATED_DESC)
-      case StringValue("CREATED_ASC")       => Right(AlertManagementAlertSort.CREATED_ASC)
-      case StringValue("STARTED_AT_ASC")    => Right(AlertManagementAlertSort.STARTED_AT_ASC)
-      case StringValue("STARTED_AT_DESC")   => Right(AlertManagementAlertSort.STARTED_AT_DESC)
-      case StringValue("ENDED_AT_ASC")      => Right(AlertManagementAlertSort.ENDED_AT_ASC)
-      case StringValue("ENDED_AT_DESC")     => Right(AlertManagementAlertSort.ENDED_AT_DESC)
-      case StringValue("CREATED_TIME_ASC")  => Right(AlertManagementAlertSort.CREATED_TIME_ASC)
-      case StringValue("CREATED_TIME_DESC") => Right(AlertManagementAlertSort.CREATED_TIME_DESC)
-      case StringValue("UPDATED_TIME_ASC")  => Right(AlertManagementAlertSort.UPDATED_TIME_ASC)
-      case StringValue("UPDATED_TIME_DESC") => Right(AlertManagementAlertSort.UPDATED_TIME_DESC)
-      case StringValue("EVENT_COUNT_ASC")   => Right(AlertManagementAlertSort.EVENT_COUNT_ASC)
-      case StringValue("EVENT_COUNT_DESC")  => Right(AlertManagementAlertSort.EVENT_COUNT_DESC)
-      case StringValue("SEVERITY_ASC")      => Right(AlertManagementAlertSort.SEVERITY_ASC)
-      case StringValue("SEVERITY_DESC")     => Right(AlertManagementAlertSort.SEVERITY_DESC)
-      case StringValue("STATUS_ASC")        => Right(AlertManagementAlertSort.STATUS_ASC)
-      case StringValue("STATUS_DESC")       => Right(AlertManagementAlertSort.STATUS_DESC)
-      case other                            => Left(DecodingError(s"Can't build AlertManagementAlertSort from input $other"))
+      case __StringValue("updated_desc")      => Right(AlertManagementAlertSort.updated_desc)
+      case __StringValue("updated_asc")       => Right(AlertManagementAlertSort.updated_asc)
+      case __StringValue("created_desc")      => Right(AlertManagementAlertSort.created_desc)
+      case __StringValue("created_asc")       => Right(AlertManagementAlertSort.created_asc)
+      case __StringValue("UPDATED_DESC")      => Right(AlertManagementAlertSort.UPDATED_DESC_)
+      case __StringValue("UPDATED_ASC")       => Right(AlertManagementAlertSort.UPDATED_ASC_)
+      case __StringValue("CREATED_DESC")      => Right(AlertManagementAlertSort.CREATED_DESC_)
+      case __StringValue("CREATED_ASC")       => Right(AlertManagementAlertSort.CREATED_ASC_)
+      case __StringValue("STARTED_AT_ASC")    => Right(AlertManagementAlertSort.STARTED_AT_ASC)
+      case __StringValue("STARTED_AT_DESC")   => Right(AlertManagementAlertSort.STARTED_AT_DESC)
+      case __StringValue("ENDED_AT_ASC")      => Right(AlertManagementAlertSort.ENDED_AT_ASC)
+      case __StringValue("ENDED_AT_DESC")     => Right(AlertManagementAlertSort.ENDED_AT_DESC)
+      case __StringValue("CREATED_TIME_ASC")  => Right(AlertManagementAlertSort.CREATED_TIME_ASC)
+      case __StringValue("CREATED_TIME_DESC") => Right(AlertManagementAlertSort.CREATED_TIME_DESC)
+      case __StringValue("UPDATED_TIME_ASC")  => Right(AlertManagementAlertSort.UPDATED_TIME_ASC)
+      case __StringValue("UPDATED_TIME_DESC") => Right(AlertManagementAlertSort.UPDATED_TIME_DESC)
+      case __StringValue("EVENT_COUNT_ASC")   => Right(AlertManagementAlertSort.EVENT_COUNT_ASC)
+      case __StringValue("EVENT_COUNT_DESC")  => Right(AlertManagementAlertSort.EVENT_COUNT_DESC)
+      case __StringValue("SEVERITY_ASC")      => Right(AlertManagementAlertSort.SEVERITY_ASC)
+      case __StringValue("SEVERITY_DESC")     => Right(AlertManagementAlertSort.SEVERITY_DESC)
+      case __StringValue("STATUS_ASC")        => Right(AlertManagementAlertSort.STATUS_ASC)
+      case __StringValue("STATUS_DESC")       => Right(AlertManagementAlertSort.STATUS_DESC)
+      case other                              => Left(DecodingError(s"Can't build AlertManagementAlertSort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[AlertManagementAlertSort] = new ArgEncoder[AlertManagementAlertSort] {
 
-      override def encode(value: AlertManagementAlertSort): Value =
+      override def encode(value: AlertManagementAlertSort): __Value =
         value match {
-          case AlertManagementAlertSort.updated_desc      => EnumValue("updated_desc")
-          case AlertManagementAlertSort.updated_asc       => EnumValue("updated_asc")
-          case AlertManagementAlertSort.created_desc      => EnumValue("created_desc")
-          case AlertManagementAlertSort.created_asc       => EnumValue("created_asc")
-          case AlertManagementAlertSort.UPDATED_DESC      => EnumValue("UPDATED_DESC")
-          case AlertManagementAlertSort.UPDATED_ASC       => EnumValue("UPDATED_ASC")
-          case AlertManagementAlertSort.CREATED_DESC      => EnumValue("CREATED_DESC")
-          case AlertManagementAlertSort.CREATED_ASC       => EnumValue("CREATED_ASC")
-          case AlertManagementAlertSort.STARTED_AT_ASC    => EnumValue("STARTED_AT_ASC")
-          case AlertManagementAlertSort.STARTED_AT_DESC   => EnumValue("STARTED_AT_DESC")
-          case AlertManagementAlertSort.ENDED_AT_ASC      => EnumValue("ENDED_AT_ASC")
-          case AlertManagementAlertSort.ENDED_AT_DESC     => EnumValue("ENDED_AT_DESC")
-          case AlertManagementAlertSort.CREATED_TIME_ASC  => EnumValue("CREATED_TIME_ASC")
-          case AlertManagementAlertSort.CREATED_TIME_DESC => EnumValue("CREATED_TIME_DESC")
-          case AlertManagementAlertSort.UPDATED_TIME_ASC  => EnumValue("UPDATED_TIME_ASC")
-          case AlertManagementAlertSort.UPDATED_TIME_DESC => EnumValue("UPDATED_TIME_DESC")
-          case AlertManagementAlertSort.EVENT_COUNT_ASC   => EnumValue("EVENT_COUNT_ASC")
-          case AlertManagementAlertSort.EVENT_COUNT_DESC  => EnumValue("EVENT_COUNT_DESC")
-          case AlertManagementAlertSort.SEVERITY_ASC      => EnumValue("SEVERITY_ASC")
-          case AlertManagementAlertSort.SEVERITY_DESC     => EnumValue("SEVERITY_DESC")
-          case AlertManagementAlertSort.STATUS_ASC        => EnumValue("STATUS_ASC")
-          case AlertManagementAlertSort.STATUS_DESC       => EnumValue("STATUS_DESC")
+          case AlertManagementAlertSort.updated_desc      => __EnumValue("updated_desc")
+          case AlertManagementAlertSort.updated_asc       => __EnumValue("updated_asc")
+          case AlertManagementAlertSort.created_desc      => __EnumValue("created_desc")
+          case AlertManagementAlertSort.created_asc       => __EnumValue("created_asc")
+          case AlertManagementAlertSort.UPDATED_DESC_     => __EnumValue("UPDATED_DESC")
+          case AlertManagementAlertSort.UPDATED_ASC_      => __EnumValue("UPDATED_ASC")
+          case AlertManagementAlertSort.CREATED_DESC_     => __EnumValue("CREATED_DESC")
+          case AlertManagementAlertSort.CREATED_ASC_      => __EnumValue("CREATED_ASC")
+          case AlertManagementAlertSort.STARTED_AT_ASC    => __EnumValue("STARTED_AT_ASC")
+          case AlertManagementAlertSort.STARTED_AT_DESC   => __EnumValue("STARTED_AT_DESC")
+          case AlertManagementAlertSort.ENDED_AT_ASC      => __EnumValue("ENDED_AT_ASC")
+          case AlertManagementAlertSort.ENDED_AT_DESC     => __EnumValue("ENDED_AT_DESC")
+          case AlertManagementAlertSort.CREATED_TIME_ASC  => __EnumValue("CREATED_TIME_ASC")
+          case AlertManagementAlertSort.CREATED_TIME_DESC => __EnumValue("CREATED_TIME_DESC")
+          case AlertManagementAlertSort.UPDATED_TIME_ASC  => __EnumValue("UPDATED_TIME_ASC")
+          case AlertManagementAlertSort.UPDATED_TIME_DESC => __EnumValue("UPDATED_TIME_DESC")
+          case AlertManagementAlertSort.EVENT_COUNT_ASC   => __EnumValue("EVENT_COUNT_ASC")
+          case AlertManagementAlertSort.EVENT_COUNT_DESC  => __EnumValue("EVENT_COUNT_DESC")
+          case AlertManagementAlertSort.SEVERITY_ASC      => __EnumValue("SEVERITY_ASC")
+          case AlertManagementAlertSort.SEVERITY_DESC     => __EnumValue("SEVERITY_DESC")
+          case AlertManagementAlertSort.STATUS_ASC        => __EnumValue("STATUS_ASC")
+          case AlertManagementAlertSort.STATUS_DESC       => __EnumValue("STATUS_DESC")
         }
 
       override def typeName: String = "AlertManagementAlertSort"
@@ -230,17 +234,17 @@ object graphql {
     case object HTTP extends AlertManagementIntegrationType
 
     implicit val decoder: ScalarDecoder[AlertManagementIntegrationType] = {
-      case StringValue("PROMETHEUS") => Right(AlertManagementIntegrationType.PROMETHEUS)
-      case StringValue("HTTP")       => Right(AlertManagementIntegrationType.HTTP)
-      case other                     => Left(DecodingError(s"Can't build AlertManagementIntegrationType from input $other"))
+      case __StringValue("PROMETHEUS") => Right(AlertManagementIntegrationType.PROMETHEUS)
+      case __StringValue("HTTP")       => Right(AlertManagementIntegrationType.HTTP)
+      case other                       => Left(DecodingError(s"Can't build AlertManagementIntegrationType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[AlertManagementIntegrationType] = new ArgEncoder[AlertManagementIntegrationType] {
 
-      override def encode(value: AlertManagementIntegrationType): Value =
+      override def encode(value: AlertManagementIntegrationType): __Value =
         value match {
-          case AlertManagementIntegrationType.PROMETHEUS => EnumValue("PROMETHEUS")
-          case AlertManagementIntegrationType.HTTP       => EnumValue("HTTP")
+          case AlertManagementIntegrationType.PROMETHEUS => __EnumValue("PROMETHEUS")
+          case AlertManagementIntegrationType.HTTP       => __EnumValue("HTTP")
         }
 
       override def typeName: String = "AlertManagementIntegrationType"
@@ -259,25 +263,25 @@ object graphql {
     case object UNKNOWN extends AlertManagementSeverity
 
     implicit val decoder: ScalarDecoder[AlertManagementSeverity] = {
-      case StringValue("CRITICAL") => Right(AlertManagementSeverity.CRITICAL)
-      case StringValue("HIGH")     => Right(AlertManagementSeverity.HIGH)
-      case StringValue("MEDIUM")   => Right(AlertManagementSeverity.MEDIUM)
-      case StringValue("LOW")      => Right(AlertManagementSeverity.LOW)
-      case StringValue("INFO")     => Right(AlertManagementSeverity.INFO)
-      case StringValue("UNKNOWN")  => Right(AlertManagementSeverity.UNKNOWN)
-      case other                   => Left(DecodingError(s"Can't build AlertManagementSeverity from input $other"))
+      case __StringValue("CRITICAL") => Right(AlertManagementSeverity.CRITICAL)
+      case __StringValue("HIGH")     => Right(AlertManagementSeverity.HIGH)
+      case __StringValue("MEDIUM")   => Right(AlertManagementSeverity.MEDIUM)
+      case __StringValue("LOW")      => Right(AlertManagementSeverity.LOW)
+      case __StringValue("INFO")     => Right(AlertManagementSeverity.INFO)
+      case __StringValue("UNKNOWN")  => Right(AlertManagementSeverity.UNKNOWN)
+      case other                     => Left(DecodingError(s"Can't build AlertManagementSeverity from input $other"))
     }
 
     implicit val encoder: ArgEncoder[AlertManagementSeverity] = new ArgEncoder[AlertManagementSeverity] {
 
-      override def encode(value: AlertManagementSeverity): Value =
+      override def encode(value: AlertManagementSeverity): __Value =
         value match {
-          case AlertManagementSeverity.CRITICAL => EnumValue("CRITICAL")
-          case AlertManagementSeverity.HIGH     => EnumValue("HIGH")
-          case AlertManagementSeverity.MEDIUM   => EnumValue("MEDIUM")
-          case AlertManagementSeverity.LOW      => EnumValue("LOW")
-          case AlertManagementSeverity.INFO     => EnumValue("INFO")
-          case AlertManagementSeverity.UNKNOWN  => EnumValue("UNKNOWN")
+          case AlertManagementSeverity.CRITICAL => __EnumValue("CRITICAL")
+          case AlertManagementSeverity.HIGH     => __EnumValue("HIGH")
+          case AlertManagementSeverity.MEDIUM   => __EnumValue("MEDIUM")
+          case AlertManagementSeverity.LOW      => __EnumValue("LOW")
+          case AlertManagementSeverity.INFO     => __EnumValue("INFO")
+          case AlertManagementSeverity.UNKNOWN  => __EnumValue("UNKNOWN")
         }
 
       override def typeName: String = "AlertManagementSeverity"
@@ -294,21 +298,21 @@ object graphql {
     case object IGNORED extends AlertManagementStatus
 
     implicit val decoder: ScalarDecoder[AlertManagementStatus] = {
-      case StringValue("TRIGGERED")    => Right(AlertManagementStatus.TRIGGERED)
-      case StringValue("ACKNOWLEDGED") => Right(AlertManagementStatus.ACKNOWLEDGED)
-      case StringValue("RESOLVED")     => Right(AlertManagementStatus.RESOLVED)
-      case StringValue("IGNORED")      => Right(AlertManagementStatus.IGNORED)
-      case other                       => Left(DecodingError(s"Can't build AlertManagementStatus from input $other"))
+      case __StringValue("TRIGGERED")    => Right(AlertManagementStatus.TRIGGERED)
+      case __StringValue("ACKNOWLEDGED") => Right(AlertManagementStatus.ACKNOWLEDGED)
+      case __StringValue("RESOLVED")     => Right(AlertManagementStatus.RESOLVED)
+      case __StringValue("IGNORED")      => Right(AlertManagementStatus.IGNORED)
+      case other                         => Left(DecodingError(s"Can't build AlertManagementStatus from input $other"))
     }
 
     implicit val encoder: ArgEncoder[AlertManagementStatus] = new ArgEncoder[AlertManagementStatus] {
 
-      override def encode(value: AlertManagementStatus): Value =
+      override def encode(value: AlertManagementStatus): __Value =
         value match {
-          case AlertManagementStatus.TRIGGERED    => EnumValue("TRIGGERED")
-          case AlertManagementStatus.ACKNOWLEDGED => EnumValue("ACKNOWLEDGED")
-          case AlertManagementStatus.RESOLVED     => EnumValue("RESOLVED")
-          case AlertManagementStatus.IGNORED      => EnumValue("IGNORED")
+          case AlertManagementStatus.TRIGGERED    => __EnumValue("TRIGGERED")
+          case AlertManagementStatus.ACKNOWLEDGED => __EnumValue("ACKNOWLEDGED")
+          case AlertManagementStatus.RESOLVED     => __EnumValue("RESOLVED")
+          case AlertManagementStatus.IGNORED      => __EnumValue("IGNORED")
         }
 
       override def typeName: String = "AlertManagementStatus"
@@ -323,17 +327,17 @@ object graphql {
     case object BUSY extends AvailabilityEnum
 
     implicit val decoder: ScalarDecoder[AvailabilityEnum] = {
-      case StringValue("NOT_SET") => Right(AvailabilityEnum.NOT_SET)
-      case StringValue("BUSY")    => Right(AvailabilityEnum.BUSY)
-      case other                  => Left(DecodingError(s"Can't build AvailabilityEnum from input $other"))
+      case __StringValue("NOT_SET") => Right(AvailabilityEnum.NOT_SET)
+      case __StringValue("BUSY")    => Right(AvailabilityEnum.BUSY)
+      case other                    => Left(DecodingError(s"Can't build AvailabilityEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[AvailabilityEnum] = new ArgEncoder[AvailabilityEnum] {
 
-      override def encode(value: AvailabilityEnum): Value =
+      override def encode(value: AvailabilityEnum): __Value =
         value match {
-          case AvailabilityEnum.NOT_SET => EnumValue("NOT_SET")
-          case AvailabilityEnum.BUSY    => EnumValue("BUSY")
+          case AvailabilityEnum.NOT_SET => __EnumValue("NOT_SET")
+          case AvailabilityEnum.BUSY    => __EnumValue("BUSY")
         }
 
       override def typeName: String = "AvailabilityEnum"
@@ -349,19 +353,19 @@ object graphql {
     case object auxiliary extends BlobViewersType
 
     implicit val decoder: ScalarDecoder[BlobViewersType] = {
-      case StringValue("rich")      => Right(BlobViewersType.rich)
-      case StringValue("simple")    => Right(BlobViewersType.simple)
-      case StringValue("auxiliary") => Right(BlobViewersType.auxiliary)
-      case other                    => Left(DecodingError(s"Can't build BlobViewersType from input $other"))
+      case __StringValue("rich")      => Right(BlobViewersType.rich)
+      case __StringValue("simple")    => Right(BlobViewersType.simple)
+      case __StringValue("auxiliary") => Right(BlobViewersType.auxiliary)
+      case other                      => Left(DecodingError(s"Can't build BlobViewersType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[BlobViewersType] = new ArgEncoder[BlobViewersType] {
 
-      override def encode(value: BlobViewersType): Value =
+      override def encode(value: BlobViewersType): __Value =
         value match {
-          case BlobViewersType.rich      => EnumValue("rich")
-          case BlobViewersType.simple    => EnumValue("simple")
-          case BlobViewersType.auxiliary => EnumValue("auxiliary")
+          case BlobViewersType.rich      => __EnumValue("rich")
+          case BlobViewersType.simple    => __EnumValue("simple")
+          case BlobViewersType.auxiliary => __EnumValue("auxiliary")
         }
 
       override def typeName: String = "BlobViewersType"
@@ -379,23 +383,23 @@ object graphql {
     case object CHMOD extends CommitActionMode
 
     implicit val decoder: ScalarDecoder[CommitActionMode] = {
-      case StringValue("CREATE") => Right(CommitActionMode.CREATE)
-      case StringValue("DELETE") => Right(CommitActionMode.DELETE)
-      case StringValue("MOVE")   => Right(CommitActionMode.MOVE)
-      case StringValue("UPDATE") => Right(CommitActionMode.UPDATE)
-      case StringValue("CHMOD")  => Right(CommitActionMode.CHMOD)
-      case other                 => Left(DecodingError(s"Can't build CommitActionMode from input $other"))
+      case __StringValue("CREATE") => Right(CommitActionMode.CREATE)
+      case __StringValue("DELETE") => Right(CommitActionMode.DELETE)
+      case __StringValue("MOVE")   => Right(CommitActionMode.MOVE)
+      case __StringValue("UPDATE") => Right(CommitActionMode.UPDATE)
+      case __StringValue("CHMOD")  => Right(CommitActionMode.CHMOD)
+      case other                   => Left(DecodingError(s"Can't build CommitActionMode from input $other"))
     }
 
     implicit val encoder: ArgEncoder[CommitActionMode] = new ArgEncoder[CommitActionMode] {
 
-      override def encode(value: CommitActionMode): Value =
+      override def encode(value: CommitActionMode): __Value =
         value match {
-          case CommitActionMode.CREATE => EnumValue("CREATE")
-          case CommitActionMode.DELETE => EnumValue("DELETE")
-          case CommitActionMode.MOVE   => EnumValue("MOVE")
-          case CommitActionMode.UPDATE => EnumValue("UPDATE")
-          case CommitActionMode.CHMOD  => EnumValue("CHMOD")
+          case CommitActionMode.CREATE => __EnumValue("CREATE")
+          case CommitActionMode.DELETE => __EnumValue("DELETE")
+          case CommitActionMode.MOVE   => __EnumValue("MOVE")
+          case CommitActionMode.UPDATE => __EnumValue("UPDATE")
+          case CommitActionMode.CHMOD  => __EnumValue("CHMOD")
         }
 
       override def typeName: String = "CommitActionMode"
@@ -410,17 +414,17 @@ object graphql {
     case object BASE64 extends CommitEncoding
 
     implicit val decoder: ScalarDecoder[CommitEncoding] = {
-      case StringValue("TEXT")   => Right(CommitEncoding.TEXT)
-      case StringValue("BASE64") => Right(CommitEncoding.BASE64)
-      case other                 => Left(DecodingError(s"Can't build CommitEncoding from input $other"))
+      case __StringValue("TEXT")   => Right(CommitEncoding.TEXT)
+      case __StringValue("BASE64") => Right(CommitEncoding.BASE64)
+      case other                   => Left(DecodingError(s"Can't build CommitEncoding from input $other"))
     }
 
     implicit val encoder: ArgEncoder[CommitEncoding] = new ArgEncoder[CommitEncoding] {
 
-      override def encode(value: CommitEncoding): Value =
+      override def encode(value: CommitEncoding): __Value =
         value match {
-          case CommitEncoding.TEXT   => EnumValue("TEXT")
-          case CommitEncoding.BASE64 => EnumValue("BASE64")
+          case CommitEncoding.TEXT   => __EnumValue("TEXT")
+          case CommitEncoding.BASE64 => __EnumValue("BASE64")
         }
 
       override def typeName: String = "CommitEncoding"
@@ -438,23 +442,23 @@ object graphql {
     case object EVERY_THREE_MONTHS extends ContainerExpirationPolicyCadenceEnum
 
     implicit val decoder: ScalarDecoder[ContainerExpirationPolicyCadenceEnum] = {
-      case StringValue("EVERY_DAY")          => Right(ContainerExpirationPolicyCadenceEnum.EVERY_DAY)
-      case StringValue("EVERY_WEEK")         => Right(ContainerExpirationPolicyCadenceEnum.EVERY_WEEK)
-      case StringValue("EVERY_TWO_WEEKS")    => Right(ContainerExpirationPolicyCadenceEnum.EVERY_TWO_WEEKS)
-      case StringValue("EVERY_MONTH")        => Right(ContainerExpirationPolicyCadenceEnum.EVERY_MONTH)
-      case StringValue("EVERY_THREE_MONTHS") => Right(ContainerExpirationPolicyCadenceEnum.EVERY_THREE_MONTHS)
-      case other                             => Left(DecodingError(s"Can't build ContainerExpirationPolicyCadenceEnum from input $other"))
+      case __StringValue("EVERY_DAY")          => Right(ContainerExpirationPolicyCadenceEnum.EVERY_DAY)
+      case __StringValue("EVERY_WEEK")         => Right(ContainerExpirationPolicyCadenceEnum.EVERY_WEEK)
+      case __StringValue("EVERY_TWO_WEEKS")    => Right(ContainerExpirationPolicyCadenceEnum.EVERY_TWO_WEEKS)
+      case __StringValue("EVERY_MONTH")        => Right(ContainerExpirationPolicyCadenceEnum.EVERY_MONTH)
+      case __StringValue("EVERY_THREE_MONTHS") => Right(ContainerExpirationPolicyCadenceEnum.EVERY_THREE_MONTHS)
+      case other                               => Left(DecodingError(s"Can't build ContainerExpirationPolicyCadenceEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ContainerExpirationPolicyCadenceEnum] = new ArgEncoder[ContainerExpirationPolicyCadenceEnum] {
 
-      override def encode(value: ContainerExpirationPolicyCadenceEnum): Value =
+      override def encode(value: ContainerExpirationPolicyCadenceEnum): __Value =
         value match {
-          case ContainerExpirationPolicyCadenceEnum.EVERY_DAY          => EnumValue("EVERY_DAY")
-          case ContainerExpirationPolicyCadenceEnum.EVERY_WEEK         => EnumValue("EVERY_WEEK")
-          case ContainerExpirationPolicyCadenceEnum.EVERY_TWO_WEEKS    => EnumValue("EVERY_TWO_WEEKS")
-          case ContainerExpirationPolicyCadenceEnum.EVERY_MONTH        => EnumValue("EVERY_MONTH")
-          case ContainerExpirationPolicyCadenceEnum.EVERY_THREE_MONTHS => EnumValue("EVERY_THREE_MONTHS")
+          case ContainerExpirationPolicyCadenceEnum.EVERY_DAY          => __EnumValue("EVERY_DAY")
+          case ContainerExpirationPolicyCadenceEnum.EVERY_WEEK         => __EnumValue("EVERY_WEEK")
+          case ContainerExpirationPolicyCadenceEnum.EVERY_TWO_WEEKS    => __EnumValue("EVERY_TWO_WEEKS")
+          case ContainerExpirationPolicyCadenceEnum.EVERY_MONTH        => __EnumValue("EVERY_MONTH")
+          case ContainerExpirationPolicyCadenceEnum.EVERY_THREE_MONTHS => __EnumValue("EVERY_THREE_MONTHS")
         }
 
       override def typeName: String = "ContainerExpirationPolicyCadenceEnum"
@@ -473,25 +477,25 @@ object graphql {
     case object ONE_HUNDRED_TAGS extends ContainerExpirationPolicyKeepEnum
 
     implicit val decoder: ScalarDecoder[ContainerExpirationPolicyKeepEnum] = {
-      case StringValue("ONE_TAG")          => Right(ContainerExpirationPolicyKeepEnum.ONE_TAG)
-      case StringValue("FIVE_TAGS")        => Right(ContainerExpirationPolicyKeepEnum.FIVE_TAGS)
-      case StringValue("TEN_TAGS")         => Right(ContainerExpirationPolicyKeepEnum.TEN_TAGS)
-      case StringValue("TWENTY_FIVE_TAGS") => Right(ContainerExpirationPolicyKeepEnum.TWENTY_FIVE_TAGS)
-      case StringValue("FIFTY_TAGS")       => Right(ContainerExpirationPolicyKeepEnum.FIFTY_TAGS)
-      case StringValue("ONE_HUNDRED_TAGS") => Right(ContainerExpirationPolicyKeepEnum.ONE_HUNDRED_TAGS)
-      case other                           => Left(DecodingError(s"Can't build ContainerExpirationPolicyKeepEnum from input $other"))
+      case __StringValue("ONE_TAG")          => Right(ContainerExpirationPolicyKeepEnum.ONE_TAG)
+      case __StringValue("FIVE_TAGS")        => Right(ContainerExpirationPolicyKeepEnum.FIVE_TAGS)
+      case __StringValue("TEN_TAGS")         => Right(ContainerExpirationPolicyKeepEnum.TEN_TAGS)
+      case __StringValue("TWENTY_FIVE_TAGS") => Right(ContainerExpirationPolicyKeepEnum.TWENTY_FIVE_TAGS)
+      case __StringValue("FIFTY_TAGS")       => Right(ContainerExpirationPolicyKeepEnum.FIFTY_TAGS)
+      case __StringValue("ONE_HUNDRED_TAGS") => Right(ContainerExpirationPolicyKeepEnum.ONE_HUNDRED_TAGS)
+      case other                             => Left(DecodingError(s"Can't build ContainerExpirationPolicyKeepEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ContainerExpirationPolicyKeepEnum] = new ArgEncoder[ContainerExpirationPolicyKeepEnum] {
 
-      override def encode(value: ContainerExpirationPolicyKeepEnum): Value =
+      override def encode(value: ContainerExpirationPolicyKeepEnum): __Value =
         value match {
-          case ContainerExpirationPolicyKeepEnum.ONE_TAG          => EnumValue("ONE_TAG")
-          case ContainerExpirationPolicyKeepEnum.FIVE_TAGS        => EnumValue("FIVE_TAGS")
-          case ContainerExpirationPolicyKeepEnum.TEN_TAGS         => EnumValue("TEN_TAGS")
-          case ContainerExpirationPolicyKeepEnum.TWENTY_FIVE_TAGS => EnumValue("TWENTY_FIVE_TAGS")
-          case ContainerExpirationPolicyKeepEnum.FIFTY_TAGS       => EnumValue("FIFTY_TAGS")
-          case ContainerExpirationPolicyKeepEnum.ONE_HUNDRED_TAGS => EnumValue("ONE_HUNDRED_TAGS")
+          case ContainerExpirationPolicyKeepEnum.ONE_TAG          => __EnumValue("ONE_TAG")
+          case ContainerExpirationPolicyKeepEnum.FIVE_TAGS        => __EnumValue("FIVE_TAGS")
+          case ContainerExpirationPolicyKeepEnum.TEN_TAGS         => __EnumValue("TEN_TAGS")
+          case ContainerExpirationPolicyKeepEnum.TWENTY_FIVE_TAGS => __EnumValue("TWENTY_FIVE_TAGS")
+          case ContainerExpirationPolicyKeepEnum.FIFTY_TAGS       => __EnumValue("FIFTY_TAGS")
+          case ContainerExpirationPolicyKeepEnum.ONE_HUNDRED_TAGS => __EnumValue("ONE_HUNDRED_TAGS")
         }
 
       override def typeName: String = "ContainerExpirationPolicyKeepEnum"
@@ -508,24 +512,55 @@ object graphql {
     case object NINETY_DAYS extends ContainerExpirationPolicyOlderThanEnum
 
     implicit val decoder: ScalarDecoder[ContainerExpirationPolicyOlderThanEnum] = {
-      case StringValue("SEVEN_DAYS")    => Right(ContainerExpirationPolicyOlderThanEnum.SEVEN_DAYS)
-      case StringValue("FOURTEEN_DAYS") => Right(ContainerExpirationPolicyOlderThanEnum.FOURTEEN_DAYS)
-      case StringValue("THIRTY_DAYS")   => Right(ContainerExpirationPolicyOlderThanEnum.THIRTY_DAYS)
-      case StringValue("NINETY_DAYS")   => Right(ContainerExpirationPolicyOlderThanEnum.NINETY_DAYS)
-      case other                        => Left(DecodingError(s"Can't build ContainerExpirationPolicyOlderThanEnum from input $other"))
+      case __StringValue("SEVEN_DAYS")    => Right(ContainerExpirationPolicyOlderThanEnum.SEVEN_DAYS)
+      case __StringValue("FOURTEEN_DAYS") => Right(ContainerExpirationPolicyOlderThanEnum.FOURTEEN_DAYS)
+      case __StringValue("THIRTY_DAYS")   => Right(ContainerExpirationPolicyOlderThanEnum.THIRTY_DAYS)
+      case __StringValue("NINETY_DAYS")   => Right(ContainerExpirationPolicyOlderThanEnum.NINETY_DAYS)
+      case other                          => Left(DecodingError(s"Can't build ContainerExpirationPolicyOlderThanEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ContainerExpirationPolicyOlderThanEnum] = new ArgEncoder[ContainerExpirationPolicyOlderThanEnum] {
 
-      override def encode(value: ContainerExpirationPolicyOlderThanEnum): Value =
+      override def encode(value: ContainerExpirationPolicyOlderThanEnum): __Value =
         value match {
-          case ContainerExpirationPolicyOlderThanEnum.SEVEN_DAYS    => EnumValue("SEVEN_DAYS")
-          case ContainerExpirationPolicyOlderThanEnum.FOURTEEN_DAYS => EnumValue("FOURTEEN_DAYS")
-          case ContainerExpirationPolicyOlderThanEnum.THIRTY_DAYS   => EnumValue("THIRTY_DAYS")
-          case ContainerExpirationPolicyOlderThanEnum.NINETY_DAYS   => EnumValue("NINETY_DAYS")
+          case ContainerExpirationPolicyOlderThanEnum.SEVEN_DAYS    => __EnumValue("SEVEN_DAYS")
+          case ContainerExpirationPolicyOlderThanEnum.FOURTEEN_DAYS => __EnumValue("FOURTEEN_DAYS")
+          case ContainerExpirationPolicyOlderThanEnum.THIRTY_DAYS   => __EnumValue("THIRTY_DAYS")
+          case ContainerExpirationPolicyOlderThanEnum.NINETY_DAYS   => __EnumValue("NINETY_DAYS")
         }
 
       override def typeName: String = "ContainerExpirationPolicyOlderThanEnum"
+    }
+
+  }
+
+  sealed trait ContainerRepositoryCleanupStatus extends scala.Product with scala.Serializable
+
+  object ContainerRepositoryCleanupStatus {
+    case object UNSCHEDULED extends ContainerRepositoryCleanupStatus
+    case object SCHEDULED extends ContainerRepositoryCleanupStatus
+    case object UNFINISHED extends ContainerRepositoryCleanupStatus
+    case object ONGOING extends ContainerRepositoryCleanupStatus
+
+    implicit val decoder: ScalarDecoder[ContainerRepositoryCleanupStatus] = {
+      case __StringValue("UNSCHEDULED") => Right(ContainerRepositoryCleanupStatus.UNSCHEDULED)
+      case __StringValue("SCHEDULED")   => Right(ContainerRepositoryCleanupStatus.SCHEDULED)
+      case __StringValue("UNFINISHED")  => Right(ContainerRepositoryCleanupStatus.UNFINISHED)
+      case __StringValue("ONGOING")     => Right(ContainerRepositoryCleanupStatus.ONGOING)
+      case other                        => Left(DecodingError(s"Can't build ContainerRepositoryCleanupStatus from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[ContainerRepositoryCleanupStatus] = new ArgEncoder[ContainerRepositoryCleanupStatus] {
+
+      override def encode(value: ContainerRepositoryCleanupStatus): __Value =
+        value match {
+          case ContainerRepositoryCleanupStatus.UNSCHEDULED => __EnumValue("UNSCHEDULED")
+          case ContainerRepositoryCleanupStatus.SCHEDULED   => __EnumValue("SCHEDULED")
+          case ContainerRepositoryCleanupStatus.UNFINISHED  => __EnumValue("UNFINISHED")
+          case ContainerRepositoryCleanupStatus.ONGOING     => __EnumValue("ONGOING")
+        }
+
+      override def typeName: String = "ContainerRepositoryCleanupStatus"
     }
 
   }
@@ -537,17 +572,17 @@ object graphql {
     case object DELETE_FAILED extends ContainerRepositoryStatus
 
     implicit val decoder: ScalarDecoder[ContainerRepositoryStatus] = {
-      case StringValue("DELETE_SCHEDULED") => Right(ContainerRepositoryStatus.DELETE_SCHEDULED)
-      case StringValue("DELETE_FAILED")    => Right(ContainerRepositoryStatus.DELETE_FAILED)
-      case other                           => Left(DecodingError(s"Can't build ContainerRepositoryStatus from input $other"))
+      case __StringValue("DELETE_SCHEDULED") => Right(ContainerRepositoryStatus.DELETE_SCHEDULED)
+      case __StringValue("DELETE_FAILED")    => Right(ContainerRepositoryStatus.DELETE_FAILED)
+      case other                             => Left(DecodingError(s"Can't build ContainerRepositoryStatus from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ContainerRepositoryStatus] = new ArgEncoder[ContainerRepositoryStatus] {
 
-      override def encode(value: ContainerRepositoryStatus): Value =
+      override def encode(value: ContainerRepositoryStatus): __Value =
         value match {
-          case ContainerRepositoryStatus.DELETE_SCHEDULED => EnumValue("DELETE_SCHEDULED")
-          case ContainerRepositoryStatus.DELETE_FAILED    => EnumValue("DELETE_FAILED")
+          case ContainerRepositoryStatus.DELETE_SCHEDULED => __EnumValue("DELETE_SCHEDULED")
+          case ContainerRepositoryStatus.DELETE_FAILED    => __EnumValue("DELETE_FAILED")
         }
 
       override def typeName: String = "ContainerRepositoryStatus"
@@ -562,17 +597,17 @@ object graphql {
     case object ACTIVE extends DastScanTypeEnum
 
     implicit val decoder: ScalarDecoder[DastScanTypeEnum] = {
-      case StringValue("PASSIVE") => Right(DastScanTypeEnum.PASSIVE)
-      case StringValue("ACTIVE")  => Right(DastScanTypeEnum.ACTIVE)
-      case other                  => Left(DecodingError(s"Can't build DastScanTypeEnum from input $other"))
+      case __StringValue("PASSIVE") => Right(DastScanTypeEnum.PASSIVE)
+      case __StringValue("ACTIVE")  => Right(DastScanTypeEnum.ACTIVE)
+      case other                    => Left(DecodingError(s"Can't build DastScanTypeEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[DastScanTypeEnum] = new ArgEncoder[DastScanTypeEnum] {
 
-      override def encode(value: DastScanTypeEnum): Value =
+      override def encode(value: DastScanTypeEnum): __Value =
         value match {
-          case DastScanTypeEnum.PASSIVE => EnumValue("PASSIVE")
-          case DastScanTypeEnum.ACTIVE  => EnumValue("ACTIVE")
+          case DastScanTypeEnum.PASSIVE => __EnumValue("PASSIVE")
+          case DastScanTypeEnum.ACTIVE  => __EnumValue("ACTIVE")
         }
 
       override def typeName: String = "DastScanTypeEnum"
@@ -589,21 +624,21 @@ object graphql {
     case object FAILED_VALIDATION extends DastSiteProfileValidationStatusEnum
 
     implicit val decoder: ScalarDecoder[DastSiteProfileValidationStatusEnum] = {
-      case StringValue("PENDING_VALIDATION")    => Right(DastSiteProfileValidationStatusEnum.PENDING_VALIDATION)
-      case StringValue("INPROGRESS_VALIDATION") => Right(DastSiteProfileValidationStatusEnum.INPROGRESS_VALIDATION)
-      case StringValue("PASSED_VALIDATION")     => Right(DastSiteProfileValidationStatusEnum.PASSED_VALIDATION)
-      case StringValue("FAILED_VALIDATION")     => Right(DastSiteProfileValidationStatusEnum.FAILED_VALIDATION)
-      case other                                => Left(DecodingError(s"Can't build DastSiteProfileValidationStatusEnum from input $other"))
+      case __StringValue("PENDING_VALIDATION")    => Right(DastSiteProfileValidationStatusEnum.PENDING_VALIDATION)
+      case __StringValue("INPROGRESS_VALIDATION") => Right(DastSiteProfileValidationStatusEnum.INPROGRESS_VALIDATION)
+      case __StringValue("PASSED_VALIDATION")     => Right(DastSiteProfileValidationStatusEnum.PASSED_VALIDATION)
+      case __StringValue("FAILED_VALIDATION")     => Right(DastSiteProfileValidationStatusEnum.FAILED_VALIDATION)
+      case other                                  => Left(DecodingError(s"Can't build DastSiteProfileValidationStatusEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[DastSiteProfileValidationStatusEnum] = new ArgEncoder[DastSiteProfileValidationStatusEnum] {
 
-      override def encode(value: DastSiteProfileValidationStatusEnum): Value =
+      override def encode(value: DastSiteProfileValidationStatusEnum): __Value =
         value match {
-          case DastSiteProfileValidationStatusEnum.PENDING_VALIDATION    => EnumValue("PENDING_VALIDATION")
-          case DastSiteProfileValidationStatusEnum.INPROGRESS_VALIDATION => EnumValue("INPROGRESS_VALIDATION")
-          case DastSiteProfileValidationStatusEnum.PASSED_VALIDATION     => EnumValue("PASSED_VALIDATION")
-          case DastSiteProfileValidationStatusEnum.FAILED_VALIDATION     => EnumValue("FAILED_VALIDATION")
+          case DastSiteProfileValidationStatusEnum.PENDING_VALIDATION    => __EnumValue("PENDING_VALIDATION")
+          case DastSiteProfileValidationStatusEnum.INPROGRESS_VALIDATION => __EnumValue("INPROGRESS_VALIDATION")
+          case DastSiteProfileValidationStatusEnum.PASSED_VALIDATION     => __EnumValue("PASSED_VALIDATION")
+          case DastSiteProfileValidationStatusEnum.FAILED_VALIDATION     => __EnumValue("FAILED_VALIDATION")
         }
 
       override def typeName: String = "DastSiteProfileValidationStatusEnum"
@@ -618,17 +653,17 @@ object graphql {
     case object HEADER extends DastSiteValidationStrategyEnum
 
     implicit val decoder: ScalarDecoder[DastSiteValidationStrategyEnum] = {
-      case StringValue("TEXT_FILE") => Right(DastSiteValidationStrategyEnum.TEXT_FILE)
-      case StringValue("HEADER")    => Right(DastSiteValidationStrategyEnum.HEADER)
-      case other                    => Left(DecodingError(s"Can't build DastSiteValidationStrategyEnum from input $other"))
+      case __StringValue("TEXT_FILE") => Right(DastSiteValidationStrategyEnum.TEXT_FILE)
+      case __StringValue("HEADER")    => Right(DastSiteValidationStrategyEnum.HEADER)
+      case other                      => Left(DecodingError(s"Can't build DastSiteValidationStrategyEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[DastSiteValidationStrategyEnum] = new ArgEncoder[DastSiteValidationStrategyEnum] {
 
-      override def encode(value: DastSiteValidationStrategyEnum): Value =
+      override def encode(value: DastSiteValidationStrategyEnum): __Value =
         value match {
-          case DastSiteValidationStrategyEnum.TEXT_FILE => EnumValue("TEXT_FILE")
-          case DastSiteValidationStrategyEnum.HEADER    => EnumValue("HEADER")
+          case DastSiteValidationStrategyEnum.TEXT_FILE => __EnumValue("TEXT_FILE")
+          case DastSiteValidationStrategyEnum.HEADER    => __EnumValue("HEADER")
         }
 
       override def typeName: String = "DastSiteValidationStrategyEnum"
@@ -644,19 +679,19 @@ object graphql {
     case object ERROR extends DesignCollectionCopyState
 
     implicit val decoder: ScalarDecoder[DesignCollectionCopyState] = {
-      case StringValue("READY")       => Right(DesignCollectionCopyState.READY)
-      case StringValue("IN_PROGRESS") => Right(DesignCollectionCopyState.IN_PROGRESS)
-      case StringValue("ERROR")       => Right(DesignCollectionCopyState.ERROR)
-      case other                      => Left(DecodingError(s"Can't build DesignCollectionCopyState from input $other"))
+      case __StringValue("READY")       => Right(DesignCollectionCopyState.READY)
+      case __StringValue("IN_PROGRESS") => Right(DesignCollectionCopyState.IN_PROGRESS)
+      case __StringValue("ERROR")       => Right(DesignCollectionCopyState.ERROR)
+      case other                        => Left(DecodingError(s"Can't build DesignCollectionCopyState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[DesignCollectionCopyState] = new ArgEncoder[DesignCollectionCopyState] {
 
-      override def encode(value: DesignCollectionCopyState): Value =
+      override def encode(value: DesignCollectionCopyState): __Value =
         value match {
-          case DesignCollectionCopyState.READY       => EnumValue("READY")
-          case DesignCollectionCopyState.IN_PROGRESS => EnumValue("IN_PROGRESS")
-          case DesignCollectionCopyState.ERROR       => EnumValue("ERROR")
+          case DesignCollectionCopyState.READY       => __EnumValue("READY")
+          case DesignCollectionCopyState.IN_PROGRESS => __EnumValue("IN_PROGRESS")
+          case DesignCollectionCopyState.ERROR       => __EnumValue("ERROR")
         }
 
       override def typeName: String = "DesignCollectionCopyState"
@@ -673,21 +708,21 @@ object graphql {
     case object DELETION extends DesignVersionEvent
 
     implicit val decoder: ScalarDecoder[DesignVersionEvent] = {
-      case StringValue("NONE")         => Right(DesignVersionEvent.NONE)
-      case StringValue("CREATION")     => Right(DesignVersionEvent.CREATION)
-      case StringValue("MODIFICATION") => Right(DesignVersionEvent.MODIFICATION)
-      case StringValue("DELETION")     => Right(DesignVersionEvent.DELETION)
-      case other                       => Left(DecodingError(s"Can't build DesignVersionEvent from input $other"))
+      case __StringValue("NONE")         => Right(DesignVersionEvent.NONE)
+      case __StringValue("CREATION")     => Right(DesignVersionEvent.CREATION)
+      case __StringValue("MODIFICATION") => Right(DesignVersionEvent.MODIFICATION)
+      case __StringValue("DELETION")     => Right(DesignVersionEvent.DELETION)
+      case other                         => Left(DecodingError(s"Can't build DesignVersionEvent from input $other"))
     }
 
     implicit val encoder: ArgEncoder[DesignVersionEvent] = new ArgEncoder[DesignVersionEvent] {
 
-      override def encode(value: DesignVersionEvent): Value =
+      override def encode(value: DesignVersionEvent): __Value =
         value match {
-          case DesignVersionEvent.NONE         => EnumValue("NONE")
-          case DesignVersionEvent.CREATION     => EnumValue("CREATION")
-          case DesignVersionEvent.MODIFICATION => EnumValue("MODIFICATION")
-          case DesignVersionEvent.DELETION     => EnumValue("DELETION")
+          case DesignVersionEvent.NONE         => __EnumValue("NONE")
+          case DesignVersionEvent.CREATION     => __EnumValue("CREATION")
+          case DesignVersionEvent.MODIFICATION => __EnumValue("MODIFICATION")
+          case DesignVersionEvent.DELETION     => __EnumValue("DELETION")
         }
 
       override def typeName: String = "DesignVersionEvent"
@@ -702,17 +737,17 @@ object graphql {
     case object image extends DiffPositionType
 
     implicit val decoder: ScalarDecoder[DiffPositionType] = {
-      case StringValue("text")  => Right(DiffPositionType.text)
-      case StringValue("image") => Right(DiffPositionType.image)
-      case other                => Left(DecodingError(s"Can't build DiffPositionType from input $other"))
+      case __StringValue("text")  => Right(DiffPositionType.text)
+      case __StringValue("image") => Right(DiffPositionType.image)
+      case other                  => Left(DecodingError(s"Can't build DiffPositionType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[DiffPositionType] = new ArgEncoder[DiffPositionType] {
 
-      override def encode(value: DiffPositionType): Value =
+      override def encode(value: DiffPositionType): __Value =
         value match {
-          case DiffPositionType.text  => EnumValue("text")
-          case DiffPositionType.image => EnumValue("image")
+          case DiffPositionType.text  => __EnumValue("text")
+          case DiffPositionType.image => __EnumValue("image")
         }
 
       override def typeName: String = "DiffPositionType"
@@ -728,19 +763,19 @@ object graphql {
     case object commit extends EntryType
 
     implicit val decoder: ScalarDecoder[EntryType] = {
-      case StringValue("tree")   => Right(EntryType.tree)
-      case StringValue("blob")   => Right(EntryType.blob)
-      case StringValue("commit") => Right(EntryType.commit)
-      case other                 => Left(DecodingError(s"Can't build EntryType from input $other"))
+      case __StringValue("tree")   => Right(EntryType.tree)
+      case __StringValue("blob")   => Right(EntryType.blob)
+      case __StringValue("commit") => Right(EntryType.commit)
+      case other                   => Left(DecodingError(s"Can't build EntryType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[EntryType] = new ArgEncoder[EntryType] {
 
-      override def encode(value: EntryType): Value =
+      override def encode(value: EntryType): __Value =
         value match {
-          case EntryType.tree   => EnumValue("tree")
-          case EntryType.blob   => EnumValue("blob")
-          case EntryType.commit => EnumValue("commit")
+          case EntryType.tree   => __EnumValue("tree")
+          case EntryType.blob   => __EnumValue("blob")
+          case EntryType.commit => __EnumValue("commit")
         }
 
       override def typeName: String = "EntryType"
@@ -757,21 +792,21 @@ object graphql {
     case object end_date_asc extends EpicSort
 
     implicit val decoder: ScalarDecoder[EpicSort] = {
-      case StringValue("start_date_desc") => Right(EpicSort.start_date_desc)
-      case StringValue("start_date_asc")  => Right(EpicSort.start_date_asc)
-      case StringValue("end_date_desc")   => Right(EpicSort.end_date_desc)
-      case StringValue("end_date_asc")    => Right(EpicSort.end_date_asc)
-      case other                          => Left(DecodingError(s"Can't build EpicSort from input $other"))
+      case __StringValue("start_date_desc") => Right(EpicSort.start_date_desc)
+      case __StringValue("start_date_asc")  => Right(EpicSort.start_date_asc)
+      case __StringValue("end_date_desc")   => Right(EpicSort.end_date_desc)
+      case __StringValue("end_date_asc")    => Right(EpicSort.end_date_asc)
+      case other                            => Left(DecodingError(s"Can't build EpicSort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[EpicSort] = new ArgEncoder[EpicSort] {
 
-      override def encode(value: EpicSort): Value =
+      override def encode(value: EpicSort): __Value =
         value match {
-          case EpicSort.start_date_desc => EnumValue("start_date_desc")
-          case EpicSort.start_date_asc  => EnumValue("start_date_asc")
-          case EpicSort.end_date_desc   => EnumValue("end_date_desc")
-          case EpicSort.end_date_asc    => EnumValue("end_date_asc")
+          case EpicSort.start_date_desc => __EnumValue("start_date_desc")
+          case EpicSort.start_date_asc  => __EnumValue("start_date_asc")
+          case EpicSort.end_date_desc   => __EnumValue("end_date_desc")
+          case EpicSort.end_date_asc    => __EnumValue("end_date_asc")
         }
 
       override def typeName: String = "EpicSort"
@@ -787,19 +822,19 @@ object graphql {
     case object closed extends EpicState
 
     implicit val decoder: ScalarDecoder[EpicState] = {
-      case StringValue("all")    => Right(EpicState.all)
-      case StringValue("opened") => Right(EpicState.opened)
-      case StringValue("closed") => Right(EpicState.closed)
-      case other                 => Left(DecodingError(s"Can't build EpicState from input $other"))
+      case __StringValue("all")    => Right(EpicState.all)
+      case __StringValue("opened") => Right(EpicState.opened)
+      case __StringValue("closed") => Right(EpicState.closed)
+      case other                   => Left(DecodingError(s"Can't build EpicState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[EpicState] = new ArgEncoder[EpicState] {
 
-      override def encode(value: EpicState): Value =
+      override def encode(value: EpicState): __Value =
         value match {
-          case EpicState.all    => EnumValue("all")
-          case EpicState.opened => EnumValue("opened")
-          case EpicState.closed => EnumValue("closed")
+          case EpicState.all    => __EnumValue("all")
+          case EpicState.opened => __EnumValue("opened")
+          case EpicState.closed => __EnumValue("closed")
         }
 
       override def typeName: String = "EpicState"
@@ -814,17 +849,17 @@ object graphql {
     case object CLOSE extends EpicStateEvent
 
     implicit val decoder: ScalarDecoder[EpicStateEvent] = {
-      case StringValue("REOPEN") => Right(EpicStateEvent.REOPEN)
-      case StringValue("CLOSE")  => Right(EpicStateEvent.CLOSE)
-      case other                 => Left(DecodingError(s"Can't build EpicStateEvent from input $other"))
+      case __StringValue("REOPEN") => Right(EpicStateEvent.REOPEN)
+      case __StringValue("CLOSE")  => Right(EpicStateEvent.CLOSE)
+      case other                   => Left(DecodingError(s"Can't build EpicStateEvent from input $other"))
     }
 
     implicit val encoder: ArgEncoder[EpicStateEvent] = new ArgEncoder[EpicStateEvent] {
 
-      override def encode(value: EpicStateEvent): Value =
+      override def encode(value: EpicStateEvent): __Value =
         value match {
-          case EpicStateEvent.REOPEN => EnumValue("REOPEN")
-          case EpicStateEvent.CLOSE  => EnumValue("CLOSE")
+          case EpicStateEvent.REOPEN => __EnumValue("REOPEN")
+          case EpicStateEvent.CLOSE  => __EnumValue("CLOSE")
         }
 
       override def typeName: String = "EpicStateEvent"
@@ -839,20 +874,48 @@ object graphql {
     case object ANY extends EpicWildcardId
 
     implicit val decoder: ScalarDecoder[EpicWildcardId] = {
-      case StringValue("NONE") => Right(EpicWildcardId.NONE)
-      case StringValue("ANY")  => Right(EpicWildcardId.ANY)
-      case other               => Left(DecodingError(s"Can't build EpicWildcardId from input $other"))
+      case __StringValue("NONE") => Right(EpicWildcardId.NONE)
+      case __StringValue("ANY")  => Right(EpicWildcardId.ANY)
+      case other                 => Left(DecodingError(s"Can't build EpicWildcardId from input $other"))
     }
 
     implicit val encoder: ArgEncoder[EpicWildcardId] = new ArgEncoder[EpicWildcardId] {
 
-      override def encode(value: EpicWildcardId): Value =
+      override def encode(value: EpicWildcardId): __Value =
         value match {
-          case EpicWildcardId.NONE => EnumValue("NONE")
-          case EpicWildcardId.ANY  => EnumValue("ANY")
+          case EpicWildcardId.NONE => __EnumValue("NONE")
+          case EpicWildcardId.ANY  => __EnumValue("ANY")
         }
 
       override def typeName: String = "EpicWildcardId"
+    }
+
+  }
+
+  sealed trait GroupMemberRelation extends scala.Product with scala.Serializable
+
+  object GroupMemberRelation {
+    case object DIRECT extends GroupMemberRelation
+    case object INHERITED extends GroupMemberRelation
+    case object DESCENDANTS extends GroupMemberRelation
+
+    implicit val decoder: ScalarDecoder[GroupMemberRelation] = {
+      case __StringValue("DIRECT")      => Right(GroupMemberRelation.DIRECT)
+      case __StringValue("INHERITED")   => Right(GroupMemberRelation.INHERITED)
+      case __StringValue("DESCENDANTS") => Right(GroupMemberRelation.DESCENDANTS)
+      case other                        => Left(DecodingError(s"Can't build GroupMemberRelation from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[GroupMemberRelation] = new ArgEncoder[GroupMemberRelation] {
+
+      override def encode(value: GroupMemberRelation): __Value =
+        value match {
+          case GroupMemberRelation.DIRECT      => __EnumValue("DIRECT")
+          case GroupMemberRelation.INHERITED   => __EnumValue("INHERITED")
+          case GroupMemberRelation.DESCENDANTS => __EnumValue("DESCENDANTS")
+        }
+
+      override def typeName: String = "GroupMemberRelation"
     }
 
   }
@@ -865,19 +928,19 @@ object graphql {
     case object atRisk extends HealthStatus
 
     implicit val decoder: ScalarDecoder[HealthStatus] = {
-      case StringValue("onTrack")        => Right(HealthStatus.onTrack)
-      case StringValue("needsAttention") => Right(HealthStatus.needsAttention)
-      case StringValue("atRisk")         => Right(HealthStatus.atRisk)
-      case other                         => Left(DecodingError(s"Can't build HealthStatus from input $other"))
+      case __StringValue("onTrack")        => Right(HealthStatus.onTrack)
+      case __StringValue("needsAttention") => Right(HealthStatus.needsAttention)
+      case __StringValue("atRisk")         => Right(HealthStatus.atRisk)
+      case other                           => Left(DecodingError(s"Can't build HealthStatus from input $other"))
     }
 
     implicit val encoder: ArgEncoder[HealthStatus] = new ArgEncoder[HealthStatus] {
 
-      override def encode(value: HealthStatus): Value =
+      override def encode(value: HealthStatus): __Value =
         value match {
-          case HealthStatus.onTrack        => EnumValue("onTrack")
-          case HealthStatus.needsAttention => EnumValue("needsAttention")
-          case HealthStatus.atRisk         => EnumValue("atRisk")
+          case HealthStatus.onTrack        => __EnumValue("onTrack")
+          case HealthStatus.needsAttention => __EnumValue("needsAttention")
+          case HealthStatus.atRisk         => __EnumValue("atRisk")
         }
 
       override def typeName: String = "HealthStatus"
@@ -895,23 +958,23 @@ object graphql {
     case object CRITICAL extends IssuableSeverity
 
     implicit val decoder: ScalarDecoder[IssuableSeverity] = {
-      case StringValue("UNKNOWN")  => Right(IssuableSeverity.UNKNOWN)
-      case StringValue("LOW")      => Right(IssuableSeverity.LOW)
-      case StringValue("MEDIUM")   => Right(IssuableSeverity.MEDIUM)
-      case StringValue("HIGH")     => Right(IssuableSeverity.HIGH)
-      case StringValue("CRITICAL") => Right(IssuableSeverity.CRITICAL)
-      case other                   => Left(DecodingError(s"Can't build IssuableSeverity from input $other"))
+      case __StringValue("UNKNOWN")  => Right(IssuableSeverity.UNKNOWN)
+      case __StringValue("LOW")      => Right(IssuableSeverity.LOW)
+      case __StringValue("MEDIUM")   => Right(IssuableSeverity.MEDIUM)
+      case __StringValue("HIGH")     => Right(IssuableSeverity.HIGH)
+      case __StringValue("CRITICAL") => Right(IssuableSeverity.CRITICAL)
+      case other                     => Left(DecodingError(s"Can't build IssuableSeverity from input $other"))
     }
 
     implicit val encoder: ArgEncoder[IssuableSeverity] = new ArgEncoder[IssuableSeverity] {
 
-      override def encode(value: IssuableSeverity): Value =
+      override def encode(value: IssuableSeverity): __Value =
         value match {
-          case IssuableSeverity.UNKNOWN  => EnumValue("UNKNOWN")
-          case IssuableSeverity.LOW      => EnumValue("LOW")
-          case IssuableSeverity.MEDIUM   => EnumValue("MEDIUM")
-          case IssuableSeverity.HIGH     => EnumValue("HIGH")
-          case IssuableSeverity.CRITICAL => EnumValue("CRITICAL")
+          case IssuableSeverity.UNKNOWN  => __EnumValue("UNKNOWN")
+          case IssuableSeverity.LOW      => __EnumValue("LOW")
+          case IssuableSeverity.MEDIUM   => __EnumValue("MEDIUM")
+          case IssuableSeverity.HIGH     => __EnumValue("HIGH")
+          case IssuableSeverity.CRITICAL => __EnumValue("CRITICAL")
         }
 
       override def typeName: String = "IssuableSeverity"
@@ -928,21 +991,21 @@ object graphql {
     case object all extends IssuableState
 
     implicit val decoder: ScalarDecoder[IssuableState] = {
-      case StringValue("opened") => Right(IssuableState.opened)
-      case StringValue("closed") => Right(IssuableState.closed)
-      case StringValue("locked") => Right(IssuableState.locked)
-      case StringValue("all")    => Right(IssuableState.all)
-      case other                 => Left(DecodingError(s"Can't build IssuableState from input $other"))
+      case __StringValue("opened") => Right(IssuableState.opened)
+      case __StringValue("closed") => Right(IssuableState.closed)
+      case __StringValue("locked") => Right(IssuableState.locked)
+      case __StringValue("all")    => Right(IssuableState.all)
+      case other                   => Left(DecodingError(s"Can't build IssuableState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[IssuableState] = new ArgEncoder[IssuableState] {
 
-      override def encode(value: IssuableState): Value =
+      override def encode(value: IssuableState): __Value =
         value match {
-          case IssuableState.opened => EnumValue("opened")
-          case IssuableState.closed => EnumValue("closed")
-          case IssuableState.locked => EnumValue("locked")
-          case IssuableState.all    => EnumValue("all")
+          case IssuableState.opened => __EnumValue("opened")
+          case IssuableState.closed => __EnumValue("closed")
+          case IssuableState.locked => __EnumValue("locked")
+          case IssuableState.all    => __EnumValue("all")
         }
 
       override def typeName: String = "IssuableState"
@@ -957,10 +1020,10 @@ object graphql {
     case object updated_asc extends IssueSort
     case object created_desc extends IssueSort
     case object created_asc extends IssueSort
-    case object UPDATED_DESC extends IssueSort
-    case object UPDATED_ASC extends IssueSort
-    case object CREATED_DESC extends IssueSort
-    case object CREATED_ASC extends IssueSort
+    case object UPDATED_DESC_ extends IssueSort
+    case object UPDATED_ASC_ extends IssueSort
+    case object CREATED_DESC_ extends IssueSort
+    case object CREATED_ASC_ extends IssueSort
     case object PRIORITY_ASC extends IssueSort
     case object PRIORITY_DESC extends IssueSort
     case object LABEL_PRIORITY_ASC extends IssueSort
@@ -980,63 +1043,63 @@ object graphql {
     case object SLA_DUE_AT_DESC extends IssueSort
 
     implicit val decoder: ScalarDecoder[IssueSort] = {
-      case StringValue("updated_desc")          => Right(IssueSort.updated_desc)
-      case StringValue("updated_asc")           => Right(IssueSort.updated_asc)
-      case StringValue("created_desc")          => Right(IssueSort.created_desc)
-      case StringValue("created_asc")           => Right(IssueSort.created_asc)
-      case StringValue("UPDATED_DESC")          => Right(IssueSort.UPDATED_DESC)
-      case StringValue("UPDATED_ASC")           => Right(IssueSort.UPDATED_ASC)
-      case StringValue("CREATED_DESC")          => Right(IssueSort.CREATED_DESC)
-      case StringValue("CREATED_ASC")           => Right(IssueSort.CREATED_ASC)
-      case StringValue("PRIORITY_ASC")          => Right(IssueSort.PRIORITY_ASC)
-      case StringValue("PRIORITY_DESC")         => Right(IssueSort.PRIORITY_DESC)
-      case StringValue("LABEL_PRIORITY_ASC")    => Right(IssueSort.LABEL_PRIORITY_ASC)
-      case StringValue("LABEL_PRIORITY_DESC")   => Right(IssueSort.LABEL_PRIORITY_DESC)
-      case StringValue("MILESTONE_DUE_ASC")     => Right(IssueSort.MILESTONE_DUE_ASC)
-      case StringValue("MILESTONE_DUE_DESC")    => Right(IssueSort.MILESTONE_DUE_DESC)
-      case StringValue("DUE_DATE_ASC")          => Right(IssueSort.DUE_DATE_ASC)
-      case StringValue("DUE_DATE_DESC")         => Right(IssueSort.DUE_DATE_DESC)
-      case StringValue("RELATIVE_POSITION_ASC") => Right(IssueSort.RELATIVE_POSITION_ASC)
-      case StringValue("SEVERITY_ASC")          => Right(IssueSort.SEVERITY_ASC)
-      case StringValue("SEVERITY_DESC")         => Right(IssueSort.SEVERITY_DESC)
-      case StringValue("WEIGHT_ASC")            => Right(IssueSort.WEIGHT_ASC)
-      case StringValue("WEIGHT_DESC")           => Right(IssueSort.WEIGHT_DESC)
-      case StringValue("PUBLISHED_ASC")         => Right(IssueSort.PUBLISHED_ASC)
-      case StringValue("PUBLISHED_DESC")        => Right(IssueSort.PUBLISHED_DESC)
-      case StringValue("SLA_DUE_AT_ASC")        => Right(IssueSort.SLA_DUE_AT_ASC)
-      case StringValue("SLA_DUE_AT_DESC")       => Right(IssueSort.SLA_DUE_AT_DESC)
-      case other                                => Left(DecodingError(s"Can't build IssueSort from input $other"))
+      case __StringValue("updated_desc")          => Right(IssueSort.updated_desc)
+      case __StringValue("updated_asc")           => Right(IssueSort.updated_asc)
+      case __StringValue("created_desc")          => Right(IssueSort.created_desc)
+      case __StringValue("created_asc")           => Right(IssueSort.created_asc)
+      case __StringValue("UPDATED_DESC")          => Right(IssueSort.UPDATED_DESC_)
+      case __StringValue("UPDATED_ASC")           => Right(IssueSort.UPDATED_ASC_)
+      case __StringValue("CREATED_DESC")          => Right(IssueSort.CREATED_DESC_)
+      case __StringValue("CREATED_ASC")           => Right(IssueSort.CREATED_ASC_)
+      case __StringValue("PRIORITY_ASC")          => Right(IssueSort.PRIORITY_ASC)
+      case __StringValue("PRIORITY_DESC")         => Right(IssueSort.PRIORITY_DESC)
+      case __StringValue("LABEL_PRIORITY_ASC")    => Right(IssueSort.LABEL_PRIORITY_ASC)
+      case __StringValue("LABEL_PRIORITY_DESC")   => Right(IssueSort.LABEL_PRIORITY_DESC)
+      case __StringValue("MILESTONE_DUE_ASC")     => Right(IssueSort.MILESTONE_DUE_ASC)
+      case __StringValue("MILESTONE_DUE_DESC")    => Right(IssueSort.MILESTONE_DUE_DESC)
+      case __StringValue("DUE_DATE_ASC")          => Right(IssueSort.DUE_DATE_ASC)
+      case __StringValue("DUE_DATE_DESC")         => Right(IssueSort.DUE_DATE_DESC)
+      case __StringValue("RELATIVE_POSITION_ASC") => Right(IssueSort.RELATIVE_POSITION_ASC)
+      case __StringValue("SEVERITY_ASC")          => Right(IssueSort.SEVERITY_ASC)
+      case __StringValue("SEVERITY_DESC")         => Right(IssueSort.SEVERITY_DESC)
+      case __StringValue("WEIGHT_ASC")            => Right(IssueSort.WEIGHT_ASC)
+      case __StringValue("WEIGHT_DESC")           => Right(IssueSort.WEIGHT_DESC)
+      case __StringValue("PUBLISHED_ASC")         => Right(IssueSort.PUBLISHED_ASC)
+      case __StringValue("PUBLISHED_DESC")        => Right(IssueSort.PUBLISHED_DESC)
+      case __StringValue("SLA_DUE_AT_ASC")        => Right(IssueSort.SLA_DUE_AT_ASC)
+      case __StringValue("SLA_DUE_AT_DESC")       => Right(IssueSort.SLA_DUE_AT_DESC)
+      case other                                  => Left(DecodingError(s"Can't build IssueSort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[IssueSort] = new ArgEncoder[IssueSort] {
 
-      override def encode(value: IssueSort): Value =
+      override def encode(value: IssueSort): __Value =
         value match {
-          case IssueSort.updated_desc          => EnumValue("updated_desc")
-          case IssueSort.updated_asc           => EnumValue("updated_asc")
-          case IssueSort.created_desc          => EnumValue("created_desc")
-          case IssueSort.created_asc           => EnumValue("created_asc")
-          case IssueSort.UPDATED_DESC          => EnumValue("UPDATED_DESC")
-          case IssueSort.UPDATED_ASC           => EnumValue("UPDATED_ASC")
-          case IssueSort.CREATED_DESC          => EnumValue("CREATED_DESC")
-          case IssueSort.CREATED_ASC           => EnumValue("CREATED_ASC")
-          case IssueSort.PRIORITY_ASC          => EnumValue("PRIORITY_ASC")
-          case IssueSort.PRIORITY_DESC         => EnumValue("PRIORITY_DESC")
-          case IssueSort.LABEL_PRIORITY_ASC    => EnumValue("LABEL_PRIORITY_ASC")
-          case IssueSort.LABEL_PRIORITY_DESC   => EnumValue("LABEL_PRIORITY_DESC")
-          case IssueSort.MILESTONE_DUE_ASC     => EnumValue("MILESTONE_DUE_ASC")
-          case IssueSort.MILESTONE_DUE_DESC    => EnumValue("MILESTONE_DUE_DESC")
-          case IssueSort.DUE_DATE_ASC          => EnumValue("DUE_DATE_ASC")
-          case IssueSort.DUE_DATE_DESC         => EnumValue("DUE_DATE_DESC")
-          case IssueSort.RELATIVE_POSITION_ASC => EnumValue("RELATIVE_POSITION_ASC")
-          case IssueSort.SEVERITY_ASC          => EnumValue("SEVERITY_ASC")
-          case IssueSort.SEVERITY_DESC         => EnumValue("SEVERITY_DESC")
-          case IssueSort.WEIGHT_ASC            => EnumValue("WEIGHT_ASC")
-          case IssueSort.WEIGHT_DESC           => EnumValue("WEIGHT_DESC")
-          case IssueSort.PUBLISHED_ASC         => EnumValue("PUBLISHED_ASC")
-          case IssueSort.PUBLISHED_DESC        => EnumValue("PUBLISHED_DESC")
-          case IssueSort.SLA_DUE_AT_ASC        => EnumValue("SLA_DUE_AT_ASC")
-          case IssueSort.SLA_DUE_AT_DESC       => EnumValue("SLA_DUE_AT_DESC")
+          case IssueSort.updated_desc          => __EnumValue("updated_desc")
+          case IssueSort.updated_asc           => __EnumValue("updated_asc")
+          case IssueSort.created_desc          => __EnumValue("created_desc")
+          case IssueSort.created_asc           => __EnumValue("created_asc")
+          case IssueSort.UPDATED_DESC_         => __EnumValue("UPDATED_DESC")
+          case IssueSort.UPDATED_ASC_          => __EnumValue("UPDATED_ASC")
+          case IssueSort.CREATED_DESC_         => __EnumValue("CREATED_DESC")
+          case IssueSort.CREATED_ASC_          => __EnumValue("CREATED_ASC")
+          case IssueSort.PRIORITY_ASC          => __EnumValue("PRIORITY_ASC")
+          case IssueSort.PRIORITY_DESC         => __EnumValue("PRIORITY_DESC")
+          case IssueSort.LABEL_PRIORITY_ASC    => __EnumValue("LABEL_PRIORITY_ASC")
+          case IssueSort.LABEL_PRIORITY_DESC   => __EnumValue("LABEL_PRIORITY_DESC")
+          case IssueSort.MILESTONE_DUE_ASC     => __EnumValue("MILESTONE_DUE_ASC")
+          case IssueSort.MILESTONE_DUE_DESC    => __EnumValue("MILESTONE_DUE_DESC")
+          case IssueSort.DUE_DATE_ASC          => __EnumValue("DUE_DATE_ASC")
+          case IssueSort.DUE_DATE_DESC         => __EnumValue("DUE_DATE_DESC")
+          case IssueSort.RELATIVE_POSITION_ASC => __EnumValue("RELATIVE_POSITION_ASC")
+          case IssueSort.SEVERITY_ASC          => __EnumValue("SEVERITY_ASC")
+          case IssueSort.SEVERITY_DESC         => __EnumValue("SEVERITY_DESC")
+          case IssueSort.WEIGHT_ASC            => __EnumValue("WEIGHT_ASC")
+          case IssueSort.WEIGHT_DESC           => __EnumValue("WEIGHT_DESC")
+          case IssueSort.PUBLISHED_ASC         => __EnumValue("PUBLISHED_ASC")
+          case IssueSort.PUBLISHED_DESC        => __EnumValue("PUBLISHED_DESC")
+          case IssueSort.SLA_DUE_AT_ASC        => __EnumValue("SLA_DUE_AT_ASC")
+          case IssueSort.SLA_DUE_AT_DESC       => __EnumValue("SLA_DUE_AT_DESC")
         }
 
       override def typeName: String = "IssueSort"
@@ -1053,21 +1116,21 @@ object graphql {
     case object all extends IssueState
 
     implicit val decoder: ScalarDecoder[IssueState] = {
-      case StringValue("opened") => Right(IssueState.opened)
-      case StringValue("closed") => Right(IssueState.closed)
-      case StringValue("locked") => Right(IssueState.locked)
-      case StringValue("all")    => Right(IssueState.all)
-      case other                 => Left(DecodingError(s"Can't build IssueState from input $other"))
+      case __StringValue("opened") => Right(IssueState.opened)
+      case __StringValue("closed") => Right(IssueState.closed)
+      case __StringValue("locked") => Right(IssueState.locked)
+      case __StringValue("all")    => Right(IssueState.all)
+      case other                   => Left(DecodingError(s"Can't build IssueState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[IssueState] = new ArgEncoder[IssueState] {
 
-      override def encode(value: IssueState): Value =
+      override def encode(value: IssueState): __Value =
         value match {
-          case IssueState.opened => EnumValue("opened")
-          case IssueState.closed => EnumValue("closed")
-          case IssueState.locked => EnumValue("locked")
-          case IssueState.all    => EnumValue("all")
+          case IssueState.opened => __EnumValue("opened")
+          case IssueState.closed => __EnumValue("closed")
+          case IssueState.locked => __EnumValue("locked")
+          case IssueState.all    => __EnumValue("all")
         }
 
       override def typeName: String = "IssueState"
@@ -1082,17 +1145,17 @@ object graphql {
     case object CLOSE extends IssueStateEvent
 
     implicit val decoder: ScalarDecoder[IssueStateEvent] = {
-      case StringValue("REOPEN") => Right(IssueStateEvent.REOPEN)
-      case StringValue("CLOSE")  => Right(IssueStateEvent.CLOSE)
-      case other                 => Left(DecodingError(s"Can't build IssueStateEvent from input $other"))
+      case __StringValue("REOPEN") => Right(IssueStateEvent.REOPEN)
+      case __StringValue("CLOSE")  => Right(IssueStateEvent.CLOSE)
+      case other                   => Left(DecodingError(s"Can't build IssueStateEvent from input $other"))
     }
 
     implicit val encoder: ArgEncoder[IssueStateEvent] = new ArgEncoder[IssueStateEvent] {
 
-      override def encode(value: IssueStateEvent): Value =
+      override def encode(value: IssueStateEvent): __Value =
         value match {
-          case IssueStateEvent.REOPEN => EnumValue("REOPEN")
-          case IssueStateEvent.CLOSE  => EnumValue("CLOSE")
+          case IssueStateEvent.REOPEN => __EnumValue("REOPEN")
+          case IssueStateEvent.CLOSE  => __EnumValue("CLOSE")
         }
 
       override def typeName: String = "IssueStateEvent"
@@ -1108,19 +1171,19 @@ object graphql {
     case object TEST_CASE extends IssueType
 
     implicit val decoder: ScalarDecoder[IssueType] = {
-      case StringValue("ISSUE")     => Right(IssueType.ISSUE)
-      case StringValue("INCIDENT")  => Right(IssueType.INCIDENT)
-      case StringValue("TEST_CASE") => Right(IssueType.TEST_CASE)
-      case other                    => Left(DecodingError(s"Can't build IssueType from input $other"))
+      case __StringValue("ISSUE")     => Right(IssueType.ISSUE)
+      case __StringValue("INCIDENT")  => Right(IssueType.INCIDENT)
+      case __StringValue("TEST_CASE") => Right(IssueType.TEST_CASE)
+      case other                      => Left(DecodingError(s"Can't build IssueType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[IssueType] = new ArgEncoder[IssueType] {
 
-      override def encode(value: IssueType): Value =
+      override def encode(value: IssueType): __Value =
         value match {
-          case IssueType.ISSUE     => EnumValue("ISSUE")
-          case IssueType.INCIDENT  => EnumValue("INCIDENT")
-          case IssueType.TEST_CASE => EnumValue("TEST_CASE")
+          case IssueType.ISSUE     => __EnumValue("ISSUE")
+          case IssueType.INCIDENT  => __EnumValue("INCIDENT")
+          case IssueType.TEST_CASE => __EnumValue("TEST_CASE")
         }
 
       override def typeName: String = "IssueType"
@@ -1138,26 +1201,151 @@ object graphql {
     case object all extends IterationState
 
     implicit val decoder: ScalarDecoder[IterationState] = {
-      case StringValue("upcoming") => Right(IterationState.upcoming)
-      case StringValue("started")  => Right(IterationState.started)
-      case StringValue("opened")   => Right(IterationState.opened)
-      case StringValue("closed")   => Right(IterationState.closed)
-      case StringValue("all")      => Right(IterationState.all)
-      case other                   => Left(DecodingError(s"Can't build IterationState from input $other"))
+      case __StringValue("upcoming") => Right(IterationState.upcoming)
+      case __StringValue("started")  => Right(IterationState.started)
+      case __StringValue("opened")   => Right(IterationState.opened)
+      case __StringValue("closed")   => Right(IterationState.closed)
+      case __StringValue("all")      => Right(IterationState.all)
+      case other                     => Left(DecodingError(s"Can't build IterationState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[IterationState] = new ArgEncoder[IterationState] {
 
-      override def encode(value: IterationState): Value =
+      override def encode(value: IterationState): __Value =
         value match {
-          case IterationState.upcoming => EnumValue("upcoming")
-          case IterationState.started  => EnumValue("started")
-          case IterationState.opened   => EnumValue("opened")
-          case IterationState.closed   => EnumValue("closed")
-          case IterationState.all      => EnumValue("all")
+          case IterationState.upcoming => __EnumValue("upcoming")
+          case IterationState.started  => __EnumValue("started")
+          case IterationState.opened   => __EnumValue("opened")
+          case IterationState.closed   => __EnumValue("closed")
+          case IterationState.all      => __EnumValue("all")
         }
 
       override def typeName: String = "IterationState"
+    }
+
+  }
+
+  sealed trait IterationWildcardId extends scala.Product with scala.Serializable
+
+  object IterationWildcardId {
+    case object NONE extends IterationWildcardId
+    case object ANY extends IterationWildcardId
+
+    implicit val decoder: ScalarDecoder[IterationWildcardId] = {
+      case __StringValue("NONE") => Right(IterationWildcardId.NONE)
+      case __StringValue("ANY")  => Right(IterationWildcardId.ANY)
+      case other                 => Left(DecodingError(s"Can't build IterationWildcardId from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[IterationWildcardId] = new ArgEncoder[IterationWildcardId] {
+
+      override def encode(value: IterationWildcardId): __Value =
+        value match {
+          case IterationWildcardId.NONE => __EnumValue("NONE")
+          case IterationWildcardId.ANY  => __EnumValue("ANY")
+        }
+
+      override def typeName: String = "IterationWildcardId"
+    }
+
+  }
+
+  sealed trait JobArtifactFileType extends scala.Product with scala.Serializable
+
+  object JobArtifactFileType {
+    case object ARCHIVE extends JobArtifactFileType
+    case object METADATA extends JobArtifactFileType
+    case object TRACE extends JobArtifactFileType
+    case object JUNIT extends JobArtifactFileType
+    case object METRICS extends JobArtifactFileType
+    case object METRICS_REFEREE extends JobArtifactFileType
+    case object NETWORK_REFEREE extends JobArtifactFileType
+    case object DOTENV extends JobArtifactFileType
+    case object COBERTURA extends JobArtifactFileType
+    case object CLUSTER_APPLICATIONS extends JobArtifactFileType
+    case object LSIF extends JobArtifactFileType
+    case object SAST extends JobArtifactFileType
+    case object SECRET_DETECTION extends JobArtifactFileType
+    case object DEPENDENCY_SCANNING extends JobArtifactFileType
+    case object CONTAINER_SCANNING extends JobArtifactFileType
+    case object DAST extends JobArtifactFileType
+    case object LICENSE_MANAGEMENT extends JobArtifactFileType
+    case object LICENSE_SCANNING extends JobArtifactFileType
+    case object ACCESSIBILITY extends JobArtifactFileType
+    case object CODEQUALITY extends JobArtifactFileType
+    case object PERFORMANCE extends JobArtifactFileType
+    case object BROWSER_PERFORMANCE extends JobArtifactFileType
+    case object LOAD_PERFORMANCE extends JobArtifactFileType
+    case object TERRAFORM extends JobArtifactFileType
+    case object REQUIREMENTS extends JobArtifactFileType
+    case object COVERAGE_FUZZING extends JobArtifactFileType
+    case object API_FUZZING extends JobArtifactFileType
+
+    implicit val decoder: ScalarDecoder[JobArtifactFileType] = {
+      case __StringValue("ARCHIVE")              => Right(JobArtifactFileType.ARCHIVE)
+      case __StringValue("METADATA")             => Right(JobArtifactFileType.METADATA)
+      case __StringValue("TRACE")                => Right(JobArtifactFileType.TRACE)
+      case __StringValue("JUNIT")                => Right(JobArtifactFileType.JUNIT)
+      case __StringValue("METRICS")              => Right(JobArtifactFileType.METRICS)
+      case __StringValue("METRICS_REFEREE")      => Right(JobArtifactFileType.METRICS_REFEREE)
+      case __StringValue("NETWORK_REFEREE")      => Right(JobArtifactFileType.NETWORK_REFEREE)
+      case __StringValue("DOTENV")               => Right(JobArtifactFileType.DOTENV)
+      case __StringValue("COBERTURA")            => Right(JobArtifactFileType.COBERTURA)
+      case __StringValue("CLUSTER_APPLICATIONS") => Right(JobArtifactFileType.CLUSTER_APPLICATIONS)
+      case __StringValue("LSIF")                 => Right(JobArtifactFileType.LSIF)
+      case __StringValue("SAST")                 => Right(JobArtifactFileType.SAST)
+      case __StringValue("SECRET_DETECTION")     => Right(JobArtifactFileType.SECRET_DETECTION)
+      case __StringValue("DEPENDENCY_SCANNING")  => Right(JobArtifactFileType.DEPENDENCY_SCANNING)
+      case __StringValue("CONTAINER_SCANNING")   => Right(JobArtifactFileType.CONTAINER_SCANNING)
+      case __StringValue("DAST")                 => Right(JobArtifactFileType.DAST)
+      case __StringValue("LICENSE_MANAGEMENT")   => Right(JobArtifactFileType.LICENSE_MANAGEMENT)
+      case __StringValue("LICENSE_SCANNING")     => Right(JobArtifactFileType.LICENSE_SCANNING)
+      case __StringValue("ACCESSIBILITY")        => Right(JobArtifactFileType.ACCESSIBILITY)
+      case __StringValue("CODEQUALITY")          => Right(JobArtifactFileType.CODEQUALITY)
+      case __StringValue("PERFORMANCE")          => Right(JobArtifactFileType.PERFORMANCE)
+      case __StringValue("BROWSER_PERFORMANCE")  => Right(JobArtifactFileType.BROWSER_PERFORMANCE)
+      case __StringValue("LOAD_PERFORMANCE")     => Right(JobArtifactFileType.LOAD_PERFORMANCE)
+      case __StringValue("TERRAFORM")            => Right(JobArtifactFileType.TERRAFORM)
+      case __StringValue("REQUIREMENTS")         => Right(JobArtifactFileType.REQUIREMENTS)
+      case __StringValue("COVERAGE_FUZZING")     => Right(JobArtifactFileType.COVERAGE_FUZZING)
+      case __StringValue("API_FUZZING")          => Right(JobArtifactFileType.API_FUZZING)
+      case other                                 => Left(DecodingError(s"Can't build JobArtifactFileType from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[JobArtifactFileType] = new ArgEncoder[JobArtifactFileType] {
+
+      override def encode(value: JobArtifactFileType): __Value =
+        value match {
+          case JobArtifactFileType.ARCHIVE              => __EnumValue("ARCHIVE")
+          case JobArtifactFileType.METADATA             => __EnumValue("METADATA")
+          case JobArtifactFileType.TRACE                => __EnumValue("TRACE")
+          case JobArtifactFileType.JUNIT                => __EnumValue("JUNIT")
+          case JobArtifactFileType.METRICS              => __EnumValue("METRICS")
+          case JobArtifactFileType.METRICS_REFEREE      => __EnumValue("METRICS_REFEREE")
+          case JobArtifactFileType.NETWORK_REFEREE      => __EnumValue("NETWORK_REFEREE")
+          case JobArtifactFileType.DOTENV               => __EnumValue("DOTENV")
+          case JobArtifactFileType.COBERTURA            => __EnumValue("COBERTURA")
+          case JobArtifactFileType.CLUSTER_APPLICATIONS => __EnumValue("CLUSTER_APPLICATIONS")
+          case JobArtifactFileType.LSIF                 => __EnumValue("LSIF")
+          case JobArtifactFileType.SAST                 => __EnumValue("SAST")
+          case JobArtifactFileType.SECRET_DETECTION     => __EnumValue("SECRET_DETECTION")
+          case JobArtifactFileType.DEPENDENCY_SCANNING  => __EnumValue("DEPENDENCY_SCANNING")
+          case JobArtifactFileType.CONTAINER_SCANNING   => __EnumValue("CONTAINER_SCANNING")
+          case JobArtifactFileType.DAST                 => __EnumValue("DAST")
+          case JobArtifactFileType.LICENSE_MANAGEMENT   => __EnumValue("LICENSE_MANAGEMENT")
+          case JobArtifactFileType.LICENSE_SCANNING     => __EnumValue("LICENSE_SCANNING")
+          case JobArtifactFileType.ACCESSIBILITY        => __EnumValue("ACCESSIBILITY")
+          case JobArtifactFileType.CODEQUALITY          => __EnumValue("CODEQUALITY")
+          case JobArtifactFileType.PERFORMANCE          => __EnumValue("PERFORMANCE")
+          case JobArtifactFileType.BROWSER_PERFORMANCE  => __EnumValue("BROWSER_PERFORMANCE")
+          case JobArtifactFileType.LOAD_PERFORMANCE     => __EnumValue("LOAD_PERFORMANCE")
+          case JobArtifactFileType.TERRAFORM            => __EnumValue("TERRAFORM")
+          case JobArtifactFileType.REQUIREMENTS         => __EnumValue("REQUIREMENTS")
+          case JobArtifactFileType.COVERAGE_FUZZING     => __EnumValue("COVERAGE_FUZZING")
+          case JobArtifactFileType.API_FUZZING          => __EnumValue("API_FUZZING")
+        }
+
+      override def typeName: String = "JobArtifactFileType"
     }
 
   }
@@ -1170,19 +1358,19 @@ object graphql {
     case object issue_weights extends ListLimitMetric
 
     implicit val decoder: ScalarDecoder[ListLimitMetric] = {
-      case StringValue("all_metrics")   => Right(ListLimitMetric.all_metrics)
-      case StringValue("issue_count")   => Right(ListLimitMetric.issue_count)
-      case StringValue("issue_weights") => Right(ListLimitMetric.issue_weights)
-      case other                        => Left(DecodingError(s"Can't build ListLimitMetric from input $other"))
+      case __StringValue("all_metrics")   => Right(ListLimitMetric.all_metrics)
+      case __StringValue("issue_count")   => Right(ListLimitMetric.issue_count)
+      case __StringValue("issue_weights") => Right(ListLimitMetric.issue_weights)
+      case other                          => Left(DecodingError(s"Can't build ListLimitMetric from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ListLimitMetric] = new ArgEncoder[ListLimitMetric] {
 
-      override def encode(value: ListLimitMetric): Value =
+      override def encode(value: ListLimitMetric): __Value =
         value match {
-          case ListLimitMetric.all_metrics   => EnumValue("all_metrics")
-          case ListLimitMetric.issue_count   => EnumValue("issue_count")
-          case ListLimitMetric.issue_weights => EnumValue("issue_weights")
+          case ListLimitMetric.all_metrics   => __EnumValue("all_metrics")
+          case ListLimitMetric.issue_count   => __EnumValue("issue_count")
+          case ListLimitMetric.issue_weights => __EnumValue("issue_weights")
         }
 
       override def typeName: String = "ListLimitMetric"
@@ -1205,33 +1393,33 @@ object graphql {
     case object PIPELINES_SKIPPED extends MeasurementIdentifier
 
     implicit val decoder: ScalarDecoder[MeasurementIdentifier] = {
-      case StringValue("PROJECTS")            => Right(MeasurementIdentifier.PROJECTS)
-      case StringValue("USERS")               => Right(MeasurementIdentifier.USERS)
-      case StringValue("ISSUES")              => Right(MeasurementIdentifier.ISSUES)
-      case StringValue("MERGE_REQUESTS")      => Right(MeasurementIdentifier.MERGE_REQUESTS)
-      case StringValue("GROUPS")              => Right(MeasurementIdentifier.GROUPS)
-      case StringValue("PIPELINES")           => Right(MeasurementIdentifier.PIPELINES)
-      case StringValue("PIPELINES_SUCCEEDED") => Right(MeasurementIdentifier.PIPELINES_SUCCEEDED)
-      case StringValue("PIPELINES_FAILED")    => Right(MeasurementIdentifier.PIPELINES_FAILED)
-      case StringValue("PIPELINES_CANCELED")  => Right(MeasurementIdentifier.PIPELINES_CANCELED)
-      case StringValue("PIPELINES_SKIPPED")   => Right(MeasurementIdentifier.PIPELINES_SKIPPED)
-      case other                              => Left(DecodingError(s"Can't build MeasurementIdentifier from input $other"))
+      case __StringValue("PROJECTS")            => Right(MeasurementIdentifier.PROJECTS)
+      case __StringValue("USERS")               => Right(MeasurementIdentifier.USERS)
+      case __StringValue("ISSUES")              => Right(MeasurementIdentifier.ISSUES)
+      case __StringValue("MERGE_REQUESTS")      => Right(MeasurementIdentifier.MERGE_REQUESTS)
+      case __StringValue("GROUPS")              => Right(MeasurementIdentifier.GROUPS)
+      case __StringValue("PIPELINES")           => Right(MeasurementIdentifier.PIPELINES)
+      case __StringValue("PIPELINES_SUCCEEDED") => Right(MeasurementIdentifier.PIPELINES_SUCCEEDED)
+      case __StringValue("PIPELINES_FAILED")    => Right(MeasurementIdentifier.PIPELINES_FAILED)
+      case __StringValue("PIPELINES_CANCELED")  => Right(MeasurementIdentifier.PIPELINES_CANCELED)
+      case __StringValue("PIPELINES_SKIPPED")   => Right(MeasurementIdentifier.PIPELINES_SKIPPED)
+      case other                                => Left(DecodingError(s"Can't build MeasurementIdentifier from input $other"))
     }
 
     implicit val encoder: ArgEncoder[MeasurementIdentifier] = new ArgEncoder[MeasurementIdentifier] {
 
-      override def encode(value: MeasurementIdentifier): Value =
+      override def encode(value: MeasurementIdentifier): __Value =
         value match {
-          case MeasurementIdentifier.PROJECTS            => EnumValue("PROJECTS")
-          case MeasurementIdentifier.USERS               => EnumValue("USERS")
-          case MeasurementIdentifier.ISSUES              => EnumValue("ISSUES")
-          case MeasurementIdentifier.MERGE_REQUESTS      => EnumValue("MERGE_REQUESTS")
-          case MeasurementIdentifier.GROUPS              => EnumValue("GROUPS")
-          case MeasurementIdentifier.PIPELINES           => EnumValue("PIPELINES")
-          case MeasurementIdentifier.PIPELINES_SUCCEEDED => EnumValue("PIPELINES_SUCCEEDED")
-          case MeasurementIdentifier.PIPELINES_FAILED    => EnumValue("PIPELINES_FAILED")
-          case MeasurementIdentifier.PIPELINES_CANCELED  => EnumValue("PIPELINES_CANCELED")
-          case MeasurementIdentifier.PIPELINES_SKIPPED   => EnumValue("PIPELINES_SKIPPED")
+          case MeasurementIdentifier.PROJECTS            => __EnumValue("PROJECTS")
+          case MeasurementIdentifier.USERS               => __EnumValue("USERS")
+          case MeasurementIdentifier.ISSUES              => __EnumValue("ISSUES")
+          case MeasurementIdentifier.MERGE_REQUESTS      => __EnumValue("MERGE_REQUESTS")
+          case MeasurementIdentifier.GROUPS              => __EnumValue("GROUPS")
+          case MeasurementIdentifier.PIPELINES           => __EnumValue("PIPELINES")
+          case MeasurementIdentifier.PIPELINES_SUCCEEDED => __EnumValue("PIPELINES_SUCCEEDED")
+          case MeasurementIdentifier.PIPELINES_FAILED    => __EnumValue("PIPELINES_FAILED")
+          case MeasurementIdentifier.PIPELINES_CANCELED  => __EnumValue("PIPELINES_CANCELED")
+          case MeasurementIdentifier.PIPELINES_SKIPPED   => __EnumValue("PIPELINES_SKIPPED")
         }
 
       override def typeName: String = "MeasurementIdentifier"
@@ -1246,10 +1434,10 @@ object graphql {
     case object updated_asc extends MergeRequestSort
     case object created_desc extends MergeRequestSort
     case object created_asc extends MergeRequestSort
-    case object UPDATED_DESC extends MergeRequestSort
-    case object UPDATED_ASC extends MergeRequestSort
-    case object CREATED_DESC extends MergeRequestSort
-    case object CREATED_ASC extends MergeRequestSort
+    case object UPDATED_DESC_ extends MergeRequestSort
+    case object UPDATED_ASC_ extends MergeRequestSort
+    case object CREATED_DESC_ extends MergeRequestSort
+    case object CREATED_ASC_ extends MergeRequestSort
     case object PRIORITY_ASC extends MergeRequestSort
     case object PRIORITY_DESC extends MergeRequestSort
     case object LABEL_PRIORITY_ASC extends MergeRequestSort
@@ -1260,45 +1448,45 @@ object graphql {
     case object MERGED_AT_DESC extends MergeRequestSort
 
     implicit val decoder: ScalarDecoder[MergeRequestSort] = {
-      case StringValue("updated_desc")        => Right(MergeRequestSort.updated_desc)
-      case StringValue("updated_asc")         => Right(MergeRequestSort.updated_asc)
-      case StringValue("created_desc")        => Right(MergeRequestSort.created_desc)
-      case StringValue("created_asc")         => Right(MergeRequestSort.created_asc)
-      case StringValue("UPDATED_DESC")        => Right(MergeRequestSort.UPDATED_DESC)
-      case StringValue("UPDATED_ASC")         => Right(MergeRequestSort.UPDATED_ASC)
-      case StringValue("CREATED_DESC")        => Right(MergeRequestSort.CREATED_DESC)
-      case StringValue("CREATED_ASC")         => Right(MergeRequestSort.CREATED_ASC)
-      case StringValue("PRIORITY_ASC")        => Right(MergeRequestSort.PRIORITY_ASC)
-      case StringValue("PRIORITY_DESC")       => Right(MergeRequestSort.PRIORITY_DESC)
-      case StringValue("LABEL_PRIORITY_ASC")  => Right(MergeRequestSort.LABEL_PRIORITY_ASC)
-      case StringValue("LABEL_PRIORITY_DESC") => Right(MergeRequestSort.LABEL_PRIORITY_DESC)
-      case StringValue("MILESTONE_DUE_ASC")   => Right(MergeRequestSort.MILESTONE_DUE_ASC)
-      case StringValue("MILESTONE_DUE_DESC")  => Right(MergeRequestSort.MILESTONE_DUE_DESC)
-      case StringValue("MERGED_AT_ASC")       => Right(MergeRequestSort.MERGED_AT_ASC)
-      case StringValue("MERGED_AT_DESC")      => Right(MergeRequestSort.MERGED_AT_DESC)
-      case other                              => Left(DecodingError(s"Can't build MergeRequestSort from input $other"))
+      case __StringValue("updated_desc")        => Right(MergeRequestSort.updated_desc)
+      case __StringValue("updated_asc")         => Right(MergeRequestSort.updated_asc)
+      case __StringValue("created_desc")        => Right(MergeRequestSort.created_desc)
+      case __StringValue("created_asc")         => Right(MergeRequestSort.created_asc)
+      case __StringValue("UPDATED_DESC")        => Right(MergeRequestSort.UPDATED_DESC_)
+      case __StringValue("UPDATED_ASC")         => Right(MergeRequestSort.UPDATED_ASC_)
+      case __StringValue("CREATED_DESC")        => Right(MergeRequestSort.CREATED_DESC_)
+      case __StringValue("CREATED_ASC")         => Right(MergeRequestSort.CREATED_ASC_)
+      case __StringValue("PRIORITY_ASC")        => Right(MergeRequestSort.PRIORITY_ASC)
+      case __StringValue("PRIORITY_DESC")       => Right(MergeRequestSort.PRIORITY_DESC)
+      case __StringValue("LABEL_PRIORITY_ASC")  => Right(MergeRequestSort.LABEL_PRIORITY_ASC)
+      case __StringValue("LABEL_PRIORITY_DESC") => Right(MergeRequestSort.LABEL_PRIORITY_DESC)
+      case __StringValue("MILESTONE_DUE_ASC")   => Right(MergeRequestSort.MILESTONE_DUE_ASC)
+      case __StringValue("MILESTONE_DUE_DESC")  => Right(MergeRequestSort.MILESTONE_DUE_DESC)
+      case __StringValue("MERGED_AT_ASC")       => Right(MergeRequestSort.MERGED_AT_ASC)
+      case __StringValue("MERGED_AT_DESC")      => Right(MergeRequestSort.MERGED_AT_DESC)
+      case other                                => Left(DecodingError(s"Can't build MergeRequestSort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[MergeRequestSort] = new ArgEncoder[MergeRequestSort] {
 
-      override def encode(value: MergeRequestSort): Value =
+      override def encode(value: MergeRequestSort): __Value =
         value match {
-          case MergeRequestSort.updated_desc        => EnumValue("updated_desc")
-          case MergeRequestSort.updated_asc         => EnumValue("updated_asc")
-          case MergeRequestSort.created_desc        => EnumValue("created_desc")
-          case MergeRequestSort.created_asc         => EnumValue("created_asc")
-          case MergeRequestSort.UPDATED_DESC        => EnumValue("UPDATED_DESC")
-          case MergeRequestSort.UPDATED_ASC         => EnumValue("UPDATED_ASC")
-          case MergeRequestSort.CREATED_DESC        => EnumValue("CREATED_DESC")
-          case MergeRequestSort.CREATED_ASC         => EnumValue("CREATED_ASC")
-          case MergeRequestSort.PRIORITY_ASC        => EnumValue("PRIORITY_ASC")
-          case MergeRequestSort.PRIORITY_DESC       => EnumValue("PRIORITY_DESC")
-          case MergeRequestSort.LABEL_PRIORITY_ASC  => EnumValue("LABEL_PRIORITY_ASC")
-          case MergeRequestSort.LABEL_PRIORITY_DESC => EnumValue("LABEL_PRIORITY_DESC")
-          case MergeRequestSort.MILESTONE_DUE_ASC   => EnumValue("MILESTONE_DUE_ASC")
-          case MergeRequestSort.MILESTONE_DUE_DESC  => EnumValue("MILESTONE_DUE_DESC")
-          case MergeRequestSort.MERGED_AT_ASC       => EnumValue("MERGED_AT_ASC")
-          case MergeRequestSort.MERGED_AT_DESC      => EnumValue("MERGED_AT_DESC")
+          case MergeRequestSort.updated_desc        => __EnumValue("updated_desc")
+          case MergeRequestSort.updated_asc         => __EnumValue("updated_asc")
+          case MergeRequestSort.created_desc        => __EnumValue("created_desc")
+          case MergeRequestSort.created_asc         => __EnumValue("created_asc")
+          case MergeRequestSort.UPDATED_DESC_       => __EnumValue("UPDATED_DESC")
+          case MergeRequestSort.UPDATED_ASC_        => __EnumValue("UPDATED_ASC")
+          case MergeRequestSort.CREATED_DESC_       => __EnumValue("CREATED_DESC")
+          case MergeRequestSort.CREATED_ASC_        => __EnumValue("CREATED_ASC")
+          case MergeRequestSort.PRIORITY_ASC        => __EnumValue("PRIORITY_ASC")
+          case MergeRequestSort.PRIORITY_DESC       => __EnumValue("PRIORITY_DESC")
+          case MergeRequestSort.LABEL_PRIORITY_ASC  => __EnumValue("LABEL_PRIORITY_ASC")
+          case MergeRequestSort.LABEL_PRIORITY_DESC => __EnumValue("LABEL_PRIORITY_DESC")
+          case MergeRequestSort.MILESTONE_DUE_ASC   => __EnumValue("MILESTONE_DUE_ASC")
+          case MergeRequestSort.MILESTONE_DUE_DESC  => __EnumValue("MILESTONE_DUE_DESC")
+          case MergeRequestSort.MERGED_AT_ASC       => __EnumValue("MERGED_AT_ASC")
+          case MergeRequestSort.MERGED_AT_DESC      => __EnumValue("MERGED_AT_DESC")
         }
 
       override def typeName: String = "MergeRequestSort"
@@ -1316,23 +1504,23 @@ object graphql {
     case object merged extends MergeRequestState
 
     implicit val decoder: ScalarDecoder[MergeRequestState] = {
-      case StringValue("opened") => Right(MergeRequestState.opened)
-      case StringValue("closed") => Right(MergeRequestState.closed)
-      case StringValue("locked") => Right(MergeRequestState.locked)
-      case StringValue("all")    => Right(MergeRequestState.all)
-      case StringValue("merged") => Right(MergeRequestState.merged)
-      case other                 => Left(DecodingError(s"Can't build MergeRequestState from input $other"))
+      case __StringValue("opened") => Right(MergeRequestState.opened)
+      case __StringValue("closed") => Right(MergeRequestState.closed)
+      case __StringValue("locked") => Right(MergeRequestState.locked)
+      case __StringValue("all")    => Right(MergeRequestState.all)
+      case __StringValue("merged") => Right(MergeRequestState.merged)
+      case other                   => Left(DecodingError(s"Can't build MergeRequestState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[MergeRequestState] = new ArgEncoder[MergeRequestState] {
 
-      override def encode(value: MergeRequestState): Value =
+      override def encode(value: MergeRequestState): __Value =
         value match {
-          case MergeRequestState.opened => EnumValue("opened")
-          case MergeRequestState.closed => EnumValue("closed")
-          case MergeRequestState.locked => EnumValue("locked")
-          case MergeRequestState.all    => EnumValue("all")
-          case MergeRequestState.merged => EnumValue("merged")
+          case MergeRequestState.opened => __EnumValue("opened")
+          case MergeRequestState.closed => __EnumValue("closed")
+          case MergeRequestState.locked => __EnumValue("locked")
+          case MergeRequestState.all    => __EnumValue("all")
+          case MergeRequestState.merged => __EnumValue("merged")
         }
 
       override def typeName: String = "MergeRequestState"
@@ -1347,17 +1535,17 @@ object graphql {
     case object closed extends MilestoneStateEnum
 
     implicit val decoder: ScalarDecoder[MilestoneStateEnum] = {
-      case StringValue("active") => Right(MilestoneStateEnum.active)
-      case StringValue("closed") => Right(MilestoneStateEnum.closed)
-      case other                 => Left(DecodingError(s"Can't build MilestoneStateEnum from input $other"))
+      case __StringValue("active") => Right(MilestoneStateEnum.active)
+      case __StringValue("closed") => Right(MilestoneStateEnum.closed)
+      case other                   => Left(DecodingError(s"Can't build MilestoneStateEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[MilestoneStateEnum] = new ArgEncoder[MilestoneStateEnum] {
 
-      override def encode(value: MilestoneStateEnum): Value =
+      override def encode(value: MilestoneStateEnum): __Value =
         value match {
-          case MilestoneStateEnum.active => EnumValue("active")
-          case MilestoneStateEnum.closed => EnumValue("closed")
+          case MilestoneStateEnum.active => __EnumValue("active")
+          case MilestoneStateEnum.closed => __EnumValue("closed")
         }
 
       override def typeName: String = "MilestoneStateEnum"
@@ -1372,17 +1560,17 @@ object graphql {
     case object after extends MoveType
 
     implicit val decoder: ScalarDecoder[MoveType] = {
-      case StringValue("before") => Right(MoveType.before)
-      case StringValue("after")  => Right(MoveType.after)
-      case other                 => Left(DecodingError(s"Can't build MoveType from input $other"))
+      case __StringValue("before") => Right(MoveType.before)
+      case __StringValue("after")  => Right(MoveType.after)
+      case other                   => Left(DecodingError(s"Can't build MoveType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[MoveType] = new ArgEncoder[MoveType] {
 
-      override def encode(value: MoveType): Value =
+      override def encode(value: MoveType): __Value =
         value match {
-          case MoveType.before => EnumValue("before")
-          case MoveType.after  => EnumValue("after")
+          case MoveType.before => __EnumValue("before")
+          case MoveType.after  => __EnumValue("after")
         }
 
       override def typeName: String = "MoveType"
@@ -1398,19 +1586,19 @@ object graphql {
     case object REMOVE extends MutationOperationMode
 
     implicit val decoder: ScalarDecoder[MutationOperationMode] = {
-      case StringValue("REPLACE") => Right(MutationOperationMode.REPLACE)
-      case StringValue("APPEND")  => Right(MutationOperationMode.APPEND)
-      case StringValue("REMOVE")  => Right(MutationOperationMode.REMOVE)
-      case other                  => Left(DecodingError(s"Can't build MutationOperationMode from input $other"))
+      case __StringValue("REPLACE") => Right(MutationOperationMode.REPLACE)
+      case __StringValue("APPEND")  => Right(MutationOperationMode.APPEND)
+      case __StringValue("REMOVE")  => Right(MutationOperationMode.REMOVE)
+      case other                    => Left(DecodingError(s"Can't build MutationOperationMode from input $other"))
     }
 
     implicit val encoder: ArgEncoder[MutationOperationMode] = new ArgEncoder[MutationOperationMode] {
 
-      override def encode(value: MutationOperationMode): Value =
+      override def encode(value: MutationOperationMode): __Value =
         value match {
-          case MutationOperationMode.REPLACE => EnumValue("REPLACE")
-          case MutationOperationMode.APPEND  => EnumValue("APPEND")
-          case MutationOperationMode.REMOVE  => EnumValue("REMOVE")
+          case MutationOperationMode.REPLACE => __EnumValue("REPLACE")
+          case MutationOperationMode.APPEND  => __EnumValue("APPEND")
+          case MutationOperationMode.REMOVE  => __EnumValue("REMOVE")
         }
 
       override def typeName: String = "MutationOperationMode"
@@ -1425,17 +1613,17 @@ object graphql {
     case object STORAGE extends NamespaceProjectSort
 
     implicit val decoder: ScalarDecoder[NamespaceProjectSort] = {
-      case StringValue("SIMILARITY") => Right(NamespaceProjectSort.SIMILARITY)
-      case StringValue("STORAGE")    => Right(NamespaceProjectSort.STORAGE)
-      case other                     => Left(DecodingError(s"Can't build NamespaceProjectSort from input $other"))
+      case __StringValue("SIMILARITY") => Right(NamespaceProjectSort.SIMILARITY)
+      case __StringValue("STORAGE")    => Right(NamespaceProjectSort.STORAGE)
+      case other                       => Left(DecodingError(s"Can't build NamespaceProjectSort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[NamespaceProjectSort] = new ArgEncoder[NamespaceProjectSort] {
 
-      override def encode(value: NamespaceProjectSort): Value =
+      override def encode(value: NamespaceProjectSort): __Value =
         value match {
-          case NamespaceProjectSort.SIMILARITY => EnumValue("SIMILARITY")
-          case NamespaceProjectSort.STORAGE    => EnumValue("STORAGE")
+          case NamespaceProjectSort.SIMILARITY => __EnumValue("SIMILARITY")
+          case NamespaceProjectSort.STORAGE    => __EnumValue("STORAGE")
         }
 
       override def typeName: String = "NamespaceProjectSort"
@@ -1457,31 +1645,31 @@ object graphql {
     case object DEBIAN extends PackageTypeEnum
 
     implicit val decoder: ScalarDecoder[PackageTypeEnum] = {
-      case StringValue("MAVEN")    => Right(PackageTypeEnum.MAVEN)
-      case StringValue("NPM")      => Right(PackageTypeEnum.NPM)
-      case StringValue("CONAN")    => Right(PackageTypeEnum.CONAN)
-      case StringValue("NUGET")    => Right(PackageTypeEnum.NUGET)
-      case StringValue("PYPI")     => Right(PackageTypeEnum.PYPI)
-      case StringValue("COMPOSER") => Right(PackageTypeEnum.COMPOSER)
-      case StringValue("GENERIC")  => Right(PackageTypeEnum.GENERIC)
-      case StringValue("GOLANG")   => Right(PackageTypeEnum.GOLANG)
-      case StringValue("DEBIAN")   => Right(PackageTypeEnum.DEBIAN)
-      case other                   => Left(DecodingError(s"Can't build PackageTypeEnum from input $other"))
+      case __StringValue("MAVEN")    => Right(PackageTypeEnum.MAVEN)
+      case __StringValue("NPM")      => Right(PackageTypeEnum.NPM)
+      case __StringValue("CONAN")    => Right(PackageTypeEnum.CONAN)
+      case __StringValue("NUGET")    => Right(PackageTypeEnum.NUGET)
+      case __StringValue("PYPI")     => Right(PackageTypeEnum.PYPI)
+      case __StringValue("COMPOSER") => Right(PackageTypeEnum.COMPOSER)
+      case __StringValue("GENERIC")  => Right(PackageTypeEnum.GENERIC)
+      case __StringValue("GOLANG")   => Right(PackageTypeEnum.GOLANG)
+      case __StringValue("DEBIAN")   => Right(PackageTypeEnum.DEBIAN)
+      case other                     => Left(DecodingError(s"Can't build PackageTypeEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[PackageTypeEnum] = new ArgEncoder[PackageTypeEnum] {
 
-      override def encode(value: PackageTypeEnum): Value =
+      override def encode(value: PackageTypeEnum): __Value =
         value match {
-          case PackageTypeEnum.MAVEN    => EnumValue("MAVEN")
-          case PackageTypeEnum.NPM      => EnumValue("NPM")
-          case PackageTypeEnum.CONAN    => EnumValue("CONAN")
-          case PackageTypeEnum.NUGET    => EnumValue("NUGET")
-          case PackageTypeEnum.PYPI     => EnumValue("PYPI")
-          case PackageTypeEnum.COMPOSER => EnumValue("COMPOSER")
-          case PackageTypeEnum.GENERIC  => EnumValue("GENERIC")
-          case PackageTypeEnum.GOLANG   => EnumValue("GOLANG")
-          case PackageTypeEnum.DEBIAN   => EnumValue("DEBIAN")
+          case PackageTypeEnum.MAVEN    => __EnumValue("MAVEN")
+          case PackageTypeEnum.NPM      => __EnumValue("NPM")
+          case PackageTypeEnum.CONAN    => __EnumValue("CONAN")
+          case PackageTypeEnum.NUGET    => __EnumValue("NUGET")
+          case PackageTypeEnum.PYPI     => __EnumValue("PYPI")
+          case PackageTypeEnum.COMPOSER => __EnumValue("COMPOSER")
+          case PackageTypeEnum.GENERIC  => __EnumValue("GENERIC")
+          case PackageTypeEnum.GOLANG   => __EnumValue("GOLANG")
+          case PackageTypeEnum.DEBIAN   => __EnumValue("DEBIAN")
         }
 
       override def typeName: String = "PackageTypeEnum"
@@ -1502,29 +1690,29 @@ object graphql {
     case object PARAMETER_SOURCE extends PipelineConfigSourceEnum
 
     implicit val decoder: ScalarDecoder[PipelineConfigSourceEnum] = {
-      case StringValue("UNKNOWN_SOURCE")          => Right(PipelineConfigSourceEnum.UNKNOWN_SOURCE)
-      case StringValue("REPOSITORY_SOURCE")       => Right(PipelineConfigSourceEnum.REPOSITORY_SOURCE)
-      case StringValue("AUTO_DEVOPS_SOURCE")      => Right(PipelineConfigSourceEnum.AUTO_DEVOPS_SOURCE)
-      case StringValue("WEBIDE_SOURCE")           => Right(PipelineConfigSourceEnum.WEBIDE_SOURCE)
-      case StringValue("REMOTE_SOURCE")           => Right(PipelineConfigSourceEnum.REMOTE_SOURCE)
-      case StringValue("EXTERNAL_PROJECT_SOURCE") => Right(PipelineConfigSourceEnum.EXTERNAL_PROJECT_SOURCE)
-      case StringValue("BRIDGE_SOURCE")           => Right(PipelineConfigSourceEnum.BRIDGE_SOURCE)
-      case StringValue("PARAMETER_SOURCE")        => Right(PipelineConfigSourceEnum.PARAMETER_SOURCE)
-      case other                                  => Left(DecodingError(s"Can't build PipelineConfigSourceEnum from input $other"))
+      case __StringValue("UNKNOWN_SOURCE")          => Right(PipelineConfigSourceEnum.UNKNOWN_SOURCE)
+      case __StringValue("REPOSITORY_SOURCE")       => Right(PipelineConfigSourceEnum.REPOSITORY_SOURCE)
+      case __StringValue("AUTO_DEVOPS_SOURCE")      => Right(PipelineConfigSourceEnum.AUTO_DEVOPS_SOURCE)
+      case __StringValue("WEBIDE_SOURCE")           => Right(PipelineConfigSourceEnum.WEBIDE_SOURCE)
+      case __StringValue("REMOTE_SOURCE")           => Right(PipelineConfigSourceEnum.REMOTE_SOURCE)
+      case __StringValue("EXTERNAL_PROJECT_SOURCE") => Right(PipelineConfigSourceEnum.EXTERNAL_PROJECT_SOURCE)
+      case __StringValue("BRIDGE_SOURCE")           => Right(PipelineConfigSourceEnum.BRIDGE_SOURCE)
+      case __StringValue("PARAMETER_SOURCE")        => Right(PipelineConfigSourceEnum.PARAMETER_SOURCE)
+      case other                                    => Left(DecodingError(s"Can't build PipelineConfigSourceEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[PipelineConfigSourceEnum] = new ArgEncoder[PipelineConfigSourceEnum] {
 
-      override def encode(value: PipelineConfigSourceEnum): Value =
+      override def encode(value: PipelineConfigSourceEnum): __Value =
         value match {
-          case PipelineConfigSourceEnum.UNKNOWN_SOURCE          => EnumValue("UNKNOWN_SOURCE")
-          case PipelineConfigSourceEnum.REPOSITORY_SOURCE       => EnumValue("REPOSITORY_SOURCE")
-          case PipelineConfigSourceEnum.AUTO_DEVOPS_SOURCE      => EnumValue("AUTO_DEVOPS_SOURCE")
-          case PipelineConfigSourceEnum.WEBIDE_SOURCE           => EnumValue("WEBIDE_SOURCE")
-          case PipelineConfigSourceEnum.REMOTE_SOURCE           => EnumValue("REMOTE_SOURCE")
-          case PipelineConfigSourceEnum.EXTERNAL_PROJECT_SOURCE => EnumValue("EXTERNAL_PROJECT_SOURCE")
-          case PipelineConfigSourceEnum.BRIDGE_SOURCE           => EnumValue("BRIDGE_SOURCE")
-          case PipelineConfigSourceEnum.PARAMETER_SOURCE        => EnumValue("PARAMETER_SOURCE")
+          case PipelineConfigSourceEnum.UNKNOWN_SOURCE          => __EnumValue("UNKNOWN_SOURCE")
+          case PipelineConfigSourceEnum.REPOSITORY_SOURCE       => __EnumValue("REPOSITORY_SOURCE")
+          case PipelineConfigSourceEnum.AUTO_DEVOPS_SOURCE      => __EnumValue("AUTO_DEVOPS_SOURCE")
+          case PipelineConfigSourceEnum.WEBIDE_SOURCE           => __EnumValue("WEBIDE_SOURCE")
+          case PipelineConfigSourceEnum.REMOTE_SOURCE           => __EnumValue("REMOTE_SOURCE")
+          case PipelineConfigSourceEnum.EXTERNAL_PROJECT_SOURCE => __EnumValue("EXTERNAL_PROJECT_SOURCE")
+          case PipelineConfigSourceEnum.BRIDGE_SOURCE           => __EnumValue("BRIDGE_SOURCE")
+          case PipelineConfigSourceEnum.PARAMETER_SOURCE        => __EnumValue("PARAMETER_SOURCE")
         }
 
       override def typeName: String = "PipelineConfigSourceEnum"
@@ -1548,38 +1736,69 @@ object graphql {
     case object SCHEDULED extends PipelineStatusEnum
 
     implicit val decoder: ScalarDecoder[PipelineStatusEnum] = {
-      case StringValue("CREATED")              => Right(PipelineStatusEnum.CREATED)
-      case StringValue("WAITING_FOR_RESOURCE") => Right(PipelineStatusEnum.WAITING_FOR_RESOURCE)
-      case StringValue("PREPARING")            => Right(PipelineStatusEnum.PREPARING)
-      case StringValue("PENDING")              => Right(PipelineStatusEnum.PENDING)
-      case StringValue("RUNNING")              => Right(PipelineStatusEnum.RUNNING)
-      case StringValue("FAILED")               => Right(PipelineStatusEnum.FAILED)
-      case StringValue("SUCCESS")              => Right(PipelineStatusEnum.SUCCESS)
-      case StringValue("CANCELED")             => Right(PipelineStatusEnum.CANCELED)
-      case StringValue("SKIPPED")              => Right(PipelineStatusEnum.SKIPPED)
-      case StringValue("MANUAL")               => Right(PipelineStatusEnum.MANUAL)
-      case StringValue("SCHEDULED")            => Right(PipelineStatusEnum.SCHEDULED)
-      case other                               => Left(DecodingError(s"Can't build PipelineStatusEnum from input $other"))
+      case __StringValue("CREATED")              => Right(PipelineStatusEnum.CREATED)
+      case __StringValue("WAITING_FOR_RESOURCE") => Right(PipelineStatusEnum.WAITING_FOR_RESOURCE)
+      case __StringValue("PREPARING")            => Right(PipelineStatusEnum.PREPARING)
+      case __StringValue("PENDING")              => Right(PipelineStatusEnum.PENDING)
+      case __StringValue("RUNNING")              => Right(PipelineStatusEnum.RUNNING)
+      case __StringValue("FAILED")               => Right(PipelineStatusEnum.FAILED)
+      case __StringValue("SUCCESS")              => Right(PipelineStatusEnum.SUCCESS)
+      case __StringValue("CANCELED")             => Right(PipelineStatusEnum.CANCELED)
+      case __StringValue("SKIPPED")              => Right(PipelineStatusEnum.SKIPPED)
+      case __StringValue("MANUAL")               => Right(PipelineStatusEnum.MANUAL)
+      case __StringValue("SCHEDULED")            => Right(PipelineStatusEnum.SCHEDULED)
+      case other                                 => Left(DecodingError(s"Can't build PipelineStatusEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[PipelineStatusEnum] = new ArgEncoder[PipelineStatusEnum] {
 
-      override def encode(value: PipelineStatusEnum): Value =
+      override def encode(value: PipelineStatusEnum): __Value =
         value match {
-          case PipelineStatusEnum.CREATED              => EnumValue("CREATED")
-          case PipelineStatusEnum.WAITING_FOR_RESOURCE => EnumValue("WAITING_FOR_RESOURCE")
-          case PipelineStatusEnum.PREPARING            => EnumValue("PREPARING")
-          case PipelineStatusEnum.PENDING              => EnumValue("PENDING")
-          case PipelineStatusEnum.RUNNING              => EnumValue("RUNNING")
-          case PipelineStatusEnum.FAILED               => EnumValue("FAILED")
-          case PipelineStatusEnum.SUCCESS              => EnumValue("SUCCESS")
-          case PipelineStatusEnum.CANCELED             => EnumValue("CANCELED")
-          case PipelineStatusEnum.SKIPPED              => EnumValue("SKIPPED")
-          case PipelineStatusEnum.MANUAL               => EnumValue("MANUAL")
-          case PipelineStatusEnum.SCHEDULED            => EnumValue("SCHEDULED")
+          case PipelineStatusEnum.CREATED              => __EnumValue("CREATED")
+          case PipelineStatusEnum.WAITING_FOR_RESOURCE => __EnumValue("WAITING_FOR_RESOURCE")
+          case PipelineStatusEnum.PREPARING            => __EnumValue("PREPARING")
+          case PipelineStatusEnum.PENDING              => __EnumValue("PENDING")
+          case PipelineStatusEnum.RUNNING              => __EnumValue("RUNNING")
+          case PipelineStatusEnum.FAILED               => __EnumValue("FAILED")
+          case PipelineStatusEnum.SUCCESS              => __EnumValue("SUCCESS")
+          case PipelineStatusEnum.CANCELED             => __EnumValue("CANCELED")
+          case PipelineStatusEnum.SKIPPED              => __EnumValue("SKIPPED")
+          case PipelineStatusEnum.MANUAL               => __EnumValue("MANUAL")
+          case PipelineStatusEnum.SCHEDULED            => __EnumValue("SCHEDULED")
         }
 
       override def typeName: String = "PipelineStatusEnum"
+    }
+
+  }
+
+  sealed trait ProjectMemberRelation extends scala.Product with scala.Serializable
+
+  object ProjectMemberRelation {
+    case object DIRECT extends ProjectMemberRelation
+    case object INHERITED extends ProjectMemberRelation
+    case object DESCENDANTS extends ProjectMemberRelation
+    case object INVITED_GROUPS extends ProjectMemberRelation
+
+    implicit val decoder: ScalarDecoder[ProjectMemberRelation] = {
+      case __StringValue("DIRECT")         => Right(ProjectMemberRelation.DIRECT)
+      case __StringValue("INHERITED")      => Right(ProjectMemberRelation.INHERITED)
+      case __StringValue("DESCENDANTS")    => Right(ProjectMemberRelation.DESCENDANTS)
+      case __StringValue("INVITED_GROUPS") => Right(ProjectMemberRelation.INVITED_GROUPS)
+      case other                           => Left(DecodingError(s"Can't build ProjectMemberRelation from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[ProjectMemberRelation] = new ArgEncoder[ProjectMemberRelation] {
+
+      override def encode(value: ProjectMemberRelation): __Value =
+        value match {
+          case ProjectMemberRelation.DIRECT         => __EnumValue("DIRECT")
+          case ProjectMemberRelation.INHERITED      => __EnumValue("INHERITED")
+          case ProjectMemberRelation.DESCENDANTS    => __EnumValue("DESCENDANTS")
+          case ProjectMemberRelation.INVITED_GROUPS => __EnumValue("INVITED_GROUPS")
+        }
+
+      override def typeName: String = "ProjectMemberRelation"
     }
 
   }
@@ -1593,21 +1812,21 @@ object graphql {
     case object FAILED extends RegistryState
 
     implicit val decoder: ScalarDecoder[RegistryState] = {
-      case StringValue("PENDING") => Right(RegistryState.PENDING)
-      case StringValue("STARTED") => Right(RegistryState.STARTED)
-      case StringValue("SYNCED")  => Right(RegistryState.SYNCED)
-      case StringValue("FAILED")  => Right(RegistryState.FAILED)
-      case other                  => Left(DecodingError(s"Can't build RegistryState from input $other"))
+      case __StringValue("PENDING") => Right(RegistryState.PENDING)
+      case __StringValue("STARTED") => Right(RegistryState.STARTED)
+      case __StringValue("SYNCED")  => Right(RegistryState.SYNCED)
+      case __StringValue("FAILED")  => Right(RegistryState.FAILED)
+      case other                    => Left(DecodingError(s"Can't build RegistryState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[RegistryState] = new ArgEncoder[RegistryState] {
 
-      override def encode(value: RegistryState): Value =
+      override def encode(value: RegistryState): __Value =
         value match {
-          case RegistryState.PENDING => EnumValue("PENDING")
-          case RegistryState.STARTED => EnumValue("STARTED")
-          case RegistryState.SYNCED  => EnumValue("SYNCED")
-          case RegistryState.FAILED  => EnumValue("FAILED")
+          case RegistryState.PENDING => __EnumValue("PENDING")
+          case RegistryState.STARTED => __EnumValue("STARTED")
+          case RegistryState.SYNCED  => __EnumValue("SYNCED")
+          case RegistryState.FAILED  => __EnumValue("FAILED")
         }
 
       override def typeName: String = "RegistryState"
@@ -1624,21 +1843,21 @@ object graphql {
     case object IMAGE extends ReleaseAssetLinkType
 
     implicit val decoder: ScalarDecoder[ReleaseAssetLinkType] = {
-      case StringValue("OTHER")   => Right(ReleaseAssetLinkType.OTHER)
-      case StringValue("RUNBOOK") => Right(ReleaseAssetLinkType.RUNBOOK)
-      case StringValue("PACKAGE") => Right(ReleaseAssetLinkType.PACKAGE)
-      case StringValue("IMAGE")   => Right(ReleaseAssetLinkType.IMAGE)
-      case other                  => Left(DecodingError(s"Can't build ReleaseAssetLinkType from input $other"))
+      case __StringValue("OTHER")   => Right(ReleaseAssetLinkType.OTHER)
+      case __StringValue("RUNBOOK") => Right(ReleaseAssetLinkType.RUNBOOK)
+      case __StringValue("PACKAGE") => Right(ReleaseAssetLinkType.PACKAGE)
+      case __StringValue("IMAGE")   => Right(ReleaseAssetLinkType.IMAGE)
+      case other                    => Left(DecodingError(s"Can't build ReleaseAssetLinkType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ReleaseAssetLinkType] = new ArgEncoder[ReleaseAssetLinkType] {
 
-      override def encode(value: ReleaseAssetLinkType): Value =
+      override def encode(value: ReleaseAssetLinkType): __Value =
         value match {
-          case ReleaseAssetLinkType.OTHER   => EnumValue("OTHER")
-          case ReleaseAssetLinkType.RUNBOOK => EnumValue("RUNBOOK")
-          case ReleaseAssetLinkType.PACKAGE => EnumValue("PACKAGE")
-          case ReleaseAssetLinkType.IMAGE   => EnumValue("IMAGE")
+          case ReleaseAssetLinkType.OTHER   => __EnumValue("OTHER")
+          case ReleaseAssetLinkType.RUNBOOK => __EnumValue("RUNBOOK")
+          case ReleaseAssetLinkType.PACKAGE => __EnumValue("PACKAGE")
+          case ReleaseAssetLinkType.IMAGE   => __EnumValue("IMAGE")
         }
 
       override def typeName: String = "ReleaseAssetLinkType"
@@ -1655,21 +1874,21 @@ object graphql {
     case object RELEASED_AT_ASC extends ReleaseSort
 
     implicit val decoder: ScalarDecoder[ReleaseSort] = {
-      case StringValue("CREATED_DESC")     => Right(ReleaseSort.CREATED_DESC)
-      case StringValue("CREATED_ASC")      => Right(ReleaseSort.CREATED_ASC)
-      case StringValue("RELEASED_AT_DESC") => Right(ReleaseSort.RELEASED_AT_DESC)
-      case StringValue("RELEASED_AT_ASC")  => Right(ReleaseSort.RELEASED_AT_ASC)
-      case other                           => Left(DecodingError(s"Can't build ReleaseSort from input $other"))
+      case __StringValue("CREATED_DESC")     => Right(ReleaseSort.CREATED_DESC)
+      case __StringValue("CREATED_ASC")      => Right(ReleaseSort.CREATED_ASC)
+      case __StringValue("RELEASED_AT_DESC") => Right(ReleaseSort.RELEASED_AT_DESC)
+      case __StringValue("RELEASED_AT_ASC")  => Right(ReleaseSort.RELEASED_AT_ASC)
+      case other                             => Left(DecodingError(s"Can't build ReleaseSort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ReleaseSort] = new ArgEncoder[ReleaseSort] {
 
-      override def encode(value: ReleaseSort): Value =
+      override def encode(value: ReleaseSort): __Value =
         value match {
-          case ReleaseSort.CREATED_DESC     => EnumValue("CREATED_DESC")
-          case ReleaseSort.CREATED_ASC      => EnumValue("CREATED_ASC")
-          case ReleaseSort.RELEASED_AT_DESC => EnumValue("RELEASED_AT_DESC")
-          case ReleaseSort.RELEASED_AT_ASC  => EnumValue("RELEASED_AT_ASC")
+          case ReleaseSort.CREATED_DESC     => __EnumValue("CREATED_DESC")
+          case ReleaseSort.CREATED_ASC      => __EnumValue("CREATED_ASC")
+          case ReleaseSort.RELEASED_AT_DESC => __EnumValue("RELEASED_AT_DESC")
+          case ReleaseSort.RELEASED_AT_ASC  => __EnumValue("RELEASED_AT_ASC")
         }
 
       override def typeName: String = "ReleaseSort"
@@ -1684,17 +1903,17 @@ object graphql {
     case object ARCHIVED extends RequirementState
 
     implicit val decoder: ScalarDecoder[RequirementState] = {
-      case StringValue("OPENED")   => Right(RequirementState.OPENED)
-      case StringValue("ARCHIVED") => Right(RequirementState.ARCHIVED)
-      case other                   => Left(DecodingError(s"Can't build RequirementState from input $other"))
+      case __StringValue("OPENED")   => Right(RequirementState.OPENED)
+      case __StringValue("ARCHIVED") => Right(RequirementState.ARCHIVED)
+      case other                     => Left(DecodingError(s"Can't build RequirementState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[RequirementState] = new ArgEncoder[RequirementState] {
 
-      override def encode(value: RequirementState): Value =
+      override def encode(value: RequirementState): __Value =
         value match {
-          case RequirementState.OPENED   => EnumValue("OPENED")
-          case RequirementState.ARCHIVED => EnumValue("ARCHIVED")
+          case RequirementState.OPENED   => __EnumValue("OPENED")
+          case RequirementState.ARCHIVED => __EnumValue("ARCHIVED")
         }
 
       override def typeName: String = "RequirementState"
@@ -1710,19 +1929,19 @@ object graphql {
     case object LARGE extends SastUiComponentSize
 
     implicit val decoder: ScalarDecoder[SastUiComponentSize] = {
-      case StringValue("SMALL")  => Right(SastUiComponentSize.SMALL)
-      case StringValue("MEDIUM") => Right(SastUiComponentSize.MEDIUM)
-      case StringValue("LARGE")  => Right(SastUiComponentSize.LARGE)
-      case other                 => Left(DecodingError(s"Can't build SastUiComponentSize from input $other"))
+      case __StringValue("SMALL")  => Right(SastUiComponentSize.SMALL)
+      case __StringValue("MEDIUM") => Right(SastUiComponentSize.MEDIUM)
+      case __StringValue("LARGE")  => Right(SastUiComponentSize.LARGE)
+      case other                   => Left(DecodingError(s"Can't build SastUiComponentSize from input $other"))
     }
 
     implicit val encoder: ArgEncoder[SastUiComponentSize] = new ArgEncoder[SastUiComponentSize] {
 
-      override def encode(value: SastUiComponentSize): Value =
+      override def encode(value: SastUiComponentSize): __Value =
         value match {
-          case SastUiComponentSize.SMALL  => EnumValue("SMALL")
-          case SastUiComponentSize.MEDIUM => EnumValue("MEDIUM")
-          case SastUiComponentSize.LARGE  => EnumValue("LARGE")
+          case SastUiComponentSize.SMALL  => __EnumValue("SMALL")
+          case SastUiComponentSize.MEDIUM => __EnumValue("MEDIUM")
+          case SastUiComponentSize.LARGE  => __EnumValue("LARGE")
         }
 
       override def typeName: String = "SastUiComponentSize"
@@ -1742,27 +1961,27 @@ object graphql {
     case object API_FUZZING extends SecurityReportTypeEnum
 
     implicit val decoder: ScalarDecoder[SecurityReportTypeEnum] = {
-      case StringValue("SAST")                => Right(SecurityReportTypeEnum.SAST)
-      case StringValue("DAST")                => Right(SecurityReportTypeEnum.DAST)
-      case StringValue("DEPENDENCY_SCANNING") => Right(SecurityReportTypeEnum.DEPENDENCY_SCANNING)
-      case StringValue("CONTAINER_SCANNING")  => Right(SecurityReportTypeEnum.CONTAINER_SCANNING)
-      case StringValue("SECRET_DETECTION")    => Right(SecurityReportTypeEnum.SECRET_DETECTION)
-      case StringValue("COVERAGE_FUZZING")    => Right(SecurityReportTypeEnum.COVERAGE_FUZZING)
-      case StringValue("API_FUZZING")         => Right(SecurityReportTypeEnum.API_FUZZING)
-      case other                              => Left(DecodingError(s"Can't build SecurityReportTypeEnum from input $other"))
+      case __StringValue("SAST")                => Right(SecurityReportTypeEnum.SAST)
+      case __StringValue("DAST")                => Right(SecurityReportTypeEnum.DAST)
+      case __StringValue("DEPENDENCY_SCANNING") => Right(SecurityReportTypeEnum.DEPENDENCY_SCANNING)
+      case __StringValue("CONTAINER_SCANNING")  => Right(SecurityReportTypeEnum.CONTAINER_SCANNING)
+      case __StringValue("SECRET_DETECTION")    => Right(SecurityReportTypeEnum.SECRET_DETECTION)
+      case __StringValue("COVERAGE_FUZZING")    => Right(SecurityReportTypeEnum.COVERAGE_FUZZING)
+      case __StringValue("API_FUZZING")         => Right(SecurityReportTypeEnum.API_FUZZING)
+      case other                                => Left(DecodingError(s"Can't build SecurityReportTypeEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[SecurityReportTypeEnum] = new ArgEncoder[SecurityReportTypeEnum] {
 
-      override def encode(value: SecurityReportTypeEnum): Value =
+      override def encode(value: SecurityReportTypeEnum): __Value =
         value match {
-          case SecurityReportTypeEnum.SAST                => EnumValue("SAST")
-          case SecurityReportTypeEnum.DAST                => EnumValue("DAST")
-          case SecurityReportTypeEnum.DEPENDENCY_SCANNING => EnumValue("DEPENDENCY_SCANNING")
-          case SecurityReportTypeEnum.CONTAINER_SCANNING  => EnumValue("CONTAINER_SCANNING")
-          case SecurityReportTypeEnum.SECRET_DETECTION    => EnumValue("SECRET_DETECTION")
-          case SecurityReportTypeEnum.COVERAGE_FUZZING    => EnumValue("COVERAGE_FUZZING")
-          case SecurityReportTypeEnum.API_FUZZING         => EnumValue("API_FUZZING")
+          case SecurityReportTypeEnum.SAST                => __EnumValue("SAST")
+          case SecurityReportTypeEnum.DAST                => __EnumValue("DAST")
+          case SecurityReportTypeEnum.DEPENDENCY_SCANNING => __EnumValue("DEPENDENCY_SCANNING")
+          case SecurityReportTypeEnum.CONTAINER_SCANNING  => __EnumValue("CONTAINER_SCANNING")
+          case SecurityReportTypeEnum.SECRET_DETECTION    => __EnumValue("SECRET_DETECTION")
+          case SecurityReportTypeEnum.COVERAGE_FUZZING    => __EnumValue("COVERAGE_FUZZING")
+          case SecurityReportTypeEnum.API_FUZZING         => __EnumValue("API_FUZZING")
         }
 
       override def typeName: String = "SecurityReportTypeEnum"
@@ -1782,27 +2001,27 @@ object graphql {
     case object API_FUZZING extends SecurityScannerType
 
     implicit val decoder: ScalarDecoder[SecurityScannerType] = {
-      case StringValue("SAST")                => Right(SecurityScannerType.SAST)
-      case StringValue("DAST")                => Right(SecurityScannerType.DAST)
-      case StringValue("DEPENDENCY_SCANNING") => Right(SecurityScannerType.DEPENDENCY_SCANNING)
-      case StringValue("CONTAINER_SCANNING")  => Right(SecurityScannerType.CONTAINER_SCANNING)
-      case StringValue("SECRET_DETECTION")    => Right(SecurityScannerType.SECRET_DETECTION)
-      case StringValue("COVERAGE_FUZZING")    => Right(SecurityScannerType.COVERAGE_FUZZING)
-      case StringValue("API_FUZZING")         => Right(SecurityScannerType.API_FUZZING)
-      case other                              => Left(DecodingError(s"Can't build SecurityScannerType from input $other"))
+      case __StringValue("SAST")                => Right(SecurityScannerType.SAST)
+      case __StringValue("DAST")                => Right(SecurityScannerType.DAST)
+      case __StringValue("DEPENDENCY_SCANNING") => Right(SecurityScannerType.DEPENDENCY_SCANNING)
+      case __StringValue("CONTAINER_SCANNING")  => Right(SecurityScannerType.CONTAINER_SCANNING)
+      case __StringValue("SECRET_DETECTION")    => Right(SecurityScannerType.SECRET_DETECTION)
+      case __StringValue("COVERAGE_FUZZING")    => Right(SecurityScannerType.COVERAGE_FUZZING)
+      case __StringValue("API_FUZZING")         => Right(SecurityScannerType.API_FUZZING)
+      case other                                => Left(DecodingError(s"Can't build SecurityScannerType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[SecurityScannerType] = new ArgEncoder[SecurityScannerType] {
 
-      override def encode(value: SecurityScannerType): Value =
+      override def encode(value: SecurityScannerType): __Value =
         value match {
-          case SecurityScannerType.SAST                => EnumValue("SAST")
-          case SecurityScannerType.DAST                => EnumValue("DAST")
-          case SecurityScannerType.DEPENDENCY_SCANNING => EnumValue("DEPENDENCY_SCANNING")
-          case SecurityScannerType.CONTAINER_SCANNING  => EnumValue("CONTAINER_SCANNING")
-          case SecurityScannerType.SECRET_DETECTION    => EnumValue("SECRET_DETECTION")
-          case SecurityScannerType.COVERAGE_FUZZING    => EnumValue("COVERAGE_FUZZING")
-          case SecurityScannerType.API_FUZZING         => EnumValue("API_FUZZING")
+          case SecurityScannerType.SAST                => __EnumValue("SAST")
+          case SecurityScannerType.DAST                => __EnumValue("DAST")
+          case SecurityScannerType.DEPENDENCY_SCANNING => __EnumValue("DEPENDENCY_SCANNING")
+          case SecurityScannerType.CONTAINER_SCANNING  => __EnumValue("CONTAINER_SCANNING")
+          case SecurityScannerType.SECRET_DETECTION    => __EnumValue("SECRET_DETECTION")
+          case SecurityScannerType.COVERAGE_FUZZING    => __EnumValue("COVERAGE_FUZZING")
+          case SecurityScannerType.API_FUZZING         => __EnumValue("API_FUZZING")
         }
 
       override def typeName: String = "SecurityScannerType"
@@ -1819,21 +2038,21 @@ object graphql {
     case object IGNORED extends SentryErrorStatus
 
     implicit val decoder: ScalarDecoder[SentryErrorStatus] = {
-      case StringValue("RESOLVED")                 => Right(SentryErrorStatus.RESOLVED)
-      case StringValue("RESOLVED_IN_NEXT_RELEASE") => Right(SentryErrorStatus.RESOLVED_IN_NEXT_RELEASE)
-      case StringValue("UNRESOLVED")               => Right(SentryErrorStatus.UNRESOLVED)
-      case StringValue("IGNORED")                  => Right(SentryErrorStatus.IGNORED)
-      case other                                   => Left(DecodingError(s"Can't build SentryErrorStatus from input $other"))
+      case __StringValue("RESOLVED")                 => Right(SentryErrorStatus.RESOLVED)
+      case __StringValue("RESOLVED_IN_NEXT_RELEASE") => Right(SentryErrorStatus.RESOLVED_IN_NEXT_RELEASE)
+      case __StringValue("UNRESOLVED")               => Right(SentryErrorStatus.UNRESOLVED)
+      case __StringValue("IGNORED")                  => Right(SentryErrorStatus.IGNORED)
+      case other                                     => Left(DecodingError(s"Can't build SentryErrorStatus from input $other"))
     }
 
     implicit val encoder: ArgEncoder[SentryErrorStatus] = new ArgEncoder[SentryErrorStatus] {
 
-      override def encode(value: SentryErrorStatus): Value =
+      override def encode(value: SentryErrorStatus): __Value =
         value match {
-          case SentryErrorStatus.RESOLVED                 => EnumValue("RESOLVED")
-          case SentryErrorStatus.RESOLVED_IN_NEXT_RELEASE => EnumValue("RESOLVED_IN_NEXT_RELEASE")
-          case SentryErrorStatus.UNRESOLVED               => EnumValue("UNRESOLVED")
-          case SentryErrorStatus.IGNORED                  => EnumValue("IGNORED")
+          case SentryErrorStatus.RESOLVED                 => __EnumValue("RESOLVED")
+          case SentryErrorStatus.RESOLVED_IN_NEXT_RELEASE => __EnumValue("RESOLVED_IN_NEXT_RELEASE")
+          case SentryErrorStatus.UNRESOLVED               => __EnumValue("UNRESOLVED")
+          case SentryErrorStatus.IGNORED                  => __EnumValue("IGNORED")
         }
 
       override def typeName: String = "SentryErrorStatus"
@@ -1853,15 +2072,19 @@ object graphql {
     case object CAMPFIRE_SERVICE extends ServiceType
     case object CONFLUENCE_SERVICE extends ServiceType
     case object CUSTOM_ISSUE_TRACKER_SERVICE extends ServiceType
+    case object DATADOG_SERVICE extends ServiceType
     case object DISCORD_SERVICE extends ServiceType
     case object DRONE_CI_SERVICE extends ServiceType
     case object EMAILS_ON_PUSH_SERVICE extends ServiceType
     case object EWM_SERVICE extends ServiceType
     case object EXTERNAL_WIKI_SERVICE extends ServiceType
     case object FLOWDOCK_SERVICE extends ServiceType
+    case object GITHUB_SERVICE extends ServiceType
+    case object GITLAB_SLACK_APPLICATION_SERVICE extends ServiceType
     case object HANGOUTS_CHAT_SERVICE extends ServiceType
     case object HIPCHAT_SERVICE extends ServiceType
     case object IRKER_SERVICE extends ServiceType
+    case object JENKINS_SERVICE extends ServiceType
     case object JIRA_SERVICE extends ServiceType
     case object MATTERMOST_SERVICE extends ServiceType
     case object MATTERMOST_SLASH_COMMANDS_SERVICE extends ServiceType
@@ -1878,89 +2101,91 @@ object graphql {
     case object UNIFY_CIRCUIT_SERVICE extends ServiceType
     case object WEBEX_TEAMS_SERVICE extends ServiceType
     case object YOUTRACK_SERVICE extends ServiceType
-    case object GITHUB_SERVICE extends ServiceType
-    case object JENKINS_SERVICE extends ServiceType
 
     implicit val decoder: ScalarDecoder[ServiceType] = {
-      case StringValue("ALERTS_SERVICE")                    => Right(ServiceType.ALERTS_SERVICE)
-      case StringValue("ASANA_SERVICE")                     => Right(ServiceType.ASANA_SERVICE)
-      case StringValue("ASSEMBLA_SERVICE")                  => Right(ServiceType.ASSEMBLA_SERVICE)
-      case StringValue("BAMBOO_SERVICE")                    => Right(ServiceType.BAMBOO_SERVICE)
-      case StringValue("BUGZILLA_SERVICE")                  => Right(ServiceType.BUGZILLA_SERVICE)
-      case StringValue("BUILDKITE_SERVICE")                 => Right(ServiceType.BUILDKITE_SERVICE)
-      case StringValue("CAMPFIRE_SERVICE")                  => Right(ServiceType.CAMPFIRE_SERVICE)
-      case StringValue("CONFLUENCE_SERVICE")                => Right(ServiceType.CONFLUENCE_SERVICE)
-      case StringValue("CUSTOM_ISSUE_TRACKER_SERVICE")      => Right(ServiceType.CUSTOM_ISSUE_TRACKER_SERVICE)
-      case StringValue("DISCORD_SERVICE")                   => Right(ServiceType.DISCORD_SERVICE)
-      case StringValue("DRONE_CI_SERVICE")                  => Right(ServiceType.DRONE_CI_SERVICE)
-      case StringValue("EMAILS_ON_PUSH_SERVICE")            => Right(ServiceType.EMAILS_ON_PUSH_SERVICE)
-      case StringValue("EWM_SERVICE")                       => Right(ServiceType.EWM_SERVICE)
-      case StringValue("EXTERNAL_WIKI_SERVICE")             => Right(ServiceType.EXTERNAL_WIKI_SERVICE)
-      case StringValue("FLOWDOCK_SERVICE")                  => Right(ServiceType.FLOWDOCK_SERVICE)
-      case StringValue("HANGOUTS_CHAT_SERVICE")             => Right(ServiceType.HANGOUTS_CHAT_SERVICE)
-      case StringValue("HIPCHAT_SERVICE")                   => Right(ServiceType.HIPCHAT_SERVICE)
-      case StringValue("IRKER_SERVICE")                     => Right(ServiceType.IRKER_SERVICE)
-      case StringValue("JIRA_SERVICE")                      => Right(ServiceType.JIRA_SERVICE)
-      case StringValue("MATTERMOST_SERVICE")                => Right(ServiceType.MATTERMOST_SERVICE)
-      case StringValue("MATTERMOST_SLASH_COMMANDS_SERVICE") => Right(ServiceType.MATTERMOST_SLASH_COMMANDS_SERVICE)
-      case StringValue("MICROSOFT_TEAMS_SERVICE")           => Right(ServiceType.MICROSOFT_TEAMS_SERVICE)
-      case StringValue("PACKAGIST_SERVICE")                 => Right(ServiceType.PACKAGIST_SERVICE)
-      case StringValue("PIPELINES_EMAIL_SERVICE")           => Right(ServiceType.PIPELINES_EMAIL_SERVICE)
-      case StringValue("PIVOTALTRACKER_SERVICE")            => Right(ServiceType.PIVOTALTRACKER_SERVICE)
-      case StringValue("PROMETHEUS_SERVICE")                => Right(ServiceType.PROMETHEUS_SERVICE)
-      case StringValue("PUSHOVER_SERVICE")                  => Right(ServiceType.PUSHOVER_SERVICE)
-      case StringValue("REDMINE_SERVICE")                   => Right(ServiceType.REDMINE_SERVICE)
-      case StringValue("SLACK_SERVICE")                     => Right(ServiceType.SLACK_SERVICE)
-      case StringValue("SLACK_SLASH_COMMANDS_SERVICE")      => Right(ServiceType.SLACK_SLASH_COMMANDS_SERVICE)
-      case StringValue("TEAMCITY_SERVICE")                  => Right(ServiceType.TEAMCITY_SERVICE)
-      case StringValue("UNIFY_CIRCUIT_SERVICE")             => Right(ServiceType.UNIFY_CIRCUIT_SERVICE)
-      case StringValue("WEBEX_TEAMS_SERVICE")               => Right(ServiceType.WEBEX_TEAMS_SERVICE)
-      case StringValue("YOUTRACK_SERVICE")                  => Right(ServiceType.YOUTRACK_SERVICE)
-      case StringValue("GITHUB_SERVICE")                    => Right(ServiceType.GITHUB_SERVICE)
-      case StringValue("JENKINS_SERVICE")                   => Right(ServiceType.JENKINS_SERVICE)
-      case other                                            => Left(DecodingError(s"Can't build ServiceType from input $other"))
+      case __StringValue("ALERTS_SERVICE")                    => Right(ServiceType.ALERTS_SERVICE)
+      case __StringValue("ASANA_SERVICE")                     => Right(ServiceType.ASANA_SERVICE)
+      case __StringValue("ASSEMBLA_SERVICE")                  => Right(ServiceType.ASSEMBLA_SERVICE)
+      case __StringValue("BAMBOO_SERVICE")                    => Right(ServiceType.BAMBOO_SERVICE)
+      case __StringValue("BUGZILLA_SERVICE")                  => Right(ServiceType.BUGZILLA_SERVICE)
+      case __StringValue("BUILDKITE_SERVICE")                 => Right(ServiceType.BUILDKITE_SERVICE)
+      case __StringValue("CAMPFIRE_SERVICE")                  => Right(ServiceType.CAMPFIRE_SERVICE)
+      case __StringValue("CONFLUENCE_SERVICE")                => Right(ServiceType.CONFLUENCE_SERVICE)
+      case __StringValue("CUSTOM_ISSUE_TRACKER_SERVICE")      => Right(ServiceType.CUSTOM_ISSUE_TRACKER_SERVICE)
+      case __StringValue("DATADOG_SERVICE")                   => Right(ServiceType.DATADOG_SERVICE)
+      case __StringValue("DISCORD_SERVICE")                   => Right(ServiceType.DISCORD_SERVICE)
+      case __StringValue("DRONE_CI_SERVICE")                  => Right(ServiceType.DRONE_CI_SERVICE)
+      case __StringValue("EMAILS_ON_PUSH_SERVICE")            => Right(ServiceType.EMAILS_ON_PUSH_SERVICE)
+      case __StringValue("EWM_SERVICE")                       => Right(ServiceType.EWM_SERVICE)
+      case __StringValue("EXTERNAL_WIKI_SERVICE")             => Right(ServiceType.EXTERNAL_WIKI_SERVICE)
+      case __StringValue("FLOWDOCK_SERVICE")                  => Right(ServiceType.FLOWDOCK_SERVICE)
+      case __StringValue("GITHUB_SERVICE")                    => Right(ServiceType.GITHUB_SERVICE)
+      case __StringValue("GITLAB_SLACK_APPLICATION_SERVICE")  => Right(ServiceType.GITLAB_SLACK_APPLICATION_SERVICE)
+      case __StringValue("HANGOUTS_CHAT_SERVICE")             => Right(ServiceType.HANGOUTS_CHAT_SERVICE)
+      case __StringValue("HIPCHAT_SERVICE")                   => Right(ServiceType.HIPCHAT_SERVICE)
+      case __StringValue("IRKER_SERVICE")                     => Right(ServiceType.IRKER_SERVICE)
+      case __StringValue("JENKINS_SERVICE")                   => Right(ServiceType.JENKINS_SERVICE)
+      case __StringValue("JIRA_SERVICE")                      => Right(ServiceType.JIRA_SERVICE)
+      case __StringValue("MATTERMOST_SERVICE")                => Right(ServiceType.MATTERMOST_SERVICE)
+      case __StringValue("MATTERMOST_SLASH_COMMANDS_SERVICE") => Right(ServiceType.MATTERMOST_SLASH_COMMANDS_SERVICE)
+      case __StringValue("MICROSOFT_TEAMS_SERVICE")           => Right(ServiceType.MICROSOFT_TEAMS_SERVICE)
+      case __StringValue("PACKAGIST_SERVICE")                 => Right(ServiceType.PACKAGIST_SERVICE)
+      case __StringValue("PIPELINES_EMAIL_SERVICE")           => Right(ServiceType.PIPELINES_EMAIL_SERVICE)
+      case __StringValue("PIVOTALTRACKER_SERVICE")            => Right(ServiceType.PIVOTALTRACKER_SERVICE)
+      case __StringValue("PROMETHEUS_SERVICE")                => Right(ServiceType.PROMETHEUS_SERVICE)
+      case __StringValue("PUSHOVER_SERVICE")                  => Right(ServiceType.PUSHOVER_SERVICE)
+      case __StringValue("REDMINE_SERVICE")                   => Right(ServiceType.REDMINE_SERVICE)
+      case __StringValue("SLACK_SERVICE")                     => Right(ServiceType.SLACK_SERVICE)
+      case __StringValue("SLACK_SLASH_COMMANDS_SERVICE")      => Right(ServiceType.SLACK_SLASH_COMMANDS_SERVICE)
+      case __StringValue("TEAMCITY_SERVICE")                  => Right(ServiceType.TEAMCITY_SERVICE)
+      case __StringValue("UNIFY_CIRCUIT_SERVICE")             => Right(ServiceType.UNIFY_CIRCUIT_SERVICE)
+      case __StringValue("WEBEX_TEAMS_SERVICE")               => Right(ServiceType.WEBEX_TEAMS_SERVICE)
+      case __StringValue("YOUTRACK_SERVICE")                  => Right(ServiceType.YOUTRACK_SERVICE)
+      case other                                              => Left(DecodingError(s"Can't build ServiceType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[ServiceType] = new ArgEncoder[ServiceType] {
 
-      override def encode(value: ServiceType): Value =
+      override def encode(value: ServiceType): __Value =
         value match {
-          case ServiceType.ALERTS_SERVICE                    => EnumValue("ALERTS_SERVICE")
-          case ServiceType.ASANA_SERVICE                     => EnumValue("ASANA_SERVICE")
-          case ServiceType.ASSEMBLA_SERVICE                  => EnumValue("ASSEMBLA_SERVICE")
-          case ServiceType.BAMBOO_SERVICE                    => EnumValue("BAMBOO_SERVICE")
-          case ServiceType.BUGZILLA_SERVICE                  => EnumValue("BUGZILLA_SERVICE")
-          case ServiceType.BUILDKITE_SERVICE                 => EnumValue("BUILDKITE_SERVICE")
-          case ServiceType.CAMPFIRE_SERVICE                  => EnumValue("CAMPFIRE_SERVICE")
-          case ServiceType.CONFLUENCE_SERVICE                => EnumValue("CONFLUENCE_SERVICE")
-          case ServiceType.CUSTOM_ISSUE_TRACKER_SERVICE      => EnumValue("CUSTOM_ISSUE_TRACKER_SERVICE")
-          case ServiceType.DISCORD_SERVICE                   => EnumValue("DISCORD_SERVICE")
-          case ServiceType.DRONE_CI_SERVICE                  => EnumValue("DRONE_CI_SERVICE")
-          case ServiceType.EMAILS_ON_PUSH_SERVICE            => EnumValue("EMAILS_ON_PUSH_SERVICE")
-          case ServiceType.EWM_SERVICE                       => EnumValue("EWM_SERVICE")
-          case ServiceType.EXTERNAL_WIKI_SERVICE             => EnumValue("EXTERNAL_WIKI_SERVICE")
-          case ServiceType.FLOWDOCK_SERVICE                  => EnumValue("FLOWDOCK_SERVICE")
-          case ServiceType.HANGOUTS_CHAT_SERVICE             => EnumValue("HANGOUTS_CHAT_SERVICE")
-          case ServiceType.HIPCHAT_SERVICE                   => EnumValue("HIPCHAT_SERVICE")
-          case ServiceType.IRKER_SERVICE                     => EnumValue("IRKER_SERVICE")
-          case ServiceType.JIRA_SERVICE                      => EnumValue("JIRA_SERVICE")
-          case ServiceType.MATTERMOST_SERVICE                => EnumValue("MATTERMOST_SERVICE")
-          case ServiceType.MATTERMOST_SLASH_COMMANDS_SERVICE => EnumValue("MATTERMOST_SLASH_COMMANDS_SERVICE")
-          case ServiceType.MICROSOFT_TEAMS_SERVICE           => EnumValue("MICROSOFT_TEAMS_SERVICE")
-          case ServiceType.PACKAGIST_SERVICE                 => EnumValue("PACKAGIST_SERVICE")
-          case ServiceType.PIPELINES_EMAIL_SERVICE           => EnumValue("PIPELINES_EMAIL_SERVICE")
-          case ServiceType.PIVOTALTRACKER_SERVICE            => EnumValue("PIVOTALTRACKER_SERVICE")
-          case ServiceType.PROMETHEUS_SERVICE                => EnumValue("PROMETHEUS_SERVICE")
-          case ServiceType.PUSHOVER_SERVICE                  => EnumValue("PUSHOVER_SERVICE")
-          case ServiceType.REDMINE_SERVICE                   => EnumValue("REDMINE_SERVICE")
-          case ServiceType.SLACK_SERVICE                     => EnumValue("SLACK_SERVICE")
-          case ServiceType.SLACK_SLASH_COMMANDS_SERVICE      => EnumValue("SLACK_SLASH_COMMANDS_SERVICE")
-          case ServiceType.TEAMCITY_SERVICE                  => EnumValue("TEAMCITY_SERVICE")
-          case ServiceType.UNIFY_CIRCUIT_SERVICE             => EnumValue("UNIFY_CIRCUIT_SERVICE")
-          case ServiceType.WEBEX_TEAMS_SERVICE               => EnumValue("WEBEX_TEAMS_SERVICE")
-          case ServiceType.YOUTRACK_SERVICE                  => EnumValue("YOUTRACK_SERVICE")
-          case ServiceType.GITHUB_SERVICE                    => EnumValue("GITHUB_SERVICE")
-          case ServiceType.JENKINS_SERVICE                   => EnumValue("JENKINS_SERVICE")
+          case ServiceType.ALERTS_SERVICE                    => __EnumValue("ALERTS_SERVICE")
+          case ServiceType.ASANA_SERVICE                     => __EnumValue("ASANA_SERVICE")
+          case ServiceType.ASSEMBLA_SERVICE                  => __EnumValue("ASSEMBLA_SERVICE")
+          case ServiceType.BAMBOO_SERVICE                    => __EnumValue("BAMBOO_SERVICE")
+          case ServiceType.BUGZILLA_SERVICE                  => __EnumValue("BUGZILLA_SERVICE")
+          case ServiceType.BUILDKITE_SERVICE                 => __EnumValue("BUILDKITE_SERVICE")
+          case ServiceType.CAMPFIRE_SERVICE                  => __EnumValue("CAMPFIRE_SERVICE")
+          case ServiceType.CONFLUENCE_SERVICE                => __EnumValue("CONFLUENCE_SERVICE")
+          case ServiceType.CUSTOM_ISSUE_TRACKER_SERVICE      => __EnumValue("CUSTOM_ISSUE_TRACKER_SERVICE")
+          case ServiceType.DATADOG_SERVICE                   => __EnumValue("DATADOG_SERVICE")
+          case ServiceType.DISCORD_SERVICE                   => __EnumValue("DISCORD_SERVICE")
+          case ServiceType.DRONE_CI_SERVICE                  => __EnumValue("DRONE_CI_SERVICE")
+          case ServiceType.EMAILS_ON_PUSH_SERVICE            => __EnumValue("EMAILS_ON_PUSH_SERVICE")
+          case ServiceType.EWM_SERVICE                       => __EnumValue("EWM_SERVICE")
+          case ServiceType.EXTERNAL_WIKI_SERVICE             => __EnumValue("EXTERNAL_WIKI_SERVICE")
+          case ServiceType.FLOWDOCK_SERVICE                  => __EnumValue("FLOWDOCK_SERVICE")
+          case ServiceType.GITHUB_SERVICE                    => __EnumValue("GITHUB_SERVICE")
+          case ServiceType.GITLAB_SLACK_APPLICATION_SERVICE  => __EnumValue("GITLAB_SLACK_APPLICATION_SERVICE")
+          case ServiceType.HANGOUTS_CHAT_SERVICE             => __EnumValue("HANGOUTS_CHAT_SERVICE")
+          case ServiceType.HIPCHAT_SERVICE                   => __EnumValue("HIPCHAT_SERVICE")
+          case ServiceType.IRKER_SERVICE                     => __EnumValue("IRKER_SERVICE")
+          case ServiceType.JENKINS_SERVICE                   => __EnumValue("JENKINS_SERVICE")
+          case ServiceType.JIRA_SERVICE                      => __EnumValue("JIRA_SERVICE")
+          case ServiceType.MATTERMOST_SERVICE                => __EnumValue("MATTERMOST_SERVICE")
+          case ServiceType.MATTERMOST_SLASH_COMMANDS_SERVICE => __EnumValue("MATTERMOST_SLASH_COMMANDS_SERVICE")
+          case ServiceType.MICROSOFT_TEAMS_SERVICE           => __EnumValue("MICROSOFT_TEAMS_SERVICE")
+          case ServiceType.PACKAGIST_SERVICE                 => __EnumValue("PACKAGIST_SERVICE")
+          case ServiceType.PIPELINES_EMAIL_SERVICE           => __EnumValue("PIPELINES_EMAIL_SERVICE")
+          case ServiceType.PIVOTALTRACKER_SERVICE            => __EnumValue("PIVOTALTRACKER_SERVICE")
+          case ServiceType.PROMETHEUS_SERVICE                => __EnumValue("PROMETHEUS_SERVICE")
+          case ServiceType.PUSHOVER_SERVICE                  => __EnumValue("PUSHOVER_SERVICE")
+          case ServiceType.REDMINE_SERVICE                   => __EnumValue("REDMINE_SERVICE")
+          case ServiceType.SLACK_SERVICE                     => __EnumValue("SLACK_SERVICE")
+          case ServiceType.SLACK_SLASH_COMMANDS_SERVICE      => __EnumValue("SLACK_SLASH_COMMANDS_SERVICE")
+          case ServiceType.TEAMCITY_SERVICE                  => __EnumValue("TEAMCITY_SERVICE")
+          case ServiceType.UNIFY_CIRCUIT_SERVICE             => __EnumValue("UNIFY_CIRCUIT_SERVICE")
+          case ServiceType.WEBEX_TEAMS_SERVICE               => __EnumValue("WEBEX_TEAMS_SERVICE")
+          case ServiceType.YOUTRACK_SERVICE                  => __EnumValue("YOUTRACK_SERVICE")
         }
 
       override def typeName: String = "ServiceType"
@@ -1977,21 +2202,21 @@ object graphql {
     case object move extends SnippetBlobActionEnum
 
     implicit val decoder: ScalarDecoder[SnippetBlobActionEnum] = {
-      case StringValue("create") => Right(SnippetBlobActionEnum.create)
-      case StringValue("update") => Right(SnippetBlobActionEnum.update)
-      case StringValue("delete") => Right(SnippetBlobActionEnum.delete)
-      case StringValue("move")   => Right(SnippetBlobActionEnum.move)
-      case other                 => Left(DecodingError(s"Can't build SnippetBlobActionEnum from input $other"))
+      case __StringValue("create") => Right(SnippetBlobActionEnum.create)
+      case __StringValue("update") => Right(SnippetBlobActionEnum.update)
+      case __StringValue("delete") => Right(SnippetBlobActionEnum.delete)
+      case __StringValue("move")   => Right(SnippetBlobActionEnum.move)
+      case other                   => Left(DecodingError(s"Can't build SnippetBlobActionEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[SnippetBlobActionEnum] = new ArgEncoder[SnippetBlobActionEnum] {
 
-      override def encode(value: SnippetBlobActionEnum): Value =
+      override def encode(value: SnippetBlobActionEnum): __Value =
         value match {
-          case SnippetBlobActionEnum.create => EnumValue("create")
-          case SnippetBlobActionEnum.update => EnumValue("update")
-          case SnippetBlobActionEnum.delete => EnumValue("delete")
-          case SnippetBlobActionEnum.move   => EnumValue("move")
+          case SnippetBlobActionEnum.create => __EnumValue("create")
+          case SnippetBlobActionEnum.update => __EnumValue("update")
+          case SnippetBlobActionEnum.delete => __EnumValue("delete")
+          case SnippetBlobActionEnum.move   => __EnumValue("move")
         }
 
       override def typeName: String = "SnippetBlobActionEnum"
@@ -2006,35 +2231,35 @@ object graphql {
     case object updated_asc extends Sort
     case object created_desc extends Sort
     case object created_asc extends Sort
-    case object UPDATED_DESC extends Sort
-    case object UPDATED_ASC extends Sort
-    case object CREATED_DESC extends Sort
-    case object CREATED_ASC extends Sort
+    case object UPDATED_DESC_ extends Sort
+    case object UPDATED_ASC_ extends Sort
+    case object CREATED_DESC_ extends Sort
+    case object CREATED_ASC_ extends Sort
 
     implicit val decoder: ScalarDecoder[Sort] = {
-      case StringValue("updated_desc") => Right(Sort.updated_desc)
-      case StringValue("updated_asc")  => Right(Sort.updated_asc)
-      case StringValue("created_desc") => Right(Sort.created_desc)
-      case StringValue("created_asc")  => Right(Sort.created_asc)
-      case StringValue("UPDATED_DESC") => Right(Sort.UPDATED_DESC)
-      case StringValue("UPDATED_ASC")  => Right(Sort.UPDATED_ASC)
-      case StringValue("CREATED_DESC") => Right(Sort.CREATED_DESC)
-      case StringValue("CREATED_ASC")  => Right(Sort.CREATED_ASC)
-      case other                       => Left(DecodingError(s"Can't build Sort from input $other"))
+      case __StringValue("updated_desc") => Right(Sort.updated_desc)
+      case __StringValue("updated_asc")  => Right(Sort.updated_asc)
+      case __StringValue("created_desc") => Right(Sort.created_desc)
+      case __StringValue("created_asc")  => Right(Sort.created_asc)
+      case __StringValue("UPDATED_DESC") => Right(Sort.UPDATED_DESC_)
+      case __StringValue("UPDATED_ASC")  => Right(Sort.UPDATED_ASC_)
+      case __StringValue("CREATED_DESC") => Right(Sort.CREATED_DESC_)
+      case __StringValue("CREATED_ASC")  => Right(Sort.CREATED_ASC_)
+      case other                         => Left(DecodingError(s"Can't build Sort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[Sort] = new ArgEncoder[Sort] {
 
-      override def encode(value: Sort): Value =
+      override def encode(value: Sort): __Value =
         value match {
-          case Sort.updated_desc => EnumValue("updated_desc")
-          case Sort.updated_asc  => EnumValue("updated_asc")
-          case Sort.created_desc => EnumValue("created_desc")
-          case Sort.created_asc  => EnumValue("created_asc")
-          case Sort.UPDATED_DESC => EnumValue("UPDATED_DESC")
-          case Sort.UPDATED_ASC  => EnumValue("UPDATED_ASC")
-          case Sort.CREATED_DESC => EnumValue("CREATED_DESC")
-          case Sort.CREATED_ASC  => EnumValue("CREATED_ASC")
+          case Sort.updated_desc  => __EnumValue("updated_desc")
+          case Sort.updated_asc   => __EnumValue("updated_asc")
+          case Sort.created_desc  => __EnumValue("created_desc")
+          case Sort.created_asc   => __EnumValue("created_asc")
+          case Sort.UPDATED_DESC_ => __EnumValue("UPDATED_DESC")
+          case Sort.UPDATED_ASC_  => __EnumValue("UPDATED_ASC")
+          case Sort.CREATED_DESC_ => __EnumValue("CREATED_DESC")
+          case Sort.CREATED_ASC_  => __EnumValue("CREATED_ASC")
         }
 
       override def typeName: String = "Sort"
@@ -2049,17 +2274,17 @@ object graphql {
     case object FAILED extends TestReportState
 
     implicit val decoder: ScalarDecoder[TestReportState] = {
-      case StringValue("PASSED") => Right(TestReportState.PASSED)
-      case StringValue("FAILED") => Right(TestReportState.FAILED)
-      case other                 => Left(DecodingError(s"Can't build TestReportState from input $other"))
+      case __StringValue("PASSED") => Right(TestReportState.PASSED)
+      case __StringValue("FAILED") => Right(TestReportState.FAILED)
+      case other                   => Left(DecodingError(s"Can't build TestReportState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[TestReportState] = new ArgEncoder[TestReportState] {
 
-      override def encode(value: TestReportState): Value =
+      override def encode(value: TestReportState): __Value =
         value match {
-          case TestReportState.PASSED => EnumValue("PASSED")
-          case TestReportState.FAILED => EnumValue("FAILED")
+          case TestReportState.PASSED => __EnumValue("PASSED")
+          case TestReportState.FAILED => __EnumValue("FAILED")
         }
 
       override def typeName: String = "TestReportState"
@@ -2079,27 +2304,27 @@ object graphql {
     case object directly_addressed extends TodoActionEnum
 
     implicit val decoder: ScalarDecoder[TodoActionEnum] = {
-      case StringValue("assigned")           => Right(TodoActionEnum.assigned)
-      case StringValue("mentioned")          => Right(TodoActionEnum.mentioned)
-      case StringValue("build_failed")       => Right(TodoActionEnum.build_failed)
-      case StringValue("marked")             => Right(TodoActionEnum.marked)
-      case StringValue("approval_required")  => Right(TodoActionEnum.approval_required)
-      case StringValue("unmergeable")        => Right(TodoActionEnum.unmergeable)
-      case StringValue("directly_addressed") => Right(TodoActionEnum.directly_addressed)
-      case other                             => Left(DecodingError(s"Can't build TodoActionEnum from input $other"))
+      case __StringValue("assigned")           => Right(TodoActionEnum.assigned)
+      case __StringValue("mentioned")          => Right(TodoActionEnum.mentioned)
+      case __StringValue("build_failed")       => Right(TodoActionEnum.build_failed)
+      case __StringValue("marked")             => Right(TodoActionEnum.marked)
+      case __StringValue("approval_required")  => Right(TodoActionEnum.approval_required)
+      case __StringValue("unmergeable")        => Right(TodoActionEnum.unmergeable)
+      case __StringValue("directly_addressed") => Right(TodoActionEnum.directly_addressed)
+      case other                               => Left(DecodingError(s"Can't build TodoActionEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[TodoActionEnum] = new ArgEncoder[TodoActionEnum] {
 
-      override def encode(value: TodoActionEnum): Value =
+      override def encode(value: TodoActionEnum): __Value =
         value match {
-          case TodoActionEnum.assigned           => EnumValue("assigned")
-          case TodoActionEnum.mentioned          => EnumValue("mentioned")
-          case TodoActionEnum.build_failed       => EnumValue("build_failed")
-          case TodoActionEnum.marked             => EnumValue("marked")
-          case TodoActionEnum.approval_required  => EnumValue("approval_required")
-          case TodoActionEnum.unmergeable        => EnumValue("unmergeable")
-          case TodoActionEnum.directly_addressed => EnumValue("directly_addressed")
+          case TodoActionEnum.assigned           => __EnumValue("assigned")
+          case TodoActionEnum.mentioned          => __EnumValue("mentioned")
+          case TodoActionEnum.build_failed       => __EnumValue("build_failed")
+          case TodoActionEnum.marked             => __EnumValue("marked")
+          case TodoActionEnum.approval_required  => __EnumValue("approval_required")
+          case TodoActionEnum.unmergeable        => __EnumValue("unmergeable")
+          case TodoActionEnum.directly_addressed => __EnumValue("directly_addressed")
         }
 
       override def typeName: String = "TodoActionEnum"
@@ -2114,17 +2339,17 @@ object graphql {
     case object done extends TodoStateEnum
 
     implicit val decoder: ScalarDecoder[TodoStateEnum] = {
-      case StringValue("pending") => Right(TodoStateEnum.pending)
-      case StringValue("done")    => Right(TodoStateEnum.done)
-      case other                  => Left(DecodingError(s"Can't build TodoStateEnum from input $other"))
+      case __StringValue("pending") => Right(TodoStateEnum.pending)
+      case __StringValue("done")    => Right(TodoStateEnum.done)
+      case other                    => Left(DecodingError(s"Can't build TodoStateEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[TodoStateEnum] = new ArgEncoder[TodoStateEnum] {
 
-      override def encode(value: TodoStateEnum): Value =
+      override def encode(value: TodoStateEnum): __Value =
         value match {
-          case TodoStateEnum.pending => EnumValue("pending")
-          case TodoStateEnum.done    => EnumValue("done")
+          case TodoStateEnum.pending => __EnumValue("pending")
+          case TodoStateEnum.done    => __EnumValue("done")
         }
 
       override def typeName: String = "TodoStateEnum"
@@ -2143,25 +2368,25 @@ object graphql {
     case object EPIC extends TodoTargetEnum
 
     implicit val decoder: ScalarDecoder[TodoTargetEnum] = {
-      case StringValue("COMMIT")       => Right(TodoTargetEnum.COMMIT)
-      case StringValue("ISSUE")        => Right(TodoTargetEnum.ISSUE)
-      case StringValue("MERGEREQUEST") => Right(TodoTargetEnum.MERGEREQUEST)
-      case StringValue("DESIGN")       => Right(TodoTargetEnum.DESIGN)
-      case StringValue("ALERT")        => Right(TodoTargetEnum.ALERT)
-      case StringValue("EPIC")         => Right(TodoTargetEnum.EPIC)
-      case other                       => Left(DecodingError(s"Can't build TodoTargetEnum from input $other"))
+      case __StringValue("COMMIT")       => Right(TodoTargetEnum.COMMIT)
+      case __StringValue("ISSUE")        => Right(TodoTargetEnum.ISSUE)
+      case __StringValue("MERGEREQUEST") => Right(TodoTargetEnum.MERGEREQUEST)
+      case __StringValue("DESIGN")       => Right(TodoTargetEnum.DESIGN)
+      case __StringValue("ALERT")        => Right(TodoTargetEnum.ALERT)
+      case __StringValue("EPIC")         => Right(TodoTargetEnum.EPIC)
+      case other                         => Left(DecodingError(s"Can't build TodoTargetEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[TodoTargetEnum] = new ArgEncoder[TodoTargetEnum] {
 
-      override def encode(value: TodoTargetEnum): Value =
+      override def encode(value: TodoTargetEnum): __Value =
         value match {
-          case TodoTargetEnum.COMMIT       => EnumValue("COMMIT")
-          case TodoTargetEnum.ISSUE        => EnumValue("ISSUE")
-          case TodoTargetEnum.MERGEREQUEST => EnumValue("MERGEREQUEST")
-          case TodoTargetEnum.DESIGN       => EnumValue("DESIGN")
-          case TodoTargetEnum.ALERT        => EnumValue("ALERT")
-          case TodoTargetEnum.EPIC         => EnumValue("EPIC")
+          case TodoTargetEnum.COMMIT       => __EnumValue("COMMIT")
+          case TodoTargetEnum.ISSUE        => __EnumValue("ISSUE")
+          case TodoTargetEnum.MERGEREQUEST => __EnumValue("MERGEREQUEST")
+          case TodoTargetEnum.DESIGN       => __EnumValue("DESIGN")
+          case TodoTargetEnum.ALERT        => __EnumValue("ALERT")
+          case TodoTargetEnum.EPIC         => __EnumValue("EPIC")
         }
 
       override def typeName: String = "TodoTargetEnum"
@@ -2176,17 +2401,17 @@ object graphql {
     case object project extends TypeEnum
 
     implicit val decoder: ScalarDecoder[TypeEnum] = {
-      case StringValue("personal") => Right(TypeEnum.personal)
-      case StringValue("project")  => Right(TypeEnum.project)
-      case other                   => Left(DecodingError(s"Can't build TypeEnum from input $other"))
+      case __StringValue("personal") => Right(TypeEnum.personal)
+      case __StringValue("project")  => Right(TypeEnum.project)
+      case other                     => Left(DecodingError(s"Can't build TypeEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[TypeEnum] = new ArgEncoder[TypeEnum] {
 
-      override def encode(value: TypeEnum): Value =
+      override def encode(value: TypeEnum): __Value =
         value match {
-          case TypeEnum.personal => EnumValue("personal")
-          case TypeEnum.project  => EnumValue("project")
+          case TypeEnum.personal => __EnumValue("personal")
+          case TypeEnum.project  => __EnumValue("project")
         }
 
       override def typeName: String = "TypeEnum"
@@ -2202,19 +2427,19 @@ object graphql {
     case object deactivated extends UserState
 
     implicit val decoder: ScalarDecoder[UserState] = {
-      case StringValue("active")      => Right(UserState.active)
-      case StringValue("blocked")     => Right(UserState.blocked)
-      case StringValue("deactivated") => Right(UserState.deactivated)
-      case other                      => Left(DecodingError(s"Can't build UserState from input $other"))
+      case __StringValue("active")      => Right(UserState.active)
+      case __StringValue("blocked")     => Right(UserState.blocked)
+      case __StringValue("deactivated") => Right(UserState.deactivated)
+      case other                        => Left(DecodingError(s"Can't build UserState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[UserState] = new ArgEncoder[UserState] {
 
-      override def encode(value: UserState): Value =
+      override def encode(value: UserState): __Value =
         value match {
-          case UserState.active      => EnumValue("active")
-          case UserState.blocked     => EnumValue("blocked")
-          case UserState.deactivated => EnumValue("deactivated")
+          case UserState.active      => __EnumValue("active")
+          case UserState.blocked     => __EnumValue("blocked")
+          case UserState.deactivated => __EnumValue("deactivated")
         }
 
       override def typeName: String = "UserState"
@@ -2230,19 +2455,19 @@ object graphql {
     case object public extends VisibilityLevelsEnum
 
     implicit val decoder: ScalarDecoder[VisibilityLevelsEnum] = {
-      case StringValue("private")  => Right(VisibilityLevelsEnum.`private`)
-      case StringValue("internal") => Right(VisibilityLevelsEnum.internal)
-      case StringValue("public")   => Right(VisibilityLevelsEnum.public)
-      case other                   => Left(DecodingError(s"Can't build VisibilityLevelsEnum from input $other"))
+      case __StringValue("private")  => Right(VisibilityLevelsEnum.`private`)
+      case __StringValue("internal") => Right(VisibilityLevelsEnum.internal)
+      case __StringValue("public")   => Right(VisibilityLevelsEnum.public)
+      case other                     => Left(DecodingError(s"Can't build VisibilityLevelsEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VisibilityLevelsEnum] = new ArgEncoder[VisibilityLevelsEnum] {
 
-      override def encode(value: VisibilityLevelsEnum): Value =
+      override def encode(value: VisibilityLevelsEnum): __Value =
         value match {
-          case VisibilityLevelsEnum.`private` => EnumValue("private")
-          case VisibilityLevelsEnum.internal  => EnumValue("internal")
-          case VisibilityLevelsEnum.public    => EnumValue("public")
+          case VisibilityLevelsEnum.`private` => __EnumValue("private")
+          case VisibilityLevelsEnum.internal  => __EnumValue("internal")
+          case VisibilityLevelsEnum.public    => __EnumValue("public")
         }
 
       override def typeName: String = "VisibilityLevelsEnum"
@@ -2258,19 +2483,19 @@ object graphql {
     case object public extends VisibilityScopesEnum
 
     implicit val decoder: ScalarDecoder[VisibilityScopesEnum] = {
-      case StringValue("private")  => Right(VisibilityScopesEnum.`private`)
-      case StringValue("internal") => Right(VisibilityScopesEnum.internal)
-      case StringValue("public")   => Right(VisibilityScopesEnum.public)
-      case other                   => Left(DecodingError(s"Can't build VisibilityScopesEnum from input $other"))
+      case __StringValue("private")  => Right(VisibilityScopesEnum.`private`)
+      case __StringValue("internal") => Right(VisibilityScopesEnum.internal)
+      case __StringValue("public")   => Right(VisibilityScopesEnum.public)
+      case other                     => Left(DecodingError(s"Can't build VisibilityScopesEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VisibilityScopesEnum] = new ArgEncoder[VisibilityScopesEnum] {
 
-      override def encode(value: VisibilityScopesEnum): Value =
+      override def encode(value: VisibilityScopesEnum): __Value =
         value match {
-          case VisibilityScopesEnum.`private` => EnumValue("private")
-          case VisibilityScopesEnum.internal  => EnumValue("internal")
-          case VisibilityScopesEnum.public    => EnumValue("public")
+          case VisibilityScopesEnum.`private` => __EnumValue("private")
+          case VisibilityScopesEnum.internal  => __EnumValue("internal")
+          case VisibilityScopesEnum.public    => __EnumValue("public")
         }
 
       override def typeName: String = "VisibilityScopesEnum"
@@ -2288,23 +2513,23 @@ object graphql {
     case object F extends VulnerabilityGrade
 
     implicit val decoder: ScalarDecoder[VulnerabilityGrade] = {
-      case StringValue("A") => Right(VulnerabilityGrade.A)
-      case StringValue("B") => Right(VulnerabilityGrade.B)
-      case StringValue("C") => Right(VulnerabilityGrade.C)
-      case StringValue("D") => Right(VulnerabilityGrade.D)
-      case StringValue("F") => Right(VulnerabilityGrade.F)
-      case other            => Left(DecodingError(s"Can't build VulnerabilityGrade from input $other"))
+      case __StringValue("A") => Right(VulnerabilityGrade.A)
+      case __StringValue("B") => Right(VulnerabilityGrade.B)
+      case __StringValue("C") => Right(VulnerabilityGrade.C)
+      case __StringValue("D") => Right(VulnerabilityGrade.D)
+      case __StringValue("F") => Right(VulnerabilityGrade.F)
+      case other              => Left(DecodingError(s"Can't build VulnerabilityGrade from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VulnerabilityGrade] = new ArgEncoder[VulnerabilityGrade] {
 
-      override def encode(value: VulnerabilityGrade): Value =
+      override def encode(value: VulnerabilityGrade): __Value =
         value match {
-          case VulnerabilityGrade.A => EnumValue("A")
-          case VulnerabilityGrade.B => EnumValue("B")
-          case VulnerabilityGrade.C => EnumValue("C")
-          case VulnerabilityGrade.D => EnumValue("D")
-          case VulnerabilityGrade.F => EnumValue("F")
+          case VulnerabilityGrade.A => __EnumValue("A")
+          case VulnerabilityGrade.B => __EnumValue("B")
+          case VulnerabilityGrade.C => __EnumValue("C")
+          case VulnerabilityGrade.D => __EnumValue("D")
+          case VulnerabilityGrade.F => __EnumValue("F")
         }
 
       override def typeName: String = "VulnerabilityGrade"
@@ -2319,17 +2544,17 @@ object graphql {
     case object CREATED extends VulnerabilityIssueLinkType
 
     implicit val decoder: ScalarDecoder[VulnerabilityIssueLinkType] = {
-      case StringValue("RELATED") => Right(VulnerabilityIssueLinkType.RELATED)
-      case StringValue("CREATED") => Right(VulnerabilityIssueLinkType.CREATED)
-      case other                  => Left(DecodingError(s"Can't build VulnerabilityIssueLinkType from input $other"))
+      case __StringValue("RELATED") => Right(VulnerabilityIssueLinkType.RELATED)
+      case __StringValue("CREATED") => Right(VulnerabilityIssueLinkType.CREATED)
+      case other                    => Left(DecodingError(s"Can't build VulnerabilityIssueLinkType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VulnerabilityIssueLinkType] = new ArgEncoder[VulnerabilityIssueLinkType] {
 
-      override def encode(value: VulnerabilityIssueLinkType): Value =
+      override def encode(value: VulnerabilityIssueLinkType): __Value =
         value match {
-          case VulnerabilityIssueLinkType.RELATED => EnumValue("RELATED")
-          case VulnerabilityIssueLinkType.CREATED => EnumValue("CREATED")
+          case VulnerabilityIssueLinkType.RELATED => __EnumValue("RELATED")
+          case VulnerabilityIssueLinkType.CREATED => __EnumValue("CREATED")
         }
 
       override def typeName: String = "VulnerabilityIssueLinkType"
@@ -2349,27 +2574,27 @@ object graphql {
     case object API_FUZZING extends VulnerabilityReportType
 
     implicit val decoder: ScalarDecoder[VulnerabilityReportType] = {
-      case StringValue("SAST")                => Right(VulnerabilityReportType.SAST)
-      case StringValue("DEPENDENCY_SCANNING") => Right(VulnerabilityReportType.DEPENDENCY_SCANNING)
-      case StringValue("CONTAINER_SCANNING")  => Right(VulnerabilityReportType.CONTAINER_SCANNING)
-      case StringValue("DAST")                => Right(VulnerabilityReportType.DAST)
-      case StringValue("SECRET_DETECTION")    => Right(VulnerabilityReportType.SECRET_DETECTION)
-      case StringValue("COVERAGE_FUZZING")    => Right(VulnerabilityReportType.COVERAGE_FUZZING)
-      case StringValue("API_FUZZING")         => Right(VulnerabilityReportType.API_FUZZING)
-      case other                              => Left(DecodingError(s"Can't build VulnerabilityReportType from input $other"))
+      case __StringValue("SAST")                => Right(VulnerabilityReportType.SAST)
+      case __StringValue("DEPENDENCY_SCANNING") => Right(VulnerabilityReportType.DEPENDENCY_SCANNING)
+      case __StringValue("CONTAINER_SCANNING")  => Right(VulnerabilityReportType.CONTAINER_SCANNING)
+      case __StringValue("DAST")                => Right(VulnerabilityReportType.DAST)
+      case __StringValue("SECRET_DETECTION")    => Right(VulnerabilityReportType.SECRET_DETECTION)
+      case __StringValue("COVERAGE_FUZZING")    => Right(VulnerabilityReportType.COVERAGE_FUZZING)
+      case __StringValue("API_FUZZING")         => Right(VulnerabilityReportType.API_FUZZING)
+      case other                                => Left(DecodingError(s"Can't build VulnerabilityReportType from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VulnerabilityReportType] = new ArgEncoder[VulnerabilityReportType] {
 
-      override def encode(value: VulnerabilityReportType): Value =
+      override def encode(value: VulnerabilityReportType): __Value =
         value match {
-          case VulnerabilityReportType.SAST                => EnumValue("SAST")
-          case VulnerabilityReportType.DEPENDENCY_SCANNING => EnumValue("DEPENDENCY_SCANNING")
-          case VulnerabilityReportType.CONTAINER_SCANNING  => EnumValue("CONTAINER_SCANNING")
-          case VulnerabilityReportType.DAST                => EnumValue("DAST")
-          case VulnerabilityReportType.SECRET_DETECTION    => EnumValue("SECRET_DETECTION")
-          case VulnerabilityReportType.COVERAGE_FUZZING    => EnumValue("COVERAGE_FUZZING")
-          case VulnerabilityReportType.API_FUZZING         => EnumValue("API_FUZZING")
+          case VulnerabilityReportType.SAST                => __EnumValue("SAST")
+          case VulnerabilityReportType.DEPENDENCY_SCANNING => __EnumValue("DEPENDENCY_SCANNING")
+          case VulnerabilityReportType.CONTAINER_SCANNING  => __EnumValue("CONTAINER_SCANNING")
+          case VulnerabilityReportType.DAST                => __EnumValue("DAST")
+          case VulnerabilityReportType.SECRET_DETECTION    => __EnumValue("SECRET_DETECTION")
+          case VulnerabilityReportType.COVERAGE_FUZZING    => __EnumValue("COVERAGE_FUZZING")
+          case VulnerabilityReportType.API_FUZZING         => __EnumValue("API_FUZZING")
         }
 
       override def typeName: String = "VulnerabilityReportType"
@@ -2388,25 +2613,25 @@ object graphql {
     case object CRITICAL extends VulnerabilitySeverity
 
     implicit val decoder: ScalarDecoder[VulnerabilitySeverity] = {
-      case StringValue("INFO")     => Right(VulnerabilitySeverity.INFO)
-      case StringValue("UNKNOWN")  => Right(VulnerabilitySeverity.UNKNOWN)
-      case StringValue("LOW")      => Right(VulnerabilitySeverity.LOW)
-      case StringValue("MEDIUM")   => Right(VulnerabilitySeverity.MEDIUM)
-      case StringValue("HIGH")     => Right(VulnerabilitySeverity.HIGH)
-      case StringValue("CRITICAL") => Right(VulnerabilitySeverity.CRITICAL)
-      case other                   => Left(DecodingError(s"Can't build VulnerabilitySeverity from input $other"))
+      case __StringValue("INFO")     => Right(VulnerabilitySeverity.INFO)
+      case __StringValue("UNKNOWN")  => Right(VulnerabilitySeverity.UNKNOWN)
+      case __StringValue("LOW")      => Right(VulnerabilitySeverity.LOW)
+      case __StringValue("MEDIUM")   => Right(VulnerabilitySeverity.MEDIUM)
+      case __StringValue("HIGH")     => Right(VulnerabilitySeverity.HIGH)
+      case __StringValue("CRITICAL") => Right(VulnerabilitySeverity.CRITICAL)
+      case other                     => Left(DecodingError(s"Can't build VulnerabilitySeverity from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VulnerabilitySeverity] = new ArgEncoder[VulnerabilitySeverity] {
 
-      override def encode(value: VulnerabilitySeverity): Value =
+      override def encode(value: VulnerabilitySeverity): __Value =
         value match {
-          case VulnerabilitySeverity.INFO     => EnumValue("INFO")
-          case VulnerabilitySeverity.UNKNOWN  => EnumValue("UNKNOWN")
-          case VulnerabilitySeverity.LOW      => EnumValue("LOW")
-          case VulnerabilitySeverity.MEDIUM   => EnumValue("MEDIUM")
-          case VulnerabilitySeverity.HIGH     => EnumValue("HIGH")
-          case VulnerabilitySeverity.CRITICAL => EnumValue("CRITICAL")
+          case VulnerabilitySeverity.INFO     => __EnumValue("INFO")
+          case VulnerabilitySeverity.UNKNOWN  => __EnumValue("UNKNOWN")
+          case VulnerabilitySeverity.LOW      => __EnumValue("LOW")
+          case VulnerabilitySeverity.MEDIUM   => __EnumValue("MEDIUM")
+          case VulnerabilitySeverity.HIGH     => __EnumValue("HIGH")
+          case VulnerabilitySeverity.CRITICAL => __EnumValue("CRITICAL")
         }
 
       override def typeName: String = "VulnerabilitySeverity"
@@ -2429,33 +2654,33 @@ object graphql {
     case object state_asc extends VulnerabilitySort
 
     implicit val decoder: ScalarDecoder[VulnerabilitySort] = {
-      case StringValue("severity_desc")    => Right(VulnerabilitySort.severity_desc)
-      case StringValue("severity_asc")     => Right(VulnerabilitySort.severity_asc)
-      case StringValue("title_desc")       => Right(VulnerabilitySort.title_desc)
-      case StringValue("title_asc")        => Right(VulnerabilitySort.title_asc)
-      case StringValue("detected_desc")    => Right(VulnerabilitySort.detected_desc)
-      case StringValue("detected_asc")     => Right(VulnerabilitySort.detected_asc)
-      case StringValue("report_type_desc") => Right(VulnerabilitySort.report_type_desc)
-      case StringValue("report_type_asc")  => Right(VulnerabilitySort.report_type_asc)
-      case StringValue("state_desc")       => Right(VulnerabilitySort.state_desc)
-      case StringValue("state_asc")        => Right(VulnerabilitySort.state_asc)
-      case other                           => Left(DecodingError(s"Can't build VulnerabilitySort from input $other"))
+      case __StringValue("severity_desc")    => Right(VulnerabilitySort.severity_desc)
+      case __StringValue("severity_asc")     => Right(VulnerabilitySort.severity_asc)
+      case __StringValue("title_desc")       => Right(VulnerabilitySort.title_desc)
+      case __StringValue("title_asc")        => Right(VulnerabilitySort.title_asc)
+      case __StringValue("detected_desc")    => Right(VulnerabilitySort.detected_desc)
+      case __StringValue("detected_asc")     => Right(VulnerabilitySort.detected_asc)
+      case __StringValue("report_type_desc") => Right(VulnerabilitySort.report_type_desc)
+      case __StringValue("report_type_asc")  => Right(VulnerabilitySort.report_type_asc)
+      case __StringValue("state_desc")       => Right(VulnerabilitySort.state_desc)
+      case __StringValue("state_asc")        => Right(VulnerabilitySort.state_asc)
+      case other                             => Left(DecodingError(s"Can't build VulnerabilitySort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VulnerabilitySort] = new ArgEncoder[VulnerabilitySort] {
 
-      override def encode(value: VulnerabilitySort): Value =
+      override def encode(value: VulnerabilitySort): __Value =
         value match {
-          case VulnerabilitySort.severity_desc    => EnumValue("severity_desc")
-          case VulnerabilitySort.severity_asc     => EnumValue("severity_asc")
-          case VulnerabilitySort.title_desc       => EnumValue("title_desc")
-          case VulnerabilitySort.title_asc        => EnumValue("title_asc")
-          case VulnerabilitySort.detected_desc    => EnumValue("detected_desc")
-          case VulnerabilitySort.detected_asc     => EnumValue("detected_asc")
-          case VulnerabilitySort.report_type_desc => EnumValue("report_type_desc")
-          case VulnerabilitySort.report_type_asc  => EnumValue("report_type_asc")
-          case VulnerabilitySort.state_desc       => EnumValue("state_desc")
-          case VulnerabilitySort.state_asc        => EnumValue("state_asc")
+          case VulnerabilitySort.severity_desc    => __EnumValue("severity_desc")
+          case VulnerabilitySort.severity_asc     => __EnumValue("severity_asc")
+          case VulnerabilitySort.title_desc       => __EnumValue("title_desc")
+          case VulnerabilitySort.title_asc        => __EnumValue("title_asc")
+          case VulnerabilitySort.detected_desc    => __EnumValue("detected_desc")
+          case VulnerabilitySort.detected_asc     => __EnumValue("detected_asc")
+          case VulnerabilitySort.report_type_desc => __EnumValue("report_type_desc")
+          case VulnerabilitySort.report_type_asc  => __EnumValue("report_type_asc")
+          case VulnerabilitySort.state_desc       => __EnumValue("state_desc")
+          case VulnerabilitySort.state_asc        => __EnumValue("state_asc")
         }
 
       override def typeName: String = "VulnerabilitySort"
@@ -2472,21 +2697,21 @@ object graphql {
     case object DISMISSED extends VulnerabilityState
 
     implicit val decoder: ScalarDecoder[VulnerabilityState] = {
-      case StringValue("DETECTED")  => Right(VulnerabilityState.DETECTED)
-      case StringValue("CONFIRMED") => Right(VulnerabilityState.CONFIRMED)
-      case StringValue("RESOLVED")  => Right(VulnerabilityState.RESOLVED)
-      case StringValue("DISMISSED") => Right(VulnerabilityState.DISMISSED)
-      case other                    => Left(DecodingError(s"Can't build VulnerabilityState from input $other"))
+      case __StringValue("DETECTED")  => Right(VulnerabilityState.DETECTED)
+      case __StringValue("CONFIRMED") => Right(VulnerabilityState.CONFIRMED)
+      case __StringValue("RESOLVED")  => Right(VulnerabilityState.RESOLVED)
+      case __StringValue("DISMISSED") => Right(VulnerabilityState.DISMISSED)
+      case other                      => Left(DecodingError(s"Can't build VulnerabilityState from input $other"))
     }
 
     implicit val encoder: ArgEncoder[VulnerabilityState] = new ArgEncoder[VulnerabilityState] {
 
-      override def encode(value: VulnerabilityState): Value =
+      override def encode(value: VulnerabilityState): __Value =
         value match {
-          case VulnerabilityState.DETECTED  => EnumValue("DETECTED")
-          case VulnerabilityState.CONFIRMED => EnumValue("CONFIRMED")
-          case VulnerabilityState.RESOLVED  => EnumValue("RESOLVED")
-          case VulnerabilityState.DISMISSED => EnumValue("DISMISSED")
+          case VulnerabilityState.DETECTED  => __EnumValue("DETECTED")
+          case VulnerabilityState.CONFIRMED => __EnumValue("CONFIRMED")
+          case VulnerabilityState.RESOLVED  => __EnumValue("RESOLVED")
+          case VulnerabilityState.DISMISSED => __EnumValue("DISMISSED")
         }
 
       override def typeName: String = "VulnerabilityState"
@@ -3281,13 +3506,13 @@ object graphql {
   object Board {
 
     /**
-      * The board assignee.
+      * The board assignee
       */
     def assignee[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[Board, Option[A]] =
       Field("assignee", OptionOf(Obj(innerSelection)))
 
     /**
-      * Epics associated with board issues.
+      * Epics associated with board issues
       */
     def epics[A](
       issueFilters: Option[BoardIssueInput] = None,
@@ -3311,12 +3536,12 @@ object graphql {
       )
 
     /**
-      * Whether or not backlog list is hidden.
+      * Whether or not backlog list is hidden
       */
     def hideBacklogList: SelectionBuilder[Board, Option[Boolean]] = Field("hideBacklogList", OptionOf(Scalar()))
 
     /**
-      * Whether or not closed list is hidden.
+      * Whether or not closed list is hidden
       */
     def hideClosedList: SelectionBuilder[Board, Option[Boolean]] = Field("hideClosedList", OptionOf(Scalar()))
 
@@ -3369,7 +3594,7 @@ object graphql {
       )
 
     /**
-      * The board milestone.
+      * The board milestone
       */
     def milestone[A](innerSelection: SelectionBuilder[Milestone, A]): SelectionBuilder[Board, Option[A]] =
       Field("milestone", OptionOf(Obj(innerSelection)))
@@ -3380,7 +3605,7 @@ object graphql {
     def name: SelectionBuilder[Board, Option[String]] = Field("name", OptionOf(Scalar()))
 
     /**
-      * Weight of the board.
+      * Weight of the board
       */
     def weight: SelectionBuilder[Board, Option[Int]] = Field("weight", OptionOf(Scalar()))
   }
@@ -4139,6 +4364,23 @@ object graphql {
   object CiJob {
 
     /**
+      * Artifacts generated by the job
+      */
+    def artifacts[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[CiJobArtifactConnection, A]
+    ): SelectionBuilder[CiJob, Option[A]] =
+      Field(
+        "artifacts",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
+
+    /**
       * Detailed status of the job
       */
     def detailedStatus[A](innerSelection: SelectionBuilder[DetailedStatus, A]): SelectionBuilder[CiJob, Option[A]] =
@@ -4167,9 +4409,69 @@ object graphql {
       )
 
     /**
+      * Pipeline the job belongs to
+      */
+    def pipeline[A](innerSelection: SelectionBuilder[Pipeline, A]): SelectionBuilder[CiJob, A] = Field("pipeline", Obj(innerSelection))
+
+    /**
       * Schedule for the build
       */
     def scheduledAt: SelectionBuilder[CiJob, Option[Time]] = Field("scheduledAt", OptionOf(Scalar()))
+  }
+
+  type CiJobArtifact
+
+  object CiJobArtifact {
+
+    /**
+      * URL for downloading the artifact's file
+      */
+    def downloadPath: SelectionBuilder[CiJobArtifact, Option[String]] = Field("downloadPath", OptionOf(Scalar()))
+
+    /**
+      * File type of the artifact
+      */
+    def fileType: SelectionBuilder[CiJobArtifact, Option[JobArtifactFileType]] = Field("fileType", OptionOf(Scalar()))
+  }
+
+  type CiJobArtifactConnection
+
+  object CiJobArtifactConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[CiJobArtifactEdge, A]
+    ): SelectionBuilder[CiJobArtifactConnection, Option[List[Option[A]]]] = Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[CiJobArtifact, A]): SelectionBuilder[CiJobArtifactConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[CiJobArtifactConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type CiJobArtifactEdge
+
+  object CiJobArtifactEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[CiJobArtifactEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[CiJobArtifact, A]): SelectionBuilder[CiJobArtifactEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
   }
 
   type CiJobConnection
@@ -4629,23 +4931,6 @@ object graphql {
     def id: SelectionBuilder[Commit, String] = Field("id", Scalar())
 
     /**
-      * Latest pipeline of the commit. Deprecated in 12.5: Use `pipelines`
-      */
-    @deprecated("Use `pipelines`. Deprecated in 12.5", "")
-    def latestPipeline[A](
-      status: Option[PipelineStatusEnum] = None,
-      ref: Option[String] = None,
-      sha: Option[String] = None
-    )(
-      innerSelection: SelectionBuilder[Pipeline, A]
-    ): SelectionBuilder[Commit, Option[A]] =
-      Field(
-        "latestPipeline",
-        OptionOf(Obj(innerSelection)),
-        arguments = List(Argument("status", status), Argument("ref", ref), Argument("sha", sha))
-      )
-
-    /**
       * Raw commit message
       */
     def message: SelectionBuilder[Commit, Option[String]] = Field("message", OptionOf(Scalar()))
@@ -4733,6 +5018,21 @@ object graphql {
   type ComplianceFramework
 
   object ComplianceFramework {
+
+    /**
+      * Hexadecimal representation of compliance framework's label color
+      */
+    def color: SelectionBuilder[ComplianceFramework, String] = Field("color", Scalar())
+
+    /**
+      * Description of the compliance framework
+      */
+    def description: SelectionBuilder[ComplianceFramework, String] = Field("description", Scalar())
+
+    /**
+      * Compliance framework ID
+      */
+    def id: SelectionBuilder[ComplianceFramework, String] = Field("id", Scalar())
 
     /**
       * Name of the compliance framework
@@ -4874,6 +5174,12 @@ object graphql {
     def createdAt: SelectionBuilder[ContainerRepository, Time] = Field("createdAt", Scalar())
 
     /**
+      * The tags cleanup status for the container repository.
+      */
+    def expirationPolicyCleanupStatus: SelectionBuilder[ContainerRepository, Option[ContainerRepositoryCleanupStatus]] =
+      Field("expirationPolicyCleanupStatus", OptionOf(Scalar()))
+
+    /**
       * Timestamp when the cleanup done by the expiration policy was started on the container repository.
       */
     def expirationPolicyStartedAt: SelectionBuilder[ContainerRepository, Option[Time]] =
@@ -4955,6 +5261,12 @@ object graphql {
       * Timestamp when the container repository was created.
       */
     def createdAt: SelectionBuilder[ContainerRepositoryDetails, Time] = Field("createdAt", Scalar())
+
+    /**
+      * The tags cleanup status for the container repository.
+      */
+    def expirationPolicyCleanupStatus: SelectionBuilder[ContainerRepositoryDetails, Option[ContainerRepositoryCleanupStatus]] =
+      Field("expirationPolicyCleanupStatus", OptionOf(Scalar()))
 
     /**
       * Timestamp when the cleanup done by the expiration policy was started on the container repository.
@@ -5242,6 +5554,30 @@ object graphql {
     def errors: SelectionBuilder[CreateClusterAgentPayload, List[String]] = Field("errors", ListOf(Scalar()))
   }
 
+  type CreateDevopsAdoptionSegmentPayload
+
+  object CreateDevopsAdoptionSegmentPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[CreateDevopsAdoptionSegmentPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[CreateDevopsAdoptionSegmentPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The segment after mutation
+      */
+    def segment[A](
+      innerSelection: SelectionBuilder[DevopsAdoptionSegment, A]
+    ): SelectionBuilder[CreateDevopsAdoptionSegmentPayload, Option[A]] = Field("segment", OptionOf(Obj(innerSelection)))
+
+  }
+
   type CreateDiffNotePayload
 
   object CreateDiffNotePayload {
@@ -5466,15 +5802,15 @@ object graphql {
     def editPath: SelectionBuilder[DastScannerProfile, Option[String]] = Field("editPath", OptionOf(Scalar()))
 
     /**
-      * ID of the DAST scanner profile
+      * ID of the DAST scanner profile. Deprecated in 13.6: Use `id`
       */
+    @deprecated("Use `id`. Deprecated in 13.6", "")
     def globalId: SelectionBuilder[DastScannerProfile, DastScannerProfileID] = Field("globalId", Scalar())
 
     /**
-      * ID of the DAST scanner profile. Deprecated in 13.4: Use `global_id`
+      * ID of the DAST scanner profile
       */
-    @deprecated("Use `global_id`. Deprecated in 13.4", "")
-    def id: SelectionBuilder[DastScannerProfile, String] = Field("id", Scalar())
+    def id: SelectionBuilder[DastScannerProfile, DastScannerProfileID] = Field("id", Scalar())
 
     /**
       * Name of the DAST scanner profile
@@ -5549,15 +5885,15 @@ object graphql {
     def errors: SelectionBuilder[DastScannerProfileCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
 
     /**
-      * ID of the scanner profile.
+      * ID of the scanner profile.. Deprecated in 13.6: Use `id`
       */
+    @deprecated("Use `id`. Deprecated in 13.6", "")
     def globalId: SelectionBuilder[DastScannerProfileCreatePayload, Option[DastScannerProfileID]] = Field("globalId", OptionOf(Scalar()))
 
     /**
-      * ID of the scanner profile.. Deprecated in 13.4: Use `global_id`
+      * ID of the scanner profile.
       */
-    @deprecated("Use `global_id`. Deprecated in 13.4", "")
-    def id: SelectionBuilder[DastScannerProfileCreatePayload, Option[String]] = Field("id", OptionOf(Scalar()))
+    def id: SelectionBuilder[DastScannerProfileCreatePayload, Option[DastScannerProfileID]] = Field("id", OptionOf(Scalar()))
   }
 
   type DastScannerProfileDeletePayload
@@ -5624,6 +5960,11 @@ object graphql {
       * ID of the site profile
       */
     def id: SelectionBuilder[DastSiteProfile, DastSiteProfileID] = Field("id", Scalar())
+
+    /**
+      * Normalized URL of the target to be scanned
+      */
+    def normalizedTargetUrl: SelectionBuilder[DastSiteProfile, Option[String]] = Field("normalizedTargetUrl", OptionOf(Scalar()))
 
     /**
       * The name of the site profile
@@ -5792,12 +6133,12 @@ object graphql {
   object DastSiteValidation {
 
     /**
-      * ID of the site validation
+      * Global ID of the site validation
       */
     def id: SelectionBuilder[DastSiteValidation, DastSiteValidationID] = Field("id", Scalar())
 
     /**
-      * The status of the validation
+      * Status of the site validation
       */
     def status: SelectionBuilder[DastSiteValidation, DastSiteProfileValidationStatusEnum] = Field("status", Scalar())
   }
@@ -5841,6 +6182,22 @@ object graphql {
       * Errors encountered during execution of the mutation.
       */
     def errors: SelectionBuilder[DeleteAnnotationPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type DeleteDevopsAdoptionSegmentPayload
+
+  object DeleteDevopsAdoptionSegmentPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[DeleteDevopsAdoptionSegmentPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[DeleteDevopsAdoptionSegmentPayload, List[String]] = Field("errors", ListOf(Scalar()))
   }
 
   type DeleteJobsResponse
@@ -6635,24 +6992,19 @@ object graphql {
     /**
       * Assigned groups
       */
-    def groups[A](
-      after: Option[String] = None,
-      before: Option[String] = None,
-      first: Option[Int] = None,
-      last: Option[Int] = None
-    )(
-      innerSelection: SelectionBuilder[GroupConnection, A]
-    ): SelectionBuilder[DevopsAdoptionSegment, Option[A]] =
-      Field(
-        "groups",
-        OptionOf(Obj(innerSelection)),
-        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
-      )
+    def groups[A](innerSelection: SelectionBuilder[Group, A]): SelectionBuilder[DevopsAdoptionSegment, Option[List[A]]] =
+      Field("groups", OptionOf(ListOf(Obj(innerSelection))))
 
     /**
       * ID of the segment
       */
     def id: SelectionBuilder[DevopsAdoptionSegment, String] = Field("id", Scalar())
+
+    /**
+      * The latest adoption metrics for the segment
+      */
+    def latestSnapshot[A](innerSelection: SelectionBuilder[DevopsAdoptionSnapshot, A]): SelectionBuilder[DevopsAdoptionSegment, Option[A]] =
+      Field("latestSnapshot", OptionOf(Obj(innerSelection)))
 
     /**
       * Name of the segment
@@ -6701,6 +7053,61 @@ object graphql {
       */
     def node[A](innerSelection: SelectionBuilder[DevopsAdoptionSegment, A]): SelectionBuilder[DevopsAdoptionSegmentEdge, Option[A]] =
       Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type DevopsAdoptionSnapshot
+
+  object DevopsAdoptionSnapshot {
+
+    /**
+      * At least one deployment succeeded
+      */
+    def deploySucceeded: SelectionBuilder[DevopsAdoptionSnapshot, Boolean] = Field("deploySucceeded", Scalar())
+
+    /**
+      * The end time for the snapshot where the data points were collected
+      */
+    def endTime: SelectionBuilder[DevopsAdoptionSnapshot, Time] = Field("endTime", Scalar())
+
+    /**
+      * At least one issue was opened
+      */
+    def issueOpened: SelectionBuilder[DevopsAdoptionSnapshot, Boolean] = Field("issueOpened", Scalar())
+
+    /**
+      * At least one merge request was approved
+      */
+    def mergeRequestApproved: SelectionBuilder[DevopsAdoptionSnapshot, Boolean] = Field("mergeRequestApproved", Scalar())
+
+    /**
+      * At least one merge request was opened
+      */
+    def mergeRequestOpened: SelectionBuilder[DevopsAdoptionSnapshot, Boolean] = Field("mergeRequestOpened", Scalar())
+
+    /**
+      * At least one pipeline succeeded
+      */
+    def pipelineSucceeded: SelectionBuilder[DevopsAdoptionSnapshot, Boolean] = Field("pipelineSucceeded", Scalar())
+
+    /**
+      * The time the snapshot was recorded
+      */
+    def recordedAt: SelectionBuilder[DevopsAdoptionSnapshot, Time] = Field("recordedAt", Scalar())
+
+    /**
+      * At least one runner was used
+      */
+    def runnerConfigured: SelectionBuilder[DevopsAdoptionSnapshot, Boolean] = Field("runnerConfigured", Scalar())
+
+    /**
+      * At least one security scan succeeded
+      */
+    def securityScanSucceeded: SelectionBuilder[DevopsAdoptionSnapshot, Boolean] = Field("securityScanSucceeded", Scalar())
+
+    /**
+      * The start time for the snapshot where the data points were collected
+      */
+    def startTime: SelectionBuilder[DevopsAdoptionSnapshot, Time] = Field("startTime", Scalar())
   }
 
   type DiffPosition
@@ -7573,12 +7980,12 @@ object graphql {
     def author[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[EpicIssue, A] = Field("author", Obj(innerSelection))
 
     /**
-      * Indicates the issue is blocked
+      * Indicates the issue is blocked.
       */
     def blocked: SelectionBuilder[EpicIssue, Boolean] = Field("blocked", Scalar())
 
     /**
-      * Count of issues blocking this issue
+      * Count of issues blocking this issue.
       */
     def blockedByCount: SelectionBuilder[EpicIssue, Option[Int]] = Field("blockedByCount", OptionOf(Scalar()))
 
@@ -7638,13 +8045,6 @@ object graphql {
       Field("designCollection", OptionOf(Obj(innerSelection)))
 
     /**
-      * The designs associated with this issue. Deprecated in 12.2: Use `designCollection`
-      */
-    @deprecated("Use `designCollection`. Deprecated in 12.2", "")
-    def designs[A](innerSelection: SelectionBuilder[DesignCollection, A]): SelectionBuilder[EpicIssue, Option[A]] =
-      Field("designs", OptionOf(Obj(innerSelection)))
-
-    /**
       * Indicates discussion is locked on the issue
       */
     def discussionLocked: SelectionBuilder[EpicIssue, Boolean] = Field("discussionLocked", Scalar())
@@ -7677,12 +8077,12 @@ object graphql {
     def dueDate: SelectionBuilder[EpicIssue, Option[Time]] = Field("dueDate", OptionOf(Scalar()))
 
     /**
-      * Indicates if a project has email notifications disabled
+      * Indicates if a project has email notifications disabled: `true` if email notifications are disabled
       */
     def emailsDisabled: SelectionBuilder[EpicIssue, Boolean] = Field("emailsDisabled", Scalar())
 
     /**
-      * Epic to which this issue belongs
+      * Epic to which this issue belongs.
       */
     def epic[A](innerSelection: SelectionBuilder[Epic, A]): SelectionBuilder[EpicIssue, Option[A]] =
       Field("epic", OptionOf(Obj(innerSelection)))
@@ -7718,7 +8118,7 @@ object graphql {
     def iid: SelectionBuilder[EpicIssue, String] = Field("iid", Scalar())
 
     /**
-      * Iteration of the issue
+      * Iteration of the issue.
       */
     def iteration[A](innerSelection: SelectionBuilder[Iteration, A]): SelectionBuilder[EpicIssue, Option[A]] =
       Field("iteration", OptionOf(Obj(innerSelection)))
@@ -7739,6 +8139,12 @@ object graphql {
         OptionOf(Obj(innerSelection)),
         arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
+
+    /**
+      * Metric images associated to the issue.
+      */
+    def metricImages[A](innerSelection: SelectionBuilder[MetricImage, A]): SelectionBuilder[EpicIssue, Option[List[A]]] =
+      Field("metricImages", OptionOf(ListOf(Obj(innerSelection))))
 
     /**
       * Milestone of the issue
@@ -7823,7 +8229,7 @@ object graphql {
     def state: SelectionBuilder[EpicIssue, IssueState] = Field("state", Scalar())
 
     /**
-      * Indicates whether an issue is published to the status page
+      * Indicates whether an issue is published to the status page.
       */
     def statusPagePublishedIncident: SelectionBuilder[EpicIssue, Option[Boolean]] = Field("statusPagePublishedIncident", OptionOf(Scalar()))
 
@@ -7906,7 +8312,7 @@ object graphql {
     def webUrl: SelectionBuilder[EpicIssue, String] = Field("webUrl", Scalar())
 
     /**
-      * Weight of the issue
+      * Weight of the issue.
       */
     def weight: SelectionBuilder[EpicIssue, Option[Int]] = Field("weight", OptionOf(Scalar()))
   }
@@ -8216,12 +8622,6 @@ object graphql {
     def id: SelectionBuilder[GrafanaIntegration, String] = Field("id", Scalar())
 
     /**
-      * API token for the Grafana integration. Deprecated in 12.7: Plain text token has been masked for security reasons
-      */
-    @deprecated("Plain text token has been masked for security reasons. Deprecated in 12.7", "")
-    def token: SelectionBuilder[GrafanaIntegration, String] = Field("token", Scalar())
-
-    /**
       * Timestamp of the issue's last activity
       */
     def updatedAt: SelectionBuilder[GrafanaIntegration, Time] = Field("updatedAt", Scalar())
@@ -8278,7 +8678,7 @@ object graphql {
       )
 
     /**
-      * Represents the code coverage activity for this group. Available only when feature flag `group_coverage_data_report_graph` is enabled
+      * Represents the code coverage activity for this group
       */
     def codeCoverageActivities[A](
       startDate: Date,
@@ -8302,7 +8702,7 @@ object graphql {
       )
 
     /**
-      * Container repositories of the project
+      * Container repositories of the group
       */
     def containerRepositories[A](
       name: Option[String] = None,
@@ -8324,6 +8724,11 @@ object graphql {
           Argument("last", last)
         )
       )
+
+    /**
+      * Number of container repositories in the group
+      */
+    def containerRepositoriesCount: SelectionBuilder[Group, Int] = Field("containerRepositoriesCount", Scalar())
 
     /**
       * Includes at least one project where the repository size exceeds the limit
@@ -8453,6 +8858,7 @@ object graphql {
       */
     def groupMembers[A](
       search: Option[String] = None,
+      relations: Option[List[GroupMemberRelation]] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -8465,6 +8871,7 @@ object graphql {
         OptionOf(Obj(innerSelection)),
         arguments = List(
           Argument("search", search),
+          Argument("relations", relations),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -8794,6 +9201,12 @@ object graphql {
     def shareWithGroupLock: SelectionBuilder[Group, Option[Boolean]] = Field("shareWithGroupLock", OptionOf(Scalar()))
 
     /**
+      * Group statistics
+      */
+    def stats[A](innerSelection: SelectionBuilder[GroupStats, A]): SelectionBuilder[Group, Option[A]] =
+      Field("stats", OptionOf(Obj(innerSelection)))
+
+    /**
       * Total storage limit of the root namespace in bytes
       */
     def storageSizeLimit: SelectionBuilder[Group, Option[Double]] = Field("storageSizeLimit", OptionOf(Scalar()))
@@ -9012,45 +9425,6 @@ object graphql {
     def webUrl: SelectionBuilder[Group, String] = Field("webUrl", Scalar())
   }
 
-  type GroupConnection
-
-  object GroupConnection {
-
-    /**
-      * A list of edges.
-      */
-    def edges[A](innerSelection: SelectionBuilder[GroupEdge, A]): SelectionBuilder[GroupConnection, Option[List[Option[A]]]] =
-      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
-
-    /**
-      * A list of nodes.
-      */
-    def nodes[A](innerSelection: SelectionBuilder[Group, A]): SelectionBuilder[GroupConnection, Option[List[Option[A]]]] =
-      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
-
-    /**
-      * Information to aid in pagination.
-      */
-    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[GroupConnection, A] =
-      Field("pageInfo", Obj(innerSelection))
-  }
-
-  type GroupEdge
-
-  object GroupEdge {
-
-    /**
-      * A cursor for use in pagination.
-      */
-    def cursor: SelectionBuilder[GroupEdge, String] = Field("cursor", Scalar())
-
-    /**
-      * The item at the end of the edge.
-      */
-    def node[A](innerSelection: SelectionBuilder[Group, A]): SelectionBuilder[GroupEdge, Option[A]] =
-      Field("node", OptionOf(Obj(innerSelection)))
-  }
-
   type GroupMember
 
   object GroupMember {
@@ -9154,6 +9528,32 @@ object graphql {
     def readGroup: SelectionBuilder[GroupPermissions, Boolean] = Field("readGroup", Scalar())
   }
 
+  type GroupReleaseStats
+
+  object GroupReleaseStats {
+
+    /**
+      * Total number of releases in all descendant projects of the group. Will always return `null` if `group_level_release_statistics` feature flag is disabled
+      */
+    def releasesCount: SelectionBuilder[GroupReleaseStats, Option[Int]] = Field("releasesCount", OptionOf(Scalar()))
+
+    /**
+      * Percentage of the group's descendant projects that have at least one release. Will always return `null` if `group_level_release_statistics` feature flag is disabled
+      */
+    def releasesPercentage: SelectionBuilder[GroupReleaseStats, Option[Int]] = Field("releasesPercentage", OptionOf(Scalar()))
+  }
+
+  type GroupStats
+
+  object GroupStats {
+
+    /**
+      * Statistics related to releases within the group
+      */
+    def releaseStats[A](innerSelection: SelectionBuilder[GroupReleaseStats, A]): SelectionBuilder[GroupStats, Option[A]] =
+      Field("releaseStats", OptionOf(Obj(innerSelection)))
+  }
+
   type HttpIntegrationCreatePayload
 
   object HttpIntegrationCreatePayload {
@@ -9243,6 +9643,76 @@ object graphql {
     def integration[A](
       innerSelection: SelectionBuilder[AlertManagementHttpIntegration, A]
     ): SelectionBuilder[HttpIntegrationUpdatePayload, Option[A]] = Field("integration", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type IncidentManagementOncallSchedule
+
+  object IncidentManagementOncallSchedule {
+
+    /**
+      * Description of the on-call schedule
+      */
+    def description: SelectionBuilder[IncidentManagementOncallSchedule, Option[String]] = Field("description", OptionOf(Scalar()))
+
+    /**
+      * Internal ID of the on-call schedule
+      */
+    def iid: SelectionBuilder[IncidentManagementOncallSchedule, String] = Field("iid", Scalar())
+
+    /**
+      * Name of the on-call schedule
+      */
+    def name: SelectionBuilder[IncidentManagementOncallSchedule, String] = Field("name", Scalar())
+
+    /**
+      * Time zone of the on-call schedule
+      */
+    def timezone: SelectionBuilder[IncidentManagementOncallSchedule, String] = Field("timezone", Scalar())
+  }
+
+  type IncidentManagementOncallScheduleConnection
+
+  object IncidentManagementOncallScheduleConnection {
+
+    /**
+      * A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[IncidentManagementOncallScheduleEdge, A]
+    ): SelectionBuilder[IncidentManagementOncallScheduleConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[IncidentManagementOncallSchedule, A]
+    ): SelectionBuilder[IncidentManagementOncallScheduleConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /**
+      * Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[IncidentManagementOncallScheduleConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type IncidentManagementOncallScheduleEdge
+
+  object IncidentManagementOncallScheduleEdge {
+
+    /**
+      * A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[IncidentManagementOncallScheduleEdge, String] = Field("cursor", Scalar())
+
+    /**
+      * The item at the end of the edge.
+      */
+    def node[A](
+      innerSelection: SelectionBuilder[IncidentManagementOncallSchedule, A]
+    ): SelectionBuilder[IncidentManagementOncallScheduleEdge, Option[A]] = Field("node", OptionOf(Obj(innerSelection)))
 
   }
 
@@ -9415,12 +9885,12 @@ object graphql {
     def author[A](innerSelection: SelectionBuilder[User, A]): SelectionBuilder[Issue, A] = Field("author", Obj(innerSelection))
 
     /**
-      * Indicates the issue is blocked
+      * Indicates the issue is blocked.
       */
     def blocked: SelectionBuilder[Issue, Boolean] = Field("blocked", Scalar())
 
     /**
-      * Count of issues blocking this issue
+      * Count of issues blocking this issue.
       */
     def blockedByCount: SelectionBuilder[Issue, Option[Int]] = Field("blockedByCount", OptionOf(Scalar()))
 
@@ -9480,13 +9950,6 @@ object graphql {
       Field("designCollection", OptionOf(Obj(innerSelection)))
 
     /**
-      * The designs associated with this issue. Deprecated in 12.2: Use `designCollection`
-      */
-    @deprecated("Use `designCollection`. Deprecated in 12.2", "")
-    def designs[A](innerSelection: SelectionBuilder[DesignCollection, A]): SelectionBuilder[Issue, Option[A]] =
-      Field("designs", OptionOf(Obj(innerSelection)))
-
-    /**
       * Indicates discussion is locked on the issue
       */
     def discussionLocked: SelectionBuilder[Issue, Boolean] = Field("discussionLocked", Scalar())
@@ -9519,12 +9982,12 @@ object graphql {
     def dueDate: SelectionBuilder[Issue, Option[Time]] = Field("dueDate", OptionOf(Scalar()))
 
     /**
-      * Indicates if a project has email notifications disabled
+      * Indicates if a project has email notifications disabled: `true` if email notifications are disabled
       */
     def emailsDisabled: SelectionBuilder[Issue, Boolean] = Field("emailsDisabled", Scalar())
 
     /**
-      * Epic to which this issue belongs
+      * Epic to which this issue belongs.
       */
     def epic[A](innerSelection: SelectionBuilder[Epic, A]): SelectionBuilder[Issue, Option[A]] =
       Field("epic", OptionOf(Obj(innerSelection)))
@@ -9555,7 +10018,7 @@ object graphql {
     def iid: SelectionBuilder[Issue, String] = Field("iid", Scalar())
 
     /**
-      * Iteration of the issue
+      * Iteration of the issue.
       */
     def iteration[A](innerSelection: SelectionBuilder[Iteration, A]): SelectionBuilder[Issue, Option[A]] =
       Field("iteration", OptionOf(Obj(innerSelection)))
@@ -9576,6 +10039,12 @@ object graphql {
         OptionOf(Obj(innerSelection)),
         arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
+
+    /**
+      * Metric images associated to the issue.
+      */
+    def metricImages[A](innerSelection: SelectionBuilder[MetricImage, A]): SelectionBuilder[Issue, Option[List[A]]] =
+      Field("metricImages", OptionOf(ListOf(Obj(innerSelection))))
 
     /**
       * Milestone of the issue
@@ -9655,7 +10124,7 @@ object graphql {
     def state: SelectionBuilder[Issue, IssueState] = Field("state", Scalar())
 
     /**
-      * Indicates whether an issue is published to the status page
+      * Indicates whether an issue is published to the status page.
       */
     def statusPagePublishedIncident: SelectionBuilder[Issue, Option[Boolean]] = Field("statusPagePublishedIncident", OptionOf(Scalar()))
 
@@ -9738,7 +10207,7 @@ object graphql {
     def webUrl: SelectionBuilder[Issue, String] = Field("webUrl", Scalar())
 
     /**
-      * Weight of the issue
+      * Weight of the issue.
       */
     def weight: SelectionBuilder[Issue, Option[Int]] = Field("weight", OptionOf(Scalar()))
   }
@@ -10091,12 +10560,6 @@ object graphql {
   type Iteration
 
   object Iteration {
-
-    /**
-      * Daily scope and completed totals for burnup charts
-      */
-    def burnupTimeSeries[A](innerSelection: SelectionBuilder[BurnupChartDailyTotals, A]): SelectionBuilder[Iteration, Option[List[A]]] =
-      Field("burnupTimeSeries", OptionOf(ListOf(Obj(innerSelection))))
 
     /**
       * Timestamp of iteration creation
@@ -10869,12 +11332,6 @@ object graphql {
       )
 
     /**
-      * Default merge commit message of the merge request. Deprecated in 11.8: Use `defaultMergeCommitMessage`
-      */
-    @deprecated("Use `defaultMergeCommitMessage`. Deprecated in 11.8", "")
-    def mergeCommitMessage: SelectionBuilder[MergeRequest, Option[String]] = Field("mergeCommitMessage", OptionOf(Scalar()))
-
-    /**
       * SHA of the merge request commit (set once merged)
       */
     def mergeCommitSha: SelectionBuilder[MergeRequest, Option[String]] = Field("mergeCommitSha", OptionOf(Scalar()))
@@ -11024,6 +11481,11 @@ object graphql {
     def sourceBranchExists: SelectionBuilder[MergeRequest, Boolean] = Field("sourceBranchExists", Scalar())
 
     /**
+      * Indicates if the source branch is protected
+      */
+    def sourceBranchProtected: SelectionBuilder[MergeRequest, Boolean] = Field("sourceBranchProtected", Scalar())
+
+    /**
       * Source project of the merge request
       */
     def sourceProject[A](innerSelection: SelectionBuilder[Project, A]): SelectionBuilder[MergeRequest, Option[A]] =
@@ -11154,6 +11616,11 @@ object graphql {
       */
     def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[MergeRequestConnection, A] =
       Field("pageInfo", Obj(innerSelection))
+
+    /**
+      * Total sum of time to merge, in seconds, for the collection of merge requests
+      */
+    def totalTimeToMerge: SelectionBuilder[MergeRequestConnection, Option[Double]] = Field("totalTimeToMerge", OptionOf(Scalar()))
   }
 
   type MergeRequestCreatePayload
@@ -11497,6 +11964,36 @@ object graphql {
     def version: SelectionBuilder[Metadata, String] = Field("version", Scalar())
   }
 
+  type MetricImage
+
+  object MetricImage {
+
+    /**
+      * File name of the metric image
+      */
+    def fileName: SelectionBuilder[MetricImage, Option[String]] = Field("fileName", OptionOf(Scalar()))
+
+    /**
+      * File path of the metric image
+      */
+    def filePath: SelectionBuilder[MetricImage, Option[String]] = Field("filePath", OptionOf(Scalar()))
+
+    /**
+      * ID of the metric upload
+      */
+    def id: SelectionBuilder[MetricImage, String] = Field("id", Scalar())
+
+    /**
+      * Internal ID of the metric upload
+      */
+    def iid: SelectionBuilder[MetricImage, String] = Field("iid", Scalar())
+
+    /**
+      * URL of the metric source
+      */
+    def url: SelectionBuilder[MetricImage, String] = Field("url", Scalar())
+  }
+
   type MetricsDashboard
 
   object MetricsDashboard {
@@ -11617,12 +12114,6 @@ object graphql {
   type Milestone
 
   object Milestone {
-
-    /**
-      * Daily scope and completed totals for burnup charts
-      */
-    def burnupTimeSeries[A](innerSelection: SelectionBuilder[BurnupChartDailyTotals, A]): SelectionBuilder[Milestone, Option[List[A]]] =
-      Field("burnupTimeSeries", OptionOf(ListOf(Obj(innerSelection))))
 
     /**
       * Timestamp of milestone creation
@@ -12119,6 +12610,75 @@ object graphql {
       * Indicates the user can perform `resolve_note` on this resource
       */
     def resolveNote: SelectionBuilder[NotePermissions, Boolean] = Field("resolveNote", Scalar())
+  }
+
+  type OncallScheduleCreatePayload
+
+  object OncallScheduleCreatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[OncallScheduleCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[OncallScheduleCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The on-call schedule
+      */
+    def oncallSchedule[A](
+      innerSelection: SelectionBuilder[IncidentManagementOncallSchedule, A]
+    ): SelectionBuilder[OncallScheduleCreatePayload, Option[A]] = Field("oncallSchedule", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type OncallScheduleDestroyPayload
+
+  object OncallScheduleDestroyPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[OncallScheduleDestroyPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[OncallScheduleDestroyPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The on-call schedule
+      */
+    def oncallSchedule[A](
+      innerSelection: SelectionBuilder[IncidentManagementOncallSchedule, A]
+    ): SelectionBuilder[OncallScheduleDestroyPayload, Option[A]] = Field("oncallSchedule", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type OncallScheduleUpdatePayload
+
+  object OncallScheduleUpdatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[OncallScheduleUpdatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[OncallScheduleUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The on-call schedule
+      */
+    def oncallSchedule[A](
+      innerSelection: SelectionBuilder[IncidentManagementOncallSchedule, A]
+    ): SelectionBuilder[OncallScheduleUpdatePayload, Option[A]] = Field("oncallSchedule", OptionOf(Obj(innerSelection)))
+
   }
 
   type Package
@@ -12774,7 +13334,7 @@ object graphql {
       )
 
     /**
-      * Code coverages summary associated with the project. Available only when feature flag `group_coverage_data_report` is enabled
+      * Code coverage summary associated with the project
       */
     def codeCoverageSummary[A](innerSelection: SelectionBuilder[CodeCoverageSummary, A]): SelectionBuilder[Project, Option[A]] =
       Field("codeCoverageSummary", OptionOf(Obj(innerSelection)))
@@ -12830,6 +13390,11 @@ object graphql {
           Argument("last", last)
         )
       )
+
+    /**
+      * Number of container repositories in the project
+      */
+    def containerRepositoriesCount: SelectionBuilder[Project, Int] = Field("containerRepositoriesCount", Scalar())
 
     /**
       * Timestamp of the project creation
@@ -12979,6 +13544,23 @@ object graphql {
       * Status of import background job of the project
       */
     def importStatus: SelectionBuilder[Project, Option[String]] = Field("importStatus", OptionOf(Scalar()))
+
+    /**
+      * Incident Management On-call schedules of the project
+      */
+    def incidentManagementOncallSchedules[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[IncidentManagementOncallScheduleConnection, A]
+    ): SelectionBuilder[Project, Option[A]] =
+      Field(
+        "incidentManagementOncallSchedules",
+        OptionOf(Obj(innerSelection)),
+        arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      )
 
     /**
       * A single issue of the project
@@ -13452,6 +14034,7 @@ object graphql {
       */
     def projectMembers[A](
       search: Option[String] = None,
+      relations: Option[List[ProjectMemberRelation]] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -13464,6 +14047,7 @@ object graphql {
         OptionOf(Obj(innerSelection)),
         arguments = List(
           Argument("search", search),
+          Argument("relations", relations),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
@@ -14221,7 +14805,7 @@ object graphql {
   object ProjectStatistics {
 
     /**
-      * Build artifacts size of the project
+      * Build artifacts size of the project in bytes
       */
     def buildArtifactsSize: SelectionBuilder[ProjectStatistics, Double] = Field("buildArtifactsSize", Scalar())
 
@@ -14231,32 +14815,37 @@ object graphql {
     def commitCount: SelectionBuilder[ProjectStatistics, Double] = Field("commitCount", Scalar())
 
     /**
-      * Large File Storage (LFS) object size of the project
+      * Large File Storage (LFS) object size of the project in bytes
       */
     def lfsObjectsSize: SelectionBuilder[ProjectStatistics, Double] = Field("lfsObjectsSize", Scalar())
 
     /**
-      * Packages size of the project
+      * Packages size of the project in bytes
       */
     def packagesSize: SelectionBuilder[ProjectStatistics, Double] = Field("packagesSize", Scalar())
 
     /**
-      * Repository size of the project
+      * Repository size of the project in bytes
       */
     def repositorySize: SelectionBuilder[ProjectStatistics, Double] = Field("repositorySize", Scalar())
 
     /**
-      * Snippets size of the project
+      * Snippets size of the project in bytes
       */
     def snippetsSize: SelectionBuilder[ProjectStatistics, Option[Double]] = Field("snippetsSize", OptionOf(Scalar()))
 
     /**
-      * Storage size of the project
+      * Storage size of the project in bytes
       */
     def storageSize: SelectionBuilder[ProjectStatistics, Double] = Field("storageSize", Scalar())
 
     /**
-      * Wiki size of the project
+      * Uploads size of the project in bytes
+      */
+    def uploadsSize: SelectionBuilder[ProjectStatistics, Option[Double]] = Field("uploadsSize", OptionOf(Scalar()))
+
+    /**
+      * Wiki size of the project in bytes
       */
     def wikiSize: SelectionBuilder[ProjectStatistics, Option[Double]] = Field("wikiSize", OptionOf(Scalar()))
   }
@@ -14650,6 +15239,27 @@ object graphql {
       Field("release", OptionOf(Obj(innerSelection)))
   }
 
+  type ReleaseDeletePayload
+
+  object ReleaseDeletePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[ReleaseDeletePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[ReleaseDeletePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The deleted release.
+      */
+    def release[A](innerSelection: SelectionBuilder[Release, A]): SelectionBuilder[ReleaseDeletePayload, Option[A]] =
+      Field("release", OptionOf(Obj(innerSelection)))
+  }
+
   type ReleaseEdge
 
   object ReleaseEdge {
@@ -14827,6 +15437,27 @@ object graphql {
       */
     def node[A](innerSelection: SelectionBuilder[ReleaseSource, A]): SelectionBuilder[ReleaseSourceEdge, Option[A]] =
       Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type ReleaseUpdatePayload
+
+  object ReleaseUpdatePayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[ReleaseUpdatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[ReleaseUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The release after mutation.
+      */
+    def release[A](innerSelection: SelectionBuilder[Release, A]): SelectionBuilder[ReleaseUpdatePayload, Option[A]] =
+      Field("release", OptionOf(Obj(innerSelection)))
   }
 
   type RemoveAwardEmojiPayload
@@ -15171,6 +15802,11 @@ object graphql {
       * The total storage in bytes
       */
     def storageSize: SelectionBuilder[RootStorageStatistics, Double] = Field("storageSize", Scalar())
+
+    /**
+      * The uploads size in bytes
+      */
+    def uploadsSize: SelectionBuilder[RootStorageStatistics, Double] = Field("uploadsSize", Scalar())
 
     /**
       * The wiki size in bytes
@@ -16090,12 +16726,12 @@ object graphql {
       * Collection of Sentry Errors
       */
     def errors[A](
+      searchTerm: Option[String] = None,
+      sort: Option[String] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
-      last: Option[Int] = None,
-      searchTerm: Option[String] = None,
-      sort: Option[String] = None
+      last: Option[Int] = None
     )(
       innerSelection: SelectionBuilder[SentryErrorConnection, A]
     ): SelectionBuilder[SentryErrorCollection, Option[A]] =
@@ -16103,12 +16739,12 @@ object graphql {
         "errors",
         OptionOf(Obj(innerSelection)),
         arguments = List(
+          Argument("searchTerm", searchTerm),
+          Argument("sort", sort),
           Argument("after", after),
           Argument("before", before),
           Argument("first", first),
-          Argument("last", last),
-          Argument("searchTerm", searchTerm),
-          Argument("sort", sort)
+          Argument("last", last)
         )
       )
 
@@ -16956,6 +17592,11 @@ object graphql {
       Field("createdByUser", OptionOf(Obj(innerSelection)))
 
     /**
+      * URL for downloading the version's JSON file
+      */
+    def downloadPath: SelectionBuilder[TerraformStateVersion, Option[String]] = Field("downloadPath", OptionOf(Scalar()))
+
+    /**
       * ID of the Terraform state version
       */
     def id: SelectionBuilder[TerraformStateVersion, String] = Field("id", Scalar())
@@ -16965,6 +17606,11 @@ object graphql {
       */
     def job[A](innerSelection: SelectionBuilder[CiJob, A]): SelectionBuilder[TerraformStateVersion, Option[A]] =
       Field("job", OptionOf(Obj(innerSelection)))
+
+    /**
+      * Serial number of the version
+      */
+    def serial: SelectionBuilder[TerraformStateVersion, Option[Int]] = Field("serial", OptionOf(Scalar()))
 
     /**
       * Timestamp the version was updated
@@ -17187,12 +17833,6 @@ object graphql {
   object Timelog {
 
     /**
-      * Timestamp of when the time tracked was spent at. Deprecated in 12.10: Use `spentAt`
-      */
-    @deprecated("Use `spentAt`. Deprecated in 12.10", "")
-    def date: SelectionBuilder[Timelog, Time] = Field("date", Scalar())
-
-    /**
       * The issue that logged time was added to
       */
     def issue[A](innerSelection: SelectionBuilder[Issue, A]): SelectionBuilder[Timelog, Option[A]] =
@@ -17412,7 +18052,7 @@ object graphql {
       Field("todos", ListOf(Obj(innerSelection)))
 
     /**
-      * The ids of the updated todo items. Deprecated in 13.2: Use todos
+      * The IDs of the updated todo items. Deprecated in 13.2: Use todos
       */
     @deprecated("Use todos. Deprecated in 13.2", "")
     def updatedIds: SelectionBuilder[TodoRestoreManyPayload, List[TodoID]] = Field("updatedIds", ListOf(Scalar()))
@@ -17720,7 +18360,7 @@ object graphql {
   object UpdateBoardPayload {
 
     /**
-      * The board after mutation.
+      * The board after mutation
       */
     def board[A](innerSelection: SelectionBuilder[Board, A]): SelectionBuilder[UpdateBoardPayload, Option[A]] =
       Field("board", OptionOf(Obj(innerSelection)))
@@ -17758,6 +18398,30 @@ object graphql {
       * Errors encountered during execution of the mutation.
       */
     def errors: SelectionBuilder[UpdateContainerExpirationPolicyPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type UpdateDevopsAdoptionSegmentPayload
+
+  object UpdateDevopsAdoptionSegmentPayload {
+
+    /**
+      * A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[UpdateDevopsAdoptionSegmentPayload, Option[String]] =
+      Field("clientMutationId", OptionOf(Scalar()))
+
+    /**
+      * Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[UpdateDevopsAdoptionSegmentPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /**
+      * The segment after mutation
+      */
+    def segment[A](
+      innerSelection: SelectionBuilder[DevopsAdoptionSegment, A]
+    ): SelectionBuilder[UpdateDevopsAdoptionSegmentPayload, Option[A]] = Field("segment", OptionOf(Obj(innerSelection)))
+
   }
 
   type UpdateEpicPayload
@@ -17838,7 +18502,7 @@ object graphql {
     def errors: SelectionBuilder[UpdateIterationPayload, List[String]] = Field("errors", ListOf(Scalar()))
 
     /**
-      * The updated iteration
+      * Updated iteration.
       */
     def iteration[A](innerSelection: SelectionBuilder[Iteration, A]): SelectionBuilder[UpdateIterationPayload, Option[A]] =
       Field("iteration", OptionOf(Obj(innerSelection)))
@@ -18014,8 +18678,9 @@ object graphql {
     def avatarUrl: SelectionBuilder[User, Option[String]] = Field("avatarUrl", OptionOf(Scalar()))
 
     /**
-      * User email
+      * User email. Deprecated in 13.7: Use public_email
       */
+    @deprecated("Use public_email. Deprecated in 13.7", "")
     def email: SelectionBuilder[User, Option[String]] = Field("email", OptionOf(Scalar()))
 
     /**
@@ -18041,6 +18706,11 @@ object graphql {
     def id: SelectionBuilder[User, String] = Field("id", Scalar())
 
     /**
+      * The location of the user.
+      */
+    def location: SelectionBuilder[User, Option[String]] = Field("location", OptionOf(Scalar()))
+
+    /**
       * Human-readable name of the user
       */
     def name: SelectionBuilder[User, String] = Field("name", Scalar())
@@ -18061,6 +18731,11 @@ object graphql {
         OptionOf(Obj(innerSelection)),
         arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
       )
+
+    /**
+      * User's public email
+      */
+    def publicEmail: SelectionBuilder[User, Option[String]] = Field("publicEmail", OptionOf(Scalar()))
 
     /**
       * Snippets authored by the user
@@ -19169,12 +19844,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AddAwardEmojiInput] = new ArgEncoder[AddAwardEmojiInput] {
 
-      override def encode(value: AddAwardEmojiInput): Value =
-        ObjectValue(
+      override def encode(value: AddAwardEmojiInput): __Value =
+        __ObjectValue(
           List(
             "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19189,11 +19864,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AddProjectToSecurityDashboardInput] = new ArgEncoder[AddProjectToSecurityDashboardInput] {
 
-      override def encode(value: AddProjectToSecurityDashboardInput): Value =
-        ObjectValue(
+      override def encode(value: AddProjectToSecurityDashboardInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[ProjectID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19218,18 +19893,18 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AdminSidekiqQueuesDeleteJobsInput] = new ArgEncoder[AdminSidekiqQueuesDeleteJobsInput] {
 
-      override def encode(value: AdminSidekiqQueuesDeleteJobsInput): Value =
-        ObjectValue(
+      override def encode(value: AdminSidekiqQueuesDeleteJobsInput): __Value =
+        __ObjectValue(
           List(
-            "user" -> value.user.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "project" -> value.project.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "rootNamespace" -> value.rootNamespace.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "subscriptionPlan" -> value.subscriptionPlan.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "callerId" -> value.callerId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "relatedClass" -> value.relatedClass.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "featureCategory" -> value.featureCategory.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "user" -> value.user.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "project" -> value.project.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "rootNamespace" -> value.rootNamespace.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "subscriptionPlan" -> value.subscriptionPlan.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "callerId" -> value.callerId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "relatedClass" -> value.relatedClass.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "featureCategory" -> value.featureCategory.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "queueName" -> implicitly[ArgEncoder[String]].encode(value.queueName),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19250,16 +19925,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AlertSetAssigneesInput] = new ArgEncoder[AlertSetAssigneesInput] {
 
-      override def encode(value: AlertSetAssigneesInput): Value =
-        ObjectValue(
+      override def encode(value: AlertSetAssigneesInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "assigneeUsernames" -> ListValue(value.assigneeUsernames.map(value => implicitly[ArgEncoder[String]].encode(value))),
+            "assigneeUsernames" -> __ListValue(value.assigneeUsernames.map(value => implicitly[ArgEncoder[String]].encode(value))),
             "operationMode" -> value
               .operationMode
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19274,12 +19949,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AlertTodoCreateInput] = new ArgEncoder[AlertTodoCreateInput] {
 
-      override def encode(value: AlertTodoCreateInput): Value =
-        ObjectValue(
+      override def encode(value: AlertTodoCreateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19294,12 +19969,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AwardEmojiAddInput] = new ArgEncoder[AwardEmojiAddInput] {
 
-      override def encode(value: AwardEmojiAddInput): Value =
-        ObjectValue(
+      override def encode(value: AwardEmojiAddInput): __Value =
+        __ObjectValue(
           List(
             "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19314,12 +19989,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AwardEmojiRemoveInput] = new ArgEncoder[AwardEmojiRemoveInput] {
 
-      override def encode(value: AwardEmojiRemoveInput): Value =
-        ObjectValue(
+      override def encode(value: AwardEmojiRemoveInput): __Value =
+        __ObjectValue(
           List(
             "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19334,12 +20009,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[AwardEmojiToggleInput] = new ArgEncoder[AwardEmojiToggleInput] {
 
-      override def encode(value: AwardEmojiToggleInput): Value =
-        ObjectValue(
+      override def encode(value: AwardEmojiToggleInput): __Value =
+        __ObjectValue(
           List(
             "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19356,38 +20031,46 @@ object graphql {
     releaseTag: Option[String] = None,
     myReactionEmoji: Option[String] = None,
     epicId: Option[EpicID] = None,
+    iterationTitle: Option[String] = None,
     weight: Option[String] = None,
     not: Option[NegatedBoardIssueInput] = None,
     search: Option[String] = None,
-    epicWildcardId: Option[EpicWildcardId] = None
+    epicWildcardId: Option[EpicWildcardId] = None,
+    iterationWildcardId: Option[IterationWildcardId] = None
   )
 
   object BoardIssueInput {
 
     implicit val encoder: ArgEncoder[BoardIssueInput] = new ArgEncoder[BoardIssueInput] {
 
-      override def encode(value: BoardIssueInput): Value =
-        ObjectValue(
+      override def encode(value: BoardIssueInput): __Value =
+        __ObjectValue(
           List(
             "labelName" -> value
               .labelName
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => value.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
-            "milestoneTitle" -> value.milestoneTitle.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "milestoneTitle" -> value.milestoneTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "assigneeUsername" -> value
               .assigneeUsername
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => value.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
-            "authorUsername" -> value.authorUsername.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "releaseTag" -> value.releaseTag.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "myReactionEmoji" -> value.myReactionEmoji.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
-            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "not" -> value.not.fold(NullValue: Value)(value => implicitly[ArgEncoder[NegatedBoardIssueInput]].encode(value)),
-            "search" -> value.search.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "epicWildcardId" -> value.epicWildcardId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicWildcardId]].encode(value))
+            "authorUsername" -> value.authorUsername.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "releaseTag" -> value.releaseTag.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "myReactionEmoji" -> value.myReactionEmoji.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
+            "iterationTitle" -> value.iterationTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "not" -> value.not.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[NegatedBoardIssueInput]].encode(value)),
+            "search" -> value.search.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicWildcardId" -> value
+              .epicWildcardId
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicWildcardId]].encode(value)),
+            "iterationWildcardId" -> value
+              .iterationWildcardId
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[IterationWildcardId]].encode(value))
           )
         )
 
@@ -19409,15 +20092,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[BoardListCreateInput] = new ArgEncoder[BoardListCreateInput] {
 
-      override def encode(value: BoardListCreateInput): Value =
-        ObjectValue(
+      override def encode(value: BoardListCreateInput): __Value =
+        __ObjectValue(
           List(
             "boardId" -> implicitly[ArgEncoder[BoardID]].encode(value.boardId),
-            "backlog" -> value.backlog.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "labelId" -> value.labelId.fold(NullValue: Value)(value => implicitly[ArgEncoder[LabelID]].encode(value)),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
-            "assigneeId" -> value.assigneeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[UserID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "backlog" -> value.backlog.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "labelId" -> value.labelId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[LabelID]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
+            "assigneeId" -> value.assigneeId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[UserID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19438,14 +20121,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[BoardListUpdateLimitMetricsInput] = new ArgEncoder[BoardListUpdateLimitMetricsInput] {
 
-      override def encode(value: BoardListUpdateLimitMetricsInput): Value =
-        ObjectValue(
+      override def encode(value: BoardListUpdateLimitMetricsInput): __Value =
+        __ObjectValue(
           List(
             "listId" -> implicitly[ArgEncoder[ListID]].encode(value.listId),
-            "limitMetric" -> value.limitMetric.fold(NullValue: Value)(value => implicitly[ArgEncoder[ListLimitMetric]].encode(value)),
-            "maxIssueCount" -> value.maxIssueCount.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "maxIssueWeight" -> value.maxIssueWeight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "limitMetric" -> value.limitMetric.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ListLimitMetric]].encode(value)),
+            "maxIssueCount" -> value.maxIssueCount.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "maxIssueWeight" -> value.maxIssueWeight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19460,11 +20143,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ClusterAgentDeleteInput] = new ArgEncoder[ClusterAgentDeleteInput] {
 
-      override def encode(value: ClusterAgentDeleteInput): Value =
-        ObjectValue(
+      override def encode(value: ClusterAgentDeleteInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[ClustersAgentID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19479,11 +20162,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ClusterAgentTokenCreateInput] = new ArgEncoder[ClusterAgentTokenCreateInput] {
 
-      override def encode(value: ClusterAgentTokenCreateInput): Value =
-        ObjectValue(
+      override def encode(value: ClusterAgentTokenCreateInput): __Value =
+        __ObjectValue(
           List(
             "clusterAgentId" -> implicitly[ArgEncoder[ClustersAgentID]].encode(value.clusterAgentId),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19498,11 +20181,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ClusterAgentTokenDeleteInput] = new ArgEncoder[ClusterAgentTokenDeleteInput] {
 
-      override def encode(value: ClusterAgentTokenDeleteInput): Value =
-        ObjectValue(
+      override def encode(value: ClusterAgentTokenDeleteInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[ClustersAgentTokenID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19525,16 +20208,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CommitAction] = new ArgEncoder[CommitAction] {
 
-      override def encode(value: CommitAction): Value =
-        ObjectValue(
+      override def encode(value: CommitAction): __Value =
+        __ObjectValue(
           List(
             "action" -> implicitly[ArgEncoder[CommitActionMode]].encode(value.action),
             "filePath" -> implicitly[ArgEncoder[String]].encode(value.filePath),
-            "content" -> value.content.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "previousPath" -> value.previousPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "lastCommitId" -> value.lastCommitId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "executeFilemode" -> value.executeFilemode.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "encoding" -> value.encoding.fold(NullValue: Value)(value => implicitly[ArgEncoder[CommitEncoding]].encode(value))
+            "content" -> value.content.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "previousPath" -> value.previousPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "lastCommitId" -> value.lastCommitId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "executeFilemode" -> value.executeFilemode.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "encoding" -> value.encoding.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[CommitEncoding]].encode(value))
           )
         )
 
@@ -19556,15 +20239,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CommitCreateInput] = new ArgEncoder[CommitCreateInput] {
 
-      override def encode(value: CommitCreateInput): Value =
-        ObjectValue(
+      override def encode(value: CommitCreateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "branch" -> implicitly[ArgEncoder[String]].encode(value.branch),
-            "startBranch" -> value.startBranch.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "startBranch" -> value.startBranch.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "message" -> implicitly[ArgEncoder[String]].encode(value.message),
-            "actions" -> ListValue(value.actions.map(value => implicitly[ArgEncoder[CommitAction]].encode(value))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "actions" -> __ListValue(value.actions.map(value => implicitly[ArgEncoder[CommitAction]].encode(value))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19579,12 +20262,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ConfigureSastInput] = new ArgEncoder[ConfigureSastInput] {
 
-      override def encode(value: ConfigureSastInput): Value =
-        ObjectValue(
+      override def encode(value: ConfigureSastInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "configuration" -> implicitly[ArgEncoder[SastCiConfigurationInput]].encode(value.configuration),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19599,12 +20282,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateAlertIssueInput] = new ArgEncoder[CreateAlertIssueInput] {
 
-      override def encode(value: CreateAlertIssueInput): Value =
-        ObjectValue(
+      override def encode(value: CreateAlertIssueInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19627,16 +20310,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateAnnotationInput] = new ArgEncoder[CreateAnnotationInput] {
 
-      override def encode(value: CreateAnnotationInput): Value =
-        ObjectValue(
+      override def encode(value: CreateAnnotationInput): __Value =
+        __ObjectValue(
           List(
-            "environmentId" -> value.environmentId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EnvironmentID]].encode(value)),
-            "clusterId" -> value.clusterId.fold(NullValue: Value)(value => implicitly[ArgEncoder[ClustersClusterID]].encode(value)),
+            "environmentId" -> value.environmentId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EnvironmentID]].encode(value)),
+            "clusterId" -> value.clusterId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ClustersClusterID]].encode(value)),
             "startingAt" -> implicitly[ArgEncoder[Time]].encode(value.startingAt),
-            "endingAt" -> value.endingAt.fold(NullValue: Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "endingAt" -> value.endingAt.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
             "dashboardPath" -> implicitly[ArgEncoder[String]].encode(value.dashboardPath),
             "description" -> implicitly[ArgEncoder[String]].encode(value.description),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19660,19 +20343,19 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateBoardInput] = new ArgEncoder[CreateBoardInput] {
 
-      override def encode(value: CreateBoardInput): Value =
-        ObjectValue(
+      override def encode(value: CreateBoardInput): __Value =
+        __ObjectValue(
           List(
-            "projectPath" -> value.projectPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "groupPath" -> value.groupPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "assigneeId" -> value.assigneeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
-            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "projectPath" -> value.projectPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "groupPath" -> value.groupPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "assigneeId" -> value.assigneeId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
+            "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "labelIds" -> value
               .labelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19687,13 +20370,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateBranchInput] = new ArgEncoder[CreateBranchInput] {
 
-      override def encode(value: CreateBranchInput): Value =
-        ObjectValue(
+      override def encode(value: CreateBranchInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "ref" -> implicitly[ArgEncoder[String]].encode(value.ref),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19708,16 +20391,38 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateClusterAgentInput] = new ArgEncoder[CreateClusterAgentInput] {
 
-      override def encode(value: CreateClusterAgentInput): Value =
-        ObjectValue(
+      override def encode(value: CreateClusterAgentInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "CreateClusterAgentInput"
+    }
+
+  }
+
+  case class CreateDevopsAdoptionSegmentInput(name: String, groupIds: Option[List[GroupID]] = None, clientMutationId: Option[String] = None)
+
+  object CreateDevopsAdoptionSegmentInput {
+
+    implicit val encoder: ArgEncoder[CreateDevopsAdoptionSegmentInput] = new ArgEncoder[CreateDevopsAdoptionSegmentInput] {
+
+      override def encode(value: CreateDevopsAdoptionSegmentInput): __Value =
+        __ObjectValue(
+          List(
+            "name" -> implicitly[ArgEncoder[String]].encode(value.name),
+            "groupIds" -> value
+              .groupIds
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[GroupID]].encode(value)))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "CreateDevopsAdoptionSegmentInput"
     }
 
   }
@@ -19734,14 +20439,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateDiffNoteInput] = new ArgEncoder[CreateDiffNoteInput] {
 
-      override def encode(value: CreateDiffNoteInput): Value =
-        ObjectValue(
+      override def encode(value: CreateDiffNoteInput): __Value =
+        __ObjectValue(
           List(
             "noteableId" -> implicitly[ArgEncoder[NoteableID]].encode(value.noteableId),
             "body" -> implicitly[ArgEncoder[String]].encode(value.body),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "position" -> implicitly[ArgEncoder[DiffPositionInput]].encode(value.position),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19768,24 +20473,24 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateEpicInput] = new ArgEncoder[CreateEpicInput] {
 
-      override def encode(value: CreateEpicInput): Value =
-        ObjectValue(
+      override def encode(value: CreateEpicInput): __Value =
+        __ObjectValue(
           List(
             "groupPath" -> implicitly[ArgEncoder[String]].encode(value.groupPath),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "startDateFixed" -> value.startDateFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "dueDateFixed" -> value.dueDateFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "startDateIsFixed" -> value.startDateIsFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "dueDateIsFixed" -> value.dueDateIsFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "startDateFixed" -> value.startDateFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "dueDateFixed" -> value.dueDateFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "startDateIsFixed" -> value.startDateIsFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "dueDateIsFixed" -> value.dueDateIsFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "addLabelIds" -> value
               .addLabelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "removeLabelIds" -> value
               .removeLabelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19806,14 +20511,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateImageDiffNoteInput] = new ArgEncoder[CreateImageDiffNoteInput] {
 
-      override def encode(value: CreateImageDiffNoteInput): Value =
-        ObjectValue(
+      override def encode(value: CreateImageDiffNoteInput): __Value =
+        __ObjectValue(
           List(
             "noteableId" -> implicitly[ArgEncoder[NoteableID]].encode(value.noteableId),
             "body" -> implicitly[ArgEncoder[String]].encode(value.body),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "position" -> implicitly[ArgEncoder[DiffImagePositionInput]].encode(value.position),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19847,37 +20552,37 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateIssueInput] = new ArgEncoder[CreateIssueInput] {
 
-      override def encode(value: CreateIssueInput): Value =
-        ObjectValue(
+      override def encode(value: CreateIssueInput): __Value =
+        __ObjectValue(
           List(
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "dueDate" -> value.dueDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[ISO8601Date]].encode(value)),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "locked" -> value.locked.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "dueDate" -> value.dueDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ISO8601Date]].encode(value)),
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "locked" -> value.locked.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "iid" -> value.iid.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "iid" -> value.iid.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
             "title" -> implicitly[ArgEncoder[String]].encode(value.title),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
             "labels" -> value
               .labels
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "labelIds" -> value
               .labelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
-            "createdAt" -> value.createdAt.fold(NullValue: Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
+            "createdAt" -> value.createdAt.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
             "mergeRequestToResolveDiscussionsOf" -> value
               .mergeRequestToResolveDiscussionsOf
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[MergeRequestID]].encode(value)),
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MergeRequestID]].encode(value)),
             "discussionToResolve" -> value
               .discussionToResolve
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "assigneeIds" -> value
               .assigneeIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[UserID]].encode(value)))),
-            "healthStatus" -> value.healthStatus.fold(NullValue: Value)(value => implicitly[ArgEncoder[HealthStatus]].encode(value)),
-            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[UserID]].encode(value)))),
+            "healthStatus" -> value.healthStatus.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[HealthStatus]].encode(value)),
+            "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19900,16 +20605,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateIterationInput] = new ArgEncoder[CreateIterationInput] {
 
-      override def encode(value: CreateIterationInput): Value =
-        ObjectValue(
+      override def encode(value: CreateIterationInput): __Value =
+        __ObjectValue(
           List(
-            "groupPath" -> value.groupPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "projectPath" -> value.projectPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "startDate" -> value.startDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "dueDate" -> value.dueDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "groupPath" -> value.groupPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "projectPath" -> value.projectPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "startDate" -> value.startDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "dueDate" -> value.dueDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19930,14 +20635,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateNoteInput] = new ArgEncoder[CreateNoteInput] {
 
-      override def encode(value: CreateNoteInput): Value =
-        ObjectValue(
+      override def encode(value: CreateNoteInput): __Value =
+        __ObjectValue(
           List(
             "noteableId" -> implicitly[ArgEncoder[NoteableID]].encode(value.noteableId),
             "body" -> implicitly[ArgEncoder[String]].encode(value.body),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "discussionId" -> value.discussionId.fold(NullValue: Value)(value => implicitly[ArgEncoder[DiscussionID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "discussionId" -> value.discussionId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DiscussionID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19957,13 +20662,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateRequirementInput] = new ArgEncoder[CreateRequirementInput] {
 
-      override def encode(value: CreateRequirementInput): Value =
-        ObjectValue(
+      override def encode(value: CreateRequirementInput): __Value =
+        __ObjectValue(
           List(
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -19986,22 +20691,22 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateSnippetInput] = new ArgEncoder[CreateSnippetInput] {
 
-      override def encode(value: CreateSnippetInput): Value =
-        ObjectValue(
+      override def encode(value: CreateSnippetInput): __Value =
+        __ObjectValue(
           List(
             "title" -> implicitly[ArgEncoder[String]].encode(value.title),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "visibilityLevel" -> implicitly[ArgEncoder[VisibilityLevelsEnum]].encode(value.visibilityLevel),
-            "projectPath" -> value.projectPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "projectPath" -> value.projectPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "uploadedFiles" -> value
               .uploadedFiles
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "blobActions" -> value
               .blobActions
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => implicitly[ArgEncoder[SnippetBlobActionInputType]].encode(value)))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[SnippetBlobActionInputType]].encode(value)))
               ),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20022,16 +20727,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[CreateTestCaseInput] = new ArgEncoder[CreateTestCaseInput] {
 
-      override def encode(value: CreateTestCaseInput): Value =
-        ObjectValue(
+      override def encode(value: CreateTestCaseInput): __Value =
+        __ObjectValue(
           List(
             "title" -> implicitly[ArgEncoder[String]].encode(value.title),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "labelIds" -> value
               .labelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20051,15 +20756,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastOnDemandScanCreateInput] = new ArgEncoder[DastOnDemandScanCreateInput] {
 
-      override def encode(value: DastOnDemandScanCreateInput): Value =
-        ObjectValue(
+      override def encode(value: DastOnDemandScanCreateInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "dastSiteProfileId" -> implicitly[ArgEncoder[DastSiteProfileID]].encode(value.dastSiteProfileId),
             "dastScannerProfileId" -> value
               .dastScannerProfileId
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[DastScannerProfileID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DastScannerProfileID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20083,17 +20788,19 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastScannerProfileCreateInput] = new ArgEncoder[DastScannerProfileCreateInput] {
 
-      override def encode(value: DastScannerProfileCreateInput): Value =
-        ObjectValue(
+      override def encode(value: DastScannerProfileCreateInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
-            "spiderTimeout" -> value.spiderTimeout.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "targetTimeout" -> value.targetTimeout.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "scanType" -> value.scanType.fold(NullValue: Value)(value => implicitly[ArgEncoder[DastScanTypeEnum]].encode(value)),
-            "useAjaxSpider" -> value.useAjaxSpider.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "showDebugMessages" -> value.showDebugMessages.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "spiderTimeout" -> value.spiderTimeout.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "targetTimeout" -> value.targetTimeout.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "scanType" -> value.scanType.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DastScanTypeEnum]].encode(value)),
+            "useAjaxSpider" -> value.useAjaxSpider.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "showDebugMessages" -> value
+              .showDebugMessages
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20108,12 +20815,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastScannerProfileDeleteInput] = new ArgEncoder[DastScannerProfileDeleteInput] {
 
-      override def encode(value: DastScannerProfileDeleteInput): Value =
-        ObjectValue(
+      override def encode(value: DastScannerProfileDeleteInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "id" -> implicitly[ArgEncoder[DastScannerProfileID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20138,18 +20845,20 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastScannerProfileUpdateInput] = new ArgEncoder[DastScannerProfileUpdateInput] {
 
-      override def encode(value: DastScannerProfileUpdateInput): Value =
-        ObjectValue(
+      override def encode(value: DastScannerProfileUpdateInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "id" -> implicitly[ArgEncoder[DastScannerProfileID]].encode(value.id),
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
             "spiderTimeout" -> implicitly[ArgEncoder[Int]].encode(value.spiderTimeout),
             "targetTimeout" -> implicitly[ArgEncoder[Int]].encode(value.targetTimeout),
-            "scanType" -> value.scanType.fold(NullValue: Value)(value => implicitly[ArgEncoder[DastScanTypeEnum]].encode(value)),
-            "useAjaxSpider" -> value.useAjaxSpider.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "showDebugMessages" -> value.showDebugMessages.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "scanType" -> value.scanType.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DastScanTypeEnum]].encode(value)),
+            "useAjaxSpider" -> value.useAjaxSpider.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "showDebugMessages" -> value
+              .showDebugMessages
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20169,13 +20878,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastSiteProfileCreateInput] = new ArgEncoder[DastSiteProfileCreateInput] {
 
-      override def encode(value: DastSiteProfileCreateInput): Value =
-        ObjectValue(
+      override def encode(value: DastSiteProfileCreateInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
-            "targetUrl" -> value.targetUrl.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "targetUrl" -> value.targetUrl.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20190,12 +20899,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastSiteProfileDeleteInput] = new ArgEncoder[DastSiteProfileDeleteInput] {
 
-      override def encode(value: DastSiteProfileDeleteInput): Value =
-        ObjectValue(
+      override def encode(value: DastSiteProfileDeleteInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "id" -> implicitly[ArgEncoder[DastSiteProfileID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20216,14 +20925,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastSiteProfileUpdateInput] = new ArgEncoder[DastSiteProfileUpdateInput] {
 
-      override def encode(value: DastSiteProfileUpdateInput): Value =
-        ObjectValue(
+      override def encode(value: DastSiteProfileUpdateInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "id" -> implicitly[ArgEncoder[DastSiteProfileID]].encode(value.id),
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
-            "targetUrl" -> value.targetUrl.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "targetUrl" -> value.targetUrl.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20238,12 +20947,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastSiteTokenCreateInput] = new ArgEncoder[DastSiteTokenCreateInput] {
 
-      override def encode(value: DastSiteTokenCreateInput): Value =
-        ObjectValue(
+      override def encode(value: DastSiteTokenCreateInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
-            "targetUrl" -> value.targetUrl.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "targetUrl" -> value.targetUrl.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20264,16 +20973,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DastSiteValidationCreateInput] = new ArgEncoder[DastSiteValidationCreateInput] {
 
-      override def encode(value: DastSiteValidationCreateInput): Value =
-        ObjectValue(
+      override def encode(value: DastSiteValidationCreateInput): __Value =
+        __ObjectValue(
           List(
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "dastSiteTokenId" -> implicitly[ArgEncoder[DastSiteTokenID]].encode(value.dastSiteTokenId),
             "validationPath" -> implicitly[ArgEncoder[String]].encode(value.validationPath),
             "strategy" -> value
               .strategy
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[DastSiteValidationStrategyEnum]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DastSiteValidationStrategyEnum]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20282,21 +20991,40 @@ object graphql {
 
   }
 
-  case class DeleteAnnotationInput(id: String, clientMutationId: Option[String] = None)
+  case class DeleteAnnotationInput(id: MetricsDashboardAnnotationID, clientMutationId: Option[String] = None)
 
   object DeleteAnnotationInput {
 
     implicit val encoder: ArgEncoder[DeleteAnnotationInput] = new ArgEncoder[DeleteAnnotationInput] {
 
-      override def encode(value: DeleteAnnotationInput): Value =
-        ObjectValue(
+      override def encode(value: DeleteAnnotationInput): __Value =
+        __ObjectValue(
           List(
-            "id" -> implicitly[ArgEncoder[String]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "id" -> implicitly[ArgEncoder[MetricsDashboardAnnotationID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "DeleteAnnotationInput"
+    }
+
+  }
+
+  case class DeleteDevopsAdoptionSegmentInput(id: AnalyticsDevopsAdoptionSegmentID, clientMutationId: Option[String] = None)
+
+  object DeleteDevopsAdoptionSegmentInput {
+
+    implicit val encoder: ArgEncoder[DeleteDevopsAdoptionSegmentInput] = new ArgEncoder[DeleteDevopsAdoptionSegmentInput] {
+
+      override def encode(value: DeleteDevopsAdoptionSegmentInput): __Value =
+        __ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[AnalyticsDevopsAdoptionSegmentID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DeleteDevopsAdoptionSegmentInput"
     }
 
   }
@@ -20312,13 +21040,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DesignManagementDeleteInput] = new ArgEncoder[DesignManagementDeleteInput] {
 
-      override def encode(value: DesignManagementDeleteInput): Value =
-        ObjectValue(
+      override def encode(value: DesignManagementDeleteInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "filenames" -> ListValue(value.filenames.map(value => implicitly[ArgEncoder[String]].encode(value))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "filenames" -> __ListValue(value.filenames.map(value => implicitly[ArgEncoder[String]].encode(value))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20338,13 +21066,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DesignManagementMoveInput] = new ArgEncoder[DesignManagementMoveInput] {
 
-      override def encode(value: DesignManagementMoveInput): Value =
-        ObjectValue(
+      override def encode(value: DesignManagementMoveInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[DesignManagementDesignID]].encode(value.id),
-            "previous" -> value.previous.fold(NullValue: Value)(value => implicitly[ArgEncoder[DesignManagementDesignID]].encode(value)),
-            "next" -> value.next.fold(NullValue: Value)(value => implicitly[ArgEncoder[DesignManagementDesignID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "previous" -> value
+              .previous
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DesignManagementDesignID]].encode(value)),
+            "next" -> value.next.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DesignManagementDesignID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20364,13 +21094,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DesignManagementUploadInput] = new ArgEncoder[DesignManagementUploadInput] {
 
-      override def encode(value: DesignManagementUploadInput): Value =
-        ObjectValue(
+      override def encode(value: DesignManagementUploadInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "files" -> ListValue(value.files.map(value => implicitly[ArgEncoder[Upload]].encode(value))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "files" -> __ListValue(value.files.map(value => implicitly[ArgEncoder[Upload]].encode(value))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20385,11 +21115,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DestroyBoardInput] = new ArgEncoder[DestroyBoardInput] {
 
-      override def encode(value: DestroyBoardInput): Value =
-        ObjectValue(
+      override def encode(value: DestroyBoardInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[BoardID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20404,11 +21134,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DestroyBoardListInput] = new ArgEncoder[DestroyBoardListInput] {
 
-      override def encode(value: DestroyBoardListInput): Value =
-        ObjectValue(
+      override def encode(value: DestroyBoardListInput): __Value =
+        __ObjectValue(
           List(
             "listId" -> implicitly[ArgEncoder[ListID]].encode(value.listId),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20423,11 +21153,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DestroyContainerRepositoryInput] = new ArgEncoder[DestroyContainerRepositoryInput] {
 
-      override def encode(value: DestroyContainerRepositoryInput): Value =
-        ObjectValue(
+      override def encode(value: DestroyContainerRepositoryInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[ContainerRepositoryID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20442,11 +21172,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DestroyNoteInput] = new ArgEncoder[DestroyNoteInput] {
 
-      override def encode(value: DestroyNoteInput): Value =
-        ObjectValue(
+      override def encode(value: DestroyNoteInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[NoteID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20461,11 +21191,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DestroySnippetInput] = new ArgEncoder[DestroySnippetInput] {
 
-      override def encode(value: DestroySnippetInput): Value =
-        ObjectValue(
+      override def encode(value: DestroySnippetInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[SnippetID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20489,11 +21219,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DiffImagePositionInput] = new ArgEncoder[DiffImagePositionInput] {
 
-      override def encode(value: DiffImagePositionInput): Value =
-        ObjectValue(
+      override def encode(value: DiffImagePositionInput): __Value =
+        __ObjectValue(
           List(
             "headSha" -> implicitly[ArgEncoder[String]].encode(value.headSha),
-            "baseSha" -> value.baseSha.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "baseSha" -> value.baseSha.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "startSha" -> implicitly[ArgEncoder[String]].encode(value.startSha),
             "paths" -> implicitly[ArgEncoder[DiffPathsInput]].encode(value.paths),
             "x" -> implicitly[ArgEncoder[Int]].encode(value.x),
@@ -20514,11 +21244,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DiffPathsInput] = new ArgEncoder[DiffPathsInput] {
 
-      override def encode(value: DiffPathsInput): Value =
-        ObjectValue(
+      override def encode(value: DiffPathsInput): __Value =
+        __ObjectValue(
           List(
-            "oldPath" -> value.oldPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "newPath" -> value.newPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "oldPath" -> value.oldPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "newPath" -> value.newPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20540,14 +21270,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DiffPositionInput] = new ArgEncoder[DiffPositionInput] {
 
-      override def encode(value: DiffPositionInput): Value =
-        ObjectValue(
+      override def encode(value: DiffPositionInput): __Value =
+        __ObjectValue(
           List(
             "headSha" -> implicitly[ArgEncoder[String]].encode(value.headSha),
-            "baseSha" -> value.baseSha.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "baseSha" -> value.baseSha.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "startSha" -> implicitly[ArgEncoder[String]].encode(value.startSha),
             "paths" -> implicitly[ArgEncoder[DiffPathsInput]].encode(value.paths),
-            "oldLine" -> value.oldLine.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "oldLine" -> value.oldLine.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
             "newLine" -> implicitly[ArgEncoder[Int]].encode(value.newLine)
           )
         )
@@ -20563,12 +21293,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DiscussionToggleResolveInput] = new ArgEncoder[DiscussionToggleResolveInput] {
 
-      override def encode(value: DiscussionToggleResolveInput): Value =
-        ObjectValue(
+      override def encode(value: DiscussionToggleResolveInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[DiscussionID]].encode(value.id),
             "resolve" -> implicitly[ArgEncoder[Boolean]].encode(value.resolve),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20583,12 +21313,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[DismissVulnerabilityInput] = new ArgEncoder[DismissVulnerabilityInput] {
 
-      override def encode(value: DismissVulnerabilityInput): Value =
-        ObjectValue(
+      override def encode(value: DismissVulnerabilityInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
-            "comment" -> value.comment.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "comment" -> value.comment.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20603,12 +21333,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[EnvironmentsCanaryIngressUpdateInput] = new ArgEncoder[EnvironmentsCanaryIngressUpdateInput] {
 
-      override def encode(value: EnvironmentsCanaryIngressUpdateInput): Value =
-        ObjectValue(
+      override def encode(value: EnvironmentsCanaryIngressUpdateInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[EnvironmentID]].encode(value.id),
             "weight" -> implicitly[ArgEncoder[Int]].encode(value.weight),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20629,14 +21359,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[EpicAddIssueInput] = new ArgEncoder[EpicAddIssueInput] {
 
-      override def encode(value: EpicAddIssueInput): Value =
-        ObjectValue(
+      override def encode(value: EpicAddIssueInput): __Value =
+        __ObjectValue(
           List(
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "groupPath" -> implicitly[ArgEncoder[String]].encode(value.groupPath),
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "issueIid" -> implicitly[ArgEncoder[String]].encode(value.issueIid),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20651,13 +21381,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[EpicSetSubscriptionInput] = new ArgEncoder[EpicSetSubscriptionInput] {
 
-      override def encode(value: EpicSetSubscriptionInput): Value =
-        ObjectValue(
+      override def encode(value: EpicSetSubscriptionInput): __Value =
+        __ObjectValue(
           List(
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "groupPath" -> implicitly[ArgEncoder[String]].encode(value.groupPath),
             "subscribedState" -> implicitly[ArgEncoder[Boolean]].encode(value.subscribedState),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20677,15 +21407,17 @@ object graphql {
 
     implicit val encoder: ArgEncoder[EpicTreeNodeFieldsInputType] = new ArgEncoder[EpicTreeNodeFieldsInputType] {
 
-      override def encode(value: EpicTreeNodeFieldsInputType): Value =
-        ObjectValue(
+      override def encode(value: EpicTreeNodeFieldsInputType): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[EpicTreeSortingID]].encode(value.id),
             "adjacentReferenceId" -> value
               .adjacentReferenceId
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicTreeSortingID]].encode(value)),
-            "relativePosition" -> value.relativePosition.fold(NullValue: Value)(value => implicitly[ArgEncoder[MoveType]].encode(value)),
-            "newParentId" -> value.newParentId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicTreeSortingID]].encode(value)),
+            "relativePosition" -> value
+              .relativePosition
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MoveType]].encode(value)),
+            "newParentId" -> value.newParentId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value))
           )
         )
 
@@ -20700,12 +21432,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[EpicTreeReorderInput] = new ArgEncoder[EpicTreeReorderInput] {
 
-      override def encode(value: EpicTreeReorderInput): Value =
-        ObjectValue(
+      override def encode(value: EpicTreeReorderInput): __Value =
+        __ObjectValue(
           List(
             "baseEpicId" -> implicitly[ArgEncoder[EpicID]].encode(value.baseEpicId),
             "moved" -> implicitly[ArgEncoder[EpicTreeNodeFieldsInputType]].encode(value.moved),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20720,13 +21452,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[HttpIntegrationCreateInput] = new ArgEncoder[HttpIntegrationCreateInput] {
 
-      override def encode(value: HttpIntegrationCreateInput): Value =
-        ObjectValue(
+      override def encode(value: HttpIntegrationCreateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "active" -> implicitly[ArgEncoder[Boolean]].encode(value.active),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20741,11 +21473,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[HttpIntegrationDestroyInput] = new ArgEncoder[HttpIntegrationDestroyInput] {
 
-      override def encode(value: HttpIntegrationDestroyInput): Value =
-        ObjectValue(
+      override def encode(value: HttpIntegrationDestroyInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[AlertManagementHttpIntegrationID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20760,11 +21492,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[HttpIntegrationResetTokenInput] = new ArgEncoder[HttpIntegrationResetTokenInput] {
 
-      override def encode(value: HttpIntegrationResetTokenInput): Value =
-        ObjectValue(
+      override def encode(value: HttpIntegrationResetTokenInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[AlertManagementHttpIntegrationID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20784,13 +21516,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[HttpIntegrationUpdateInput] = new ArgEncoder[HttpIntegrationUpdateInput] {
 
-      override def encode(value: HttpIntegrationUpdateInput): Value =
-        ObjectValue(
+      override def encode(value: HttpIntegrationUpdateInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[AlertManagementHttpIntegrationID]].encode(value.id),
-            "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "active" -> value.active.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "active" -> value.active.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20805,13 +21537,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueMoveInput] = new ArgEncoder[IssueMoveInput] {
 
-      override def encode(value: IssueMoveInput): Value =
-        ObjectValue(
+      override def encode(value: IssueMoveInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "targetProjectPath" -> implicitly[ArgEncoder[String]].encode(value.targetProjectPath),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20836,18 +21568,18 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueMoveListInput] = new ArgEncoder[IssueMoveListInput] {
 
-      override def encode(value: IssueMoveListInput): Value =
-        ObjectValue(
+      override def encode(value: IssueMoveListInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "boardId" -> implicitly[ArgEncoder[String]].encode(value.boardId),
-            "fromListId" -> value.fromListId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "toListId" -> value.toListId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "moveBeforeId" -> value.moveBeforeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "moveAfterId" -> value.moveAfterId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "fromListId" -> value.fromListId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "toListId" -> value.toListId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "moveBeforeId" -> value.moveBeforeId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "moveAfterId" -> value.moveAfterId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20868,16 +21600,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetAssigneesInput] = new ArgEncoder[IssueSetAssigneesInput] {
 
-      override def encode(value: IssueSetAssigneesInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetAssigneesInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "assigneeUsernames" -> ListValue(value.assigneeUsernames.map(value => implicitly[ArgEncoder[String]].encode(value))),
+            "assigneeUsernames" -> __ListValue(value.assigneeUsernames.map(value => implicitly[ArgEncoder[String]].encode(value))),
             "operationMode" -> value
               .operationMode
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20892,13 +21624,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetConfidentialInput] = new ArgEncoder[IssueSetConfidentialInput] {
 
-      override def encode(value: IssueSetConfidentialInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetConfidentialInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "confidential" -> implicitly[ArgEncoder[Boolean]].encode(value.confidential),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20913,13 +21645,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetDueDateInput] = new ArgEncoder[IssueSetDueDateInput] {
 
-      override def encode(value: IssueSetDueDateInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetDueDateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "dueDate" -> implicitly[ArgEncoder[Time]].encode(value.dueDate),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20934,13 +21666,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetEpicInput] = new ArgEncoder[IssueSetEpicInput] {
 
-      override def encode(value: IssueSetEpicInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetEpicInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20960,13 +21692,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetIterationInput] = new ArgEncoder[IssueSetIterationInput] {
 
-      override def encode(value: IssueSetIterationInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetIterationInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "iterationId" -> value.iterationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[IterationID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "iterationId" -> value.iterationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[IterationID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -20981,13 +21713,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetLockedInput] = new ArgEncoder[IssueSetLockedInput] {
 
-      override def encode(value: IssueSetLockedInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetLockedInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "locked" -> implicitly[ArgEncoder[Boolean]].encode(value.locked),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21002,13 +21734,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetSeverityInput] = new ArgEncoder[IssueSetSeverityInput] {
 
-      override def encode(value: IssueSetSeverityInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetSeverityInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "severity" -> implicitly[ArgEncoder[IssuableSeverity]].encode(value.severity),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21023,13 +21755,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetSubscriptionInput] = new ArgEncoder[IssueSetSubscriptionInput] {
 
-      override def encode(value: IssueSetSubscriptionInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetSubscriptionInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "subscribedState" -> implicitly[ArgEncoder[Boolean]].encode(value.subscribedState),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21044,13 +21776,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[IssueSetWeightInput] = new ArgEncoder[IssueSetWeightInput] {
 
-      override def encode(value: IssueSetWeightInput): Value =
-        ObjectValue(
+      override def encode(value: IssueSetWeightInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "weight" -> implicitly[ArgEncoder[Int]].encode(value.weight),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21071,18 +21803,18 @@ object graphql {
 
     implicit val encoder: ArgEncoder[JiraImportStartInput] = new ArgEncoder[JiraImportStartInput] {
 
-      override def encode(value: JiraImportStartInput): Value =
-        ObjectValue(
+      override def encode(value: JiraImportStartInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "jiraProjectKey" -> implicitly[ArgEncoder[String]].encode(value.jiraProjectKey),
-            "jiraProjectName" -> value.jiraProjectName.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "jiraProjectName" -> value.jiraProjectName.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "usersMapping" -> value
               .usersMapping
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => implicitly[ArgEncoder[JiraUsersMappingInputType]].encode(value)))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[JiraUsersMappingInputType]].encode(value)))
               ),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21097,12 +21829,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[JiraImportUsersInput] = new ArgEncoder[JiraImportUsersInput] {
 
-      override def encode(value: JiraImportUsersInput): Value =
-        ObjectValue(
+      override def encode(value: JiraImportUsersInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "startAt" -> value.startAt.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "startAt" -> value.startAt.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21117,11 +21849,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[JiraUsersMappingInputType] = new ArgEncoder[JiraUsersMappingInputType] {
 
-      override def encode(value: JiraUsersMappingInputType): Value =
-        ObjectValue(
+      override def encode(value: JiraUsersMappingInputType): __Value =
+        __ObjectValue(
           List(
             "jiraAccountId" -> implicitly[ArgEncoder[String]].encode(value.jiraAccountId),
-            "gitlabId" -> value.gitlabId.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value))
+            "gitlabId" -> value.gitlabId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value))
           )
         )
 
@@ -21143,15 +21875,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[LabelCreateInput] = new ArgEncoder[LabelCreateInput] {
 
-      override def encode(value: LabelCreateInput): Value =
-        ObjectValue(
+      override def encode(value: LabelCreateInput): __Value =
+        __ObjectValue(
           List(
-            "projectPath" -> value.projectPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "groupPath" -> value.groupPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "projectPath" -> value.projectPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "groupPath" -> value.groupPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "title" -> implicitly[ArgEncoder[String]].encode(value.title),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "color" -> value.color.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "color" -> value.color.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21166,11 +21898,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MarkAsSpamSnippetInput] = new ArgEncoder[MarkAsSpamSnippetInput] {
 
-      override def encode(value: MarkAsSpamSnippetInput): Value =
-        ObjectValue(
+      override def encode(value: MarkAsSpamSnippetInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[SnippetID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21193,18 +21925,18 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestCreateInput] = new ArgEncoder[MergeRequestCreateInput] {
 
-      override def encode(value: MergeRequestCreateInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestCreateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "title" -> implicitly[ArgEncoder[String]].encode(value.title),
             "sourceBranch" -> implicitly[ArgEncoder[String]].encode(value.sourceBranch),
             "targetBranch" -> implicitly[ArgEncoder[String]].encode(value.targetBranch),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "labels" -> value
               .labels
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21225,16 +21957,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestSetAssigneesInput] = new ArgEncoder[MergeRequestSetAssigneesInput] {
 
-      override def encode(value: MergeRequestSetAssigneesInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestSetAssigneesInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "assigneeUsernames" -> ListValue(value.assigneeUsernames.map(value => implicitly[ArgEncoder[String]].encode(value))),
+            "assigneeUsernames" -> __ListValue(value.assigneeUsernames.map(value => implicitly[ArgEncoder[String]].encode(value))),
             "operationMode" -> value
               .operationMode
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21255,16 +21987,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestSetLabelsInput] = new ArgEncoder[MergeRequestSetLabelsInput] {
 
-      override def encode(value: MergeRequestSetLabelsInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestSetLabelsInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "labelIds" -> ListValue(value.labelIds.map(value => implicitly[ArgEncoder[LabelID]].encode(value))),
+            "labelIds" -> __ListValue(value.labelIds.map(value => implicitly[ArgEncoder[LabelID]].encode(value))),
             "operationMode" -> value
               .operationMode
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MutationOperationMode]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21279,13 +22011,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestSetLockedInput] = new ArgEncoder[MergeRequestSetLockedInput] {
 
-      override def encode(value: MergeRequestSetLockedInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestSetLockedInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "locked" -> implicitly[ArgEncoder[Boolean]].encode(value.locked),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21305,13 +22037,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestSetMilestoneInput] = new ArgEncoder[MergeRequestSetMilestoneInput] {
 
-      override def encode(value: MergeRequestSetMilestoneInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestSetMilestoneInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "milestoneId" -> value.milestoneId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21331,13 +22063,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestSetSubscriptionInput] = new ArgEncoder[MergeRequestSetSubscriptionInput] {
 
-      override def encode(value: MergeRequestSetSubscriptionInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestSetSubscriptionInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "subscribedState" -> implicitly[ArgEncoder[Boolean]].encode(value.subscribedState),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21352,13 +22084,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestSetWipInput] = new ArgEncoder[MergeRequestSetWipInput] {
 
-      override def encode(value: MergeRequestSetWipInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestSetWipInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "wip" -> implicitly[ArgEncoder[Boolean]].encode(value.wip),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21380,15 +22112,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[MergeRequestUpdateInput] = new ArgEncoder[MergeRequestUpdateInput] {
 
-      override def encode(value: MergeRequestUpdateInput): Value =
-        ObjectValue(
+      override def encode(value: MergeRequestUpdateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "targetBranch" -> value.targetBranch.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "targetBranch" -> value.targetBranch.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21403,11 +22135,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[NamespaceIncreaseStorageTemporarilyInput] = new ArgEncoder[NamespaceIncreaseStorageTemporarilyInput] {
 
-      override def encode(value: NamespaceIncreaseStorageTemporarilyInput): Value =
-        ObjectValue(
+      override def encode(value: NamespaceIncreaseStorageTemporarilyInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[NamespaceID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21424,6 +22156,7 @@ object graphql {
     releaseTag: Option[String] = None,
     myReactionEmoji: Option[String] = None,
     epicId: Option[EpicID] = None,
+    iterationTitle: Option[String] = None,
     weight: Option[String] = None
   )
 
@@ -21431,29 +22164,108 @@ object graphql {
 
     implicit val encoder: ArgEncoder[NegatedBoardIssueInput] = new ArgEncoder[NegatedBoardIssueInput] {
 
-      override def encode(value: NegatedBoardIssueInput): Value =
-        ObjectValue(
+      override def encode(value: NegatedBoardIssueInput): __Value =
+        __ObjectValue(
           List(
             "labelName" -> value
               .labelName
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => value.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
-            "milestoneTitle" -> value.milestoneTitle.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "milestoneTitle" -> value.milestoneTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "assigneeUsername" -> value
               .assigneeUsername
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => value.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
-            "authorUsername" -> value.authorUsername.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "releaseTag" -> value.releaseTag.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "myReactionEmoji" -> value.myReactionEmoji.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
-            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "authorUsername" -> value.authorUsername.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "releaseTag" -> value.releaseTag.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "myReactionEmoji" -> value.myReactionEmoji.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
+            "iterationTitle" -> value.iterationTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "NegatedBoardIssueInput"
+    }
+
+  }
+
+  case class OncallScheduleCreateInput(
+    projectPath: String,
+    name: String,
+    description: Option[String] = None,
+    timezone: String,
+    clientMutationId: Option[String] = None
+  )
+
+  object OncallScheduleCreateInput {
+
+    implicit val encoder: ArgEncoder[OncallScheduleCreateInput] = new ArgEncoder[OncallScheduleCreateInput] {
+
+      override def encode(value: OncallScheduleCreateInput): __Value =
+        __ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "name" -> implicitly[ArgEncoder[String]].encode(value.name),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "timezone" -> implicitly[ArgEncoder[String]].encode(value.timezone),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "OncallScheduleCreateInput"
+    }
+
+  }
+
+  case class OncallScheduleDestroyInput(projectPath: String, iid: String, clientMutationId: Option[String] = None)
+
+  object OncallScheduleDestroyInput {
+
+    implicit val encoder: ArgEncoder[OncallScheduleDestroyInput] = new ArgEncoder[OncallScheduleDestroyInput] {
+
+      override def encode(value: OncallScheduleDestroyInput): __Value =
+        __ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "OncallScheduleDestroyInput"
+    }
+
+  }
+
+  case class OncallScheduleUpdateInput(
+    projectPath: String,
+    iid: String,
+    name: Option[String] = None,
+    description: Option[String] = None,
+    timezone: Option[String] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object OncallScheduleUpdateInput {
+
+    implicit val encoder: ArgEncoder[OncallScheduleUpdateInput] = new ArgEncoder[OncallScheduleUpdateInput] {
+
+      override def encode(value: OncallScheduleUpdateInput): __Value =
+        __ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "timezone" -> value.timezone.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "OncallScheduleUpdateInput"
     }
 
   }
@@ -21464,11 +22276,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[PipelineCancelInput] = new ArgEncoder[PipelineCancelInput] {
 
-      override def encode(value: PipelineCancelInput): Value =
-        ObjectValue(
+      override def encode(value: PipelineCancelInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[CiPipelineID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21483,11 +22295,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[PipelineDestroyInput] = new ArgEncoder[PipelineDestroyInput] {
 
-      override def encode(value: PipelineDestroyInput): Value =
-        ObjectValue(
+      override def encode(value: PipelineDestroyInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[CiPipelineID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21502,11 +22314,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[PipelineRetryInput] = new ArgEncoder[PipelineRetryInput] {
 
-      override def encode(value: PipelineRetryInput): Value =
-        ObjectValue(
+      override def encode(value: PipelineRetryInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[CiPipelineID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21521,13 +22333,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[PrometheusIntegrationCreateInput] = new ArgEncoder[PrometheusIntegrationCreateInput] {
 
-      override def encode(value: PrometheusIntegrationCreateInput): Value =
-        ObjectValue(
+      override def encode(value: PrometheusIntegrationCreateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "active" -> implicitly[ArgEncoder[Boolean]].encode(value.active),
             "apiUrl" -> implicitly[ArgEncoder[String]].encode(value.apiUrl),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21542,11 +22354,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[PrometheusIntegrationResetTokenInput] = new ArgEncoder[PrometheusIntegrationResetTokenInput] {
 
-      override def encode(value: PrometheusIntegrationResetTokenInput): Value =
-        ObjectValue(
+      override def encode(value: PrometheusIntegrationResetTokenInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[PrometheusServiceID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21566,13 +22378,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[PrometheusIntegrationUpdateInput] = new ArgEncoder[PrometheusIntegrationUpdateInput] {
 
-      override def encode(value: PrometheusIntegrationUpdateInput): Value =
-        ObjectValue(
+      override def encode(value: PrometheusIntegrationUpdateInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[PrometheusServiceID]].encode(value.id),
-            "active" -> value.active.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "apiUrl" -> value.apiUrl.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "active" -> value.active.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "apiUrl" -> value.apiUrl.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21587,13 +22399,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[PromoteToEpicInput] = new ArgEncoder[PromoteToEpicInput] {
 
-      override def encode(value: PromoteToEpicInput): Value =
-        ObjectValue(
+      override def encode(value: PromoteToEpicInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "groupPath" -> value.groupPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "groupPath" -> value.groupPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21613,13 +22425,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ReleaseAssetLinkInput] = new ArgEncoder[ReleaseAssetLinkInput] {
 
-      override def encode(value: ReleaseAssetLinkInput): Value =
-        ObjectValue(
+      override def encode(value: ReleaseAssetLinkInput): __Value =
+        __ObjectValue(
           List(
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "url" -> implicitly[ArgEncoder[String]].encode(value.url),
-            "directAssetPath" -> value.directAssetPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "linkType" -> value.linkType.fold(NullValue: Value)(value => implicitly[ArgEncoder[ReleaseAssetLinkType]].encode(value))
+            "directAssetPath" -> value.directAssetPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "linkType" -> value.linkType.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ReleaseAssetLinkType]].encode(value))
           )
         )
 
@@ -21634,12 +22446,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ReleaseAssetsInput] = new ArgEncoder[ReleaseAssetsInput] {
 
-      override def encode(value: ReleaseAssetsInput): Value =
-        ObjectValue(
+      override def encode(value: ReleaseAssetsInput): __Value =
+        __ObjectValue(
           List(
             "links" -> value
               .links
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[ReleaseAssetLinkInput]].encode(value))))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[ReleaseAssetLinkInput]].encode(value)))
+              )
           )
         )
 
@@ -21664,24 +22478,78 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ReleaseCreateInput] = new ArgEncoder[ReleaseCreateInput] {
 
-      override def encode(value: ReleaseCreateInput): Value =
-        ObjectValue(
+      override def encode(value: ReleaseCreateInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "tagName" -> implicitly[ArgEncoder[String]].encode(value.tagName),
-            "ref" -> value.ref.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "releasedAt" -> value.releasedAt.fold(NullValue: Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "ref" -> value.ref.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "releasedAt" -> value.releasedAt.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
             "milestones" -> value
               .milestones
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
-            "assets" -> value.assets.fold(NullValue: Value)(value => implicitly[ArgEncoder[ReleaseAssetsInput]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "assets" -> value.assets.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ReleaseAssetsInput]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "ReleaseCreateInput"
+    }
+
+  }
+
+  case class ReleaseDeleteInput(projectPath: String, tagName: String, clientMutationId: Option[String] = None)
+
+  object ReleaseDeleteInput {
+
+    implicit val encoder: ArgEncoder[ReleaseDeleteInput] = new ArgEncoder[ReleaseDeleteInput] {
+
+      override def encode(value: ReleaseDeleteInput): __Value =
+        __ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "tagName" -> implicitly[ArgEncoder[String]].encode(value.tagName),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "ReleaseDeleteInput"
+    }
+
+  }
+
+  case class ReleaseUpdateInput(
+    projectPath: String,
+    tagName: String,
+    name: Option[String] = None,
+    description: Option[String] = None,
+    releasedAt: Option[Time] = None,
+    milestones: Option[List[String]] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object ReleaseUpdateInput {
+
+    implicit val encoder: ArgEncoder[ReleaseUpdateInput] = new ArgEncoder[ReleaseUpdateInput] {
+
+      override def encode(value: ReleaseUpdateInput): __Value =
+        __ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "tagName" -> implicitly[ArgEncoder[String]].encode(value.tagName),
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "releasedAt" -> value.releasedAt.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "milestones" -> value
+              .milestones
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "ReleaseUpdateInput"
     }
 
   }
@@ -21692,12 +22560,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[RemoveAwardEmojiInput] = new ArgEncoder[RemoveAwardEmojiInput] {
 
-      override def encode(value: RemoveAwardEmojiInput): Value =
-        ObjectValue(
+      override def encode(value: RemoveAwardEmojiInput): __Value =
+        __ObjectValue(
           List(
             "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21712,11 +22580,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[RemoveProjectFromSecurityDashboardInput] = new ArgEncoder[RemoveProjectFromSecurityDashboardInput] {
 
-      override def encode(value: RemoveProjectFromSecurityDashboardInput): Value =
-        ObjectValue(
+      override def encode(value: RemoveProjectFromSecurityDashboardInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[ProjectID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21731,12 +22599,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[RepositionImageDiffNoteInput] = new ArgEncoder[RepositionImageDiffNoteInput] {
 
-      override def encode(value: RepositionImageDiffNoteInput): Value =
-        ObjectValue(
+      override def encode(value: RepositionImageDiffNoteInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[DiffNoteID]].encode(value.id),
             "position" -> implicitly[ArgEncoder[UpdateDiffImagePositionInput]].encode(value.position),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21751,11 +22619,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[RevertVulnerabilityToDetectedInput] = new ArgEncoder[RevertVulnerabilityToDetectedInput] {
 
-      override def encode(value: RevertVulnerabilityToDetectedInput): Value =
-        ObjectValue(
+      override def encode(value: RevertVulnerabilityToDetectedInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21776,14 +22644,14 @@ object graphql {
 
     implicit val encoder: ArgEncoder[RunDASTScanInput] = new ArgEncoder[RunDASTScanInput] {
 
-      override def encode(value: RunDASTScanInput): Value =
-        ObjectValue(
+      override def encode(value: RunDASTScanInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "targetUrl" -> implicitly[ArgEncoder[String]].encode(value.targetUrl),
             "branch" -> implicitly[ArgEncoder[String]].encode(value.branch),
             "scanType" -> implicitly[ArgEncoder[DastScanTypeEnum]].encode(value.scanType),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21802,15 +22670,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[SastCiConfigurationAnalyzersEntityInput] = new ArgEncoder[SastCiConfigurationAnalyzersEntityInput] {
 
-      override def encode(value: SastCiConfigurationAnalyzersEntityInput): Value =
-        ObjectValue(
+      override def encode(value: SastCiConfigurationAnalyzersEntityInput): __Value =
+        __ObjectValue(
           List(
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "enabled" -> implicitly[ArgEncoder[Boolean]].encode(value.enabled),
             "variables" -> value
               .variables
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
               )
           )
         )
@@ -21826,8 +22694,8 @@ object graphql {
 
     implicit val encoder: ArgEncoder[SastCiConfigurationEntityInput] = new ArgEncoder[SastCiConfigurationEntityInput] {
 
-      override def encode(value: SastCiConfigurationEntityInput): Value =
-        ObjectValue(
+      override def encode(value: SastCiConfigurationEntityInput): __Value =
+        __ObjectValue(
           List(
             "field" -> implicitly[ArgEncoder[String]].encode(value.field),
             "defaultValue" -> implicitly[ArgEncoder[String]].encode(value.defaultValue),
@@ -21850,23 +22718,23 @@ object graphql {
 
     implicit val encoder: ArgEncoder[SastCiConfigurationInput] = new ArgEncoder[SastCiConfigurationInput] {
 
-      override def encode(value: SastCiConfigurationInput): Value =
-        ObjectValue(
+      override def encode(value: SastCiConfigurationInput): __Value =
+        __ObjectValue(
           List(
             "global" -> value
               .global
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
               ),
             "pipeline" -> value
               .pipeline
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationEntityInput]].encode(value)))
               ),
             "analyzers" -> value
               .analyzers
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationAnalyzersEntityInput]].encode(value)))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[SastCiConfigurationAnalyzersEntityInput]].encode(value)))
               )
           )
         )
@@ -21887,13 +22755,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[SnippetBlobActionInputType] = new ArgEncoder[SnippetBlobActionInputType] {
 
-      override def encode(value: SnippetBlobActionInputType): Value =
-        ObjectValue(
+      override def encode(value: SnippetBlobActionInputType): __Value =
+        __ObjectValue(
           List(
             "action" -> implicitly[ArgEncoder[SnippetBlobActionEnum]].encode(value.action),
-            "previousPath" -> value.previousPath.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "previousPath" -> value.previousPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "filePath" -> implicitly[ArgEncoder[String]].encode(value.filePath),
-            "content" -> value.content.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "content" -> value.content.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21908,11 +22776,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TerraformStateDeleteInput] = new ArgEncoder[TerraformStateDeleteInput] {
 
-      override def encode(value: TerraformStateDeleteInput): Value =
-        ObjectValue(
+      override def encode(value: TerraformStateDeleteInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[TerraformStateID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21927,11 +22795,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TerraformStateLockInput] = new ArgEncoder[TerraformStateLockInput] {
 
-      override def encode(value: TerraformStateLockInput): Value =
-        ObjectValue(
+      override def encode(value: TerraformStateLockInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[TerraformStateID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21946,11 +22814,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TerraformStateUnlockInput] = new ArgEncoder[TerraformStateUnlockInput] {
 
-      override def encode(value: TerraformStateUnlockInput): Value =
-        ObjectValue(
+      override def encode(value: TerraformStateUnlockInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[TerraformStateID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -21965,8 +22833,8 @@ object graphql {
 
     implicit val encoder: ArgEncoder[Timeframe] = new ArgEncoder[Timeframe] {
 
-      override def encode(value: Timeframe): Value =
-        ObjectValue(
+      override def encode(value: Timeframe): __Value =
+        __ObjectValue(
           List("start" -> implicitly[ArgEncoder[Date]].encode(value.start), "end" -> implicitly[ArgEncoder[Date]].encode(value.end))
         )
 
@@ -21981,11 +22849,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TodoCreateInput] = new ArgEncoder[TodoCreateInput] {
 
-      override def encode(value: TodoCreateInput): Value =
-        ObjectValue(
+      override def encode(value: TodoCreateInput): __Value =
+        __ObjectValue(
           List(
             "targetId" -> implicitly[ArgEncoder[TodoableID]].encode(value.targetId),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22000,11 +22868,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TodoMarkDoneInput] = new ArgEncoder[TodoMarkDoneInput] {
 
-      override def encode(value: TodoMarkDoneInput): Value =
-        ObjectValue(
+      override def encode(value: TodoMarkDoneInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[TodoID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22019,11 +22887,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TodoRestoreInput] = new ArgEncoder[TodoRestoreInput] {
 
-      override def encode(value: TodoRestoreInput): Value =
-        ObjectValue(
+      override def encode(value: TodoRestoreInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[TodoID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22038,11 +22906,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TodoRestoreManyInput] = new ArgEncoder[TodoRestoreManyInput] {
 
-      override def encode(value: TodoRestoreManyInput): Value =
-        ObjectValue(
+      override def encode(value: TodoRestoreManyInput): __Value =
+        __ObjectValue(
           List(
-            "ids" -> ListValue(value.ids.map(value => implicitly[ArgEncoder[TodoID]].encode(value))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "ids" -> __ListValue(value.ids.map(value => implicitly[ArgEncoder[TodoID]].encode(value))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22057,9 +22925,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[TodosMarkAllDoneInput] = new ArgEncoder[TodosMarkAllDoneInput] {
 
-      override def encode(value: TodosMarkAllDoneInput): Value =
-        ObjectValue(
-          List("clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)))
+      override def encode(value: TodosMarkAllDoneInput): __Value =
+        __ObjectValue(
+          List(
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
         )
 
       override def typeName: String = "TodosMarkAllDoneInput"
@@ -22073,12 +22943,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[ToggleAwardEmojiInput] = new ArgEncoder[ToggleAwardEmojiInput] {
 
-      override def encode(value: ToggleAwardEmojiInput): Value =
-        ObjectValue(
+      override def encode(value: ToggleAwardEmojiInput): __Value =
+        __ObjectValue(
           List(
             "awardableId" -> implicitly[ArgEncoder[AwardableID]].encode(value.awardableId),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22098,13 +22968,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateAlertStatusInput] = new ArgEncoder[UpdateAlertStatusInput] {
 
-      override def encode(value: UpdateAlertStatusInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateAlertStatusInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "status" -> implicitly[ArgEncoder[AlertManagementStatus]].encode(value.status),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22124,13 +22994,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateBoardEpicUserPreferencesInput] = new ArgEncoder[UpdateBoardEpicUserPreferencesInput] {
 
-      override def encode(value: UpdateBoardEpicUserPreferencesInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateBoardEpicUserPreferencesInput): __Value =
+        __ObjectValue(
           List(
             "boardId" -> implicitly[ArgEncoder[BoardID]].encode(value.boardId),
             "epicId" -> implicitly[ArgEncoder[EpicID]].encode(value.epicId),
             "collapsed" -> implicitly[ArgEncoder[Boolean]].encode(value.collapsed),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22156,23 +23026,23 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateBoardInput] = new ArgEncoder[UpdateBoardInput] {
 
-      override def encode(value: UpdateBoardInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateBoardInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[BoardID]].encode(value.id),
-            "name" -> value.name.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "hideBacklogList" -> value.hideBacklogList.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "hideClosedList" -> value.hideClosedList.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "assigneeId" -> value.assigneeId.fold(NullValue: Value)(value => implicitly[ArgEncoder[UserID]].encode(value)),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
-            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "hideBacklogList" -> value.hideBacklogList.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "hideClosedList" -> value.hideClosedList.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "assigneeId" -> value.assigneeId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[UserID]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MilestoneID]].encode(value)),
+            "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
             "labels" -> value
               .labels
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "labelIds" -> value
               .labelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22192,13 +23062,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateBoardListInput] = new ArgEncoder[UpdateBoardListInput] {
 
-      override def encode(value: UpdateBoardListInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateBoardListInput): __Value =
+        __ObjectValue(
           List(
             "listId" -> implicitly[ArgEncoder[ListID]].encode(value.listId),
-            "position" -> value.position.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "collapsed" -> value.collapsed.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "position" -> value.position.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "collapsed" -> value.collapsed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22222,25 +23092,57 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateContainerExpirationPolicyInput] = new ArgEncoder[UpdateContainerExpirationPolicyInput] {
 
-      override def encode(value: UpdateContainerExpirationPolicyInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateContainerExpirationPolicyInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "enabled" -> value.enabled.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "enabled" -> value.enabled.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "cadence" -> value
               .cadence
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[ContainerExpirationPolicyCadenceEnum]].encode(value)),
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ContainerExpirationPolicyCadenceEnum]].encode(value)),
             "olderThan" -> value
               .olderThan
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[ContainerExpirationPolicyOlderThanEnum]].encode(value)),
-            "keepN" -> value.keepN.fold(NullValue: Value)(value => implicitly[ArgEncoder[ContainerExpirationPolicyKeepEnum]].encode(value)),
-            "nameRegex" -> value.nameRegex.fold(NullValue: Value)(value => implicitly[ArgEncoder[UntrustedRegexp]].encode(value)),
-            "nameRegexKeep" -> value.nameRegexKeep.fold(NullValue: Value)(value => implicitly[ArgEncoder[UntrustedRegexp]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ContainerExpirationPolicyOlderThanEnum]].encode(value)),
+            "keepN" -> value
+              .keepN
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ContainerExpirationPolicyKeepEnum]].encode(value)),
+            "nameRegex" -> value.nameRegex.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[UntrustedRegexp]].encode(value)),
+            "nameRegexKeep" -> value
+              .nameRegexKeep
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[UntrustedRegexp]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "UpdateContainerExpirationPolicyInput"
+    }
+
+  }
+
+  case class UpdateDevopsAdoptionSegmentInput(
+    name: String,
+    groupIds: Option[List[GroupID]] = None,
+    id: AnalyticsDevopsAdoptionSegmentID,
+    clientMutationId: Option[String] = None
+  )
+
+  object UpdateDevopsAdoptionSegmentInput {
+
+    implicit val encoder: ArgEncoder[UpdateDevopsAdoptionSegmentInput] = new ArgEncoder[UpdateDevopsAdoptionSegmentInput] {
+
+      override def encode(value: UpdateDevopsAdoptionSegmentInput): __Value =
+        __ObjectValue(
+          List(
+            "name" -> implicitly[ArgEncoder[String]].encode(value.name),
+            "groupIds" -> value
+              .groupIds
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[GroupID]].encode(value)))),
+            "id" -> implicitly[ArgEncoder[AnalyticsDevopsAdoptionSegmentID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "UpdateDevopsAdoptionSegmentInput"
     }
 
   }
@@ -22256,13 +23158,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateDiffImagePositionInput] = new ArgEncoder[UpdateDiffImagePositionInput] {
 
-      override def encode(value: UpdateDiffImagePositionInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateDiffImagePositionInput): __Value =
+        __ObjectValue(
           List(
-            "x" -> value.x.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "y" -> value.y.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "width" -> value.width.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "height" -> value.height.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value))
+            "x" -> value.x.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "y" -> value.y.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "width" -> value.width.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "height" -> value.height.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value))
           )
         )
 
@@ -22291,26 +23193,26 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateEpicInput] = new ArgEncoder[UpdateEpicInput] {
 
-      override def encode(value: UpdateEpicInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateEpicInput): __Value =
+        __ObjectValue(
           List(
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "groupPath" -> implicitly[ArgEncoder[String]].encode(value.groupPath),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "startDateFixed" -> value.startDateFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "dueDateFixed" -> value.dueDateFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "startDateIsFixed" -> value.startDateIsFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "dueDateIsFixed" -> value.dueDateIsFixed.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "startDateFixed" -> value.startDateFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "dueDateFixed" -> value.dueDateFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "startDateIsFixed" -> value.startDateIsFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "dueDateIsFixed" -> value.dueDateIsFixed.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "addLabelIds" -> value
               .addLabelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "removeLabelIds" -> value
               .removeLabelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
-            "stateEvent" -> value.stateEvent.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicStateEvent]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "stateEvent" -> value.stateEvent.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicStateEvent]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22330,15 +23232,15 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateImageDiffNoteInput] = new ArgEncoder[UpdateImageDiffNoteInput] {
 
-      override def encode(value: UpdateImageDiffNoteInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateImageDiffNoteInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[NoteID]].encode(value.id),
-            "body" -> value.body.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "body" -> value.body.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "position" -> value
               .position
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[UpdateDiffImagePositionInput]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[UpdateDiffImagePositionInput]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22369,28 +23271,28 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateIssueInput] = new ArgEncoder[UpdateIssueInput] {
 
-      override def encode(value: UpdateIssueInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateIssueInput): __Value =
+        __ObjectValue(
           List(
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "dueDate" -> value.dueDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[ISO8601Date]].encode(value)),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "locked" -> value.locked.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "milestoneId" -> value.milestoneId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "dueDate" -> value.dueDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ISO8601Date]].encode(value)),
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "locked" -> value.locked.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "milestoneId" -> value.milestoneId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "addLabelIds" -> value
               .addLabelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "removeLabelIds" -> value
               .removeLabelIds
-              .fold(NullValue: Value)(value => ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
-            "stateEvent" -> value.stateEvent.fold(NullValue: Value)(value => implicitly[ArgEncoder[IssueStateEvent]].encode(value)),
-            "healthStatus" -> value.healthStatus.fold(NullValue: Value)(value => implicitly[ArgEncoder[HealthStatus]].encode(value)),
-            "weight" -> value.weight.fold(NullValue: Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
-            "epicId" -> value.epicId.fold(NullValue: Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "stateEvent" -> value.stateEvent.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[IssueStateEvent]].encode(value)),
+            "healthStatus" -> value.healthStatus.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[HealthStatus]].encode(value)),
+            "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22413,16 +23315,16 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateIterationInput] = new ArgEncoder[UpdateIterationInput] {
 
-      override def encode(value: UpdateIterationInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateIterationInput): __Value =
+        __ObjectValue(
           List(
             "groupPath" -> implicitly[ArgEncoder[String]].encode(value.groupPath),
             "id" -> implicitly[ArgEncoder[String]].encode(value.id),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "startDate" -> value.startDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "dueDate" -> value.dueDate.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "startDate" -> value.startDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "dueDate" -> value.dueDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22442,13 +23344,13 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateNoteInput] = new ArgEncoder[UpdateNoteInput] {
 
-      override def encode(value: UpdateNoteInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateNoteInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[NoteID]].encode(value.id),
-            "body" -> value.body.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "confidential" -> value.confidential.fold(NullValue: Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "body" -> value.body.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "confidential" -> value.confidential.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22471,18 +23373,18 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateRequirementInput] = new ArgEncoder[UpdateRequirementInput] {
 
-      override def encode(value: UpdateRequirementInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateRequirementInput): __Value =
+        __ObjectValue(
           List(
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "state" -> value.state.fold(NullValue: Value)(value => implicitly[ArgEncoder[RequirementState]].encode(value)),
+            "state" -> value.state.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[RequirementState]].encode(value)),
             "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
             "lastTestReportState" -> value
               .lastTestReportState
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[TestReportState]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[TestReportState]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22504,21 +23406,21 @@ object graphql {
 
     implicit val encoder: ArgEncoder[UpdateSnippetInput] = new ArgEncoder[UpdateSnippetInput] {
 
-      override def encode(value: UpdateSnippetInput): Value =
-        ObjectValue(
+      override def encode(value: UpdateSnippetInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[SnippetID]].encode(value.id),
-            "title" -> value.title.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "description" -> value.description.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "description" -> value.description.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "visibilityLevel" -> value
               .visibilityLevel
-              .fold(NullValue: Value)(value => implicitly[ArgEncoder[VisibilityLevelsEnum]].encode(value)),
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[VisibilityLevelsEnum]].encode(value)),
             "blobActions" -> value
               .blobActions
-              .fold(NullValue: Value)(value =>
-                ListValue(value.map(value => implicitly[ArgEncoder[SnippetBlobActionInputType]].encode(value)))
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[SnippetBlobActionInputType]].encode(value)))
               ),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22533,11 +23435,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[VulnerabilityConfirmInput] = new ArgEncoder[VulnerabilityConfirmInput] {
 
-      override def encode(value: VulnerabilityConfirmInput): Value =
-        ObjectValue(
+      override def encode(value: VulnerabilityConfirmInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22552,12 +23454,12 @@ object graphql {
 
     implicit val encoder: ArgEncoder[VulnerabilityDismissInput] = new ArgEncoder[VulnerabilityDismissInput] {
 
-      override def encode(value: VulnerabilityDismissInput): Value =
-        ObjectValue(
+      override def encode(value: VulnerabilityDismissInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
-            "comment" -> value.comment.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "comment" -> value.comment.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22572,11 +23474,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[VulnerabilityResolveInput] = new ArgEncoder[VulnerabilityResolveInput] {
 
-      override def encode(value: VulnerabilityResolveInput): Value =
-        ObjectValue(
+      override def encode(value: VulnerabilityResolveInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -22591,11 +23493,11 @@ object graphql {
 
     implicit val encoder: ArgEncoder[VulnerabilityRevertToDetectedInput] = new ArgEncoder[VulnerabilityRevertToDetectedInput] {
 
-      override def encode(value: VulnerabilityRevertToDetectedInput): Value =
-        ObjectValue(
+      override def encode(value: VulnerabilityRevertToDetectedInput): __Value =
+        __ObjectValue(
           List(
             "id" -> implicitly[ArgEncoder[VulnerabilityID]].encode(value.id),
-            "clientMutationId" -> value.clientMutationId.fold(NullValue: Value)(value => implicitly[ArgEncoder[String]].encode(value))
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
@@ -23124,6 +24026,13 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("createClusterAgent", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def createDevopsAdoptionSegment[A](
+      input: CreateDevopsAdoptionSegmentInput
+    )(
+      innerSelection: SelectionBuilder[CreateDevopsAdoptionSegmentPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("createDevopsAdoptionSegment", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def createDiffNote[A](
       input: CreateDiffNoteInput
     )(
@@ -23256,6 +24165,13 @@ object graphql {
       innerSelection: SelectionBuilder[DeleteAnnotationPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("deleteAnnotation", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def deleteDevopsAdoptionSegment[A](
+      input: DeleteDevopsAdoptionSegmentInput
+    )(
+      innerSelection: SelectionBuilder[DeleteDevopsAdoptionSegmentPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("deleteDevopsAdoptionSegment", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def designManagementDelete[A](
       input: DesignManagementDeleteInput
@@ -23558,6 +24474,27 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("namespaceIncreaseStorageTemporarily", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def oncallScheduleCreate[A](
+      input: OncallScheduleCreateInput
+    )(
+      innerSelection: SelectionBuilder[OncallScheduleCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("oncallScheduleCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def oncallScheduleDestroy[A](
+      input: OncallScheduleDestroyInput
+    )(
+      innerSelection: SelectionBuilder[OncallScheduleDestroyPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("oncallScheduleDestroy", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def oncallScheduleUpdate[A](
+      input: OncallScheduleUpdateInput
+    )(
+      innerSelection: SelectionBuilder[OncallScheduleUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("oncallScheduleUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def pipelineCancel[A](
       input: PipelineCancelInput
     )(
@@ -23613,6 +24550,20 @@ object graphql {
       innerSelection: SelectionBuilder[ReleaseCreatePayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("releaseCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def releaseDelete[A](
+      input: ReleaseDeleteInput
+    )(
+      innerSelection: SelectionBuilder[ReleaseDeletePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("releaseDelete", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def releaseUpdate[A](
+      input: ReleaseUpdateInput
+    )(
+      innerSelection: SelectionBuilder[ReleaseUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("releaseUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     @deprecated("Use awardEmojiRemove. Deprecated in 13.2", "")
     def removeAwardEmoji[A](
@@ -23753,6 +24704,13 @@ object graphql {
       innerSelection: SelectionBuilder[UpdateContainerExpirationPolicyPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("updateContainerExpirationPolicy", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def updateDevopsAdoptionSegment[A](
+      input: UpdateDevopsAdoptionSegmentInput
+    )(
+      innerSelection: SelectionBuilder[UpdateDevopsAdoptionSegmentPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("updateDevopsAdoptionSegment", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def updateEpic[A](
       input: UpdateEpicInput

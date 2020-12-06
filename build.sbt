@@ -15,7 +15,6 @@ inThisBuild(
   )
 )
 
-val Scala212 = "2.12.12"
 val Scala213 = "2.13.3"
 
 def crossPlugin(x: sbt.librarymanagement.ModuleID) = compilerPlugin(x.cross(CrossVersion.full))
@@ -27,15 +26,15 @@ val compilerPlugins = List(
   compilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 )
 
-val GraalVM11 = "graalvm11@20.1.0"
+val GraalVM11 = "graalvm-ce-java11@20.3.0"
 
 ThisBuild / scalaVersion := Scala213
-ThisBuild / crossScalaVersions := Seq(Scala212, Scala213)
+ThisBuild / crossScalaVersions := Seq(Scala213)
 ThisBuild / githubWorkflowJavaVersions := Seq(GraalVM11)
 //sbt-ci-release settings
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowPublishTargetBranches := Seq(RefPredicate.StartsWith(Ref.Tag("v")))
-ThisBuild / githubWorkflowPublishPreamble := Seq(WorkflowStep.Use("olafurpg", "setup-gpg", "v2"))
+ThisBuild / githubWorkflowPublishPreamble := Seq(WorkflowStep.Use("olafurpg", "setup-gpg", "v3"))
 ThisBuild / githubWorkflowPublish := Seq(WorkflowStep.Sbt(List("ci-release")))
 ThisBuild / githubWorkflowEnv ++= List("PGP_PASSPHRASE", "PGP_SECRET", "SONATYPE_PASSWORD", "SONATYPE_USERNAME").map { envKey =>
   envKey -> s"$${{ secrets.$envKey }}"
@@ -44,7 +43,7 @@ ThisBuild / githubWorkflowEnv ++= List("PGP_PASSPHRASE", "PGP_SECRET", "SONATYPE
 val core = project
   .settings(
     name := "caliban-gitlab",
-    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.9.3")
+    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.9.4")
   )
 
 val root = project
