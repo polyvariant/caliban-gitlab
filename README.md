@@ -20,7 +20,7 @@ For calling queries/mutations, consult [Caliban's documentation](https://ghostdo
 
 ## Publishing
 
-Until publishing from CI works:
+If you really need to publish from localhost:
 
 - `+publishSigned`
 - `sonatypeBundleRelease`
