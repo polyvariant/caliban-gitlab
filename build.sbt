@@ -26,7 +26,7 @@ val compilerPlugins = List(
   compilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 )
 
-val GraalVM11 = "graalvm-ce-java11@20.3.0"
+val GraalVM11 = "graalvm-ce-java11@21.0.0"
 
 ThisBuild / scalaVersion := Scala213
 ThisBuild / crossScalaVersions := Seq(Scala213)
