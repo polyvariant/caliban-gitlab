@@ -77,7 +77,11 @@ object graphql {
 
   type IterationID = String
 
+  type IterationsCadenceID = String
+
   type JSON = String
+
+  type JobID = String
 
   type JsonString = String
 
@@ -102,6 +106,8 @@ object graphql {
   type ProjectID = String
 
   type PrometheusServiceID = String
+
+  type ReleasesLinkID = String
 
   type SnippetID = String
 
@@ -440,10 +446,12 @@ object graphql {
   object ApiFuzzingScanMode {
     case object HAR extends ApiFuzzingScanMode
     case object OPENAPI extends ApiFuzzingScanMode
+    case object POSTMAN extends ApiFuzzingScanMode
 
     implicit val decoder: ScalarDecoder[ApiFuzzingScanMode] = {
       case __StringValue("HAR")     => Right(ApiFuzzingScanMode.HAR)
       case __StringValue("OPENAPI") => Right(ApiFuzzingScanMode.OPENAPI)
+      case __StringValue("POSTMAN") => Right(ApiFuzzingScanMode.POSTMAN)
       case other                    => Left(DecodingError(s"Can't build ApiFuzzingScanMode from input $other"))
     }
 
@@ -452,6 +460,7 @@ object graphql {
       override def encode(value: ApiFuzzingScanMode): __Value = value match {
         case ApiFuzzingScanMode.HAR     => __EnumValue("HAR")
         case ApiFuzzingScanMode.OPENAPI => __EnumValue("OPENAPI")
+        case ApiFuzzingScanMode.POSTMAN => __EnumValue("POSTMAN")
       }
 
       override def typeName: String = "ApiFuzzingScanMode"
@@ -530,6 +539,57 @@ object graphql {
       }
 
       override def typeName: String = "CiConfigStatus"
+    }
+
+  }
+
+  sealed trait CiJobStatus extends scala.Product with scala.Serializable
+
+  object CiJobStatus {
+    case object CREATED extends CiJobStatus
+    case object WAITING_FOR_RESOURCE extends CiJobStatus
+    case object PREPARING extends CiJobStatus
+    case object PENDING extends CiJobStatus
+    case object RUNNING extends CiJobStatus
+    case object SUCCESS extends CiJobStatus
+    case object FAILED extends CiJobStatus
+    case object CANCELED extends CiJobStatus
+    case object SKIPPED extends CiJobStatus
+    case object MANUAL extends CiJobStatus
+    case object SCHEDULED extends CiJobStatus
+
+    implicit val decoder: ScalarDecoder[CiJobStatus] = {
+      case __StringValue("CREATED")              => Right(CiJobStatus.CREATED)
+      case __StringValue("WAITING_FOR_RESOURCE") => Right(CiJobStatus.WAITING_FOR_RESOURCE)
+      case __StringValue("PREPARING")            => Right(CiJobStatus.PREPARING)
+      case __StringValue("PENDING")              => Right(CiJobStatus.PENDING)
+      case __StringValue("RUNNING")              => Right(CiJobStatus.RUNNING)
+      case __StringValue("SUCCESS")              => Right(CiJobStatus.SUCCESS)
+      case __StringValue("FAILED")               => Right(CiJobStatus.FAILED)
+      case __StringValue("CANCELED")             => Right(CiJobStatus.CANCELED)
+      case __StringValue("SKIPPED")              => Right(CiJobStatus.SKIPPED)
+      case __StringValue("MANUAL")               => Right(CiJobStatus.MANUAL)
+      case __StringValue("SCHEDULED")            => Right(CiJobStatus.SCHEDULED)
+      case other                                 => Left(DecodingError(s"Can't build CiJobStatus from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[CiJobStatus] = new ArgEncoder[CiJobStatus] {
+
+      override def encode(value: CiJobStatus): __Value = value match {
+        case CiJobStatus.CREATED              => __EnumValue("CREATED")
+        case CiJobStatus.WAITING_FOR_RESOURCE => __EnumValue("WAITING_FOR_RESOURCE")
+        case CiJobStatus.PREPARING            => __EnumValue("PREPARING")
+        case CiJobStatus.PENDING              => __EnumValue("PENDING")
+        case CiJobStatus.RUNNING              => __EnumValue("RUNNING")
+        case CiJobStatus.SUCCESS              => __EnumValue("SUCCESS")
+        case CiJobStatus.FAILED               => __EnumValue("FAILED")
+        case CiJobStatus.CANCELED             => __EnumValue("CANCELED")
+        case CiJobStatus.SKIPPED              => __EnumValue("SKIPPED")
+        case CiJobStatus.MANUAL               => __EnumValue("MANUAL")
+        case CiJobStatus.SCHEDULED            => __EnumValue("SCHEDULED")
+      }
+
+      override def typeName: String = "CiJobStatus"
     }
 
   }
@@ -1072,22 +1132,34 @@ object graphql {
     case object start_date_asc extends EpicSort
     case object end_date_desc extends EpicSort
     case object end_date_asc extends EpicSort
+    case object START_DATE_DESC_ extends EpicSort
+    case object START_DATE_ASC_ extends EpicSort
+    case object END_DATE_DESC_ extends EpicSort
+    case object END_DATE_ASC_ extends EpicSort
 
     implicit val decoder: ScalarDecoder[EpicSort] = {
       case __StringValue("start_date_desc") => Right(EpicSort.start_date_desc)
       case __StringValue("start_date_asc")  => Right(EpicSort.start_date_asc)
       case __StringValue("end_date_desc")   => Right(EpicSort.end_date_desc)
       case __StringValue("end_date_asc")    => Right(EpicSort.end_date_asc)
+      case __StringValue("START_DATE_DESC") => Right(EpicSort.START_DATE_DESC_)
+      case __StringValue("START_DATE_ASC")  => Right(EpicSort.START_DATE_ASC_)
+      case __StringValue("END_DATE_DESC")   => Right(EpicSort.END_DATE_DESC_)
+      case __StringValue("END_DATE_ASC")    => Right(EpicSort.END_DATE_ASC_)
       case other                            => Left(DecodingError(s"Can't build EpicSort from input $other"))
     }
 
     implicit val encoder: ArgEncoder[EpicSort] = new ArgEncoder[EpicSort] {
 
       override def encode(value: EpicSort): __Value = value match {
-        case EpicSort.start_date_desc => __EnumValue("start_date_desc")
-        case EpicSort.start_date_asc  => __EnumValue("start_date_asc")
-        case EpicSort.end_date_desc   => __EnumValue("end_date_desc")
-        case EpicSort.end_date_asc    => __EnumValue("end_date_asc")
+        case EpicSort.start_date_desc  => __EnumValue("start_date_desc")
+        case EpicSort.start_date_asc   => __EnumValue("start_date_asc")
+        case EpicSort.end_date_desc    => __EnumValue("end_date_desc")
+        case EpicSort.end_date_asc     => __EnumValue("end_date_asc")
+        case EpicSort.START_DATE_DESC_ => __EnumValue("START_DATE_DESC")
+        case EpicSort.START_DATE_ASC_  => __EnumValue("START_DATE_ASC")
+        case EpicSort.END_DATE_DESC_   => __EnumValue("END_DATE_DESC")
+        case EpicSort.END_DATE_ASC_    => __EnumValue("END_DATE_ASC")
       }
 
       override def typeName: String = "EpicSort"
@@ -1875,6 +1947,33 @@ object graphql {
 
   }
 
+  sealed trait MergeStrategyEnum extends scala.Product with scala.Serializable
+
+  object MergeStrategyEnum {
+    case object MERGE_TRAIN extends MergeStrategyEnum
+    case object ADD_TO_MERGE_TRAIN_WHEN_PIPELINE_SUCCEEDS extends MergeStrategyEnum
+    case object MERGE_WHEN_PIPELINE_SUCCEEDS extends MergeStrategyEnum
+
+    implicit val decoder: ScalarDecoder[MergeStrategyEnum] = {
+      case __StringValue("MERGE_TRAIN")                               => Right(MergeStrategyEnum.MERGE_TRAIN)
+      case __StringValue("ADD_TO_MERGE_TRAIN_WHEN_PIPELINE_SUCCEEDS") => Right(MergeStrategyEnum.ADD_TO_MERGE_TRAIN_WHEN_PIPELINE_SUCCEEDS)
+      case __StringValue("MERGE_WHEN_PIPELINE_SUCCEEDS")              => Right(MergeStrategyEnum.MERGE_WHEN_PIPELINE_SUCCEEDS)
+      case other                                                      => Left(DecodingError(s"Can't build MergeStrategyEnum from input $other"))
+    }
+
+    implicit val encoder: ArgEncoder[MergeStrategyEnum] = new ArgEncoder[MergeStrategyEnum] {
+
+      override def encode(value: MergeStrategyEnum): __Value = value match {
+        case MergeStrategyEnum.MERGE_TRAIN                               => __EnumValue("MERGE_TRAIN")
+        case MergeStrategyEnum.ADD_TO_MERGE_TRAIN_WHEN_PIPELINE_SUCCEEDS => __EnumValue("ADD_TO_MERGE_TRAIN_WHEN_PIPELINE_SUCCEEDS")
+        case MergeStrategyEnum.MERGE_WHEN_PIPELINE_SUCCEEDS              => __EnumValue("MERGE_WHEN_PIPELINE_SUCCEEDS")
+      }
+
+      override def typeName: String = "MergeStrategyEnum"
+    }
+
+  }
+
   sealed trait MilestoneStateEnum extends scala.Product with scala.Serializable
 
   object MilestoneStateEnum {
@@ -2472,7 +2571,6 @@ object graphql {
     case object GITHUB_SERVICE extends ServiceType
     case object GITLAB_SLACK_APPLICATION_SERVICE extends ServiceType
     case object HANGOUTS_CHAT_SERVICE extends ServiceType
-    case object HIPCHAT_SERVICE extends ServiceType
     case object IRKER_SERVICE extends ServiceType
     case object JENKINS_SERVICE extends ServiceType
     case object JIRA_SERVICE extends ServiceType
@@ -2511,7 +2609,6 @@ object graphql {
       case __StringValue("GITHUB_SERVICE")                    => Right(ServiceType.GITHUB_SERVICE)
       case __StringValue("GITLAB_SLACK_APPLICATION_SERVICE")  => Right(ServiceType.GITLAB_SLACK_APPLICATION_SERVICE)
       case __StringValue("HANGOUTS_CHAT_SERVICE")             => Right(ServiceType.HANGOUTS_CHAT_SERVICE)
-      case __StringValue("HIPCHAT_SERVICE")                   => Right(ServiceType.HIPCHAT_SERVICE)
       case __StringValue("IRKER_SERVICE")                     => Right(ServiceType.IRKER_SERVICE)
       case __StringValue("JENKINS_SERVICE")                   => Right(ServiceType.JENKINS_SERVICE)
       case __StringValue("JIRA_SERVICE")                      => Right(ServiceType.JIRA_SERVICE)
@@ -2554,7 +2651,6 @@ object graphql {
         case ServiceType.GITHUB_SERVICE                    => __EnumValue("GITHUB_SERVICE")
         case ServiceType.GITLAB_SLACK_APPLICATION_SERVICE  => __EnumValue("GITLAB_SLACK_APPLICATION_SERVICE")
         case ServiceType.HANGOUTS_CHAT_SERVICE             => __EnumValue("HANGOUTS_CHAT_SERVICE")
-        case ServiceType.HIPCHAT_SERVICE                   => __EnumValue("HIPCHAT_SERVICE")
         case ServiceType.IRKER_SERVICE                     => __EnumValue("IRKER_SERVICE")
         case ServiceType.JENKINS_SERVICE                   => __EnumValue("JENKINS_SERVICE")
         case ServiceType.JIRA_SERVICE                      => __EnumValue("JIRA_SERVICE")
@@ -5319,6 +5415,10 @@ object graphql {
 
   object CiJob {
 
+    /** Whether this job is allowed to fail.
+      */
+    def allowFailure: SelectionBuilder[CiJob, Boolean] = Field("allowFailure", Scalar())
+
     /** Artifacts generated by the job.
       */
     def artifacts[A](
@@ -5334,6 +5434,10 @@ object graphql {
       arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
     )
 
+    /** When the job was created.
+      */
+    def createdAt: SelectionBuilder[CiJob, Time] = Field("createdAt", Scalar())
+
     /** Detailed status of the job.
       */
     def detailedStatus[A](innerSelection: SelectionBuilder[DetailedStatus, A]): SelectionBuilder[CiJob, Option[A]] =
@@ -5346,6 +5450,10 @@ object graphql {
     /** When a job has finished running.
       */
     def finishedAt: SelectionBuilder[CiJob, Option[Time]] = Field("finishedAt", OptionOf(Scalar()))
+
+    /** ID of the job.
+      */
+    def id: SelectionBuilder[CiJob, Option[JobID]] = Field("id", OptionOf(Scalar()))
 
     /** Name of the job.
       */
@@ -5371,9 +5479,30 @@ object graphql {
     def pipeline[A](innerSelection: SelectionBuilder[Pipeline, A]): SelectionBuilder[CiJob, Option[A]] =
       Field("pipeline", OptionOf(Obj(innerSelection)))
 
+    /** When the job was enqueued and marked as pending.
+      */
+    def queuedAt: SelectionBuilder[CiJob, Option[Time]] = Field("queuedAt", OptionOf(Scalar()))
+
     /** Schedule for the build.
       */
     def scheduledAt: SelectionBuilder[CiJob, Option[Time]] = Field("scheduledAt", OptionOf(Scalar()))
+
+    /** Short SHA1 ID of the commit.
+      */
+    def shortSha: SelectionBuilder[CiJob, String] = Field("shortSha", Scalar())
+
+    /** Stage of the job.
+      */
+    def stage[A](innerSelection: SelectionBuilder[CiStage, A]): SelectionBuilder[CiJob, Option[A]] =
+      Field("stage", OptionOf(Obj(innerSelection)))
+
+    /** When the job was started.
+      */
+    def startedAt: SelectionBuilder[CiJob, Option[Time]] = Field("startedAt", OptionOf(Scalar()))
+
+    /** Status of the job.
+      */
+    def status: SelectionBuilder[CiJob, Option[CiJobStatus]] = Field("status", OptionOf(Scalar()))
   }
 
   type CiJobArtifact
@@ -5428,6 +5557,10 @@ object graphql {
 
   object CiJobConnection {
 
+    /** Total count of collection.
+      */
+    def count: SelectionBuilder[CiJobConnection, Int] = Field("count", Scalar())
+
     /** A list of edges.
       */
     def edges[A](innerSelection: SelectionBuilder[CiJobEdge, A]): SelectionBuilder[CiJobConnection, Option[List[Option[A]]]] =
@@ -5478,6 +5611,21 @@ object graphql {
       innerSelection: SelectionBuilder[CiGroupConnection, A]
     ): SelectionBuilder[CiStage, Option[A]] = Field(
       "groups",
+      OptionOf(Obj(innerSelection)),
+      arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+    )
+
+    /** Jobs for the stage.
+      */
+    def jobs[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[CiJobConnection, A]
+    ): SelectionBuilder[CiStage, Option[A]] = Field(
+      "jobs",
       OptionOf(Obj(innerSelection)),
       arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
     )
@@ -5647,6 +5795,10 @@ object graphql {
     /** Global ID of the token.
       */
     def id: SelectionBuilder[ClusterAgentToken, ClustersAgentTokenID] = Field("id", Scalar())
+
+    /** Timestamp the token was last used.
+      */
+    def lastUsedAt: SelectionBuilder[ClusterAgentToken, Option[Time]] = Field("lastUsedAt", OptionOf(Scalar()))
 
     /** Name given to the token.
       */
@@ -6970,9 +7122,18 @@ object graphql {
 
   object DastSiteProfile {
 
+    /** Target authentication details. Will always return `null` if `security_dast_site_profiles_additional_fields` feature flag is disabled.
+      */
+    def auth[A](innerSelection: SelectionBuilder[DastSiteProfileAuth, A]): SelectionBuilder[DastSiteProfile, Option[A]] =
+      Field("auth", OptionOf(Obj(innerSelection)))
+
     /** Relative web path to the edit page of a site profile.
       */
     def editPath: SelectionBuilder[DastSiteProfile, Option[String]] = Field("editPath", OptionOf(Scalar()))
+
+    /** The URLs to skip during an authenticated scan. Will always return `null` if `security_dast_site_profiles_additional_fields` feature flag is disabled.
+      */
+    def excludedUrls: SelectionBuilder[DastSiteProfile, Option[List[String]]] = Field("excludedUrls", OptionOf(ListOf(Scalar())))
 
     /** ID of the site profile.
       */
@@ -6991,6 +7152,10 @@ object graphql {
     def referencedInSecurityPolicies: SelectionBuilder[DastSiteProfile, Option[List[String]]] =
       Field("referencedInSecurityPolicies", OptionOf(ListOf(Scalar())))
 
+    /** Comma-separated list of request header names and values to be added to every request made by DAST. Will always return `null` if `security_dast_site_profiles_additional_fields` feature flag is disabled.
+      */
+    def requestHeaders: SelectionBuilder[DastSiteProfile, Option[String]] = Field("requestHeaders", OptionOf(Scalar()))
+
     /** The URL of the target to be scanned.
       */
     def targetUrl: SelectionBuilder[DastSiteProfile, Option[String]] = Field("targetUrl", OptionOf(Scalar()))
@@ -7004,6 +7169,35 @@ object graphql {
       */
     def validationStatus: SelectionBuilder[DastSiteProfile, Option[DastSiteProfileValidationStatusEnum]] =
       Field("validationStatus", OptionOf(Scalar()))
+  }
+
+  type DastSiteProfileAuth
+
+  object DastSiteProfileAuth {
+
+    /** Indicates whether authentication is enabled.
+      */
+    def enabled: SelectionBuilder[DastSiteProfileAuth, Option[Boolean]] = Field("enabled", OptionOf(Scalar()))
+
+    /** Redacted password to authenticate with on the target website.
+      */
+    def password: SelectionBuilder[DastSiteProfileAuth, Option[String]] = Field("password", OptionOf(Scalar()))
+
+    /** The name of password field at the sign-in HTML form.
+      */
+    def passwordField: SelectionBuilder[DastSiteProfileAuth, Option[String]] = Field("passwordField", OptionOf(Scalar()))
+
+    /** The URL of the page containing the sign-in HTML form on the target website.
+      */
+    def url: SelectionBuilder[DastSiteProfileAuth, Option[String]] = Field("url", OptionOf(Scalar()))
+
+    /** The username to authenticate with on the target website.
+      */
+    def username: SelectionBuilder[DastSiteProfileAuth, Option[String]] = Field("username", OptionOf(Scalar()))
+
+    /** The name of username field at the sign-in HTML form.
+      */
+    def usernameField: SelectionBuilder[DastSiteProfileAuth, Option[String]] = Field("usernameField", OptionOf(Scalar()))
   }
 
   type DastSiteProfileConnection
@@ -7878,6 +8072,24 @@ object graphql {
     /** Errors encountered during execution of the mutation.
       */
     def errors: SelectionBuilder[DestroyContainerRepositoryTagsPayload, List[String]] = Field("errors", ListOf(Scalar()))
+  }
+
+  type DestroyEpicBoardPayload
+
+  object DestroyEpicBoardPayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[DestroyEpicBoardPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Epic board after mutation.
+      */
+    def epicBoard[A](innerSelection: SelectionBuilder[EpicBoard, A]): SelectionBuilder[DestroyEpicBoardPayload, Option[A]] =
+      Field("epicBoard", OptionOf(Obj(innerSelection)))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[DestroyEpicBoardPayload, List[String]] = Field("errors", ListOf(Scalar()))
   }
 
   type DestroyNotePayload
@@ -9332,6 +9544,7 @@ object graphql {
     /** List epics.
       */
     def epics[A](
+      filters: Option[EpicFilters] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -9341,7 +9554,13 @@ object graphql {
     ): SelectionBuilder[EpicList, Option[A]] = Field(
       "epics",
       OptionOf(Obj(innerSelection)),
-      arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      arguments = List(
+        Argument("filters", filters),
+        Argument("after", after),
+        Argument("before", before),
+        Argument("first", first),
+        Argument("last", last)
+      )
     )
 
     /** Count of epics in the list.
@@ -9402,6 +9621,19 @@ object graphql {
       */
     def node[A](innerSelection: SelectionBuilder[EpicList, A]): SelectionBuilder[EpicListEdge, Option[A]] =
       Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type EpicMoveListPayload
+
+  object EpicMoveListPayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[EpicMoveListPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[EpicMoveListPayload, List[String]] = Field("errors", ListOf(Scalar()))
   }
 
   type EpicPermissions
@@ -9593,6 +9825,23 @@ object graphql {
     /** The maximum concurrency of LFS/attachment backfill for this secondary node.
       */
     def filesMaxCapacity: SelectionBuilder[GeoNode, Option[Int]] = Field("filesMaxCapacity", OptionOf(Scalar()))
+
+    /** Find group wiki repository registries on this Geo node.
+      */
+    def groupWikiRepositoryRegistries[A](
+      ids: Option[List[String]] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[GroupWikiRepositoryRegistryConnection, A]
+    ): SelectionBuilder[GeoNode, Option[A]] = Field(
+      "groupWikiRepositoryRegistries",
+      OptionOf(Obj(innerSelection)),
+      arguments =
+        List(Argument("ids", ids), Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+    )
 
     /** ID of this GeoNode.
       */
@@ -10023,10 +10272,6 @@ object graphql {
       )
     )
 
-    /** Indicates if Group timelogs are enabled for namespace
-      */
-    def groupTimelogsEnabled: SelectionBuilder[Group, Option[Boolean]] = Field("groupTimelogsEnabled", OptionOf(Scalar()))
-
     /** ID of the namespace.
       */
     def id: SelectionBuilder[Group, String] = Field("id", Scalar())
@@ -10090,6 +10335,38 @@ object graphql {
         Argument("iterationId", iterationId),
         Argument("epicId", epicId),
         Argument("includeSubgroups", includeSubgroups),
+        Argument("after", after),
+        Argument("before", before),
+        Argument("first", first),
+        Argument("last", last)
+      )
+    )
+
+    /** Find iteration cadences.
+      */
+    def iterationCadences[A](
+      id: Option[IterationsCadenceID] = None,
+      title: Option[String] = None,
+      durationInWeeks: Option[Int] = None,
+      automatic: Option[Boolean] = None,
+      active: Option[Boolean] = None,
+      includeAncestorGroups: Option[Boolean] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[IterationCadenceConnection, A]
+    ): SelectionBuilder[Group, Option[A]] = Field(
+      "iterationCadences",
+      OptionOf(Obj(innerSelection)),
+      arguments = List(
+        Argument("id", id),
+        Argument("title", title),
+        Argument("durationInWeeks", durationInWeeks),
+        Argument("automatic", automatic),
+        Argument("active", active),
+        Argument("includeAncestorGroups", includeAncestorGroups),
         Argument("after", after),
         Argument("before", before),
         Argument("first", first),
@@ -10224,6 +10501,7 @@ object graphql {
       searchTitle: Option[String] = None,
       containingDate: Option[Time] = None,
       includeDescendants: Option[Boolean] = None,
+      includeAncestors: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -10241,6 +10519,7 @@ object graphql {
         Argument("searchTitle", searchTitle),
         Argument("containingDate", containingDate),
         Argument("includeDescendants", includeDescendants),
+        Argument("includeAncestors", includeAncestors),
         Argument("after", after),
         Argument("before", before),
         Argument("first", first),
@@ -10356,7 +10635,7 @@ object graphql {
       */
     def temporaryStorageIncreaseEndsOn: SelectionBuilder[Group, Option[Time]] = Field("temporaryStorageIncreaseEndsOn", OptionOf(Scalar()))
 
-    /** Time logged in issues by group members.
+    /** Time logged on issues in the group and its subgroups.
       */
     def timelogs[A](
       startDate: Option[Time] = None,
@@ -10650,6 +10929,83 @@ object graphql {
       */
     def releaseStats[A](innerSelection: SelectionBuilder[GroupReleaseStats, A]): SelectionBuilder[GroupStats, Option[A]] =
       Field("releaseStats", OptionOf(Obj(innerSelection)))
+  }
+
+  type GroupWikiRepositoryRegistry
+
+  object GroupWikiRepositoryRegistry {
+
+    /** Timestamp when the GroupWikiRepositoryRegistry was created
+      */
+    def createdAt: SelectionBuilder[GroupWikiRepositoryRegistry, Option[Time]] = Field("createdAt", OptionOf(Scalar()))
+
+    /** ID of the Group Wiki Repository.
+      */
+    def groupWikiRepositoryId: SelectionBuilder[GroupWikiRepositoryRegistry, String] = Field("groupWikiRepositoryId", Scalar())
+
+    /** ID of the GroupWikiRepositoryRegistry
+      */
+    def id: SelectionBuilder[GroupWikiRepositoryRegistry, String] = Field("id", Scalar())
+
+    /** Error message during sync of the GroupWikiRepositoryRegistry
+      */
+    def lastSyncFailure: SelectionBuilder[GroupWikiRepositoryRegistry, Option[String]] = Field("lastSyncFailure", OptionOf(Scalar()))
+
+    /** Timestamp of the most recent successful sync of the GroupWikiRepositoryRegistry
+      */
+    def lastSyncedAt: SelectionBuilder[GroupWikiRepositoryRegistry, Option[Time]] = Field("lastSyncedAt", OptionOf(Scalar()))
+
+    /** Timestamp after which the GroupWikiRepositoryRegistry should be resynced
+      */
+    def retryAt: SelectionBuilder[GroupWikiRepositoryRegistry, Option[Time]] = Field("retryAt", OptionOf(Scalar()))
+
+    /** Number of consecutive failed sync attempts of the GroupWikiRepositoryRegistry
+      */
+    def retryCount: SelectionBuilder[GroupWikiRepositoryRegistry, Option[Int]] = Field("retryCount", OptionOf(Scalar()))
+
+    /** Sync state of the GroupWikiRepositoryRegistry
+      */
+    def state: SelectionBuilder[GroupWikiRepositoryRegistry, Option[RegistryState]] = Field("state", OptionOf(Scalar()))
+  }
+
+  type GroupWikiRepositoryRegistryConnection
+
+  object GroupWikiRepositoryRegistryConnection {
+
+    /** A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[GroupWikiRepositoryRegistryEdge, A]
+    ): SelectionBuilder[GroupWikiRepositoryRegistryConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /** A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[GroupWikiRepositoryRegistry, A]
+    ): SelectionBuilder[GroupWikiRepositoryRegistryConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /** Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[GroupWikiRepositoryRegistryConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type GroupWikiRepositoryRegistryEdge
+
+  object GroupWikiRepositoryRegistryEdge {
+
+    /** A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[GroupWikiRepositoryRegistryEdge, String] = Field("cursor", Scalar())
+
+    /** The item at the end of the edge.
+      */
+    def node[A](
+      innerSelection: SelectionBuilder[GroupWikiRepositoryRegistry, A]
+    ): SelectionBuilder[GroupWikiRepositoryRegistryEdge, Option[A]] = Field("node", OptionOf(Obj(innerSelection)))
+
   }
 
   type HttpIntegrationCreatePayload
@@ -11726,6 +12082,117 @@ object graphql {
     def webUrl: SelectionBuilder[Iteration, String] = Field("webUrl", Scalar())
   }
 
+  type IterationCadence
+
+  object IterationCadence {
+
+    /** Whether the iteration cadence is active.
+      */
+    def active: SelectionBuilder[IterationCadence, Option[Boolean]] = Field("active", OptionOf(Scalar()))
+
+    /** Whether the iteration cadence should automatically generate future iterations.
+      */
+    def automatic: SelectionBuilder[IterationCadence, Option[Boolean]] = Field("automatic", OptionOf(Scalar()))
+
+    /** Duration in weeks of the iterations within this cadence.
+      */
+    def durationInWeeks: SelectionBuilder[IterationCadence, Option[Int]] = Field("durationInWeeks", OptionOf(Scalar()))
+
+    /** Global ID of the iteration cadence.
+      */
+    def id: SelectionBuilder[IterationCadence, IterationsCadenceID] = Field("id", Scalar())
+
+    /** Future iterations to be created when iteration cadence is set to automatic.
+      */
+    def iterationsInAdvance: SelectionBuilder[IterationCadence, Option[Int]] = Field("iterationsInAdvance", OptionOf(Scalar()))
+
+    /** Timestamp of the iteration cadence start date.
+      */
+    def startDate: SelectionBuilder[IterationCadence, Option[Time]] = Field("startDate", OptionOf(Scalar()))
+
+    /** Title of the iteration cadence.
+      */
+    def title: SelectionBuilder[IterationCadence, String] = Field("title", Scalar())
+  }
+
+  type IterationCadenceConnection
+
+  object IterationCadenceConnection {
+
+    /** A list of edges.
+      */
+    def edges[A](
+      innerSelection: SelectionBuilder[IterationCadenceEdge, A]
+    ): SelectionBuilder[IterationCadenceConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /** A list of nodes.
+      */
+    def nodes[A](
+      innerSelection: SelectionBuilder[IterationCadence, A]
+    ): SelectionBuilder[IterationCadenceConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /** Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[IterationCadenceConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type IterationCadenceCreatePayload
+
+  object IterationCadenceCreatePayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[IterationCadenceCreatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[IterationCadenceCreatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /** The created iteration cadence.
+      */
+    def iterationCadence[A](
+      innerSelection: SelectionBuilder[IterationCadence, A]
+    ): SelectionBuilder[IterationCadenceCreatePayload, Option[A]] = Field("iterationCadence", OptionOf(Obj(innerSelection)))
+
+  }
+
+  type IterationCadenceEdge
+
+  object IterationCadenceEdge {
+
+    /** A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[IterationCadenceEdge, String] = Field("cursor", Scalar())
+
+    /** The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[IterationCadence, A]): SelectionBuilder[IterationCadenceEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type IterationCadenceUpdatePayload
+
+  object IterationCadenceUpdatePayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[IterationCadenceUpdatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[IterationCadenceUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /** The updated iteration cadence.
+      */
+    def iterationCadence[A](
+      innerSelection: SelectionBuilder[IterationCadence, A]
+    ): SelectionBuilder[IterationCadenceUpdatePayload, Option[A]] = Field("iterationCadence", OptionOf(Obj(innerSelection)))
+
+  }
+
   type IterationConnection
 
   object IterationConnection {
@@ -12626,6 +13093,24 @@ object graphql {
     /** Indicates if the merge request is a draft.
       */
     def workInProgress: SelectionBuilder[MergeRequest, Boolean] = Field("workInProgress", Scalar())
+  }
+
+  type MergeRequestAcceptPayload
+
+  object MergeRequestAcceptPayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[MergeRequestAcceptPayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[MergeRequestAcceptPayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /** The merge request after mutation.
+      */
+    def mergeRequest[A](innerSelection: SelectionBuilder[MergeRequest, A]): SelectionBuilder[MergeRequestAcceptPayload, Option[A]] =
+      Field("mergeRequest", OptionOf(Obj(innerSelection)))
   }
 
   type MergeRequestConnection
@@ -13660,6 +14145,26 @@ object graphql {
 
   }
 
+  type OncallRotationUpdatePayload
+
+  object OncallRotationUpdatePayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[OncallRotationUpdatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[OncallRotationUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /** The on-call rotation.
+      */
+    def oncallRotation[A](
+      innerSelection: SelectionBuilder[IncidentManagementOncallRotation, A]
+    ): SelectionBuilder[OncallRotationUpdatePayload, Option[A]] = Field("oncallRotation", OptionOf(Obj(innerSelection)))
+
+  }
+
   type OncallScheduleCreatePayload
 
   object OncallScheduleCreatePayload {
@@ -14203,10 +14708,21 @@ object graphql {
       */
     def iid: SelectionBuilder[Pipeline, String] = Field("iid", Scalar())
 
+    /** A specific job in this pipeline, either by name or ID.
+      */
+    def job[A](
+      id: Option[JobID] = None,
+      name: Option[String] = None
+    )(
+      innerSelection: SelectionBuilder[CiJob, A]
+    ): SelectionBuilder[Pipeline, Option[A]] =
+      Field("job", OptionOf(Obj(innerSelection)), arguments = List(Argument("id", id), Argument("name", name)))
+
     /** Jobs belonging to the pipeline.
       */
     def jobs[A](
       securityReportTypes: Option[List[SecurityReportTypeEnum]] = None,
+      statuses: Option[List[CiJobStatus]] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -14218,6 +14734,7 @@ object graphql {
       OptionOf(Obj(innerSelection)),
       arguments = List(
         Argument("securityReportTypes", securityReportTypes),
+        Argument("statuses", statuses),
         Argument("after", after),
         Argument("before", before),
         Argument("first", first),
@@ -14727,7 +15244,7 @@ object graphql {
       */
     def allowMergeOnSkippedPipeline: SelectionBuilder[Project, Option[Boolean]] = Field("allowMergeOnSkippedPipeline", OptionOf(Scalar()))
 
-    /** API fuzzing configuration for the project. Available only when feature flag `api_fuzzing_configuration_ui` is enabled.
+    /** API fuzzing configuration for the project. Null unless feature flag `api_fuzzing_configuration_ui` is enabled.
       */
     def apiFuzzingCiConfiguration[A](innerSelection: SelectionBuilder[ApiFuzzingCiConfiguration, A]): SelectionBuilder[Project, Option[A]] =
       Field("apiFuzzingCiConfiguration", OptionOf(Obj(innerSelection)))
@@ -14852,7 +15369,7 @@ object graphql {
       */
     def createdAt: SelectionBuilder[Project, Option[Time]] = Field("createdAt", OptionOf(Scalar()))
 
-    /** DAST Profiles associated with the project. Always returns no nodes if `dast_saved_scans` is disabled.
+    /** DAST Profiles associated with the project.
       */
     def dastProfiles[A](
       after: Option[String] = None,
@@ -15180,6 +15697,38 @@ object graphql {
       */
     def issuesEnabled: SelectionBuilder[Project, Option[Boolean]] = Field("issuesEnabled", OptionOf(Scalar()))
 
+    /** Find iteration cadences.
+      */
+    def iterationCadences[A](
+      id: Option[IterationsCadenceID] = None,
+      title: Option[String] = None,
+      durationInWeeks: Option[Int] = None,
+      automatic: Option[Boolean] = None,
+      active: Option[Boolean] = None,
+      includeAncestorGroups: Option[Boolean] = None,
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[IterationCadenceConnection, A]
+    ): SelectionBuilder[Project, Option[A]] = Field(
+      "iterationCadences",
+      OptionOf(Obj(innerSelection)),
+      arguments = List(
+        Argument("id", id),
+        Argument("title", title),
+        Argument("durationInWeeks", durationInWeeks),
+        Argument("automatic", automatic),
+        Argument("active", active),
+        Argument("includeAncestorGroups", includeAncestorGroups),
+        Argument("after", after),
+        Argument("before", before),
+        Argument("first", first),
+        Argument("last", last)
+      )
+    )
+
     /** Find iterations.
       */
     def iterations[A](
@@ -15482,6 +16031,11 @@ object graphql {
     /** Indicates if there is public access to pipelines and job details of the project, including output logs and artifacts.
       */
     def publicJobs: SelectionBuilder[Project, Option[Boolean]] = Field("publicJobs", OptionOf(Scalar()))
+
+    /** The project's push rules settings.
+      */
+    def pushRules[A](innerSelection: SelectionBuilder[PushRules, A]): SelectionBuilder[Project, Option[A]] =
+      Field("pushRules", OptionOf(Obj(innerSelection)))
 
     /** A single release of the project.
       */
@@ -16288,6 +16842,15 @@ object graphql {
       Field("issue", OptionOf(Obj(innerSelection)))
   }
 
+  type PushRules
+
+  object PushRules {
+
+    /** Indicates whether commits not signed through GPG will be rejected.
+      */
+    def rejectUnsignedCommits: SelectionBuilder[PushRules, Boolean] = Field("rejectUnsignedCommits", Scalar())
+  }
+
   type Release
 
   object Release {
@@ -16446,6 +17009,24 @@ object graphql {
       Field("link", OptionOf(Obj(innerSelection)))
   }
 
+  type ReleaseAssetLinkDeletePayload
+
+  object ReleaseAssetLinkDeletePayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[ReleaseAssetLinkDeletePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[ReleaseAssetLinkDeletePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /** The deleted release asset link.
+      */
+    def link[A](innerSelection: SelectionBuilder[ReleaseAssetLink, A]): SelectionBuilder[ReleaseAssetLinkDeletePayload, Option[A]] =
+      Field("link", OptionOf(Obj(innerSelection)))
+  }
+
   type ReleaseAssetLinkEdge
 
   object ReleaseAssetLinkEdge {
@@ -16458,6 +17039,24 @@ object graphql {
       */
     def node[A](innerSelection: SelectionBuilder[ReleaseAssetLink, A]): SelectionBuilder[ReleaseAssetLinkEdge, Option[A]] =
       Field("node", OptionOf(Obj(innerSelection)))
+  }
+
+  type ReleaseAssetLinkUpdatePayload
+
+  object ReleaseAssetLinkUpdatePayload {
+
+    /** A unique identifier for the client performing the mutation.
+      */
+    def clientMutationId: SelectionBuilder[ReleaseAssetLinkUpdatePayload, Option[String]] = Field("clientMutationId", OptionOf(Scalar()))
+
+    /** Errors encountered during execution of the mutation.
+      */
+    def errors: SelectionBuilder[ReleaseAssetLinkUpdatePayload, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /** The asset link after mutation.
+      */
+    def link[A](innerSelection: SelectionBuilder[ReleaseAssetLink, A]): SelectionBuilder[ReleaseAssetLinkUpdatePayload, Option[A]] =
+      Field("link", OptionOf(Obj(innerSelection)))
   }
 
   type ReleaseAssets
@@ -17441,6 +18040,53 @@ object graphql {
 
   }
 
+  type Scan
+
+  object Scan {
+
+    /** List of errors.
+      */
+    def errors: SelectionBuilder[Scan, List[String]] = Field("errors", ListOf(Scalar()))
+
+    /** Name of the scan.
+      */
+    def name: SelectionBuilder[Scan, String] = Field("name", Scalar())
+  }
+
+  type ScanConnection
+
+  object ScanConnection {
+
+    /** A list of edges.
+      */
+    def edges[A](innerSelection: SelectionBuilder[ScanEdge, A]): SelectionBuilder[ScanConnection, Option[List[Option[A]]]] =
+      Field("edges", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /** A list of nodes.
+      */
+    def nodes[A](innerSelection: SelectionBuilder[Scan, A]): SelectionBuilder[ScanConnection, Option[List[Option[A]]]] =
+      Field("nodes", OptionOf(ListOf(OptionOf(Obj(innerSelection)))))
+
+    /** Information to aid in pagination.
+      */
+    def pageInfo[A](innerSelection: SelectionBuilder[PageInfo, A]): SelectionBuilder[ScanConnection, A] =
+      Field("pageInfo", Obj(innerSelection))
+  }
+
+  type ScanEdge
+
+  object ScanEdge {
+
+    /** A cursor for use in pagination.
+      */
+    def cursor: SelectionBuilder[ScanEdge, String] = Field("cursor", Scalar())
+
+    /** The item at the end of the edge.
+      */
+    def node[A](innerSelection: SelectionBuilder[Scan, A]): SelectionBuilder[ScanEdge, Option[A]] =
+      Field("node", OptionOf(Obj(innerSelection)))
+  }
+
   type ScannedResource
 
   object ScannedResource {
@@ -17566,6 +18212,21 @@ object graphql {
       */
     def scannedResourcesCsvPath: SelectionBuilder[SecurityReportSummarySection, Option[String]] =
       Field("scannedResourcesCsvPath", OptionOf(Scalar()))
+
+    /** List of security scans ran for the type.
+      */
+    def scans[A](
+      after: Option[String] = None,
+      before: Option[String] = None,
+      first: Option[Int] = None,
+      last: Option[Int] = None
+    )(
+      innerSelection: SelectionBuilder[ScanConnection, A]
+    ): SelectionBuilder[SecurityReportSummarySection, A] = Field(
+      "scans",
+      Obj(innerSelection),
+      arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+    )
 
     /** Total number of vulnerabilities.
       */
@@ -19676,9 +20337,9 @@ object graphql {
       arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
     )
 
-    /** User email. Deprecated in 13.7: Use public_email.
+    /** User email. Deprecated in 13.7: This was renamed.
       */
-    @deprecated("Use public_email. Deprecated in 13.7.", "")
+    @deprecated("This was renamed. Please use `User.publicEmail`. Deprecated in 13.7.", "")
     def email: SelectionBuilder[User, Option[String]] = Field("email", OptionOf(Scalar()))
 
     /** Group memberships of the user.
@@ -20333,7 +20994,7 @@ object graphql {
     def project[A](innerSelection: SelectionBuilder[Project, A]): SelectionBuilder[Vulnerability, Option[A]] =
       Field("project", OptionOf(Obj(innerSelection)))
 
-    /** Type of the security report that found the vulnerability (SAST, DEPENDENCY_SCANNING, CONTAINER_SCANNING, DAST, SECRET_DETECTION, COVERAGE_FUZZING, API_FUZZING)
+    /** Type of the security report that found the vulnerability (SAST, DEPENDENCY_SCANNING, CONTAINER_SCANNING, DAST, SECRET_DETECTION, COVERAGE_FUZZING, API_FUZZING). `Scan Type` in the UI.
       */
     def reportType: SelectionBuilder[Vulnerability, Option[VulnerabilityReportType]] = Field("reportType", OptionOf(Scalar()))
 
@@ -21445,6 +22106,7 @@ object graphql {
     remoteIp: Option[String] = None,
     relatedClass: Option[String] = None,
     featureCategory: Option[String] = None,
+    clientId: Option[String] = None,
     queueName: String,
     clientMutationId: Option[String] = None
   )
@@ -21464,6 +22126,7 @@ object graphql {
             "remoteIp" -> value.remoteIp.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "relatedClass" -> value.relatedClass.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "featureCategory" -> value.featureCategory.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "clientId" -> value.clientId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "queueName" -> implicitly[ArgEncoder[String]].encode(value.queueName),
             "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -21646,11 +22309,11 @@ object graphql {
 
   case class BoardIssueInput(
     labelName: Option[List[Option[String]]] = None,
+    authorUsername: Option[String] = None,
+    myReactionEmoji: Option[String] = None,
     milestoneTitle: Option[String] = None,
     assigneeUsername: Option[List[Option[String]]] = None,
-    authorUsername: Option[String] = None,
     releaseTag: Option[String] = None,
-    myReactionEmoji: Option[String] = None,
     epicId: Option[EpicID] = None,
     iterationTitle: Option[String] = None,
     weight: Option[String] = None,
@@ -21672,15 +22335,15 @@ object graphql {
               .fold(__NullValue: __Value)(value =>
                 __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
+            "authorUsername" -> value.authorUsername.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "myReactionEmoji" -> value.myReactionEmoji.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "milestoneTitle" -> value.milestoneTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "assigneeUsername" -> value
               .assigneeUsername
               .fold(__NullValue: __Value)(value =>
                 __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
-            "authorUsername" -> value.authorUsername.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "releaseTag" -> value.releaseTag.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "myReactionEmoji" -> value.myReactionEmoji.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
             "iterationTitle" -> value.iterationTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
@@ -22715,10 +23378,43 @@ object graphql {
 
   }
 
+  case class DastSiteProfileAuthInput(
+    enabled: Option[Boolean] = None,
+    url: Option[String] = None,
+    usernameField: Option[String] = None,
+    passwordField: Option[String] = None,
+    username: Option[String] = None,
+    password: Option[String] = None
+  )
+
+  object DastSiteProfileAuthInput {
+
+    implicit val encoder: ArgEncoder[DastSiteProfileAuthInput] = new ArgEncoder[DastSiteProfileAuthInput] {
+
+      override def encode(value: DastSiteProfileAuthInput): __Value =
+        __ObjectValue(
+          List(
+            "enabled" -> value.enabled.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "url" -> value.url.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "usernameField" -> value.usernameField.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "passwordField" -> value.passwordField.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "username" -> value.username.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "password" -> value.password.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DastSiteProfileAuthInput"
+    }
+
+  }
+
   case class DastSiteProfileCreateInput(
     fullPath: String,
     profileName: String,
     targetUrl: Option[String] = None,
+    excludedUrls: Option[List[String]] = None,
+    requestHeaders: Option[String] = None,
+    auth: Option[DastSiteProfileAuthInput] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -22732,6 +23428,11 @@ object graphql {
             "fullPath" -> implicitly[ArgEncoder[String]].encode(value.fullPath),
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
             "targetUrl" -> value.targetUrl.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "excludedUrls" -> value
+              .excludedUrls
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "requestHeaders" -> value.requestHeaders.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "auth" -> value.auth.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DastSiteProfileAuthInput]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -22766,6 +23467,9 @@ object graphql {
     id: DastSiteProfileID,
     profileName: String,
     targetUrl: Option[String] = None,
+    excludedUrls: Option[List[String]] = None,
+    requestHeaders: Option[String] = None,
+    auth: Option[DastSiteProfileAuthInput] = None,
     clientMutationId: Option[String] = None
   )
 
@@ -22780,6 +23484,11 @@ object graphql {
             "id" -> implicitly[ArgEncoder[DastSiteProfileID]].encode(value.id),
             "profileName" -> implicitly[ArgEncoder[String]].encode(value.profileName),
             "targetUrl" -> value.targetUrl.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "excludedUrls" -> value
+              .excludedUrls
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "requestHeaders" -> value.requestHeaders.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "auth" -> value.auth.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[DastSiteProfileAuthInput]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
@@ -23077,6 +23786,25 @@ object graphql {
 
   }
 
+  case class DestroyEpicBoardInput(id: BoardsEpicBoardID, clientMutationId: Option[String] = None)
+
+  object DestroyEpicBoardInput {
+
+    implicit val encoder: ArgEncoder[DestroyEpicBoardInput] = new ArgEncoder[DestroyEpicBoardInput] {
+
+      override def encode(value: DestroyEpicBoardInput): __Value =
+        __ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[BoardsEpicBoardID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "DestroyEpicBoardInput"
+    }
+
+  }
+
   case class DestroyNoteInput(id: NoteID, clientMutationId: Option[String] = None)
 
   object DestroyNoteInput {
@@ -23298,6 +24026,8 @@ object graphql {
     name: Option[String] = None,
     hideBacklogList: Option[Boolean] = None,
     hideClosedList: Option[Boolean] = None,
+    labels: Option[List[String]] = None,
+    labelIds: Option[List[LabelID]] = None,
     groupPath: Option[String] = None,
     clientMutationId: Option[String] = None
   )
@@ -23312,6 +24042,12 @@ object graphql {
             "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "hideBacklogList" -> value.hideBacklogList.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "hideClosedList" -> value.hideClosedList.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "labels" -> value
+              .labels
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
+            "labelIds" -> value
+              .labelIds
+              .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
             "groupPath" -> value.groupPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
@@ -23352,9 +24088,9 @@ object graphql {
     name: Option[String] = None,
     hideBacklogList: Option[Boolean] = None,
     hideClosedList: Option[Boolean] = None,
-    id: BoardsEpicBoardID,
     labels: Option[List[String]] = None,
     labelIds: Option[List[LabelID]] = None,
+    id: BoardsEpicBoardID,
     clientMutationId: Option[String] = None
   )
 
@@ -23368,18 +24104,76 @@ object graphql {
             "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "hideBacklogList" -> value.hideBacklogList.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
             "hideClosedList" -> value.hideClosedList.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
-            "id" -> implicitly[ArgEncoder[BoardsEpicBoardID]].encode(value.id),
             "labels" -> value
               .labels
               .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[String]].encode(value)))),
             "labelIds" -> value
               .labelIds
               .fold(__NullValue: __Value)(value => __ListValue(value.map(value => implicitly[ArgEncoder[LabelID]].encode(value)))),
+            "id" -> implicitly[ArgEncoder[BoardsEpicBoardID]].encode(value.id),
             "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "EpicBoardUpdateInput"
+    }
+
+  }
+
+  case class EpicFilters(
+    labelName: Option[List[Option[String]]] = None,
+    authorUsername: Option[String] = None,
+    myReactionEmoji: Option[String] = None,
+    search: Option[String] = None
+  )
+
+  object EpicFilters {
+
+    implicit val encoder: ArgEncoder[EpicFilters] = new ArgEncoder[EpicFilters] {
+
+      override def encode(value: EpicFilters): __Value =
+        __ObjectValue(
+          List(
+            "labelName" -> value
+              .labelName
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
+              ),
+            "authorUsername" -> value.authorUsername.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "myReactionEmoji" -> value.myReactionEmoji.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "search" -> value.search.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "EpicFilters"
+    }
+
+  }
+
+  case class EpicMoveListInput(
+    boardId: BoardsEpicBoardID,
+    epicId: EpicID,
+    fromListId: BoardsEpicListID,
+    toListId: BoardsEpicListID,
+    clientMutationId: Option[String] = None
+  )
+
+  object EpicMoveListInput {
+
+    implicit val encoder: ArgEncoder[EpicMoveListInput] = new ArgEncoder[EpicMoveListInput] {
+
+      override def encode(value: EpicMoveListInput): __Value =
+        __ObjectValue(
+          List(
+            "boardId" -> implicitly[ArgEncoder[BoardsEpicBoardID]].encode(value.boardId),
+            "epicId" -> implicitly[ArgEncoder[EpicID]].encode(value.epicId),
+            "fromListId" -> implicitly[ArgEncoder[BoardsEpicListID]].encode(value.fromListId),
+            "toListId" -> implicitly[ArgEncoder[BoardsEpicListID]].encode(value.toListId),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "EpicMoveListInput"
     }
 
   }
@@ -23876,6 +24670,78 @@ object graphql {
 
   }
 
+  case class IterationCadenceCreateInput(
+    groupPath: String,
+    title: Option[String] = None,
+    durationInWeeks: Option[Int] = None,
+    iterationsInAdvance: Option[Int] = None,
+    startDate: Option[Time] = None,
+    automatic: Boolean,
+    active: Boolean,
+    clientMutationId: Option[String] = None
+  )
+
+  object IterationCadenceCreateInput {
+
+    implicit val encoder: ArgEncoder[IterationCadenceCreateInput] = new ArgEncoder[IterationCadenceCreateInput] {
+
+      override def encode(value: IterationCadenceCreateInput): __Value =
+        __ObjectValue(
+          List(
+            "groupPath" -> implicitly[ArgEncoder[String]].encode(value.groupPath),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "durationInWeeks" -> value.durationInWeeks.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "iterationsInAdvance" -> value
+              .iterationsInAdvance
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "startDate" -> value.startDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "automatic" -> implicitly[ArgEncoder[Boolean]].encode(value.automatic),
+            "active" -> implicitly[ArgEncoder[Boolean]].encode(value.active),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "IterationCadenceCreateInput"
+    }
+
+  }
+
+  case class IterationCadenceUpdateInput(
+    id: IterationsCadenceID,
+    title: Option[String] = None,
+    durationInWeeks: Option[Int] = None,
+    iterationsInAdvance: Option[Int] = None,
+    startDate: Option[Time] = None,
+    automatic: Option[Boolean] = None,
+    active: Option[Boolean] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object IterationCadenceUpdateInput {
+
+    implicit val encoder: ArgEncoder[IterationCadenceUpdateInput] = new ArgEncoder[IterationCadenceUpdateInput] {
+
+      override def encode(value: IterationCadenceUpdateInput): __Value =
+        __ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[IterationsCadenceID]].encode(value.id),
+            "title" -> value.title.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "durationInWeeks" -> value.durationInWeeks.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "iterationsInAdvance" -> value
+              .iterationsInAdvance
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Int]].encode(value)),
+            "startDate" -> value.startDate.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Time]].encode(value)),
+            "automatic" -> value.automatic.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "active" -> value.active.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "IterationCadenceUpdateInput"
+    }
+
+  }
+
   case class JiraImportStartInput(
     projectPath: String,
     jiraProjectKey: String,
@@ -23992,6 +24858,46 @@ object graphql {
         )
 
       override def typeName: String = "MarkAsSpamSnippetInput"
+    }
+
+  }
+
+  case class MergeRequestAcceptInput(
+    projectPath: String,
+    iid: String,
+    strategy: Option[MergeStrategyEnum] = None,
+    commitMessage: Option[String] = None,
+    squashCommitMessage: Option[String] = None,
+    sha: String,
+    shouldRemoveSourceBranch: Option[Boolean] = None,
+    squash: Option[Boolean] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object MergeRequestAcceptInput {
+
+    implicit val encoder: ArgEncoder[MergeRequestAcceptInput] = new ArgEncoder[MergeRequestAcceptInput] {
+
+      override def encode(value: MergeRequestAcceptInput): __Value =
+        __ObjectValue(
+          List(
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "iid" -> implicitly[ArgEncoder[String]].encode(value.iid),
+            "strategy" -> value.strategy.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[MergeStrategyEnum]].encode(value)),
+            "commitMessage" -> value.commitMessage.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "squashCommitMessage" -> value
+              .squashCommitMessage
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "sha" -> implicitly[ArgEncoder[String]].encode(value.sha),
+            "shouldRemoveSourceBranch" -> value
+              .shouldRemoveSourceBranch
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "squash" -> value.squash.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[Boolean]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "MergeRequestAcceptInput"
     }
 
   }
@@ -24258,11 +25164,11 @@ object graphql {
 
   case class NegatedBoardIssueInput(
     labelName: Option[List[Option[String]]] = None,
+    authorUsername: Option[String] = None,
+    myReactionEmoji: Option[String] = None,
     milestoneTitle: Option[String] = None,
     assigneeUsername: Option[List[Option[String]]] = None,
-    authorUsername: Option[String] = None,
     releaseTag: Option[String] = None,
-    myReactionEmoji: Option[String] = None,
     epicId: Option[EpicID] = None,
     iterationTitle: Option[String] = None,
     weight: Option[String] = None
@@ -24280,15 +25186,15 @@ object graphql {
               .fold(__NullValue: __Value)(value =>
                 __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
+            "authorUsername" -> value.authorUsername.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "myReactionEmoji" -> value.myReactionEmoji.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "milestoneTitle" -> value.milestoneTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "assigneeUsername" -> value
               .assigneeUsername
               .fold(__NullValue: __Value)(value =>
                 __ListValue(value.map(value => value.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))))
               ),
-            "authorUsername" -> value.authorUsername.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "releaseTag" -> value.releaseTag.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
-            "myReactionEmoji" -> value.myReactionEmoji.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "epicId" -> value.epicId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[EpicID]].encode(value)),
             "iterationTitle" -> value.iterationTitle.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "weight" -> value.weight.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
@@ -24414,6 +25320,50 @@ object graphql {
         )
 
       override def typeName: String = "OncallRotationLengthInputType"
+    }
+
+  }
+
+  case class OncallRotationUpdateInput(
+    id: IncidentManagementOncallRotationID,
+    name: Option[String] = None,
+    startsAt: Option[OncallRotationDateInputType] = None,
+    endsAt: Option[OncallRotationDateInputType] = None,
+    rotationLength: Option[OncallRotationLengthInputType] = None,
+    activePeriod: Option[OncallRotationActivePeriodInputType] = None,
+    participants: Option[List[OncallUserInputType]] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object OncallRotationUpdateInput {
+
+    implicit val encoder: ArgEncoder[OncallRotationUpdateInput] = new ArgEncoder[OncallRotationUpdateInput] {
+
+      override def encode(value: OncallRotationUpdateInput): __Value =
+        __ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[IncidentManagementOncallRotationID]].encode(value.id),
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "startsAt" -> value
+              .startsAt
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[OncallRotationDateInputType]].encode(value)),
+            "endsAt" -> value.endsAt.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[OncallRotationDateInputType]].encode(value)),
+            "rotationLength" -> value
+              .rotationLength
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[OncallRotationLengthInputType]].encode(value)),
+            "activePeriod" -> value
+              .activePeriod
+              .fold(__NullValue: __Value)(value => implicitly[ArgEncoder[OncallRotationActivePeriodInputType]].encode(value)),
+            "participants" -> value
+              .participants
+              .fold(__NullValue: __Value)(value =>
+                __ListValue(value.map(value => implicitly[ArgEncoder[OncallUserInputType]].encode(value)))
+              ),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "OncallRotationUpdateInput"
     }
 
   }
@@ -24669,12 +25619,12 @@ object graphql {
   }
 
   case class ReleaseAssetLinkCreateInput(
-    projectPath: String,
-    tagName: String,
     name: String,
     url: String,
     directAssetPath: Option[String] = None,
     linkType: Option[ReleaseAssetLinkType] = None,
+    projectPath: String,
+    tagName: String,
     clientMutationId: Option[String] = None
   )
 
@@ -24685,17 +25635,36 @@ object graphql {
       override def encode(value: ReleaseAssetLinkCreateInput): __Value =
         __ObjectValue(
           List(
-            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
-            "tagName" -> implicitly[ArgEncoder[String]].encode(value.tagName),
             "name" -> implicitly[ArgEncoder[String]].encode(value.name),
             "url" -> implicitly[ArgEncoder[String]].encode(value.url),
             "directAssetPath" -> value.directAssetPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
             "linkType" -> value.linkType.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ReleaseAssetLinkType]].encode(value)),
+            "projectPath" -> implicitly[ArgEncoder[String]].encode(value.projectPath),
+            "tagName" -> implicitly[ArgEncoder[String]].encode(value.tagName),
             "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
           )
         )
 
       override def typeName: String = "ReleaseAssetLinkCreateInput"
+    }
+
+  }
+
+  case class ReleaseAssetLinkDeleteInput(id: ReleasesLinkID, clientMutationId: Option[String] = None)
+
+  object ReleaseAssetLinkDeleteInput {
+
+    implicit val encoder: ArgEncoder[ReleaseAssetLinkDeleteInput] = new ArgEncoder[ReleaseAssetLinkDeleteInput] {
+
+      override def encode(value: ReleaseAssetLinkDeleteInput): __Value =
+        __ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[ReleasesLinkID]].encode(value.id),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "ReleaseAssetLinkDeleteInput"
     }
 
   }
@@ -24722,6 +25691,36 @@ object graphql {
         )
 
       override def typeName: String = "ReleaseAssetLinkInput"
+    }
+
+  }
+
+  case class ReleaseAssetLinkUpdateInput(
+    id: ReleasesLinkID,
+    name: Option[String] = None,
+    url: Option[String] = None,
+    directAssetPath: Option[String] = None,
+    linkType: Option[ReleaseAssetLinkType] = None,
+    clientMutationId: Option[String] = None
+  )
+
+  object ReleaseAssetLinkUpdateInput {
+
+    implicit val encoder: ArgEncoder[ReleaseAssetLinkUpdateInput] = new ArgEncoder[ReleaseAssetLinkUpdateInput] {
+
+      override def encode(value: ReleaseAssetLinkUpdateInput): __Value =
+        __ObjectValue(
+          List(
+            "id" -> implicitly[ArgEncoder[ReleasesLinkID]].encode(value.id),
+            "name" -> value.name.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "url" -> value.url.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "directAssetPath" -> value.directAssetPath.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value)),
+            "linkType" -> value.linkType.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[ReleaseAssetLinkType]].encode(value)),
+            "clientMutationId" -> value.clientMutationId.fold(__NullValue: __Value)(value => implicitly[ArgEncoder[String]].encode(value))
+          )
+        )
+
+      override def typeName: String = "ReleaseAssetLinkUpdateInput"
     }
 
   }
@@ -25943,6 +26942,8 @@ object graphql {
     /** Get configured DevOps adoption segments on the instance.
       */
     def devopsAdoptionSegments[A](
+      parentNamespaceId: Option[NamespaceID] = None,
+      directDescendantsOnly: Option[Boolean] = None,
       after: Option[String] = None,
       before: Option[String] = None,
       first: Option[Int] = None,
@@ -25952,7 +26953,14 @@ object graphql {
     ): SelectionBuilder[RootQuery, Option[A]] = Field(
       "devopsAdoptionSegments",
       OptionOf(Obj(innerSelection)),
-      arguments = List(Argument("after", after), Argument("before", before), Argument("first", first), Argument("last", last))
+      arguments = List(
+        Argument("parentNamespaceId", parentNamespaceId),
+        Argument("directDescendantsOnly", directDescendantsOnly),
+        Argument("after", after),
+        Argument("before", before),
+        Argument("first", first),
+        Argument("last", last)
+      )
     )
 
     /** Text to echo back.
@@ -25975,9 +26983,9 @@ object graphql {
       innerSelection: SelectionBuilder[InstanceSecurityDashboard, A]
     ): SelectionBuilder[RootQuery, Option[A]] = Field("instanceSecurityDashboard", OptionOf(Obj(innerSelection)))
 
-    /** Get statistics on the instance. Deprecated in 13.10: This field was renamed. Use the `usageTrendsMeasurements` field instead.
+    /** Get statistics on the instance. Deprecated in 13.10: This was renamed.
       */
-    @deprecated("This field was renamed. Use the `usageTrendsMeasurements` field instead. Deprecated in 13.10.", "")
+    @deprecated("This was renamed. Please use `Query.usageTrendsMeasurements`. Deprecated in 13.10.", "")
     def instanceStatisticsMeasurements[A](
       identifier: MeasurementIdentifier,
       recordedAfter: Option[Time] = None,
@@ -26260,9 +27268,9 @@ object graphql {
       )
     )
 
-    /** Number of vulnerabilities per severity level, per day, for the projects on the current user's instance security dashboard. Deprecated in 13.3: Use `vulnerabilitiesCountByDay`.
+    /** Number of vulnerabilities per severity level, per day, for the projects on the current user's instance security dashboard. Deprecated in 13.3: Use of this is not recommended.
       */
-    @deprecated("Use `vulnerabilitiesCountByDay`. Deprecated in 13.3.", "")
+    @deprecated("Use of this is not recommended. Please use `Query.vulnerabilitiesCountByDay`. Deprecated in 13.3.", "")
     def vulnerabilitiesCountByDayAndSeverity[A](
       startDate: ISO8601Date,
       endDate: ISO8601Date,
@@ -26702,6 +27710,13 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("destroyContainerRepositoryTags", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def destroyEpicBoard[A](
+      input: DestroyEpicBoardInput
+    )(
+      innerSelection: SelectionBuilder[DestroyEpicBoardPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("destroyEpicBoard", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def destroyNote[A](
       input: DestroyNoteInput
     )(
@@ -26767,6 +27782,13 @@ object graphql {
       innerSelection: SelectionBuilder[EpicBoardUpdatePayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("epicBoardUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def epicMoveList[A](
+      input: EpicMoveListInput
+    )(
+      innerSelection: SelectionBuilder[EpicMoveListPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("epicMoveList", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def epicSetSubscription[A](
       input: EpicSetSubscriptionInput
@@ -26901,6 +27923,20 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("issueSetWeight", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def iterationCadenceCreate[A](
+      input: IterationCadenceCreateInput
+    )(
+      innerSelection: SelectionBuilder[IterationCadenceCreatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("iterationCadenceCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def iterationCadenceUpdate[A](
+      input: IterationCadenceUpdateInput
+    )(
+      innerSelection: SelectionBuilder[IterationCadenceUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("iterationCadenceUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def jiraImportStart[A](
       input: JiraImportStartInput
     )(
@@ -26928,6 +27964,17 @@ object graphql {
       innerSelection: SelectionBuilder[MarkAsSpamSnippetPayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("markAsSpamSnippet", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    /** Accepts a merge request.
+      * When accepted, the source branch will be merged into the target branch, either
+      * immediately if possible, or using one of the automatic merge strategies.
+      */
+    def mergeRequestAccept[A](
+      input: MergeRequestAcceptInput
+    )(
+      innerSelection: SelectionBuilder[MergeRequestAcceptPayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("mergeRequestAccept", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def mergeRequestCreate[A](
       input: MergeRequestCreateInput
@@ -27015,6 +28062,13 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("oncallRotationDestroy", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
+    def oncallRotationUpdate[A](
+      input: OncallRotationUpdateInput
+    )(
+      innerSelection: SelectionBuilder[OncallRotationUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("oncallRotationUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
     def oncallScheduleCreate[A](
       input: OncallScheduleCreateInput
     )(
@@ -27091,6 +28145,20 @@ object graphql {
       innerSelection: SelectionBuilder[ReleaseAssetLinkCreatePayload, A]
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("releaseAssetLinkCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def releaseAssetLinkDelete[A](
+      input: ReleaseAssetLinkDeleteInput
+    )(
+      innerSelection: SelectionBuilder[ReleaseAssetLinkDeletePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("releaseAssetLinkDelete", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
+
+    def releaseAssetLinkUpdate[A](
+      input: ReleaseAssetLinkUpdateInput
+    )(
+      innerSelection: SelectionBuilder[ReleaseAssetLinkUpdatePayload, A]
+    ): SelectionBuilder[RootMutation, Option[A]] =
+      Field("releaseAssetLinkUpdate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
     def releaseCreate[A](
       input: ReleaseCreateInput
@@ -27266,7 +28334,10 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("updateEpic", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
-    /** Updates a DiffNote on an image (a `Note` where the `position.positionType` is `"image"`). If the body of the Note contains only quick actions, the Note will be destroyed during the update, and no Note will be returned
+    /** Updates a DiffNote on an image (a `Note` where the `position.positionType` is `"image"`).
+      * If the body of the Note contains only quick actions,
+      * the Note will be destroyed during the update, and no Note will be
+      * returned.
       */
     def updateImageDiffNote[A](
       input: UpdateImageDiffNoteInput
@@ -27296,7 +28367,10 @@ object graphql {
     ): SelectionBuilder[RootMutation, Option[A]] =
       Field("updateNamespacePackageSettings", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input)))
 
-    /** Updates a Note. If the body of the Note contains only quick actions, the Note will be destroyed during the update, and no Note will be returned
+    /** Updates a Note.
+      * If the body of the Note contains only quick actions,
+      * the Note will be destroyed during the update, and no Note will be
+      * returned.
       */
     def updateNote[A](
       input: UpdateNoteInput
