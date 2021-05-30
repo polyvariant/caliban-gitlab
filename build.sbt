@@ -9,13 +9,20 @@ inThisBuild(
         "Jakub Kozłowski",
         "kubukoz@gmail.com",
         url("https://blog.kubukoz.com")
+      ),
+      Developer(
+        "majk-p",
+        "Michał Pawlik",
+        "admin@michalp.net",
+        url("https://michalp.net")
       )
     ),
-    sources in (Compile, doc) := Seq()
+    Compile / doc / sources := Seq()
   )
 )
 
-val Scala213 = "2.13.3"
+val Scala213 = "2.13.6"
+val Scala3 = "3.0.0"
 
 def crossPlugin(x: sbt.librarymanagement.ModuleID) = compilerPlugin(x.cross(CrossVersion.full))
 
@@ -29,7 +36,7 @@ val compilerPlugins = List(
 val GraalVM11 = "graalvm-ce-java11@20.3.0"
 
 ThisBuild / scalaVersion := Scala213
-ThisBuild / crossScalaVersions := Seq(Scala213)
+ThisBuild / crossScalaVersions := Seq(Scala213, Scala3)
 ThisBuild / githubWorkflowJavaVersions := Seq(GraalVM11)
 //sbt-ci-release settings
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
@@ -57,7 +64,7 @@ val root = project
       "release",
       "+publishSigned;sonatypeBundleRelease"
     ),
-    skip in publish := true
+    publish / skip := true
   )
   .aggregate(core)
   .enablePlugins(CodegenPlugin)
