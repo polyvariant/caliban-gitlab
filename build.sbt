@@ -50,14 +50,7 @@ ThisBuild / githubWorkflowEnv ++= List("PGP_PASSPHRASE", "PGP_SECRET", "SONATYPE
 val core = project
   .settings(
     name := "caliban-gitlab",
-    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.10.1"),
-    scalacOptions ++= {
-      if (scalaVersion.value.startsWith("3."))
-        Seq("-source:3.0-migration")
-      else
-        Seq()
-    },
-
+    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.10.1")
   )
 
 val root = project
