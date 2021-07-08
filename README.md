@@ -16,7 +16,7 @@ For calling queries/mutations, consult [Caliban's documentation](https://ghostdo
 
 `sbt codegen` - generates sources
 
-`sbt githubWorkflowGenerate` - generates the gitlab actions
+`sbt githubWorkflowGenerate` - generates the github actions
 
 ## Publishing
 
