@@ -50,7 +50,7 @@ ThisBuild / githubWorkflowEnv ++= List("PGP_PASSPHRASE", "PGP_SECRET", "SONATYPE
 val core = project
   .settings(
     name := "caliban-gitlab",
-    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "0.10.1")
+    libraryDependencies ++= List("com.github.ghostdogpr" %% "caliban-client" % "1.1.0")
   )
 
 val root = project
@@ -67,4 +67,4 @@ val root = project
     publish / skip := true
   )
   .aggregate(core)
-  .enablePlugins(CodegenPlugin)
+  .enablePlugins(CalibanPlugin)
