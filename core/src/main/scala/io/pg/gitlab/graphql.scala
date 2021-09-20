@@ -365,7 +365,7 @@ object graphql {
       case __StringValue("SEVERITY")                => Right(AlertManagementPayloadAlertFieldName.SEVERITY)
       case __StringValue("FINGERPRINT")             => Right(AlertManagementPayloadAlertFieldName.FINGERPRINT)
       case __StringValue("GITLAB_ENVIRONMENT_NAME") => Right(AlertManagementPayloadAlertFieldName.GITLAB_ENVIRONMENT_NAME)
-      case other                                    => Left(DecodingError(s"Can't build AlertManagementPayloadAlertFieldName from input $other"))
+      case other => Left(DecodingError(s"Can't build AlertManagementPayloadAlertFieldName from input $other"))
     }
 
     implicit val encoder: ArgEncoder[AlertManagementPayloadAlertFieldName] = {
@@ -1068,7 +1068,7 @@ object graphql {
       case __StringValue("INPROGRESS_VALIDATION") => Right(DastSiteProfileValidationStatusEnum.INPROGRESS_VALIDATION)
       case __StringValue("PASSED_VALIDATION")     => Right(DastSiteProfileValidationStatusEnum.PASSED_VALIDATION)
       case __StringValue("FAILED_VALIDATION")     => Right(DastSiteProfileValidationStatusEnum.FAILED_VALIDATION)
-      case other                                  => Left(DecodingError(s"Can't build DastSiteProfileValidationStatusEnum from input $other"))
+      case other => Left(DecodingError(s"Can't build DastSiteProfileValidationStatusEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[DastSiteProfileValidationStatusEnum] = {
@@ -2326,7 +2326,7 @@ object graphql {
       case __StringValue("MERGE_TRAIN")                               => Right(MergeStrategyEnum.MERGE_TRAIN)
       case __StringValue("ADD_TO_MERGE_TRAIN_WHEN_PIPELINE_SUCCEEDS") => Right(MergeStrategyEnum.ADD_TO_MERGE_TRAIN_WHEN_PIPELINE_SUCCEEDS)
       case __StringValue("MERGE_WHEN_PIPELINE_SUCCEEDS")              => Right(MergeStrategyEnum.MERGE_WHEN_PIPELINE_SUCCEEDS)
-      case other                                                      => Left(DecodingError(s"Can't build MergeStrategyEnum from input $other"))
+      case other => Left(DecodingError(s"Can't build MergeStrategyEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[MergeStrategyEnum] = {
@@ -3516,37 +3516,37 @@ object graphql {
     }
 
     implicit val decoder: ScalarDecoder[UserCalloutFeatureNameEnum] = {
-      case __StringValue("GKE_CLUSTER_INTEGRATION")                        => Right(UserCalloutFeatureNameEnum.GKE_CLUSTER_INTEGRATION)
-      case __StringValue("GCP_SIGNUP_OFFER")                               => Right(UserCalloutFeatureNameEnum.GCP_SIGNUP_OFFER)
-      case __StringValue("CLUSTER_SECURITY_WARNING")                       => Right(UserCalloutFeatureNameEnum.CLUSTER_SECURITY_WARNING)
-      case __StringValue("ULTIMATE_TRIAL")                                 => Right(UserCalloutFeatureNameEnum.ULTIMATE_TRIAL)
-      case __StringValue("GEO_ENABLE_HASHED_STORAGE")                      => Right(UserCalloutFeatureNameEnum.GEO_ENABLE_HASHED_STORAGE)
-      case __StringValue("GEO_MIGRATE_HASHED_STORAGE")                     => Right(UserCalloutFeatureNameEnum.GEO_MIGRATE_HASHED_STORAGE)
-      case __StringValue("CANARY_DEPLOYMENT")                              => Right(UserCalloutFeatureNameEnum.CANARY_DEPLOYMENT)
-      case __StringValue("GOLD_TRIAL_BILLINGS")                            => Right(UserCalloutFeatureNameEnum.GOLD_TRIAL_BILLINGS)
-      case __StringValue("SUGGEST_POPOVER_DISMISSED")                      => Right(UserCalloutFeatureNameEnum.SUGGEST_POPOVER_DISMISSED)
-      case __StringValue("TABS_POSITION_HIGHLIGHT")                        => Right(UserCalloutFeatureNameEnum.TABS_POSITION_HIGHLIGHT)
-      case __StringValue("THREAT_MONITORING_INFO")                         => Right(UserCalloutFeatureNameEnum.THREAT_MONITORING_INFO)
-      case __StringValue("ACCOUNT_RECOVERY_REGULAR_CHECK")                 => Right(UserCalloutFeatureNameEnum.ACCOUNT_RECOVERY_REGULAR_CHECK)
-      case __StringValue("SERVICE_TEMPLATES_DEPRECATED_CALLOUT")           => Right(UserCalloutFeatureNameEnum.SERVICE_TEMPLATES_DEPRECATED_CALLOUT)
-      case __StringValue("WEB_IDE_ALERT_DISMISSED")                        => Right(UserCalloutFeatureNameEnum.WEB_IDE_ALERT_DISMISSED)
-      case __StringValue("ACTIVE_USER_COUNT_THRESHOLD")                    => Right(UserCalloutFeatureNameEnum.ACTIVE_USER_COUNT_THRESHOLD)
-      case __StringValue("BUY_PIPELINE_MINUTES_NOTIFICATION_DOT")          => Right(UserCalloutFeatureNameEnum.BUY_PIPELINE_MINUTES_NOTIFICATION_DOT)
-      case __StringValue("PERSONAL_ACCESS_TOKEN_EXPIRY")                   => Right(UserCalloutFeatureNameEnum.PERSONAL_ACCESS_TOKEN_EXPIRY)
-      case __StringValue("SUGGEST_PIPELINE")                               => Right(UserCalloutFeatureNameEnum.SUGGEST_PIPELINE)
-      case __StringValue("CUSTOMIZE_HOMEPAGE")                             => Right(UserCalloutFeatureNameEnum.CUSTOMIZE_HOMEPAGE)
-      case __StringValue("FEATURE_FLAGS_NEW_VERSION")                      => Right(UserCalloutFeatureNameEnum.FEATURE_FLAGS_NEW_VERSION)
-      case __StringValue("REGISTRATION_ENABLED_CALLOUT")                   => Right(UserCalloutFeatureNameEnum.REGISTRATION_ENABLED_CALLOUT)
-      case __StringValue("NEW_USER_SIGNUPS_CAP_REACHED")                   => Right(UserCalloutFeatureNameEnum.NEW_USER_SIGNUPS_CAP_REACHED)
-      case __StringValue("UNFINISHED_TAG_CLEANUP_CALLOUT")                 => Right(UserCalloutFeatureNameEnum.UNFINISHED_TAG_CLEANUP_CALLOUT)
-      case __StringValue("EOA_BRONZE_PLAN_BANNER")                         => Right(UserCalloutFeatureNameEnum.EOA_BRONZE_PLAN_BANNER)
-      case __StringValue("PIPELINE_NEEDS_BANNER")                          => Right(UserCalloutFeatureNameEnum.PIPELINE_NEEDS_BANNER)
-      case __StringValue("PIPELINE_NEEDS_HOVER_TIP")                       => Right(UserCalloutFeatureNameEnum.PIPELINE_NEEDS_HOVER_TIP)
-      case __StringValue("WEB_IDE_CI_ENVIRONMENTS_GUIDANCE")               => Right(UserCalloutFeatureNameEnum.WEB_IDE_CI_ENVIRONMENTS_GUIDANCE)
-      case __StringValue("SECURITY_CONFIGURATION_UPGRADE_BANNER")          => Right(UserCalloutFeatureNameEnum.SECURITY_CONFIGURATION_UPGRADE_BANNER)
+      case __StringValue("GKE_CLUSTER_INTEGRATION")               => Right(UserCalloutFeatureNameEnum.GKE_CLUSTER_INTEGRATION)
+      case __StringValue("GCP_SIGNUP_OFFER")                      => Right(UserCalloutFeatureNameEnum.GCP_SIGNUP_OFFER)
+      case __StringValue("CLUSTER_SECURITY_WARNING")              => Right(UserCalloutFeatureNameEnum.CLUSTER_SECURITY_WARNING)
+      case __StringValue("ULTIMATE_TRIAL")                        => Right(UserCalloutFeatureNameEnum.ULTIMATE_TRIAL)
+      case __StringValue("GEO_ENABLE_HASHED_STORAGE")             => Right(UserCalloutFeatureNameEnum.GEO_ENABLE_HASHED_STORAGE)
+      case __StringValue("GEO_MIGRATE_HASHED_STORAGE")            => Right(UserCalloutFeatureNameEnum.GEO_MIGRATE_HASHED_STORAGE)
+      case __StringValue("CANARY_DEPLOYMENT")                     => Right(UserCalloutFeatureNameEnum.CANARY_DEPLOYMENT)
+      case __StringValue("GOLD_TRIAL_BILLINGS")                   => Right(UserCalloutFeatureNameEnum.GOLD_TRIAL_BILLINGS)
+      case __StringValue("SUGGEST_POPOVER_DISMISSED")             => Right(UserCalloutFeatureNameEnum.SUGGEST_POPOVER_DISMISSED)
+      case __StringValue("TABS_POSITION_HIGHLIGHT")               => Right(UserCalloutFeatureNameEnum.TABS_POSITION_HIGHLIGHT)
+      case __StringValue("THREAT_MONITORING_INFO")                => Right(UserCalloutFeatureNameEnum.THREAT_MONITORING_INFO)
+      case __StringValue("ACCOUNT_RECOVERY_REGULAR_CHECK")        => Right(UserCalloutFeatureNameEnum.ACCOUNT_RECOVERY_REGULAR_CHECK)
+      case __StringValue("SERVICE_TEMPLATES_DEPRECATED_CALLOUT")  => Right(UserCalloutFeatureNameEnum.SERVICE_TEMPLATES_DEPRECATED_CALLOUT)
+      case __StringValue("WEB_IDE_ALERT_DISMISSED")               => Right(UserCalloutFeatureNameEnum.WEB_IDE_ALERT_DISMISSED)
+      case __StringValue("ACTIVE_USER_COUNT_THRESHOLD")           => Right(UserCalloutFeatureNameEnum.ACTIVE_USER_COUNT_THRESHOLD)
+      case __StringValue("BUY_PIPELINE_MINUTES_NOTIFICATION_DOT") => Right(UserCalloutFeatureNameEnum.BUY_PIPELINE_MINUTES_NOTIFICATION_DOT)
+      case __StringValue("PERSONAL_ACCESS_TOKEN_EXPIRY")          => Right(UserCalloutFeatureNameEnum.PERSONAL_ACCESS_TOKEN_EXPIRY)
+      case __StringValue("SUGGEST_PIPELINE")                      => Right(UserCalloutFeatureNameEnum.SUGGEST_PIPELINE)
+      case __StringValue("CUSTOMIZE_HOMEPAGE")                    => Right(UserCalloutFeatureNameEnum.CUSTOMIZE_HOMEPAGE)
+      case __StringValue("FEATURE_FLAGS_NEW_VERSION")             => Right(UserCalloutFeatureNameEnum.FEATURE_FLAGS_NEW_VERSION)
+      case __StringValue("REGISTRATION_ENABLED_CALLOUT")          => Right(UserCalloutFeatureNameEnum.REGISTRATION_ENABLED_CALLOUT)
+      case __StringValue("NEW_USER_SIGNUPS_CAP_REACHED")          => Right(UserCalloutFeatureNameEnum.NEW_USER_SIGNUPS_CAP_REACHED)
+      case __StringValue("UNFINISHED_TAG_CLEANUP_CALLOUT")        => Right(UserCalloutFeatureNameEnum.UNFINISHED_TAG_CLEANUP_CALLOUT)
+      case __StringValue("EOA_BRONZE_PLAN_BANNER")                => Right(UserCalloutFeatureNameEnum.EOA_BRONZE_PLAN_BANNER)
+      case __StringValue("PIPELINE_NEEDS_BANNER")                 => Right(UserCalloutFeatureNameEnum.PIPELINE_NEEDS_BANNER)
+      case __StringValue("PIPELINE_NEEDS_HOVER_TIP")              => Right(UserCalloutFeatureNameEnum.PIPELINE_NEEDS_HOVER_TIP)
+      case __StringValue("WEB_IDE_CI_ENVIRONMENTS_GUIDANCE")      => Right(UserCalloutFeatureNameEnum.WEB_IDE_CI_ENVIRONMENTS_GUIDANCE)
+      case __StringValue("SECURITY_CONFIGURATION_UPGRADE_BANNER") => Right(UserCalloutFeatureNameEnum.SECURITY_CONFIGURATION_UPGRADE_BANNER)
       case __StringValue("CLOUD_LICENSING_SUBSCRIPTION_ACTIVATION_BANNER") =>
         Right(UserCalloutFeatureNameEnum.CLOUD_LICENSING_SUBSCRIPTION_ACTIVATION_BANNER)
-      case other                                                           => Left(DecodingError(s"Can't build UserCalloutFeatureNameEnum from input $other"))
+      case other => Left(DecodingError(s"Can't build UserCalloutFeatureNameEnum from input $other"))
     }
 
     implicit val encoder: ArgEncoder[UserCalloutFeatureNameEnum] = {
@@ -7835,7 +7835,8 @@ object graphql {
       */
     def name: SelectionBuilder[ComplianceFramework, String] = _root_.caliban.client.SelectionBuilder.Field("name", Scalar())
 
-    /** Full path of the compliance pipeline configuration stored in a project repository, such as `.gitlab/.compliance-gitlab-ci.yml@compliance/hipaa` **(ULTIMATE)**.
+    /** Full path of the compliance pipeline configuration stored in a project repository, such as
+      * `.gitlab/.compliance-gitlab-ci.yml@compliance/hipaa` **(ULTIMATE)**.
       */
     def pipelineConfigurationFullPath: SelectionBuilder[ComplianceFramework, Option[String]] =
       _root_.caliban.client.SelectionBuilder.Field("pipelineConfigurationFullPath", OptionOf(Scalar()))
@@ -8623,7 +8624,9 @@ object graphql {
 
   object CreateSnippetPayload {
 
-    /** The CAPTCHA site key which must be used to render a challenge for the user to solve to obtain a valid captchaResponse value. Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** The CAPTCHA site key which must be used to render a challenge for the user to solve to obtain a valid captchaResponse value.
+      * Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection
+      * with HTTP headers instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def captchaSiteKey: SelectionBuilder[CreateSnippetPayload, Option[String]] =
@@ -8639,7 +8642,10 @@ object graphql {
     def errors: SelectionBuilder[CreateSnippetPayload, List[String]] =
       _root_.caliban.client.SelectionBuilder.Field("errors", ListOf(Scalar()))
 
-    /** Indicates whether the operation was detected as possible spam and not completed. If CAPTCHA is enabled, the request must be resubmitted with a valid CAPTCHA response and spam_log_id included for the operation to be completed. Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** Indicates whether the operation was detected as possible spam and not completed. If CAPTCHA is enabled, the request must be
+      * resubmitted with a valid CAPTCHA response and spam_log_id included for the operation to be completed. Included only when an
+      * operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers
+      * instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def needsCaptchaResponse: SelectionBuilder[CreateSnippetPayload, Option[Boolean]] =
@@ -8650,13 +8656,16 @@ object graphql {
     def snippet[A](innerSelection: SelectionBuilder[Snippet, A]): SelectionBuilder[CreateSnippetPayload, Option[A]] =
       _root_.caliban.client.SelectionBuilder.Field("snippet", OptionOf(Obj(innerSelection)))
 
-    /** Indicates whether the operation was detected as definite spam. There is no option to resubmit the request with a CAPTCHA response. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** Indicates whether the operation was detected as definite spam. There is no option to resubmit the request with a CAPTCHA response.
+      * Deprecated in 13.11: Use spam protection with HTTP headers instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def spam: SelectionBuilder[CreateSnippetPayload, Option[Boolean]] =
       _root_.caliban.client.SelectionBuilder.Field("spam", OptionOf(Scalar()))
 
-    /** The spam log ID which must be passed along with a valid CAPTCHA response for an operation to be completed. Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** The spam log ID which must be passed along with a valid CAPTCHA response for an operation to be completed. Included only when an
+      * operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers
+      * instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def spamLogId: SelectionBuilder[CreateSnippetPayload, Option[Int]] =
@@ -8999,7 +9008,8 @@ object graphql {
     def errors: SelectionBuilder[DastProfileUpdatePayload, List[String]] =
       _root_.caliban.client.SelectionBuilder.Field("errors", ListOf(Scalar()))
 
-    /** The URL of the pipeline that was created. Requires the input argument `runAfterUpdate` to be set to `true` when calling the mutation, otherwise no pipeline will be created.
+    /** The URL of the pipeline that was created. Requires the input argument `runAfterUpdate` to be set to `true` when calling the
+      * mutation, otherwise no pipeline will be created.
       */
     def pipelineUrl: SelectionBuilder[DastProfileUpdatePayload, Option[String]] =
       _root_.caliban.client.SelectionBuilder.Field("pipelineUrl", OptionOf(Scalar()))
@@ -9048,7 +9058,8 @@ object graphql {
     def targetTimeout: SelectionBuilder[DastScannerProfile, Option[Int]] =
       _root_.caliban.client.SelectionBuilder.Field("targetTimeout", OptionOf(Scalar()))
 
-    /** Indicates if the AJAX spider should be used to crawl the target site. True to run the AJAX spider in addition to the traditional spider, and false to run only the traditional spider.
+    /** Indicates if the AJAX spider should be used to crawl the target site. True to run the AJAX spider in addition to the traditional
+      * spider, and false to run only the traditional spider.
       */
     def useAjaxSpider: SelectionBuilder[DastScannerProfile, Boolean] =
       _root_.caliban.client.SelectionBuilder.Field("useAjaxSpider", Scalar())
@@ -19450,7 +19461,8 @@ object graphql {
       */
     def dueDate: SelectionBuilder[Milestone, Option[Time]] = _root_.caliban.client.SelectionBuilder.Field("dueDate", OptionOf(Scalar()))
 
-    /** Expired state of the milestone (a milestone is expired when the due date is past the current date). Defaults to `false` when due date has not been set.
+    /** Expired state of the milestone (a milestone is expired when the due date is past the current date). Defaults to `false` when due
+      * date has not been set.
       */
     def expired: SelectionBuilder[Milestone, Boolean] = _root_.caliban.client.SelectionBuilder.Field("expired", Scalar())
 
@@ -20849,7 +20861,8 @@ object graphql {
 
   object PackageSettings {
 
-    /** When generic_duplicates_allowed is false, you can publish duplicate packages with names that match this regex. Otherwise, this setting has no effect.
+    /** When generic_duplicates_allowed is false, you can publish duplicate packages with names that match this regex. Otherwise, this
+      * setting has no effect.
       */
     def genericDuplicateExceptionRegex: SelectionBuilder[PackageSettings, Option[UntrustedRegexp]] =
       _root_.caliban.client.SelectionBuilder.Field("genericDuplicateExceptionRegex", OptionOf(Scalar()))
@@ -20859,7 +20872,8 @@ object graphql {
     def genericDuplicatesAllowed: SelectionBuilder[PackageSettings, Boolean] =
       _root_.caliban.client.SelectionBuilder.Field("genericDuplicatesAllowed", Scalar())
 
-    /** When maven_duplicates_allowed is false, you can publish duplicate packages with names that match this regex. Otherwise, this setting has no effect.
+    /** When maven_duplicates_allowed is false, you can publish duplicate packages with names that match this regex. Otherwise, this setting
+      * has no effect.
       */
     def mavenDuplicateExceptionRegex: SelectionBuilder[PackageSettings, Option[UntrustedRegexp]] =
       _root_.caliban.client.SelectionBuilder.Field("mavenDuplicateExceptionRegex", OptionOf(Scalar()))
@@ -21060,7 +21074,8 @@ object graphql {
       */
     def complete: SelectionBuilder[Pipeline, Boolean] = _root_.caliban.client.SelectionBuilder.Field("complete", Scalar())
 
-    /** Configuration source of the pipeline (UNKNOWN_SOURCE, REPOSITORY_SOURCE, AUTO_DEVOPS_SOURCE, WEBIDE_SOURCE, REMOTE_SOURCE, EXTERNAL_PROJECT_SOURCE, BRIDGE_SOURCE, PARAMETER_SOURCE, COMPLIANCE_SOURCE)
+    /** Configuration source of the pipeline (UNKNOWN_SOURCE, REPOSITORY_SOURCE, AUTO_DEVOPS_SOURCE, WEBIDE_SOURCE, REMOTE_SOURCE,
+      * EXTERNAL_PROJECT_SOURCE, BRIDGE_SOURCE, PARAMETER_SOURCE, COMPLIANCE_SOURCE)
       */
     def configSource: SelectionBuilder[Pipeline, Option[PipelineConfigSourceEnum]] =
       _root_.caliban.client.SelectionBuilder.Field("configSource", OptionOf(Scalar()))
@@ -21285,7 +21300,8 @@ object graphql {
       */
     def startedAt: SelectionBuilder[Pipeline, Option[Time]] = _root_.caliban.client.SelectionBuilder.Field("startedAt", OptionOf(Scalar()))
 
-    /** Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, SKIPPED, MANUAL, SCHEDULED)
+    /** Status of the pipeline (CREATED, WAITING_FOR_RESOURCE, PREPARING, PENDING, RUNNING, FAILED, SUCCESS, CANCELED, SKIPPED, MANUAL,
+      * SCHEDULED)
       */
     def status: SelectionBuilder[Pipeline, PipelineStatusEnum] = _root_.caliban.client.SelectionBuilder.Field("status", Scalar())
 
@@ -23056,7 +23072,8 @@ object graphql {
     def mergeRequestsEnabled: SelectionBuilder[Project, Option[Boolean]] =
       _root_.caliban.client.SelectionBuilder.Field("mergeRequestsEnabled", OptionOf(Scalar()))
 
-    /** Indicates if no merge commits should be created and all merges should instead be fast-forwarded, which means that merging is only allowed if the branch could be fast-forwarded.
+    /** Indicates if no merge commits should be created and all merges should instead be fast-forwarded, which means that merging is only
+      * allowed if the branch could be fast-forwarded.
       */
     def mergeRequestsFfOnlyEnabled: SelectionBuilder[Project, Option[Boolean]] =
       _root_.caliban.client.SelectionBuilder.Field("mergeRequestsFfOnlyEnabled", OptionOf(Scalar()))
@@ -23314,7 +23331,8 @@ object graphql {
         )
       )
 
-    /** Indicates if a link to create or view a merge request should display after a push to Git repositories of the project from the command line.
+    /** Indicates if a link to create or view a merge request should display after a push to Git repositories of the project from the
+      * command line.
       */
     def printingMergeRequestLinkEnabled: SelectionBuilder[Project, Option[Boolean]] =
       _root_.caliban.client.SelectionBuilder.Field("printingMergeRequestLinkEnabled", OptionOf(Scalar()))
@@ -28920,7 +28938,9 @@ object graphql {
 
   object UpdateSnippetPayload {
 
-    /** The CAPTCHA site key which must be used to render a challenge for the user to solve to obtain a valid captchaResponse value. Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** The CAPTCHA site key which must be used to render a challenge for the user to solve to obtain a valid captchaResponse value.
+      * Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection
+      * with HTTP headers instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def captchaSiteKey: SelectionBuilder[UpdateSnippetPayload, Option[String]] =
@@ -28936,7 +28956,10 @@ object graphql {
     def errors: SelectionBuilder[UpdateSnippetPayload, List[String]] =
       _root_.caliban.client.SelectionBuilder.Field("errors", ListOf(Scalar()))
 
-    /** Indicates whether the operation was detected as possible spam and not completed. If CAPTCHA is enabled, the request must be resubmitted with a valid CAPTCHA response and spam_log_id included for the operation to be completed. Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** Indicates whether the operation was detected as possible spam and not completed. If CAPTCHA is enabled, the request must be
+      * resubmitted with a valid CAPTCHA response and spam_log_id included for the operation to be completed. Included only when an
+      * operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers
+      * instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def needsCaptchaResponse: SelectionBuilder[UpdateSnippetPayload, Option[Boolean]] =
@@ -28947,13 +28970,16 @@ object graphql {
     def snippet[A](innerSelection: SelectionBuilder[Snippet, A]): SelectionBuilder[UpdateSnippetPayload, Option[A]] =
       _root_.caliban.client.SelectionBuilder.Field("snippet", OptionOf(Obj(innerSelection)))
 
-    /** Indicates whether the operation was detected as definite spam. There is no option to resubmit the request with a CAPTCHA response. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** Indicates whether the operation was detected as definite spam. There is no option to resubmit the request with a CAPTCHA response.
+      * Deprecated in 13.11: Use spam protection with HTTP headers instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def spam: SelectionBuilder[UpdateSnippetPayload, Option[Boolean]] =
       _root_.caliban.client.SelectionBuilder.Field("spam", OptionOf(Scalar()))
 
-    /** The spam log ID which must be passed along with a valid CAPTCHA response for an operation to be completed. Included only when an operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers instead.
+    /** The spam log ID which must be passed along with a valid CAPTCHA response for an operation to be completed. Included only when an
+      * operation was not completed because "NeedsCaptchaResponse" is true. Deprecated in 13.11: Use spam protection with HTTP headers
+      * instead.
       */
     @deprecated("Use spam protection with HTTP headers instead. Deprecated in 13.11.", "")
     def spamLogId: SelectionBuilder[UpdateSnippetPayload, Option[Int]] =
@@ -30004,7 +30030,8 @@ object graphql {
     def project[A](innerSelection: SelectionBuilder[Project, A]): SelectionBuilder[Vulnerability, Option[A]] =
       _root_.caliban.client.SelectionBuilder.Field("project", OptionOf(Obj(innerSelection)))
 
-    /** Type of the security report that found the vulnerability (SAST, DEPENDENCY_SCANNING, CONTAINER_SCANNING, DAST, SECRET_DETECTION, COVERAGE_FUZZING, API_FUZZING, CLUSTER_IMAGE_SCANNING). `Scan Type` in the UI.
+    /** Type of the security report that found the vulnerability (SAST, DEPENDENCY_SCANNING, CONTAINER_SCANNING, DAST, SECRET_DETECTION,
+      * COVERAGE_FUZZING, API_FUZZING, CLUSTER_IMAGE_SCANNING). `Scan Type` in the UI.
       */
     def reportType: SelectionBuilder[Vulnerability, Option[VulnerabilityReportType]] =
       _root_.caliban.client.SelectionBuilder.Field("reportType", OptionOf(Scalar()))
@@ -36540,8 +36567,7 @@ object graphql {
     ): SelectionBuilder[_root_.caliban.client.Operations.RootQuery, Option[A]] =
       _root_.caliban.client.SelectionBuilder.Field("ciApplicationSettings", OptionOf(Obj(innerSelection)))
 
-    /** Linted and processed contents of a CI config.
-      * Should not be requested more than once per request.
+    /** Linted and processed contents of a CI config. Should not be requested more than once per request.
       */
     def ciConfig[A](
       projectPath: String,
@@ -37562,9 +37588,8 @@ object graphql {
       .SelectionBuilder
       .Field("commitCreate", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input, "CommitCreateInput!")(encoder0)))
 
-    /** Configure SAST for a project by enabling SAST in a new or modified
-      * `.gitlab-ci.yml` file in a new branch. The new branch and a URL to
-      * create a Merge Request are a part of the response.
+    /** Configure SAST for a project by enabling SAST in a new or modified `.gitlab-ci.yml` file in a new branch. The new branch and a URL
+      * to create a Merge Request are a part of the response.
       */
     def configureSast[A](
       input: ConfigureSastInput
@@ -37578,10 +37603,8 @@ object graphql {
       .SelectionBuilder
       .Field("configureSast", OptionOf(Obj(innerSelection)), arguments = List(Argument("input", input, "ConfigureSastInput!")(encoder0)))
 
-    /** Configure Secret Detection for a project by enabling Secret Detection
-      * in a new or modified `.gitlab-ci.yml` file in a new branch. The new
-      * branch and a URL to create a Merge Request are a part of the
-      * response.
+    /** Configure Secret Detection for a project by enabling Secret Detection in a new or modified `.gitlab-ci.yml` file in a new branch.
+      * The new branch and a URL to create a Merge Request are a part of the response.
       */
     def configureSecretDetection[A](
       input: ConfigureSecretDetectionInput
@@ -38276,8 +38299,7 @@ object graphql {
 
     /** A mutation that does not perform any changes.
       *
-      * This is expected to be used for testing of endpoints, to verify
-      * that a user has mutation access.
+      * This is expected to be used for testing of endpoints, to verify that a user has mutation access.
       */
     def echoCreate[A](
       input: EchoCreateInput
@@ -38911,9 +38933,8 @@ object graphql {
         arguments = List(Argument("input", input, "MarkAsSpamSnippetInput!")(encoder0))
       )
 
-    /** Accepts a merge request.
-      * When accepted, the source branch will be merged into the target branch, either
-      * immediately if possible, or using one of the automatic merge strategies.
+    /** Accepts a merge request. When accepted, the source branch will be merged into the target branch, either immediately if possible, or
+      * using one of the automatic merge strategies.
       */
     def mergeRequestAccept[A](
       input: MergeRequestAcceptInput
@@ -39754,10 +39775,8 @@ object graphql {
         arguments = List(Argument("input", input, "UpdateEpicBoardListInput!")(encoder0))
       )
 
-    /** Updates a DiffNote on an image (a `Note` where the `position.positionType` is `"image"`).
-      * If the body of the Note contains only quick actions,
-      * the Note will be destroyed during the update, and no Note will be
-      * returned.
+    /** Updates a DiffNote on an image (a `Note` where the `position.positionType` is `"image"`). If the body of the Note contains only
+      * quick actions, the Note will be destroyed during the update, and no Note will be returned.
       */
     def updateImageDiffNote[A](
       input: UpdateImageDiffNoteInput
@@ -39819,10 +39838,8 @@ object graphql {
         arguments = List(Argument("input", input, "UpdateNamespacePackageSettingsInput!")(encoder0))
       )
 
-    /** Updates a Note.
-      * If the body of the Note contains only quick actions,
-      * the Note will be destroyed during the update, and no Note will be
-      * returned.
+    /** Updates a Note. If the body of the Note contains only quick actions, the Note will be destroyed during the update, and no Note will
+      * be returned.
       */
     def updateNote[A](
       input: UpdateNoteInput
@@ -40005,4 +40022,3 @@ object graphql {
   }
 
 }
-
